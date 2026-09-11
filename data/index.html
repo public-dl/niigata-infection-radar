@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>新潟感染症レーダー</title>
+  <meta name="description" content="新潟県の感染症週報をもとに、インフルエンザの流行状況をわかりやすく可視化します。" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-shape hero-shape-1"></div>
+    <div class="hero-shape hero-shape-2"></div>
+    <div class="rice rice-1">穂</div>
+    <div class="rice rice-2">穂</div>
+    <div class="hero-inner">
+      <p class="eyebrow">NIIGATA INFECTION RADAR</p>
+      <h1>新潟感染症レーダー</h1>
+      <p class="hero-copy">新潟県の週報データを、いま必要な情報に。</p>
+      <div class="hero-meta">
+        <span id="latest-period">読み込み中…</span>
+        <span class="dot"></span>
+        <span>インフルエンザ</span>
+      </div>
+    </div>
+    <div class="wave wave-a"></div>
+    <div class="wave wave-b"></div>
+  </header>
+
+  <main>
+    <section class="summary-grid">
+      <article class="card primary-card">
+        <div class="card-kicker">県全体・定点当たり報告数</div>
+        <div class="primary-row">
+          <div>
+            <div id="latest-value" class="big-number">--</div>
+            <div class="unit">人 / 定点</div>
+          </div>
+          <div id="level-badge" class="level-badge">判定中</div>
+        </div>
+        <div class="mini-grid">
+          <div><span>前週</span><strong id="prev-value">--</strong></div>
+          <div><span>前々週</span><strong id="prev2-value">--</strong></div>
+          <div><span>前週比</span><strong id="wow-value">--</strong></div>
+        </div>
+      </article>
+
+      <article class="card point-card">
+        <div class="section-title-row">
+          <div>
+            <div class="card-kicker">WEEKLY TOPIC</div>
+            <h2>今週のポイント</h2>
+          </div>
+          <span class="source-chip">新潟県週報</span>
+        </div>
+        <p id="weekly-topic" class="topic-text">データを読み込んでいます。</p>
+      </article>
+    </section>
+
+    <section class="card trend-card">
+      <div class="section-title-row">
+        <div>
+          <div class="card-kicker">TREND</div>
+          <h2>県全体の推移</h2>
+        </div>
+        <button id="to-latest" class="ghost-button" type="button">最新へ</button>
+      </div>
+      <div class="threshold-note">
+        <span><i class="line-dot"></i>流行期入りの目安 1</span>
+        <span><i class="line-dot"></i>注意報の目安 10</span>
+        <span><i class="line-dot"></i>警報の目安 30</span>
+      </div>
+      <div id="chart-scroll" class="chart-scroll">
+        <div class="chart-inner">
+          <canvas id="trend-chart" aria-label="インフルエンザ定点当たり報告数の推移"></canvas>
+        </div>
+      </div>
+    </section>
+
+    <section class="compare-grid">
+      <article class="card comparison-card">
+        <div class="card-kicker">YEAR ON YEAR</div>
+        <h2>前年同期との比較</h2>
+        <div class="comparison-body">
+          <div>
+            <span id="this-period-label" class="compare-label">今年</span>
+            <strong id="this-period-value">--</strong>
+          </div>
+          <div class="compare-arrow">→</div>
+          <div>
+            <span id="last-period-label" class="compare-label">前年</span>
+            <strong id="last-period-value">--</strong>
+          </div>
+        </div>
+        <p id="year-compare-note" class="muted">比較データを確認中です。</p>
+      </article>
+
+      <article class="card">
+        <div class="card-kicker">RANKING</div>
+        <h2>地域別ランキング</h2>
+        <div id="ranking" class="ranking"></div>
+      </article>
+    </section>
+
+    <section class="card map-card">
+      <div class="section-title-row">
+        <div>
+          <div class="card-kicker">AREA MAP</div>
+          <h2>地域別の流行状況</h2>
+        </div>
+        <span id="map-period" class="source-chip">--</span>
+      </div>
+      <div class="map-layout">
+        <div id="map" class="map"></div>
+        <div class="map-side">
+          <div class="legend">
+            <h3>定点当たり報告数</h3>
+            <div><span class="swatch s0"></span>1未満</div>
+            <div><span class="swatch s1"></span>1–10未満</div>
+            <div><span class="swatch s2"></span>10–30未満</div>
+            <div><span class="swatch s3"></span>30以上</div>
+          </div>
+          <p class="muted small">市町村境界は国土数値情報由来のGeoJSONを利用し、県の公表地域単位に対応付けています。</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="footer-note">
+      <p>出典：新潟県「感染症情報（週報）」</p>
+      <p>本サイトは公表データを見やすく整理したもので、診断・受診判断を行うものではありません。</p>
+      <p>Powered by CivITech</p>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+  <script src="./app.js"></script>
+</body>
+</html>
