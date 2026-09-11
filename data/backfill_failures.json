@@ -1,14 +1,1 @@
-[
-  {
-    "year": 2025,
-    "week": 43,
-    "url": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0743.html",
-    "error": "本文照合不一致: Excel=0.27 / 今週のトピック=2.05"
-  },
-  {
-    "year": 2026,
-    "week": 34,
-    "url": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0834.html",
-    "error": "本文照合不一致: Excel=0.18 / 今週のトピック=1.65"
-  }
-]
+[]

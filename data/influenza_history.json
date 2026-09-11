@@ -6,8 +6,8 @@
     "unit": "定点当たり報告数",
     "generated_by": "scripts/backfill.py",
     "weeks_discovered": 88,
-    "weeks_ok": 86,
-    "weeks_failed": 2
+    "weeks_ok": 88,
+    "weeks_failed": 0
   },
   "weeks": [
     {
@@ -35,14 +35,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0701.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/430923.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "公表用",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -70,14 +74,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0702.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/431360.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "公表用",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -105,14 +113,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0703.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/432214.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -140,14 +152,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0704.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/432872.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -175,14 +191,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0705.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/433748.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -210,14 +230,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0706.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/434690.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -245,14 +269,18 @@
       "topic": "インフルエンザの警報を解除します。（別紙１参照）\n〇県内では定点当たりの報告数が全県で6.97と前週の10.79に比べ減少しました。国の示す終息基準（定点当たり10）を下回ったため、警報を解除します。\n〇ただし、一部保健所管内では、注意報基準（定点当たり10）を上回っており、児童福祉施設等での集団発生も報告されていることから、引き続き注意が必要です。\n〇発熱や咳などの症状がある場合は、外出を控えてください。\n〇やむを得ず外出される場合には、マスクを着用するとともに、うがいや手洗いの励行や咳エチケット等の基本的な感染対策をお願いします。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0707.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/435745.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 6.97
+      },
       "_parser": {
         "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -280,14 +308,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0709.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/436391.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -315,14 +347,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho07099.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/437444.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -350,14 +386,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0710.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/438900.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -385,14 +425,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0711.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/440069.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -420,14 +464,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0712.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/442416.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -455,14 +503,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho07130.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/445220.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -490,14 +542,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0714.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/446107.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
         "header_row": 3,
         "flu_row": 4,
         "value_row": 5,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -506,32 +562,37 @@
       "start": "2025-04-07",
       "end": "2025-04-13",
       "label": "R7/4/7–4/13",
-      "prefecture": 4.76,
+      "prefecture": 1.44,
       "regions": {
-        "新潟市": 5.86,
-        "新発田": 5.02,
-        "新津": 3.43,
-        "三条": 1.81,
-        "長岡": 1.44,
-        "南魚沼": 0.04,
-        "十日町": 0.51,
-        "柏崎": 0.21,
-        "糸魚川": 0.07,
-        "村上": 0.09,
-        "佐渡": 0.37,
-        "上越": 0.15
+        "新潟市": 1.29,
+        "新発田": 2.5,
+        "新津": 0.0,
+        "三条": 1.6,
+        "長岡": 1.83,
+        "魚沼": 3.0,
+        "南魚沼": 4.67,
+        "十日町": 0.67,
+        "柏崎": 0.5,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 2.0,
+        "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0715.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/447372.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -540,32 +601,37 @@
       "start": "2025-04-14",
       "end": "2025-04-20",
       "label": "R7/4/14–4/20",
-      "prefecture": 5.86,
+      "prefecture": 1.53,
       "regions": {
-        "新潟市": 5.02,
-        "新発田": 3.43,
-        "新津": 1.81,
-        "三条": 1.44,
-        "長岡": 1.53,
-        "南魚沼": 0.0,
-        "十日町": 0.27,
-        "柏崎": 0.38,
-        "糸魚川": 0.2,
-        "村上": 0.27,
-        "佐渡": 0.24,
-        "上越": 0.15
+        "新潟市": 1.56,
+        "新発田": 0.75,
+        "新津": 0.5,
+        "三条": 3.2,
+        "長岡": 2.33,
+        "魚沼": 2.5,
+        "南魚沼": 4.67,
+        "十日町": 0.0,
+        "柏崎": 1.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.5,
+        "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0716.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/448226.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -574,32 +640,37 @@
       "start": "2025-04-21",
       "end": "2025-04-27",
       "label": "R7/4/21–4/27",
-      "prefecture": 5.02,
+      "prefecture": 1.47,
       "regions": {
-        "新潟市": 3.43,
-        "新発田": 1.81,
-        "新津": 1.44,
-        "三条": 1.53,
-        "長岡": 1.47,
-        "南魚沼": 0.02,
-        "十日町": 0.14,
-        "柏崎": 0.37,
-        "糸魚川": 0.36,
-        "村上": 0.24,
-        "佐渡": 0.33,
-        "上越": 0.02
+        "新潟市": 1.67,
+        "新発田": 1.75,
+        "新津": 1.5,
+        "三条": 1.6,
+        "長岡": 4.0,
+        "魚沼": 0.5,
+        "南魚沼": 1.67,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 1.0,
+        "佐渡": 0.0,
+        "上越": 0.25
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0717.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/449174.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -608,32 +679,37 @@
       "start": "2025-04-28",
       "end": "2025-05-04",
       "label": "R7/4/28–5/4",
-      "prefecture": 3.43,
+      "prefecture": 1.16,
       "regions": {
-        "新潟市": 1.81,
-        "新発田": 1.44,
-        "新津": 1.53,
-        "三条": 1.47,
-        "長岡": 1.16,
-        "南魚沼": 0.0,
-        "十日町": 0.12,
-        "柏崎": 0.65,
-        "糸魚川": 0.2,
-        "村上": 0.05,
-        "佐渡": 0.13,
-        "上越": 0.02
+        "新潟市": 0.83,
+        "新発田": 0.0,
+        "新津": 3.0,
+        "三条": 1.6,
+        "長岡": 1.17,
+        "魚沼": 0.0,
+        "南魚沼": 0.67,
+        "十日町": 0.0,
+        "柏崎": 0.5,
+        "糸魚川": 0.0,
+        "村上": 11.5,
+        "佐渡": 0.0,
+        "上越": 0.5
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0718.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/449685.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -642,32 +718,37 @@
       "start": "2025-05-05",
       "end": "2025-05-11",
       "label": "R7/5/5–5/11",
-      "prefecture": 1.81,
+      "prefecture": 0.73,
       "regions": {
-        "新潟市": 1.44,
-        "新発田": 1.53,
-        "新津": 1.47,
-        "三条": 1.16,
-        "長岡": 0.73,
-        "南魚沼": 0.0,
-        "十日町": 0.04,
-        "柏崎": 0.27,
-        "糸魚川": 0.11,
-        "村上": 0.09,
-        "佐渡": 0.15,
-        "上越": 0.08
+        "新潟市": 0.89,
+        "新発田": 0.75,
+        "新津": 1.0,
+        "三条": 0.4,
+        "長岡": 0.17,
+        "魚沼": 1.5,
+        "南魚沼": 2.67,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 1.0,
+        "佐渡": 0.0,
+        "上越": 0.75
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0719.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/450180.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -676,32 +757,37 @@
       "start": "2025-05-12",
       "end": "2025-05-18",
       "label": "R7/5/12–5/18",
-      "prefecture": 1.44,
+      "prefecture": 0.51,
       "regions": {
-        "新潟市": 1.53,
-        "新発田": 1.47,
-        "新津": 1.16,
-        "三条": 0.73,
-        "長岡": 0.51,
-        "南魚沼": 0.0,
-        "十日町": 0.06,
-        "柏崎": 0.15,
-        "糸魚川": 0.15,
-        "村上": 0.02,
-        "佐渡": 0.13,
-        "上越": 0.02
+        "新潟市": 0.28,
+        "新発田": 0.75,
+        "新津": 0.0,
+        "三条": 0.4,
+        "長岡": 0.5,
+        "魚沼": 0.5,
+        "南魚沼": 0.67,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 3.0,
+        "佐渡": 0.0,
+        "上越": 1.5
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0720.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/451112.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -710,32 +796,37 @@
       "start": "2025-05-19",
       "end": "2025-05-25",
       "label": "R7/5/19–5/25",
-      "prefecture": 1.53,
+      "prefecture": 0.45,
       "regions": {
-        "新潟市": 1.47,
-        "新発田": 1.16,
-        "新津": 0.73,
-        "三条": 0.51,
-        "長岡": 0.45,
-        "南魚沼": 0.0,
-        "十日町": 0.07,
-        "柏崎": 0.16,
-        "糸魚川": 0.05,
-        "村上": 0.05,
-        "佐渡": 0.08,
-        "上越": 0.04
+        "新潟市": 0.44,
+        "新発田": 1.25,
+        "新津": 0.0,
+        "三条": 0.4,
+        "長岡": 0.67,
+        "魚沼": 0.0,
+        "南魚沼": 0.33,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 1.5,
+        "佐渡": 0.0,
+        "上越": 0.5
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0721.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/452012.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -744,32 +835,37 @@
       "start": "2025-05-26",
       "end": "2025-06-01",
       "label": "R7/5/26–6/1",
-      "prefecture": 1.47,
+      "prefecture": 0.35,
       "regions": {
-        "新潟市": 1.16,
-        "新発田": 0.73,
-        "新津": 0.51,
-        "三条": 0.45,
-        "長岡": 0.35,
-        "南魚沼": 0.02,
-        "十日町": 0.1,
-        "柏崎": 0.04,
-        "糸魚川": 0.05,
-        "村上": 0.04,
-        "佐渡": 0.08,
-        "上越": 0.04
+        "新潟市": 0.22,
+        "新発田": 0.25,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.67,
+        "魚沼": 1.5,
+        "南魚沼": 1.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.75
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0722.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/453033.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -778,32 +874,37 @@
       "start": "2025-06-02",
       "end": "2025-06-08",
       "label": "R7/6/2–6/8",
-      "prefecture": 1.16,
+      "prefecture": 0.11,
       "regions": {
-        "新潟市": 0.73,
-        "新発田": 0.51,
-        "新津": 0.45,
-        "三条": 0.35,
-        "長岡": 0.11,
-        "南魚沼": 0.0,
-        "十日町": 0.02,
-        "柏崎": 0.02,
+        "新潟市": 0.0,
+        "新発田": 0.25,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.33,
+        "魚沼": 0.5,
+        "南魚沼": 0.33,
+        "十日町": 0.0,
+        "柏崎": 0.0,
         "糸魚川": 0.0,
-        "村上": 0.02,
+        "村上": 0.0,
         "佐渡": 0.0,
-        "上越": 0.06
+        "上越": 0.25
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0723.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/453586.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -812,32 +913,37 @@
       "start": "2025-06-09",
       "end": "2025-06-15",
       "label": "R7/6/9–6/15",
-      "prefecture": 0.73,
+      "prefecture": 0.09,
       "regions": {
-        "新潟市": 0.51,
-        "新発田": 0.45,
-        "新津": 0.35,
-        "三条": 0.11,
-        "長岡": 0.09,
-        "南魚沼": 0.0,
-        "十日町": 0.02,
+        "新潟市": 0.17,
+        "新発田": 0.25,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.33,
+        "十日町": 0.0,
         "柏崎": 0.0,
         "糸魚川": 0.0,
-        "村上": 0.02,
-        "佐渡": 0.06,
+        "村上": 0.0,
+        "佐渡": 0.0,
         "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0724.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/454501.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -846,32 +952,37 @@
       "start": "2025-06-16",
       "end": "2025-06-22",
       "label": "R7/6/16–6/22",
-      "prefecture": 0.51,
+      "prefecture": 0.27,
       "regions": {
-        "新潟市": 0.45,
-        "新発田": 0.35,
-        "新津": 0.11,
-        "三条": 0.09,
-        "長岡": 0.27,
-        "南魚沼": 0.0,
-        "十日町": 0.02,
-        "柏崎": 0.06,
-        "糸魚川": 0.07,
+        "新潟市": 0.17,
+        "新発田": 0.25,
+        "新津": 0.5,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.33,
+        "十日町": 1.33,
+        "柏崎": 0.0,
+        "糸魚川": 1.0,
         "村上": 0.0,
-        "佐渡": 0.07,
-        "上越": 0.06
+        "佐渡": 0.0,
+        "上越": 0.75
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0725.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/455886.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -880,32 +991,37 @@
       "start": "2025-06-23",
       "end": "2025-06-29",
       "label": "R7/6/23–6/29",
-      "prefecture": 0.45,
+      "prefecture": 0.56,
       "regions": {
-        "新潟市": 0.35,
-        "新発田": 0.11,
-        "新津": 0.09,
-        "三条": 0.27,
-        "長岡": 0.56,
-        "南魚沼": 0.0,
-        "十日町": 0.02,
-        "柏崎": 0.04,
-        "糸魚川": 0.35,
-        "村上": 0.07,
-        "佐渡": 0.04,
-        "上越": 0.06
+        "新潟市": 0.06,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.33,
+        "十日町": 1.0,
+        "柏崎": 0.0,
+        "糸魚川": 9.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 1.75
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0726.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/457518.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -914,32 +1030,37 @@
       "start": "2025-06-30",
       "end": "2025-07-06",
       "label": "R7/6/30–7/6",
-      "prefecture": 0.35,
+      "prefecture": 0.85,
       "regions": {
-        "新潟市": 0.11,
-        "新発田": 0.09,
-        "新津": 0.27,
-        "三条": 0.56,
-        "長岡": 0.85,
-        "南魚沼": 0.0,
-        "十日町": 0.02,
-        "柏崎": 0.17,
-        "糸魚川": 0.47,
-        "村上": 0.13,
-        "佐渡": 0.06,
-        "上越": 0.02
+        "新潟市": 0.06,
+        "新発田": 0.25,
+        "新津": 0.0,
+        "三条": 0.2,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.67,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 21.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0727.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/458462.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -948,32 +1069,37 @@
       "start": "2025-07-07",
       "end": "2025-07-13",
       "label": "R7/7/7–7/13",
-      "prefecture": 0.11,
+      "prefecture": 0.53,
       "regions": {
-        "新潟市": 0.09,
-        "新発田": 0.27,
-        "新津": 0.56,
-        "三条": 0.85,
-        "長岡": 0.53,
+        "新潟市": 0.06,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
-        "十日町": 0.02,
-        "柏崎": 0.23,
-        "糸魚川": 0.16,
-        "村上": 0.07,
-        "佐渡": 0.06,
+        "十日町": 1.33,
+        "柏崎": 0.0,
+        "糸魚川": 12.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
         "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0728.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/459293.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -982,32 +1108,37 @@
       "start": "2025-07-14",
       "end": "2025-07-20",
       "label": "R7/7/14–7/20",
-      "prefecture": 0.09,
+      "prefecture": 0.46,
       "regions": {
-        "新潟市": 0.27,
-        "新発田": 0.56,
-        "新津": 0.85,
-        "三条": 0.53,
-        "長岡": 0.46,
+        "新潟市": 0.17,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.5,
         "南魚沼": 0.0,
-        "十日町": 0.08,
-        "柏崎": 0.17,
-        "糸魚川": 0.11,
-        "村上": 0.04,
-        "佐渡": 0.06,
-        "上越": 0.02
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 10.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0729.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/459998.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1016,32 +1147,37 @@
       "start": "2025-07-21",
       "end": "2025-07-27",
       "label": "R7/7/21–7/27",
-      "prefecture": 0.27,
+      "prefecture": 0.31,
       "regions": {
-        "新潟市": 0.56,
-        "新発田": 0.85,
-        "新津": 0.53,
-        "三条": 0.45,
-        "長岡": 0.31,
+        "新潟市": 0.11,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
-        "十日町": 0.06,
-        "柏崎": 0.12,
-        "糸魚川": 0.07,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 7.5,
         "村上": 0.0,
-        "佐渡": 0.08,
+        "佐渡": 0.0,
         "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0730.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/460951.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1050,32 +1186,37 @@
       "start": "2025-07-28",
       "end": "2025-08-03",
       "label": "R7/7/28–8/3",
-      "prefecture": 0.56,
+      "prefecture": 0.18,
       "regions": {
-        "新潟市": 0.85,
-        "新発田": 0.53,
-        "新津": 0.45,
-        "三条": 0.31,
-        "長岡": 0.18,
+        "新潟市": 0.06,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.33,
+        "魚沼": 0.5,
         "南魚沼": 0.0,
-        "十日町": 0.04,
-        "柏崎": 0.06,
-        "糸魚川": 0.0,
-        "村上": 0.04,
-        "佐渡": 0.06,
-        "上越": 0.0
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 2.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.25
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0731.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/461523.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1084,32 +1225,37 @@
       "start": "2025-08-04",
       "end": "2025-08-10",
       "label": "R7/8/4–8/10",
-      "prefecture": 0.85,
+      "prefecture": 0.2,
       "regions": {
-        "新潟市": 0.53,
-        "新発田": 0.45,
-        "新津": 0.31,
-        "三条": 0.18,
-        "長岡": 0.2,
+        "新潟市": 0.38,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.4,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
-        "十日町": 0.06,
-        "柏崎": 0.04,
-        "糸魚川": 0.0,
-        "村上": 0.0,
-        "佐渡": 0.06,
-        "上越": 0.04
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.5,
+        "村上": 0.5,
+        "佐渡": 0.0,
+        "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0732.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/462048.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1118,32 +1264,37 @@
       "start": "2025-08-11",
       "end": "2025-08-17",
       "label": "R7/8/11–8/17",
-      "prefecture": 0.53,
+      "prefecture": 0.41,
       "regions": {
-        "新潟市": 0.45,
-        "新発田": 0.31,
-        "新津": 0.18,
+        "新潟市": 1.0,
+        "新発田": 0.0,
+        "新津": 0.0,
         "三条": 0.2,
-        "長岡": 0.41,
+        "長岡": 0.0,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
-        "十日町": 0.08,
-        "柏崎": 0.13,
-        "糸魚川": 0.02,
-        "村上": 0.02,
-        "佐渡": 0.1,
-        "上越": 0.08
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.5,
+        "村上": 0.5,
+        "佐渡": 0.5,
+        "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0733.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/462765.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1152,32 +1303,37 @@
       "start": "2025-08-18",
       "end": "2025-08-24",
       "label": "R7/8/18–8/24",
-      "prefecture": 0.45,
+      "prefecture": 0.3,
       "regions": {
-        "新潟市": 0.31,
-        "新発田": 0.18,
-        "新津": 0.2,
-        "三条": 0.41,
-        "長岡": 0.3,
-        "南魚沼": 0.0,
-        "十日町": 0.06,
-        "柏崎": 0.08,
-        "糸魚川": 0.06,
+        "新潟市": 0.5,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.6,
+        "長岡": 0.17,
+        "魚沼": 0.0,
+        "南魚沼": 0.67,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
         "村上": 0.0,
-        "佐渡": 0.06,
-        "上越": 0.06
+        "佐渡": 0.0,
+        "上越": 0.25
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0734.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/463440.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1186,32 +1342,37 @@
       "start": "2025-08-25",
       "end": "2025-08-31",
       "label": "R7/8/25–8/31",
-      "prefecture": 0.31,
+      "prefecture": 0.15,
       "regions": {
-        "新潟市": 0.18,
-        "新発田": 0.2,
-        "新津": 0.41,
-        "三条": 0.3,
-        "長岡": 0.15,
+        "新潟市": 0.22,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.2,
+        "長岡": 0.0,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
-        "十日町": 0.02,
-        "柏崎": 0.02,
-        "糸魚川": 0.04,
-        "村上": 0.02,
-        "佐渡": 0.02,
-        "上越": 0.04
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 1.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0735.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/464190.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1220,32 +1381,37 @@
       "start": "2025-09-01",
       "end": "2025-09-07",
       "label": "R7/9/1–9/7",
-      "prefecture": 0.18,
+      "prefecture": 0.27,
       "regions": {
-        "新潟市": 0.2,
-        "新発田": 0.41,
-        "新津": 0.3,
-        "三条": 0.15,
-        "長岡": 0.27,
+        "新潟市": 0.61,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.2,
+        "長岡": 0.17,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
-        "十日町": 0.04,
-        "柏崎": 0.06,
-        "糸魚川": 0.02,
-        "村上": 0.02,
-        "佐渡": 0.06,
-        "上越": 0.09
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.25
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0736.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/464788.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1254,32 +1420,37 @@
       "start": "2025-09-08",
       "end": "2025-09-14",
       "label": "R7/9/8–9/14",
-      "prefecture": 0.2,
+      "prefecture": 0.09,
       "regions": {
-        "新潟市": 0.41,
-        "新発田": 0.3,
-        "新津": 0.15,
-        "三条": 0.27,
-        "長岡": 0.09,
+        "新潟市": 0.17,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.4,
+        "長岡": 0.0,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
         "十日町": 0.0,
         "柏崎": 0.0,
         "糸魚川": 0.0,
         "村上": 0.0,
-        "佐渡": 0.09,
+        "佐渡": 0.0,
         "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0737.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/465431.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1288,32 +1459,37 @@
       "start": "2025-09-15",
       "end": "2025-09-21",
       "label": "R7/9/15–9/21",
-      "prefecture": 0.41,
+      "prefecture": 0.27,
       "regions": {
-        "新潟市": 0.3,
-        "新発田": 0.15,
-        "新津": 0.27,
-        "三条": 0.09,
-        "長岡": 0.27,
+        "新潟市": 0.78,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.17,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
         "十日町": 0.0,
         "柏崎": 0.0,
-        "糸魚川": 0.11,
-        "村上": 0.02,
-        "佐渡": 0.11,
-        "上越": 0.04
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0738.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/465984.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1322,32 +1498,37 @@
       "start": "2025-09-22",
       "end": "2025-09-28",
       "label": "R7/9/22–9/28",
-      "prefecture": 0.3,
+      "prefecture": 0.2,
       "regions": {
-        "新潟市": 0.15,
-        "新発田": 0.27,
-        "新津": 0.09,
-        "三条": 0.27,
-        "長岡": 0.2,
+        "新潟市": 0.17,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.2,
+        "長岡": 0.17,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
         "十日町": 0.0,
-        "柏崎": 0.04,
+        "柏崎": 1.0,
         "糸魚川": 0.0,
-        "村上": 0.02,
-        "佐渡": 0.13,
-        "上越": 0.02
+        "村上": 0.5,
+        "佐渡": 1.0,
+        "上越": 0.25
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0739.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/466758.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1356,32 +1537,37 @@
       "start": "2025-09-29",
       "end": "2025-10-05",
       "label": "R7/9/29–10/5",
-      "prefecture": 0.15,
+      "prefecture": 0.24,
       "regions": {
-        "新潟市": 0.27,
-        "新発田": 0.09,
-        "新津": 0.27,
-        "三条": 0.2,
-        "長岡": 0.24,
+        "新潟市": 0.11,
+        "新発田": 0.75,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.83,
+        "魚沼": 0.5,
         "南魚沼": 0.0,
-        "十日町": 0.02,
-        "柏崎": 0.09,
-        "糸魚川": 0.02,
-        "村上": 0.02,
-        "佐渡": 0.05,
-        "上越": 0.04
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 1.0,
+        "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0740.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/467389.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1390,32 +1576,37 @@
       "start": "2025-10-06",
       "end": "2025-10-12",
       "label": "R7/10/6–10/12",
-      "prefecture": 0.27,
+      "prefecture": 0.42,
       "regions": {
-        "新潟市": 0.09,
-        "新発田": 0.27,
-        "新津": 0.2,
-        "三条": 0.24,
-        "長岡": 0.42,
-        "南魚沼": 0.0,
-        "十日町": 0.04,
-        "柏崎": 0.04,
-        "糸魚川": 0.07,
-        "村上": 0.04,
-        "佐渡": 0.2,
-        "上越": 0.04
+        "新潟市": 0.5,
+        "新発田": 0.5,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.33,
+        "魚沼": 0.0,
+        "南魚沼": 2.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.5,
+        "村上": 0.0,
+        "佐渡": 1.0,
+        "上越": 0.25
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0741.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/467731.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1424,32 +1615,76 @@
       "start": "2025-10-13",
       "end": "2025-10-19",
       "label": "R7/10/13–10/19",
-      "prefecture": 0.09,
+      "prefecture": 0.85,
       "regions": {
-        "新潟市": 0.27,
-        "新発田": 0.2,
-        "新津": 0.24,
-        "三条": 0.42,
-        "長岡": 0.85,
-        "南魚沼": 0.02,
-        "十日町": 0.15,
-        "柏崎": 0.1,
-        "糸魚川": 0.09,
-        "村上": 0.13,
-        "佐渡": 0.28,
-        "上越": 0.11
+        "新潟市": 0.83,
+        "新発田": 1.75,
+        "新津": 2.0,
+        "三条": 0.0,
+        "長岡": 0.67,
+        "魚沼": 1.5,
+        "南魚沼": 1.67,
+        "十日町": 0.33,
+        "柏崎": 0.0,
+        "糸魚川": 3.0,
+        "村上": 0.5,
+        "佐渡": 0.0,
+        "上越": 0.25
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0742.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/468344.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 43,
+      "start": "2025-10-20",
+      "end": "2025-10-26",
+      "label": "R7/10/20–10/26",
+      "prefecture": 2.05,
+      "regions": {
+        "新潟市": 3.0,
+        "新発田": 1.0,
+        "新津": 0.5,
+        "三条": 3.8,
+        "長岡": 1.83,
+        "魚沼": 5.0,
+        "南魚沼": 1.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 2.5,
+        "村上": 0.5,
+        "佐渡": 0.5,
+        "上越": 1.0
+      },
+      "topic": "インフルエンザの流行期に入りました。\n○県内では定点当たりの報告数が全県で2.05と流行期入りの目安（定点当たりの報告数１）を\n超えました。（前週：0.85）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染\n対策の徹底をお願いします。\n※参考 直近のシーズンにおける流行期入りの週\n2024(令和６)年第46週（11月11日～11月17日）：定点当たり1.75\n注意報の基準 定点当たりの報告数   10",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0743.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/468927.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 2.05
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1477,14 +1712,18 @@
       "topic": "インフルエンザの流行期に入っています。\n○県内では定点当たりの報告数が全県で4.15と流行期入りの目安（定点当たりの報告数1）を\n超えています。（前週：2.05、前々週：0.85）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染\n対策の徹底をお願いします。\n※参考　直近のシーズンにおける流行期入りの週\n2024（令和6）年第46週（11月11日～11月17日）：定点当たり1.75\n注意報の基準　定点当たりの報告数   10",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0744.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/469357.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 4.15
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1512,14 +1751,18 @@
       "topic": "インフルエンザの定点当たりの報告数が国の示す注意報基準を超えたため、全県に注意報を発令します。\n○県内では定点当たりの報告数が全県で11.20と注意報基準（定点当たりの報告数10）を超えました。\n（前週：4.15、前々週：2.05）\n○昨シーズンに比べて注意報発令時期が１か月程度早くなっています。\n○学校において、学級閉鎖等が増加しています。\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策\nの徹底をお願いします。\n※【参考】過去３シーズンの注意報基準を越えた週\n・2024/2025シーズン：2024(令和６)年第50週(12月９日～12月15日)：定点当たり10.34\n・2023/2024シーズン：2023(令和５)年第43週(10月23日～10月29日)：定点当たり12.12\n・2022/2023シーズン：2023(令和５)年第10週(３月６日～３月12日)：定点当たり15.59",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0745.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/470004.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 11.2
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1547,14 +1790,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0746.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/471496.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1582,14 +1829,18 @@
       "topic": "インフルエンザの定点あたりの報告数が国の示す警報基準を超えたため、全県に警報を発令します。\n○県内では定点当たりの報告数が全県で51.45と警報基準（定点あたりの報告数30）を超えています\n（前週：24.53）。全国的にも警報基準を超えている都道府県が増加しています。\n○昨シーズンに比べて警報発令時期が１か月以上早い状況です。\n​○学校や児童福祉施設での集団発生が多い状況です。\n​○感染予防のため、適宜換気を行いましょう。\n○発熱や咳などの症状がある場合は、早めに医療機関を受診してください。\n○また、症状がある場合は外出を控え、やむを得ず外出される場合にはマスクを着用するとともに、\n手洗いの励行など基本的な感染対策の徹底をお願いします。\n​○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0747.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/472065.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 51.45
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1617,14 +1868,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0748.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/472764.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1652,14 +1907,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0749.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/473555.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1687,14 +1946,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0750.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/474199.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1722,14 +1985,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0751.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/474975.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1757,14 +2024,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0752.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/475667.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1792,14 +2063,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0801.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/475871.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1827,14 +2102,18 @@
       "topic": "インフルエンザの警報を解除します。\n○県内では定点当たりの報告数が全県で7.64と前週の8.65に比べ減少しました。\n○前週に引き続き国の示す終息基準（定点当たり10）を下回ったため、警報を解除します。\n○一部保健所管内では、注意報基準（定点当たり10）を上回っており、また、学校の授業も\n再開されていることから、引き続き注意が必要です。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0802.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/476168.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 7.64
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1862,14 +2141,18 @@
       "topic": "インフルエンザの状況は下記のとおりです。\n​○県内では定点当たりの報告数が全県で5.87と前週の7.64に比べ減少しました。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など、\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0803.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/476775.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 5.87
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1897,14 +2180,18 @@
       "topic": "インフルエンザ患者が増加しています。\n○県内では定点当たりの報告数が全県で7.69と前週の5.87に比べ増加しており、学校における\n学級閉鎖等が増えています。\n○県保健環境科学研究所の検査結果報告では、Ｂ型の報告も増えており、引き続き\nインフルエンザへの注意が必要です。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など、\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0804.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/477602.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 7.69
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1932,14 +2219,18 @@
       "topic": "インフルエンザの定点当たりの報告数が国の示す注意報基準を超えたため、\n改めて全県に注意報を発令します。\n○県内の定点当たりの報告数は再び増加し、全県で19.55と注意報基準（定点あたりの報告数10）を\n超えており、インフルエンザへの注意が必要です。（前週：7.69）\n○全国的にも報告数が増加しております。全国のインフルエンザウイルスの検出報告では、\nB型の割合も増えており、本県の検出報告においても同様の傾向にあります。\n○5～14歳の割合が高くなっており、学校における学級閉鎖等も増加しています。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など、\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0805.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/478304.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 19.55
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -1967,14 +2258,18 @@
       "topic": "インフルエンザの定点当たりの報告数が国の示す注意報基準を超えています\n○県内では定点当たりの報告数が全県で26.40と注意報基準（定点当たりの報告数10）を\n超えています。（前週：19.55）\n※警報基準：定点当たりの報告数30\n○全国的にも報告数が増加しております。全国のインフルエンザウイルスの検出報告では、\nB型の割合も増えており、本県の検出報告においても同様の傾向にあります。\n○5～14歳の割合が高くなっており、学校における学級閉鎖等も増加しています。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など、\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0806.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/479009.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 26.4
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2002,14 +2297,18 @@
       "topic": "インフルエンザの定点当たりの報告数が国の示す警報基準を超えたため、\n再度全県に警報を発令します。\n○県内では定点当たりの報告数が全県で30.89と警報基準（定点当たりの報告数30）\nを超えました。（前週：26.40）\n○全国第６週では警報基準を超えている状況です。\n○県保健環境科学研究所の検査結果報告では、Ｂ型の報告が増えており、\n学校における学級閉鎖等や児童福祉施設（保育園等）における集団発生も\n増加しています。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での\n換気の実施など、基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。\nやむを得ず外出が必要な場合はマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0807.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/479728.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 30.89
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2037,14 +2336,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0808.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/480320.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2072,14 +2375,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0809.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/481850.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2107,14 +2414,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0810.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/483862.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2142,14 +2453,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0811.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/486506.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2177,14 +2492,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0812.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/487706.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2212,14 +2531,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0813.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/490118.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2247,14 +2570,18 @@
       "topic": "インフルエンザの警報を解除します。\n○県内で定点当たりの報告数が全県で5.91と前週の11.96に比べて減少し、国の示す終息基準（定点当たり10）を下回ったため、警報を解除します。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0814.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/491004.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 5.91
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2267,6 +2594,7 @@
       "regions": {
         "新潟市": 1.89,
         "新発田": 0.5,
+        "新津": 0.0,
         "三条": 1.0,
         "長岡": 1.43,
         "魚沼": 0.5,
@@ -2281,14 +2609,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0815.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/491835.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "Sheet1",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2297,32 +2629,37 @@
       "start": "2026-04-13",
       "end": "2026-04-19",
       "label": "R8/4/13–4/19",
-      "prefecture": 20.69,
+      "prefecture": 1.89,
       "regions": {
-        "新潟市": 16.71,
-        "新発田": 11.96,
-        "新津": 5.91,
-        "三条": 2.2,
-        "長岡": 1.89,
-        "南魚沼": 0.02,
-        "十日町": 0.45,
-        "柏崎": 0.75,
-        "糸魚川": 0.18,
-        "村上": 0.04,
-        "佐渡": 0.36,
-        "上越": 0.09
+        "新潟市": 1.44,
+        "新発田": 2.0,
+        "新津": 0.0,
+        "三条": 2.4,
+        "長岡": 2.14,
+        "魚沼": 2.0,
+        "南魚沼": 0.0,
+        "十日町": 1.5,
+        "柏崎": 2.5,
+        "糸魚川": 5.0,
+        "村上": 0.5,
+        "佐渡": 3.5,
+        "上越": 3.25
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0816.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/493693.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2331,32 +2668,37 @@
       "start": "2026-04-20",
       "end": "2026-04-26",
       "label": "R8/4/20–4/26",
-      "prefecture": 16.71,
+      "prefecture": 1.07,
       "regions": {
-        "新潟市": 11.96,
-        "新発田": 5.91,
-        "新津": 2.2,
-        "三条": 1.89,
-        "長岡": 1.07,
-        "南魚沼": 0.04,
-        "十日町": 0.23,
-        "柏崎": 0.19,
-        "糸魚川": 0.24,
-        "村上": 0.05,
-        "佐渡": 0.3,
-        "上越": 0.02
+        "新潟市": 0.72,
+        "新発田": 1.5,
+        "新津": 0.5,
+        "三条": 1.2,
+        "長岡": 1.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.33,
+        "十日町": 1.0,
+        "柏崎": 0.5,
+        "糸魚川": 3.5,
+        "村上": 0.0,
+        "佐渡": 3.5,
+        "上越": 2.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0817.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/495100.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "Sheet2",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2365,32 +2707,37 @@
       "start": "2026-04-27",
       "end": "2026-05-03",
       "label": "R8/4/27–5/3",
-      "prefecture": 11.96,
+      "prefecture": 0.55,
       "regions": {
-        "新潟市": 5.91,
-        "新発田": 2.2,
-        "新津": 1.89,
-        "三条": 1.07,
-        "長岡": 0.55,
-        "南魚沼": 0.02,
-        "十日町": 0.08,
-        "柏崎": 0.19,
-        "糸魚川": 0.07,
-        "村上": 0.04,
-        "佐渡": 0.15,
-        "上越": 0.02
+        "新潟市": 0.22,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 2.4,
+        "長岡": 0.57,
+        "魚沼": 0.0,
+        "南魚沼": 0.33,
+        "十日町": 1.5,
+        "柏崎": 1.0,
+        "糸魚川": 0.5,
+        "村上": 0.5,
+        "佐渡": 0.5,
+        "上越": 0.25
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0818.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/495690.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2399,32 +2746,37 @@
       "start": "2026-05-04",
       "end": "2026-05-10",
       "label": "R8/5/4–5/10",
-      "prefecture": 5.91,
+      "prefecture": 0.29,
       "regions": {
-        "新潟市": 2.2,
-        "新発田": 1.89,
-        "新津": 1.07,
-        "三条": 0.55,
-        "長岡": 0.29,
-        "南魚沼": 0.0,
-        "十日町": 0.06,
-        "柏崎": 0.07,
-        "糸魚川": 0.07,
+        "新潟市": 0.22,
+        "新発田": 0.25,
+        "新津": 0.0,
+        "三条": 0.8,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.67,
+        "十日町": 0.5,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
         "村上": 0.0,
-        "佐渡": 0.06,
-        "上越": 0.04
+        "佐渡": 0.5,
+        "上越": 0.75
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0819.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/496157.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2433,32 +2785,37 @@
       "start": "2026-05-11",
       "end": "2026-05-17",
       "label": "R8/5/11–5/17",
-      "prefecture": 2.2,
+      "prefecture": 0.11,
       "regions": {
-        "新潟市": 1.89,
-        "新発田": 1.07,
-        "新津": 0.55,
-        "三条": 0.29,
-        "長岡": 0.11,
+        "新潟市": 0.0,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.8,
+        "長岡": 0.0,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
-        "十日町": 0.0,
-        "柏崎": 0.04,
-        "糸魚川": 0.05,
+        "十日町": 0.5,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
         "村上": 0.0,
-        "佐渡": 0.02,
-        "上越": 0.0
+        "佐渡": 0.0,
+        "上越": 0.25
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0820.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/496673.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2467,32 +2824,37 @@
       "start": "2026-05-18",
       "end": "2026-05-24",
       "label": "R8/5/18–5/24",
-      "prefecture": 1.89,
+      "prefecture": 0.02,
       "regions": {
-        "新潟市": 1.07,
-        "新発田": 0.55,
-        "新津": 0.29,
-        "三条": 0.11,
-        "長岡": 0.02,
+        "新潟市": 0.06,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
         "十日町": 0.0,
         "柏崎": 0.0,
         "糸魚川": 0.0,
         "村上": 0.0,
-        "佐渡": 0.02,
+        "佐渡": 0.0,
         "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0821.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/497591.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2501,13 +2863,14 @@
       "start": "2026-05-25",
       "end": "2026-05-31",
       "label": "R8/5/25–5/31",
-      "prefecture": 1.07,
+      "prefecture": 0.0,
       "regions": {
-        "新潟市": 0.55,
-        "新発田": 0.29,
-        "新津": 0.11,
-        "三条": 0.02,
+        "新潟市": 0.0,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
         "長岡": 0.0,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
         "十日町": 0.0,
         "柏崎": 0.0,
@@ -2519,14 +2882,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0822.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/498484.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2535,13 +2902,14 @@
       "start": "2026-06-01",
       "end": "2026-06-07",
       "label": "R8/6/1–6/7",
-      "prefecture": 0.31,
+      "prefecture": 0.0,
       "regions": {
         "新潟市": 0.0,
         "新発田": 0.0,
         "新津": 0.0,
         "三条": 0.0,
         "長岡": 0.0,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
         "十日町": 0.0,
         "柏崎": 0.0,
@@ -2553,14 +2921,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0823.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/499323.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 97,
-        "value_row": 98,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2569,32 +2941,37 @@
       "start": "2026-06-08",
       "end": "2026-06-14",
       "label": "R8/6/8–6/14",
-      "prefecture": 0.29,
+      "prefecture": 0.04,
       "regions": {
-        "新潟市": 0.11,
-        "新発田": 0.02,
+        "新潟市": 0.0,
+        "新発田": 0.0,
         "新津": 0.0,
         "三条": 0.0,
-        "長岡": 0.04,
+        "長岡": 0.0,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
         "十日町": 0.0,
         "柏崎": 0.0,
-        "糸魚川": 0.0,
-        "村上": 0.02,
-        "佐渡": 0.02,
-        "上越": 0.0
+        "糸魚川": 0.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.25
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0824.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/500102.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2603,32 +2980,37 @@
       "start": "2026-06-15",
       "end": "2026-06-21",
       "label": "R8/6/15–6/21",
-      "prefecture": 0.11,
+      "prefecture": 0.07,
       "regions": {
-        "新潟市": 0.02,
+        "新潟市": 0.0,
         "新発田": 0.0,
         "新津": 0.0,
-        "三条": 0.04,
-        "長岡": 0.07,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
-        "十日町": 0.02,
-        "柏崎": 0.06,
+        "十日町": 0.0,
+        "柏崎": 0.0,
         "糸魚川": 0.0,
         "村上": 0.0,
         "佐渡": 0.0,
-        "上越": 0.0
+        "上越": 1.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0825.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/501335.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2637,32 +3019,37 @@
       "start": "2026-06-22",
       "end": "2026-06-28",
       "label": "R8/6/22–6/28",
-      "prefecture": 0.02,
+      "prefecture": 0.07,
       "regions": {
         "新潟市": 0.0,
         "新発田": 0.0,
-        "新津": 0.04,
-        "三条": 0.07,
-        "長岡": 0.07,
-        "南魚沼": 0.0,
+        "新津": 0.0,
+        "三条": 0.2,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.67,
         "十日町": 0.0,
-        "柏崎": 0.02,
-        "糸魚川": 0.02,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
         "村上": 0.0,
         "佐渡": 0.0,
-        "上越": 0.04
+        "上越": 0.25
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0826.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/502639.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2671,17 +3058,18 @@
       "start": "2026-06-29",
       "end": "2026-07-05",
       "label": "R8/6/29–7/5",
-      "prefecture": 0.0,
+      "prefecture": 0.04,
       "regions": {
         "新潟市": 0.0,
-        "新発田": 0.04,
-        "新津": 0.07,
-        "三条": 0.07,
-        "長岡": 0.04,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.14,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
-        "十日町": 0.02,
+        "十日町": 0.0,
         "柏崎": 0.0,
-        "糸魚川": 0.02,
+        "糸魚川": 0.5,
         "村上": 0.0,
         "佐渡": 0.0,
         "上越": 0.0
@@ -2689,14 +3077,18 @@
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0827.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/503323.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2705,32 +3097,37 @@
       "start": "2026-07-06",
       "end": "2026-07-12",
       "label": "R8/7/6–7/12",
-      "prefecture": 0.0,
+      "prefecture": 0.07,
       "regions": {
-        "新潟市": 0.04,
-        "新発田": 0.07,
-        "新津": 0.07,
-        "三条": 0.04,
-        "長岡": 0.07,
-        "南魚沼": 0.02,
+        "新潟市": 0.06,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.6,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
         "十日町": 0.0,
         "柏崎": 0.0,
         "糸魚川": 0.0,
         "村上": 0.0,
-        "佐渡": 0.06,
+        "佐渡": 0.0,
         "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0828.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/504335.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2739,32 +3136,37 @@
       "start": "2026-07-13",
       "end": "2026-07-19",
       "label": "R8/7/13–7/19",
-      "prefecture": 0.04,
+      "prefecture": 0.18,
       "regions": {
-        "新潟市": 0.07,
-        "新発田": 0.07,
-        "新津": 0.04,
-        "三条": 0.07,
-        "長岡": 0.18,
+        "新潟市": 0.22,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
         "南魚沼": 0.0,
-        "十日町": 0.02,
-        "柏崎": 0.0,
-        "糸魚川": 0.02,
+        "十日町": 0.5,
+        "柏崎": 1.5,
+        "糸魚川": 0.0,
         "村上": 0.0,
-        "佐渡": 0.12,
-        "上越": 0.04
+        "佐渡": 0.0,
+        "上越": 0.5
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0829.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/504955.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2773,32 +3175,37 @@
       "start": "2026-07-20",
       "end": "2026-07-26",
       "label": "R8/7/20–7/26",
-      "prefecture": 0.07,
+      "prefecture": 0.22,
       "regions": {
-        "新潟市": 0.07,
-        "新発田": 0.04,
-        "新津": 0.07,
-        "三条": 0.18,
-        "長岡": 0.22,
+        "新潟市": 0.28,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.2,
+        "長岡": 0.14,
+        "魚沼": 0.5,
         "南魚沼": 0.0,
-        "十日町": 0.08,
-        "柏崎": 0.05,
-        "糸魚川": 0.0,
-        "村上": 0.02,
-        "佐渡": 0.07,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 2.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
         "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0830.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/505795.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2807,32 +3214,37 @@
       "start": "2026-07-27",
       "end": "2026-08-02",
       "label": "R8/7/27–8/2",
-      "prefecture": 0.07,
+      "prefecture": 0.8,
       "regions": {
-        "新潟市": 0.04,
-        "新発田": 0.07,
-        "新津": 0.18,
-        "三条": 0.22,
-        "長岡": 0.8,
-        "南魚沼": 0.02,
-        "十日町": 0.1,
-        "柏崎": 0.18,
-        "糸魚川": 0.07,
-        "村上": 0.05,
-        "佐渡": 0.2,
-        "上越": 0.18
+        "新潟市": 0.89,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 1.6,
+        "長岡": 0.43,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.5,
+        "糸魚川": 3.0,
+        "村上": 5.0,
+        "佐渡": 0.0,
+        "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0831.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/506689.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2841,32 +3253,37 @@
       "start": "2026-08-03",
       "end": "2026-08-09",
       "label": "R8/8/3–8/9",
-      "prefecture": 0.04,
+      "prefecture": 1.64,
       "regions": {
-        "新潟市": 0.07,
-        "新発田": 0.18,
-        "新津": 0.22,
-        "三条": 0.8,
-        "長岡": 1.64,
-        "南魚沼": 0.0,
-        "十日町": 0.41,
-        "柏崎": 0.41,
-        "糸魚川": 0.25,
-        "村上": 0.0,
-        "佐渡": 0.3,
-        "上越": 0.24
+        "新潟市": 1.5,
+        "新発田": 0.25,
+        "新津": 0.0,
+        "三条": 1.2,
+        "長岡": 1.14,
+        "魚沼": 0.0,
+        "南魚沼": 0.67,
+        "十日町": 7.5,
+        "柏崎": 2.0,
+        "糸魚川": 0.0,
+        "村上": 12.0,
+        "佐渡": 1.5,
+        "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0832.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/507175.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2875,32 +3292,76 @@
       "start": "2026-08-10",
       "end": "2026-08-16",
       "label": "R8/8/10–8/16",
-      "prefecture": 0.07,
+      "prefecture": 1.09,
       "regions": {
-        "新潟市": 0.18,
-        "新発田": 0.22,
-        "新津": 0.8,
-        "三条": 1.64,
-        "長岡": 1.09,
-        "南魚沼": 0.02,
-        "十日町": 0.17,
-        "柏崎": 0.29,
-        "糸魚川": 0.15,
-        "村上": 0.04,
-        "佐渡": 0.34,
-        "上越": 0.1
+        "新潟市": 1.78,
+        "新発田": 0.5,
+        "新津": 1.0,
+        "三条": 1.0,
+        "長岡": 0.71,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 1.0,
+        "柏崎": 0.5,
+        "糸魚川": 0.5,
+        "村上": 3.0,
+        "佐渡": 2.0,
+        "上越": 0.0
       },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0833.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/507805.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
-        "flu_row": 50,
-        "value_row": 51,
-        "prefix": "定点当",
-        "region_count": 12,
-        "score": 112
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 34,
+      "start": "2026-08-17",
+      "end": "2026-08-23",
+      "label": "R8/8/17–8/23",
+      "prefecture": 1.65,
+      "regions": {
+        "新潟市": 1.56,
+        "新発田": 3.25,
+        "新津": 0.0,
+        "三条": 2.2,
+        "長岡": 1.14,
+        "魚沼": 1.0,
+        "南魚沼": 1.0,
+        "十日町": 0.5,
+        "柏崎": 2.5,
+        "糸魚川": 2.5,
+        "村上": 6.5,
+        "佐渡": 0.0,
+        "上越": 0.5
+      },
+      "topic": "インフルエンザの流行期に入りました。（別紙１参照）\n○県内では定点当たりの報告数が全県で\n1.65\nと流行期入りの目安（定点当たりの報告数１）を３週連続で超えました。（前々週：1.64、前週：1.09）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策の徹底をお願いします。\n※参考　直近のシーズンにおける流行期入りの週\n2025(令和７)年第43週（10月20日～10月26日）：定点当たり2.05\n注意報の基準　　定点当たりの報告数   10",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0834.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/508336.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 1.65
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2928,14 +3389,18 @@
       "topic": "インフルエンザの流行期に入っています。（別紙1参照）\n○県内では定点当たりの報告数が全県で\n3.58\nと流行期入りの目安（定点当たりの報告数1）を超えています。（前週：1.65、前々週：1.09）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策の徹底をお願いします。\n※参考　直近のシーズンにおける流行期入りの週\n2025(令和7)年第43週（10月20日～10月26日）：定点当たり2.05\n注意報の基準　　定点当たりの報告数   10",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0835.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/509166.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 3.58
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     },
     {
@@ -2963,14 +3428,18 @@
       "topic": "インフルエンザの流行期に入っています。（別紙1参照）\n○県内では定点当たりの報告数が全県で\n6.13\nと流行期入りの目安（定点当たりの報告数1）を超えています。（前週：3.58、前々週：1.65）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策の徹底をお願いします。\n※参考　直近のシーズンにおける流行期入りの週\n2025(令和7)年第43週（10月20日～10月26日）：定点当たり2.05\n注意報の基準　　定点当たりの報告数   10",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0836.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/509796.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 6.13
+      },
       "_parser": {
         "sheet": "入力シート",
+        "title_row": 1,
         "header_row": 2,
         "flu_row": 3,
         "value_row": 4,
-        "prefix": "定点当",
         "region_count": 13,
-        "score": 113
+        "strategy": "main_regional_table_only"
       }
     }
   ]
