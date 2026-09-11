@@ -208,22 +208,28 @@ def parse_influenza_excel(data):
 
         vals={}
         for key,c in info["cols"].items():
-            n=as_number(ws.cell(info["value_row"],c).value)
-            if n is not None:
-                vals[key]=n
+            raw = ws.cell(info["value_row"],c).value
+            n = as_number(raw)
+            # 地域別表の空欄は「報告なし」= 0 と扱う。
+            # 県計だけは空欄なら異常として扱う。
+            if key == "県計":
+                if n is not None:
+                    vals[key]=n
+            else:
+                vals[key]=0.0 if n is None else n
 
         if "県計" not in vals:
             diagnostics.append(f"{ws.title}: 県計なし")
             continue
 
-        region_count=sum(1 for r in REGIONS if r in vals)
+        region_count=sum(1 for r in REGIONS if r in info["cols"])
         if region_count < 10:
-            diagnostics.append(f"{ws.title}: 地域数不足={region_count}")
+            diagnostics.append(f"{ws.title}: 地域列不足={region_count}")
             continue
 
         return {
             "prefecture":round(float(vals["県計"]),4),
-            "regions":{k:round(float(vals[k]),4) for k in REGIONS if k in vals},
+            "regions":{k:round(float(vals.get(k,0.0)),4) for k in REGIONS if k in info["cols"]},
             "_parser":{
                 "sheet":ws.title,
                 "title_row":info["title_row"],
