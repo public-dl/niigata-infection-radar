@@ -1,5 +1,5 @@
 from __future__ import annotations
-import io, json, re
+import csv, io, json, re
 from dataclasses import dataclass
 from datetime import date
 from pathlib import Path
@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from openpyxl import load_workbook
 
 INDEX_URL = "https://www.pref.niigata.lg.jp/sec/kanyaku/1232482573101.html"
-UA = "Niigata-Infection-Radar/1.5 (public-data visualization)"
+UA = "Niigata-Infection-Radar/1.6 (public-data visualization)"
 REGIONS = ["新潟市","新発田","新津","三条","長岡","魚沼","南魚沼","十日町","柏崎","糸魚川","村上","佐渡","上越"]
 
 SESSION = requests.Session()
@@ -26,9 +26,13 @@ def norm(v: Any) -> str:
     s = re.sub(r"[※＊*]+$", "", s)
     return s
 
-def get(url: str, binary=False):
+def get_response(url: str):
     r = SESSION.get(url, timeout=35)
     r.raise_for_status()
+    return r
+
+def get(url: str, binary=False):
+    r = get_response(url)
     if binary:
         return r.content
     try:
@@ -47,15 +51,15 @@ class WeekPage:
     url:str
 
 def discover_week_pages(start_year=2025):
-    soup = BeautifulSoup(get(INDEX_URL), "html.parser")
+    soup=BeautifulSoup(get(INDEX_URL),"html.parser")
     out=[]; seen=set()
-    for a in soup.find_all("a", href=True):
+    for a in soup.find_all("a",href=True):
         txt=a.get_text(" ",strip=True)
         m=re.search(r"令和\s*(\d+)\s*年\s*第\s*(\d+)\s*週",txt)
         if not m:
             continue
         y=2018+int(m.group(1)); w=int(m.group(2))
-        if y<start_year:
+        if y < start_year:
             continue
         k=(y,w)
         if k not in seen:
@@ -122,6 +126,104 @@ def as_number(v):
             return float(s)
     return None
 
+# ---------- JIHS national reference ----------
+
+def decode_csv_bytes(raw: bytes) -> str:
+    for enc in ("utf-8-sig","utf-8","cp932","shift_jis"):
+        try:
+            return raw.decode(enc)
+        except UnicodeDecodeError:
+            pass
+    return raw.decode("utf-8",errors="replace")
+
+def parse_jihs_teiten_csv(raw: bytes):
+    """
+    JIHSの週別定点CSVから新潟県のインフルエンザ「定点当たり」を取得。
+    日本語/英語ヘッダーの双方に対応する。
+    """
+    text=decode_csv_bytes(raw)
+    rows=list(csv.reader(io.StringIO(text)))
+    if not rows:
+        return None
+
+    niigata_row_idx=None
+    niigata_row=None
+    for ri,row in enumerate(rows):
+        for cell in row[:5]:
+            s=norm(cell).lower()
+            if s in ("新潟","新潟県","niigata"):
+                niigata_row_idx=ri
+                niigata_row=row
+                break
+        if niigata_row is not None:
+            break
+    if niigata_row is None:
+        return None
+
+    # 新潟行より上をヘッダーとして検索
+    influenza_cols=[]
+    for ri,row in enumerate(rows[:niigata_row_idx]):
+        for ci,cell in enumerate(row):
+            s=norm(cell).lower()
+            if not s:
+                continue
+            # パラインフルエンザ等は除外
+            if ("インフルエンザ" in s and "パラインフルエンザ" not in s) or s=="influenza":
+                influenza_cols.append((ri,ci))
+
+    # 疾患ヘッダー付近に「定点当たり / per sentinel」があれば最優先
+    for hri,hci in influenza_cols:
+        for rri in range(hri,min(niigata_row_idx,hri+4)):
+            row=rows[rri]
+            for ci in range(max(0,hci-1),min(len(row),hci+4)):
+                s=norm(row[ci]).lower()
+                if ("定点当" in s) or ("persentinel" in s) or ("per-sentinel" in s):
+                    if ci < len(niigata_row):
+                        n=as_number(niigata_row[ci])
+                        if n is not None:
+                            return round(n,4)
+
+    # ヘッダーが結合表現で、直下の2列が「報告数 / 定点当たり」の場合を想定。
+    # 近傍列のうち小数値を優先する。
+    for _,hci in influenza_cols:
+        nearby=[]
+        for ci in range(hci,min(len(niigata_row),hci+3)):
+            n=as_number(niigata_row[ci])
+            if n is not None:
+                nearby.append((ci,n))
+        if len(nearby)>=2:
+            decimal=[n for _,n in nearby if abs(n-round(n))>1e-9]
+            if decimal:
+                return round(decimal[-1],4)
+            # 両方整数のときは通常2列目が定点当たり
+            return round(nearby[1][1],4)
+        if len(nearby)==1:
+            return round(nearby[0][1],4)
+
+    return None
+
+def fetch_jihs_prefecture_value(year:int, week:int):
+    """
+    JIHS速報CSVが存在する週だけ参照値を返す。
+    最新週など未公開なら None。
+    """
+    ww=f"{week:02d}"
+    urls=[
+        f"https://id-info.jihs.go.jp/en/surveillance/idwr/rapid/{year}/{ww}/teiten{ww}.csv",
+        f"https://id-info.jihs.go.jp/surveillance/idwr/provisional/{year}/{ww}/teiten{ww}.csv",
+    ]
+    for url in urls:
+        try:
+            r=get_response(url)
+            val=parse_jihs_teiten_csv(r.content)
+            if val is not None:
+                return val,url
+        except Exception:
+            continue
+    return None,None
+
+# ---------- Niigata Excel ----------
+
 def workbook_matrix(data):
     wb=load_workbook(io.BytesIO(data),data_only=True,read_only=False)
     for ws in wb.worksheets:
@@ -156,23 +258,15 @@ def is_influenza_label(v):
     s=norm(v)
     if not s:
         return False
-
     if s=="インフルエンザ":
         return True
-
-    # 長い正式名称は許可
     if s.startswith("インフルエンザ（") or s.startswith("インフルエンザ("):
         if any(x in s for x in ("定点","COVID","新型コロナ")):
             return False
         return True
-
     return False
 
 def collect_influenza_candidates(data):
-    """
-    Excel内に複数の「インフルエンザ」表がある週があるため、
-    まず候補をすべて集める。
-    """
     candidates=[]
     diagnostics=[]
 
@@ -195,15 +289,10 @@ def collect_influenza_candidates(data):
             continue
 
         for fr in flu_rows:
-            # 疾患行の近傍だけ確認。
-            # 旧レイアウトでは数行離れていることがあるため +8。
-            for rr in range(fr, min(len(rows), fr+9)):
+            for rr in range(fr,min(len(rows),fr+9)):
                 row=rows[rr]
                 left_text="".join(norm(x) for x in row[:first_region_col] if x is not None)
-
-                if "定点当" not in left_text:
-                    continue
-                if "実数" in left_text:
+                if "定点当" not in left_text or "実数" in left_text:
                     continue
 
                 vals={}
@@ -215,7 +304,6 @@ def collect_influenza_candidates(data):
 
                 if "県計" not in vals:
                     continue
-
                 region_count=sum(1 for k in REGIONS if k in vals)
                 if region_count < 10:
                     continue
@@ -227,47 +315,44 @@ def collect_influenza_candidates(data):
                     "value_row":rr+1,
                     "prefix":left_text,
                     "region_count":region_count,
-                    "score":100+region_count,
                     "values":vals
                 })
 
-    return candidates, diagnostics
+    return candidates,diagnostics
 
 def parse_influenza_excel(data, expected_prefecture=None):
-    candidates, diagnostics = collect_influenza_candidates(data)
-
+    candidates,diagnostics=collect_influenza_candidates(data)
     if not candidates:
-        raise ValueError(
-            "インフルエンザ定点候補を特定できません: "
-            + "; ".join(diagnostics)
-        )
+        raise ValueError("インフルエンザ候補なし: "+"; ".join(diagnostics))
 
-    # 県ページ本文に正解値が明記されている週は、その値と一致する候補を最優先。
     if expected_prefecture is not None:
         matched=[
             c for c in candidates
-            if abs(float(c["values"]["県計"]) - float(expected_prefecture)) <= 0.011
+            if abs(float(c["values"]["県計"])-float(expected_prefecture))<=0.011
         ]
-        if matched:
-            matched.sort(key=lambda c:(c["region_count"], -c["value_row"]), reverse=True)
-            best=matched[0]
-        else:
+        if not matched:
             vals=sorted(set(round(float(c["values"]["県計"]),4) for c in candidates))
             raise ValueError(
-                f"本文値 {expected_prefecture} に一致するインフルエンザ候補がありません。"
-                f" Excel候補={vals}"
+                f"参照値 {expected_prefecture} に一致するExcel候補なし。候補={vals}"
             )
+        matched.sort(key=lambda c:(-c["region_count"],c["value_row"]))
+        best=matched[0]
     else:
-        # 本文に値がない週は、地域数が最も揃う候補を優先。
-        # 同点ならシート上で先に出るものを採用。
-        candidates.sort(key=lambda c:(-c["region_count"], c["value_row"]))
+        candidates.sort(key=lambda c:(-c["region_count"],c["value_row"]))
         best=candidates[0]
 
     vals=best["values"]
     return {
         "prefecture":round(float(vals["県計"]),4),
         "regions":{k:round(float(vals[k]),4) for k in REGIONS if k in vals},
-        "_parser":{k:v for k,v in best.items() if k!="values"}
+        "_parser":{
+            "sheet":best["sheet"],
+            "header_row":best["header_row"],
+            "flu_row":best["flu_row"],
+            "value_row":best["value_row"],
+            "prefix":best["prefix"],
+            "region_count":best["region_count"],
+        }
     }
 
 def scrape_week(wp):
@@ -277,17 +362,29 @@ def scrape_week(wp):
     if not xurl:
         raise ValueError("Excelリンクが見つかりません")
 
-    page_value=extract_topic_prefecture_value(soup)
-    parsed=parse_influenza_excel(
-        get(xurl,binary=True),
-        expected_prefecture=page_value
-    )
+    topic_value=extract_topic_prefecture_value(soup)
+    jihs_value,jihs_url=fetch_jihs_prefecture_value(wp.year,wp.week)
 
-    # 念のため再照合
-    if page_value is not None and abs(parsed["prefecture"]-page_value)>0.011:
-        raise ValueError(
-            f"本文照合不一致: Excel={parsed['prefecture']} / 今週のトピック={page_value}"
-        )
+    # 参照値は県本文を優先し、なければJIHS。
+    # 両方ある場合は一致も確認。
+    if topic_value is not None and jihs_value is not None:
+        if abs(topic_value-jihs_value)>0.011:
+            raise ValueError(
+                f"県本文とJIHSが不一致: 県本文={topic_value} / JIHS={jihs_value}"
+            )
+        expected=topic_value
+        verification="niigata_topic+jihs"
+    elif topic_value is not None:
+        expected=topic_value
+        verification="niigata_topic"
+    elif jihs_value is not None:
+        expected=jihs_value
+        verification="jihs"
+    else:
+        expected=None
+        verification="excel_only"
+
+    parsed=parse_influenza_excel(get(xurl,binary=True),expected_prefecture=expected)
 
     return {
         "year":wp.year,
@@ -300,6 +397,12 @@ def scrape_week(wp):
         "topic":extract_topic(soup),
         "source_page":wp.url,
         "source_excel":xurl,
+        "verification":{
+            "method":verification,
+            "niigata_topic_value":topic_value,
+            "jihs_value":jihs_value,
+            "jihs_url":jihs_url
+        },
         "_parser":parsed["_parser"]
     }
 
