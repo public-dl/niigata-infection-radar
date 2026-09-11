@@ -14,6 +14,7 @@ checks={
 }
 
 errors=[]
+
 for k,expected in checks.items():
     got=idx.get(k,{}).get("prefecture")
     if got is None or abs(float(got)-expected)>0.011:
