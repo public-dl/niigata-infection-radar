@@ -219,8 +219,19 @@ def parse_influenza_excel(data):
                 vals[key]=0.0 if n is None else n
 
         if "県計" not in vals:
-            diagnostics.append(f"{ws.title}: 県計なし")
-            continue
+            # 県計セルが空欄でも、インフルエンザ実数行が全地域で
+            # 空欄または0なら「報告なし」= 0.0 と判断する。
+            actual_values = []
+            for key, c in info["cols"].items():
+                raw_actual = ws.cell(info["flu_row"], c).value
+                n_actual = as_number(raw_actual)
+                actual_values.append(0.0 if n_actual is None else n_actual)
+
+            if all(v == 0.0 for v in actual_values):
+                vals["県計"] = 0.0
+            else:
+                diagnostics.append(f"{ws.title}: 県計なし")
+                continue
 
         region_count=sum(1 for r in REGIONS if r in info["cols"])
         if region_count < 10:
