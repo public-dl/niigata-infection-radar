@@ -17,10 +17,12 @@ jobs:
       - run: pip install -r requirements.txt
       - name: Backfill from 2025
         run: python scripts/backfill.py --start-year 2025
+      - name: Verify influenza history
+        run: python scripts/verify_history.py
       - name: Commit history
         run: |
           git config user.name "niigata-infection-radar-bot"
           git config user.email "actions@users.noreply.github.com"
           git add data/influenza_history.json data/backfill_failures.json
-          git diff --cached --quiet || git commit -m "Backfill influenza history"
+          git diff --cached --quiet || git commit -m "Backfill verified influenza history"
           git push
