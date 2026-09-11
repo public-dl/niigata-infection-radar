@@ -7,6 +7,8 @@ idx={(x["year"],x["week"]):x for x in data.get("weeks",[])}
 
 checks={
     (2025,1):21.97,
+    (2025,14):1.81,
+    (2025,15):1.44,
     (2025,36):0.27,
     (2025,43):2.05,
     (2026,34):1.65,
@@ -14,7 +16,6 @@ checks={
 }
 
 errors=[]
-
 for k,expected in checks.items():
     got=idx.get(k,{}).get("prefecture")
     if got is None or abs(float(got)-expected)>0.011:
@@ -34,5 +35,4 @@ print("VERIFY OK")
 print("weeks:",weeks)
 for k,expected in checks.items():
     item=idx[k]
-    method=item.get("verification",{}).get("method")
-    print(f"{k[0]} W{k[1]:02d}: {item['prefecture']} (expected {expected}) [{method}]")
+    print(f"{k[0]} W{k[1]:02d}: {item['prefecture']} (expected {expected})")
