@@ -26,7 +26,13 @@ def norm(v):
 def get(url, binary=False):
     r=S.get(url, timeout=40)
     r.raise_for_status()
-    return r.content if binary else r.text
+    if binary:
+        return r.content
+    raw = r.content
+    try:
+        return raw.decode("utf-8")
+    except UnicodeDecodeError:
+        return raw.decode(r.apparent_encoding or "cp932", errors="replace")
 
 def excel_url(page_url):
     soup=BeautifulSoup(get(page_url), "html.parser")
