@@ -9,7 +9,7 @@ from bs4 import BeautifulSoup
 from openpyxl import load_workbook
 
 INDEX_URL = "https://www.pref.niigata.lg.jp/sec/kanyaku/1232482573101.html"
-UA = "Niigata-Infection-Radar/1.3 (public-data visualization)"
+UA = "Niigata-Infection-Radar/1.4 (public-data visualization)"
 REGIONS = ["新潟市","新発田","新津","三条","長岡","魚沼","南魚沼","十日町","柏崎","糸魚川","村上","佐渡","上越"]
 
 SESSION = requests.Session()
@@ -101,10 +101,6 @@ def extract_topic(soup):
     return re.sub(r"\n{3,}","\n\n","インフルエンザ"+m.group(1)).strip()[:3000]
 
 def extract_topic_prefecture_value(soup):
-    """
-    今週のトピックにインフルエンザの全県値が明記されている週だけ拾う。
-    例: 「インフルエンザ…全県で6.13」
-    """
     topic = extract_topic(soup)
     if not topic:
         return None
@@ -160,30 +156,51 @@ def locate_region_columns(rows):
             best = (score,ri,found)
     return best
 
-def is_exact_influenza_label(v):
+def is_influenza_disease_label(v):
     """
-    「インフルエンザ/COVID-19定点」等の一般ラベルを除外し、
-    疾患名としてのインフルエンザだけを許可。
+    疾患名セルとしてのインフルエンザだけを許可。
+    長い正式名称は許可するが、「インフルエンザ/COVID-19定点」等の見出しは除外。
     """
     s = norm(v)
     if not s:
         return False
+
     if s == "インフルエンザ":
         return True
-    # 注記付きだけは許可
-    if re.fullmatch(r"インフルエンザ[（(][^）)]{0,20}[）)]", s):
+
+    if s.startswith("インフルエンザ（") or s.startswith("インフルエンザ("):
+        if any(x in s for x in ("定点","COVID","新型コロナ")):
+            return False
         return True
+
     return False
 
-def find_influenza_rows(rows):
+def find_influenza_rows(rows, header_row_index):
+    """
+    地域見出し直下の主要表だけを見る。
+    後半の参考表・別表にある同名行を候補にしない。
+    """
     hits = []
-    for ri,row in enumerate(rows):
-        # 疾患名は通常左側にあるので先頭12列だけを見る
+    start = max(0, header_row_index + 1)
+    end = min(len(rows), header_row_index + 31)
+
+    for ri in range(start, end):
+        row = rows[ri]
         for ci,v in enumerate(row[:12]):
-            if is_exact_influenza_label(v):
+            if is_influenza_disease_label(v):
                 hits.append((ri,ci))
                 break
     return hits
+
+def looks_like_other_disease_row(row):
+    left = "".join(norm(v) for v in row[:12] if v is not None)
+    diseases = (
+        "新型コロナウイルス","RSウイルス","咽頭結膜熱","A群溶血性",
+        "感染性胃腸炎","水痘","手足口病","伝染性紅斑","突発性発しん",
+        "ヘルパンギーナ","流行性耳下腺炎","急性出血性結膜炎",
+        "流行性角結膜炎","細菌性髄膜炎","無菌性髄膜炎"
+    )
+    return any(d in left for d in diseases)
 
 def parse_influenza_excel(data):
     best = None
@@ -196,39 +213,23 @@ def parse_influenza_excel(data):
             continue
 
         _,hrow,cols = hdr
-        flu_hits = find_influenza_rows(rows)
+        flu_hits = find_influenza_rows(rows, hrow)
         if not flu_hits:
-            diagnostics.append(f"{sheet}: 疾患名『インフルエンザ』の完全一致行なし")
+            diagnostics.append(f"{sheet}: 主要表内にインフルエンザ疾患行なし")
             continue
 
         first_region_col = min(cols.values())
 
-        for fr, disease_col in flu_hits:
-            # 疾患名行の直後だけを見る。
-            # 他疾患ブロックへ跨がないよう最大4行。
-            for rr in range(fr, min(len(rows), fr+5)):
+        for fr,disease_col in flu_hits:
+            # インフルエンザ疾患行から次の疾患へ移る直前までだけを見る
+            for rr in range(fr, min(len(rows), fr+7)):
                 row = rows[rr]
 
-                # rr > fr で次の疾患名が出たらそこで打ち切り
-                if rr > fr and any(
-                    isinstance(v,str) and
-                    norm(v) not in ("","定点当","実数") and
-                    (
-                        "新型コロナウイルス" in norm(v)
-                        or "RSウイルス" in norm(v)
-                        or "咽頭結膜熱" in norm(v)
-                        or "A群溶血性" in norm(v)
-                        or "感染性胃腸炎" in norm(v)
-                        or "水痘" in norm(v)
-                        or "手足口病" in norm(v)
-                    )
-                    for v in row[:12]
-                ):
+                if rr > fr and looks_like_other_disease_row(row):
                     break
 
                 left_text = "".join(norm(x) for x in row[:first_region_col] if x is not None)
 
-                # 定点当行以外は候補にしない
                 if "定点当" not in left_text:
                     continue
                 if "実数" in left_text:
@@ -241,9 +242,9 @@ def parse_influenza_excel(data):
                         if n is not None:
                             vals[k] = n
 
-                # 県計必須 + 地域は最低10区分
                 if "県計" not in vals:
                     continue
+
                 region_count = sum(1 for k in REGIONS if k in vals)
                 if region_count < 10:
                     continue
@@ -283,7 +284,6 @@ def scrape_week(wp):
 
     parsed = parse_influenza_excel(get(xurl,binary=True))
 
-    # 県ページ本文にインフルエンザの全県値がある週は照合する。
     page_value = extract_topic_prefecture_value(soup)
     if page_value is not None and abs(parsed["prefecture"] - page_value) > 0.011:
         raise ValueError(
