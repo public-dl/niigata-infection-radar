@@ -793,3 +793,95 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
   }
   .hero-shortcut{min-height:96px}
 }
+
+
+/* =========================================================
+   v11 — A案: 正しい県外形だけのシルエット + グラフ装飾
+   ========================================================= */
+
+/* ヒーローの新潟県アクセント：
+   市町村境界は描かず、県外形の塊として見せる */
+.hero-map-mark{
+  width:184px;
+  height:214px;
+  opacity:.78;
+  filter:drop-shadow(0 12px 20px rgba(16,83,128,.15));
+}
+.hero-map-mark svg{
+  overflow:visible;
+}
+.hero-silhouette-label{
+  margin-top:-5px;
+}
+
+/* グラフカードは真っ白一色をやめ、研究機関サイトらしい薄い背景へ */
+.trend-card{
+  position:relative;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 86% 18%,rgba(95,191,229,.10),transparent 30%),
+    linear-gradient(145deg,#ffffff 0%,#fbfdff 58%,#f2f9fd 100%);
+}
+.trend-card::before{
+  content:"";
+  position:absolute;
+  left:-90px;
+  bottom:-150px;
+  width:390px;
+  height:390px;
+  border-radius:50%;
+  border:1px solid rgba(53,151,202,.08);
+  box-shadow:
+    0 0 0 62px rgba(53,151,202,.025),
+    0 0 0 124px rgba(53,151,202,.018);
+  pointer-events:none;
+}
+.trend-content-layer{
+  position:relative;
+  z-index:2;
+}
+.trend-niigata-watermark{
+  position:absolute;
+  z-index:0;
+  right:34px;
+  bottom:18px;
+  width:300px;
+  height:280px;
+  opacity:.12;
+  pointer-events:none;
+  transform:rotate(-4deg);
+}
+.trend-niigata-watermark svg{
+  display:block;
+  width:100%;
+  height:100%;
+  filter:drop-shadow(0 8px 16px rgba(20,111,165,.05));
+}
+
+/* canvasの白い板感を弱める */
+.chart-scroll{
+  position:relative;
+  z-index:2;
+  border-radius:18px;
+  padding:8px 8px 10px;
+  background:rgba(255,255,255,.58);
+  border:1px solid rgba(207,227,238,.55);
+  backdrop-filter:blur(2px);
+}
+.chart-inner{
+  position:relative;
+  z-index:2;
+}
+
+/* 写真をグラフ背景には使わない。
+   データ可読性を優先し、県シルエットと薄い科学系リングだけを使用。 */
+
+@media(max-width:780px){
+  .trend-niigata-watermark{
+    right:-18px;
+    bottom:34px;
+    width:220px;
+    height:210px;
+    opacity:.08;
+  }
+}

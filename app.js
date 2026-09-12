@@ -97,6 +97,7 @@ async function main(){
  highlightSignal(latestWeek.prefecture); document.querySelector("#weekly-topic").textContent=cleanTopic(latestWeek.topic);
  const geo=await fetchGeoData();
  buildHeroSilhouette(geo);
+ buildTrendSilhouette(geo);
  renderTrend(13); wireRangeButtons(); renderComparison(allWeeks,latestWeek); renderRanking(latestWeek); renderMap(latestWeek,geo); renderRegionDefinitions(); wireRegionDialog();
 }
 
@@ -172,28 +173,24 @@ function geometryRings(geometry){
  if(geometry.type==="MultiPolygon") return (geometry.coordinates||[]).flatMap(poly=>(poly||[]).map(ring=>ring||[]).filter(r=>r.length>=3));
  return [];
 }
-function buildHeroSilhouette(geo){
- const target=document.querySelector("#hero-niigata-silhouette");
- if(!target||!geo?.features?.length) return;
+function buildNiigataSilhouetteSvg(geo,{viewW=220,viewH=240,fillId="niigataGradient",opacity=1}={}){
  const rings=[];
  geo.features.forEach(feature=>{
    geometryRings(feature.geometry).forEach((ring,idx)=>{
-     // 外周と内周をまとめて描画してもよいが、アクセント用途なので外形中心で描く
      if(idx===0) rings.push(ring);
    });
  });
- if(!rings.length) return;
+ if(!rings.length) return "";
 
  const allPoints=rings.flat();
  let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
  allPoints.forEach(([x,y])=>{
    if(x<minX)minX=x; if(x>maxX)maxX=x; if(y<minY)minY=y; if(y>maxY)maxY=y;
  });
- const width=maxX-minX;
- const height=maxY-minY;
- if(!Number.isFinite(width)||!Number.isFinite(height)||!width||!height) return;
+ const width=maxX-minX, height=maxY-minY;
+ if(!Number.isFinite(width)||!Number.isFinite(height)||!width||!height) return "";
 
- const viewW=220, viewH=240, pad=14;
+ const pad=14;
  const scale=Math.min((viewW-pad*2)/width,(viewH-pad*2)/height);
  const offsetX=(viewW-width*scale)/2;
  const offsetY=(viewH-height*scale)/2;
@@ -202,21 +199,40 @@ function buildHeroSilhouette(geo){
    const sy=viewH-(offsetY+(y-minY)*scale);
    return `${sx.toFixed(2)} ${sy.toFixed(2)}`;
  };
- const pathData=rings.map(ring=>`M ${ring.map(toSvgPoint).join(' L ')} Z`).join(' ');
+ const pathData=rings.map(ring=>`M ${ring.map(toSvgPoint).join(" L ")} Z`).join(" ");
 
- target.innerHTML=`
- <svg viewBox="0 0 ${viewW} ${viewH}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="新潟県シルエット">
+ return `
+ <svg viewBox="0 0 ${viewW} ${viewH}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
    <defs>
-     <linearGradient id="niigataHeroGradient" x1="0" y1="0" x2="0.95" y2="1">
-       <stop offset="0%" stop-color="rgba(104,201,239,0.96)" />
-       <stop offset="100%" stop-color="rgba(23,123,191,0.96)" />
+     <linearGradient id="${fillId}" x1="0" y1="0" x2="0.95" y2="1">
+       <stop offset="0%" stop-color="#77cbed" />
+       <stop offset="100%" stop-color="#177bbf" />
      </linearGradient>
-     <filter id="niigataHeroGlow" x="-25%" y="-25%" width="150%" height="150%">
-       <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="rgba(7,68,111,0.22)" />
-     </filter>
    </defs>
-   <path d="${pathData}" fill="url(#niigataHeroGradient)" stroke="rgba(255,255,255,0.62)" stroke-width="1.4" stroke-linejoin="round" filter="url(#niigataHeroGlow)"/>
+   <path d="${pathData}" fill="url(#${fillId})" fill-opacity="${opacity}" stroke="none" />
  </svg>`;
+}
+
+function buildHeroSilhouette(geo){
+ const target=document.querySelector("#hero-niigata-silhouette");
+ if(!target) return;
+ target.innerHTML=buildNiigataSilhouetteSvg(geo,{
+   viewW:220,
+   viewH:240,
+   fillId:"niigataHeroGradient",
+   opacity:.9
+ });
+}
+
+function buildTrendSilhouette(geo){
+ const target=document.querySelector("#trend-niigata-watermark");
+ if(!target) return;
+ target.innerHTML=buildNiigataSilhouetteSvg(geo,{
+   viewW:420,
+   viewH:390,
+   fillId:"niigataTrendGradient",
+   opacity:.42
+ });
 }
 
 async function renderMap(latest,geo){

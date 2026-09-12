@@ -157,7 +157,8 @@
 </section>
 
 <section class="card trend-card" id="trend">
-  <div class="section-title-row">
+  <div id="trend-niigata-watermark" class="trend-niigata-watermark" aria-hidden="true"></div>
+  <div class="section-title-row trend-content-layer">
     <div><div class="card-kicker">TREND</div><h2>県全体の推移</h2></div>
     <div class="trend-actions">
       <div class="range-switch" role="group" aria-label="表示期間">
@@ -169,12 +170,12 @@
       <button id="to-latest" class="ghost-button" type="button">最新へ</button>
     </div>
   </div>
-  <div class="threshold-note">
+  <div class="threshold-note trend-content-layer">
     <span><i class="line-dot"></i>流行期入りの目安 1</span>
     <span><i class="line-dot"></i>注意報の目安 10</span>
     <span><i class="line-dot"></i>警報の目安 30</span>
   </div>
-  <div id="chart-scroll" class="chart-scroll"><div class="chart-inner"><canvas id="trend-chart"></canvas></div></div>
+  <div id="chart-scroll" class="chart-scroll trend-content-layer"><div class="chart-inner"><canvas id="trend-chart"></canvas></div></div>
 </section>
 
 <section class="compare-grid">
