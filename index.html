@@ -11,48 +11,75 @@
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-<header class="hero hero-photo">
-  <div class="hero-photo-bg" aria-hidden="true"></div>
-  <div class="hero-photo-overlay" aria-hidden="true"></div>
-  <div class="hero-science-lines" aria-hidden="true"></div>
-
-  <div class="hero-topbar">
-    <div class="hero-brand">
-      <div class="brand-mark" aria-hidden="true">
-        <span></span><span></span><span></span>
-      </div>
+<header class="hero hero-photo hero-sample">
+  <div class="hero-sitebar">
+    <a class="hero-brand" href="#top" aria-label="インフルエンザレーダー（新潟県）">
+      <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
       <div>
         <div class="brand-title">インフルエンザレーダー（新潟県）</div>
         <div class="brand-en">NIIGATA INFLUENZA RADAR</div>
       </div>
-    </div>
-    <div class="hero-topnote">新潟県の週報データを、わかりやすく可視化。</div>
+    </a>
+    <nav class="hero-nav" aria-label="ページ内ナビゲーション">
+      <a href="#latest">最新の状況</a>
+      <a href="#area-map">地域別の状況</a>
+      <a href="#trend">グラフでみる</a>
+      <a href="#about">このサイトについて</a>
+    </nav>
   </div>
 
-  <div class="hero-inner hero-content">
-    <div class="hero-copy-block">
-      <p class="hero-kicker">新潟のいまを、データで見える化</p>
-      <h1>インフルエンザレーダー<span>（新潟県）</span></h1>
-      <p class="hero-subtitle">NIIGATA INFLUENZA RADAR</p>
-      <p class="hero-description">
-        新潟県におけるインフルエンザの発生状況を、<br>
-        週次データに基づいてわかりやすくお伝えします。
-      </p>
-      <div class="hero-meta hero-meta-pill">
-        <span class="hero-meta-label">最新週</span>
-        <strong id="latest-period">読み込み中…</strong>
+  <div class="hero-stage" id="top">
+    <div class="hero-photo-panel" aria-hidden="true"></div>
+    <div class="hero-white-fade" aria-hidden="true"></div>
+    <div class="hero-orbit hero-orbit-a" aria-hidden="true"></div>
+    <div class="hero-orbit hero-orbit-b" aria-hidden="true"></div>
+
+    <div class="hero-stage-inner">
+      <div class="hero-copy-block">
+        <p class="hero-kicker">新潟のいまを、データで見える化</p>
+        <h1>インフルエンザレーダー<span>（新潟県）</span></h1>
+        <p class="hero-subtitle">NIIGATA INFLUENZA RADAR</p>
+        <p class="hero-description">
+          新潟県におけるインフルエンザの発生状況を、<br>
+          週次データに基づいてわかりやすくお伝えします。
+        </p>
+        <div class="hero-meta hero-meta-pill">
+          <span class="hero-meta-label">最新週</span>
+          <strong id="latest-period">読み込み中…</strong>
+        </div>
+      </div>
+
+      <div class="hero-right-message" aria-hidden="true">
+        <div class="hero-silhouette-wrap">
+          <div id="hero-niigata-silhouette" class="hero-map-mark"></div>
+          <div class="hero-silhouette-label">新潟県</div>
+        </div>
+        <p>地域の健康を、<br>確かなデータで。</p>
       </div>
     </div>
+  </div>
 
-    <div class="hero-visual-note">
-      <div class="niigata-silhouette" aria-hidden="true">新潟県</div>
-      <p>地域の健康を、<br>確かなデータで。</p>
-    </div>
+  <div class="hero-shortcuts" aria-label="主要コンテンツ">
+    <a href="#latest" class="hero-shortcut">
+      <span class="shortcut-icon">▥</span>
+      <div><strong>最新の状況</strong><small>県全体の発生状況を確認</small></div>
+      <span class="shortcut-arrow">→</span>
+    </a>
+    <a href="#area-map" class="hero-shortcut">
+      <span class="shortcut-icon">●</span>
+      <div><strong>地域別の状況</strong><small>地図で流行状況を確認</small></div>
+      <span class="shortcut-arrow">→</span>
+    </a>
+    <a href="#trend" class="hero-shortcut">
+      <span class="shortcut-icon">↗</span>
+      <div><strong>グラフでみる</strong><small>週ごとの推移を確認</small></div>
+      <span class="shortcut-arrow">→</span>
+    </a>
   </div>
 </header>
 
 <main>
-<section class="summary-grid">
+<section class="summary-grid" id="latest">
   <article class="card primary-card">
     <div class="card-kicker">県全体・定点当たり報告数</div>
     <div class="primary-row">
@@ -101,7 +128,7 @@
   </article>
 </section>
 
-<section class="card map-card map-feature">
+<section class="card map-card map-feature" id="area-map">
   <div class="section-title-row map-head">
     <div>
       <div class="card-kicker">AREA MAP</div>
@@ -129,7 +156,7 @@
   </div>
 </section>
 
-<section class="card trend-card">
+<section class="card trend-card" id="trend">
   <div class="section-title-row">
     <div><div class="card-kicker">TREND</div><h2>県全体の推移</h2></div>
     <div class="trend-actions">
@@ -176,7 +203,7 @@
   </article>
 </section>
 
-<section class="footer-note">
+<section class="footer-note" id="about">
   <p>出典：新潟県「感染症情報（週報）」</p>
   <p>本サイトは公表データを見やすく整理したもので、診断・受診判断を行うものではありません。</p>
   <p>Powered by CivITech</p>

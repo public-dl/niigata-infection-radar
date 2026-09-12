@@ -17,7 +17,7 @@ const REGION_MUNICIPALITIES={
 "佐渡":["佐渡市"]
 };
 const DISPLAY_REGION={"新潟市":"新潟"};
-let allWeeks=[],trendChart=null,latestWeek=null;
+let allWeeks=[],trendChart=null,latestWeek=null,geoDataPromise=null;
 
 function displayRegionName(name){return DISPLAY_REGION[name]||name}
 function n(v,digits=2){if(v===null||v===undefined||Number.isNaN(Number(v)))return"--";return Number(v).toFixed(digits).replace(/\.00$/,"").replace(/(\.\d)0$/,"$1")}
@@ -95,7 +95,9 @@ async function main(){
  big.classList.remove("tier-blue","tier-yellow","tier-red","tier-purple");
  big.classList.add(`tier-${tier}`);
  highlightSignal(latestWeek.prefecture); document.querySelector("#weekly-topic").textContent=cleanTopic(latestWeek.topic);
- renderTrend(13); wireRangeButtons(); renderComparison(allWeeks,latestWeek); renderRanking(latestWeek); renderMap(latestWeek); renderRegionDefinitions(); wireRegionDialog();
+ const geo=await fetchGeoData();
+ buildHeroSilhouette(geo);
+ renderTrend(13); wireRangeButtons(); renderComparison(allWeeks,latestWeek); renderRanking(latestWeek); renderMap(latestWeek,geo); renderRegionDefinitions(); wireRegionDialog();
 }
 
 function renderTrend(weeksCount){
@@ -157,9 +159,68 @@ function wireRegionDialog(){
  document.querySelector("#region-dialog-close").addEventListener("click",()=>dialog.close());
  dialog.addEventListener("click",e=>{if(e.target===dialog)dialog.close()});
 }
-async function renderMap(latest){
+
+function fetchGeoData(){
+ if(!geoDataPromise){
+   geoDataPromise=fetch(GEOJSON_URL).then(r=>{if(!r.ok)throw new Error("GeoJSONを読み込めません");return r.json()});
+ }
+ return geoDataPromise;
+}
+function geometryRings(geometry){
+ if(!geometry) return [];
+ if(geometry.type==="Polygon") return (geometry.coordinates||[]).map(ring=>ring||[]).filter(r=>r.length>=3);
+ if(geometry.type==="MultiPolygon") return (geometry.coordinates||[]).flatMap(poly=>(poly||[]).map(ring=>ring||[]).filter(r=>r.length>=3));
+ return [];
+}
+function buildHeroSilhouette(geo){
+ const target=document.querySelector("#hero-niigata-silhouette");
+ if(!target||!geo?.features?.length) return;
+ const rings=[];
+ geo.features.forEach(feature=>{
+   geometryRings(feature.geometry).forEach((ring,idx)=>{
+     // 外周と内周をまとめて描画してもよいが、アクセント用途なので外形中心で描く
+     if(idx===0) rings.push(ring);
+   });
+ });
+ if(!rings.length) return;
+
+ const allPoints=rings.flat();
+ let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+ allPoints.forEach(([x,y])=>{
+   if(x<minX)minX=x; if(x>maxX)maxX=x; if(y<minY)minY=y; if(y>maxY)maxY=y;
+ });
+ const width=maxX-minX;
+ const height=maxY-minY;
+ if(!Number.isFinite(width)||!Number.isFinite(height)||!width||!height) return;
+
+ const viewW=220, viewH=240, pad=14;
+ const scale=Math.min((viewW-pad*2)/width,(viewH-pad*2)/height);
+ const offsetX=(viewW-width*scale)/2;
+ const offsetY=(viewH-height*scale)/2;
+ const toSvgPoint=([x,y])=>{
+   const sx=offsetX+(x-minX)*scale;
+   const sy=viewH-(offsetY+(y-minY)*scale);
+   return `${sx.toFixed(2)} ${sy.toFixed(2)}`;
+ };
+ const pathData=rings.map(ring=>`M ${ring.map(toSvgPoint).join(' L ')} Z`).join(' ');
+
+ target.innerHTML=`
+ <svg viewBox="0 0 ${viewW} ${viewH}" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="新潟県シルエット">
+   <defs>
+     <linearGradient id="niigataHeroGradient" x1="0" y1="0" x2="0.95" y2="1">
+       <stop offset="0%" stop-color="rgba(104,201,239,0.96)" />
+       <stop offset="100%" stop-color="rgba(23,123,191,0.96)" />
+     </linearGradient>
+     <filter id="niigataHeroGlow" x="-25%" y="-25%" width="150%" height="150%">
+       <feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="rgba(7,68,111,0.22)" />
+     </filter>
+   </defs>
+   <path d="${pathData}" fill="url(#niigataHeroGradient)" stroke="rgba(255,255,255,0.62)" stroke-width="1.4" stroke-linejoin="round" filter="url(#niigataHeroGlow)"/>
+ </svg>`;
+}
+
+async function renderMap(latest,geo){
  const map=L.map("map",{zoomControl:true,attributionControl:true,scrollWheelZoom:false}).setView([37.55,138.85],8);map.attributionControl.setPrefix(false);
- const geo=await fetch(GEOJSON_URL).then(r=>{if(!r.ok)throw new Error("GeoJSONを読み込めません");return r.json()});
  const layer=L.geoJSON(geo,{style:feature=>{const p=feature.properties||{},region=regionForFeature(p),v=region?Number(latest.regions?.[region]??0):0;return{color:"rgba(255,255,255,.92)",weight:1.2,fillColor:color(v),fillOpacity:.9}},
  onEachFeature:(feature,l)=>{const p=feature.properties||{},m=municipalityLabel(p),region=regionForFeature(p),v=region?Number(latest.regions?.[region]??0):0,regionLabel=region?displayRegionName(region):"地域未対応";l.bindTooltip(`<strong>${m}</strong><br>${regionLabel}${region?`：${n(v)}`:""}`,{sticky:true});l.on({mouseover:e=>e.target.setStyle({weight:2.3,color:"#173f55",fillOpacity:1}),mouseout:e=>layer.resetStyle(e.target)})}}).addTo(map);
  try{map.fitBounds(layer.getBounds(),{padding:[18,18]})}catch(e){}
