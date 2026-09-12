@@ -134,3 +134,38 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
 .rank-row.tier-bg-yellow .rank-value{color:#9b7500}
 .rank-row.tier-bg-red .rank-value{color:#cf4f42}
 .rank-row.tier-bg-purple .rank-value{color:#7041a8}
+
+/* v6: 前年→今年の順序と比較カードの視認性 */
+.comparison-body{
+  grid-template-columns:1fr auto 1fr;
+  gap:24px;
+}
+.compare-period{
+  min-width:0;
+}
+.compare-label{
+  display:block;
+  font-size:1rem;
+  font-weight:800;
+  color:#526c7c;
+  letter-spacing:.01em;
+  margin-bottom:10px;
+}
+.compare-value{
+  display:block;
+  font-size:2.65rem!important;
+  line-height:1;
+  font-weight:900;
+  letter-spacing:-.035em;
+}
+.compare-arrow{
+  font-size:2rem;
+  font-weight:700;
+  color:#96abb7;
+  align-self:center;
+}
+@media(max-width:520px){
+  .comparison-body{gap:12px}
+  .compare-label{font-size:.9rem}
+  .compare-value{font-size:2.15rem!important}
+}

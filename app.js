@@ -111,9 +111,31 @@ function wireRangeButtons(){
 }
 function renderComparison(weeks,latest){
  const target=weeks.find(w=>w.year===latest.year-1&&w.week===latest.week);
- document.querySelector("#this-period-label").textContent=`${latest.year} 第${latest.week}週`; document.querySelector("#this-period-value").textContent=n(latest.prefecture);
- if(!target){document.querySelector("#last-period-label").textContent=`${latest.year-1} 同週`;document.querySelector("#last-period-value").textContent="--";document.querySelector("#year-compare-note").textContent="前年同週データはまだ蓄積されていません。";return}
- document.querySelector("#last-period-label").textContent=`${target.year} 第${target.week}週`;document.querySelector("#last-period-value").textContent=n(target.prefecture); const diff=latest.prefecture-target.prefecture;document.querySelector("#year-compare-note").textContent=`前年同週より ${diff>=0?"+":""}${n(diff)} ポイント。`;
+ const thisLabel=document.querySelector("#this-period-label");
+ const thisValue=document.querySelector("#this-period-value");
+ const lastLabel=document.querySelector("#last-period-label");
+ const lastValue=document.querySelector("#last-period-value");
+
+ thisLabel.textContent=`${latest.year} 第${latest.week}週`;
+ thisValue.textContent=n(latest.prefecture);
+ thisValue.classList.remove("tier-blue","tier-yellow","tier-red","tier-purple");
+ thisValue.classList.add(`tier-${tierKey(Number(latest.prefecture))}`);
+
+ if(!target){
+   lastLabel.textContent=`${latest.year-1} 同週`;
+   lastValue.textContent="--";
+   lastValue.classList.remove("tier-blue","tier-yellow","tier-red","tier-purple");
+   document.querySelector("#year-compare-note").textContent="前年同週データはまだ蓄積されていません。";
+   return;
+ }
+
+ lastLabel.textContent=`${target.year} 第${target.week}週`;
+ lastValue.textContent=n(target.prefecture);
+ lastValue.classList.remove("tier-blue","tier-yellow","tier-red","tier-purple");
+ lastValue.classList.add(`tier-${tierKey(Number(target.prefecture))}`);
+
+ const diff=latest.prefecture-target.prefecture;
+ document.querySelector("#year-compare-note").textContent=`前年同週より ${diff>=0?"+":""}${n(diff)} ポイント。`;
 }
 function renderRanking(latest){
  const entries=Object.entries(latest.regions||{}).sort((a,b)=>b[1]-a[1]),box=document.querySelector("#ranking");box.innerHTML="";
