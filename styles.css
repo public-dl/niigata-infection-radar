@@ -93,3 +93,44 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
   .signal-list{grid-template-columns:1fr}
   .signal-guide-head{align-items:flex-start;flex-direction:column}
 }
+
+
+/* v5: 地図と数値の色階層を統一 */
+.tier-blue{color:var(--blue)!important}
+.tier-yellow{color:#b88600!important}
+.tier-red{color:var(--red)!important}
+.tier-purple{color:var(--purple)!important}
+
+.level-badge.tier-blue{background:#e8f5fb;border-color:#b9deef;color:#0b79b6!important}
+.level-badge.tier-yellow{background:#fff7d8;border-color:#efd980;color:#8b6900!important}
+.level-badge.tier-red{background:#fff0ed;border-color:#f3b5ad;color:#cf4f42!important}
+.level-badge.tier-purple{background:#f3edf9;border-color:#ccb7e3;color:#7041a8!important}
+
+.signal-item[data-signal="pre"].is-current{border-color:var(--blue);background:#e8f5fb}
+.signal-item[data-signal="pre"].is-current .signal-dot{background:var(--blue)}
+.signal-item[data-signal="active"].is-current{border-color:var(--yellow);background:#fff7d8}
+.signal-item[data-signal="active"].is-current .signal-dot{background:var(--yellow)}
+.signal-item[data-signal="caution"].is-current{border-color:var(--red);background:#fff0ed}
+.signal-item[data-signal="caution"].is-current .signal-dot{background:var(--red)}
+.signal-item[data-signal="warning"].is-current{border-color:var(--purple);background:#f3edf9}
+.signal-item[data-signal="warning"].is-current .signal-dot{background:var(--purple)}
+.signal-item[data-signal="active"].is-current strong{color:#8b6900}
+.signal-item[data-signal="caution"].is-current strong{color:#cf4f42}
+.signal-item[data-signal="warning"].is-current strong{color:#7041a8}
+
+.threshold-note span:nth-child(1) .line-dot{background:var(--yellow)}
+.threshold-note span:nth-child(2) .line-dot{background:var(--red)}
+.threshold-note span:nth-child(3) .line-dot{background:var(--purple)}
+
+.rank-row.tier-bg-blue{background:#eef8fc}
+.rank-row.tier-bg-yellow{background:#fff9e4}
+.rank-row.tier-bg-red{background:#fff2ef}
+.rank-row.tier-bg-purple{background:#f5f0fa}
+.rank-row.tier-bg-blue .rank-no{background:#d8eef8;color:#0b79b6}
+.rank-row.tier-bg-yellow .rank-no{background:#fff0b2;color:#8b6900}
+.rank-row.tier-bg-red .rank-no{background:#ffd9d3;color:#c64a3e}
+.rank-row.tier-bg-purple .rank-no{background:#e5d8f2;color:#7041a8}
+.rank-row.tier-bg-blue .rank-value{color:var(--blue)}
+.rank-row.tier-bg-yellow .rank-value{color:#9b7500}
+.rank-row.tier-bg-red .rank-value{color:#cf4f42}
+.rank-row.tier-bg-purple .rank-value{color:#7041a8}

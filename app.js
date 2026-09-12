@@ -21,6 +21,7 @@ let allWeeks=[],trendChart=null,latestWeek=null;
 
 function displayRegionName(name){return DISPLAY_REGION[name]||name}
 function n(v,digits=2){if(v===null||v===undefined||Number.isNaN(Number(v)))return"--";return Number(v).toFixed(digits).replace(/\.00$/,"").replace(/(\.\d)0$/,"$1")}
+function tierKey(v){if(v>=30)return"purple";if(v>=10)return"red";if(v>=1)return"yellow";return"blue"}
 function level(v){
  if(v>=30)return["従来の警報基準相当","warning"];
  if(v>=10)return["従来の注意報基準相当","caution"];
@@ -85,7 +86,15 @@ async function main(){
  document.querySelector("#latest-period").textContent=latestWeek.label; document.querySelector("#map-period").textContent=latestWeek.label;
  document.querySelector("#latest-value").textContent=n(latestWeek.prefecture); document.querySelector("#prev-value").textContent=n(prev?.prefecture); document.querySelector("#prev2-value").textContent=n(prev2?.prefecture);
  const wow=prev?.prefecture?((latestWeek.prefecture-prev.prefecture)/prev.prefecture)*100:null; document.querySelector("#wow-value").textContent=wow===null?"--":`${wow>=0?"+":""}${n(wow,1)}%`;
- document.querySelector("#level-badge").textContent=level(latestWeek.prefecture)[0]; highlightSignal(latestWeek.prefecture); document.querySelector("#weekly-topic").textContent=cleanTopic(latestWeek.topic);
+ document.querySelector("#level-badge").textContent=level(latestWeek.prefecture)[0];
+ const tier=tierKey(latestWeek.prefecture);
+ const badge=document.querySelector("#level-badge");
+ badge.classList.remove("tier-blue","tier-yellow","tier-red","tier-purple");
+ badge.classList.add(`tier-${tier}`);
+ const big=document.querySelector("#latest-value");
+ big.classList.remove("tier-blue","tier-yellow","tier-red","tier-purple");
+ big.classList.add(`tier-${tier}`);
+ highlightSignal(latestWeek.prefecture); document.querySelector("#weekly-topic").textContent=cleanTopic(latestWeek.topic);
  renderTrend(13); wireRangeButtons(); renderComparison(allWeeks,latestWeek); renderRanking(latestWeek); renderMap(latestWeek); renderRegionDefinitions(); wireRegionDialog();
 }
 
@@ -108,7 +117,13 @@ function renderComparison(weeks,latest){
 }
 function renderRanking(latest){
  const entries=Object.entries(latest.regions||{}).sort((a,b)=>b[1]-a[1]),box=document.querySelector("#ranking");box.innerHTML="";
- entries.forEach(([name,value],i)=>{const row=document.createElement("div");row.className="rank-row";row.innerHTML=`<span class="rank-no">${i+1}</span><span class="rank-name">${displayRegionName(name)}</span><span class="rank-value">${n(value)}</span>`;box.appendChild(row)});
+ entries.forEach(([name,value],i)=>{
+   const row=document.createElement("div");
+   const tier=tierKey(Number(value));
+   row.className=`rank-row tier-bg-${tier}`;
+   row.innerHTML=`<span class="rank-no">${i+1}</span><span class="rank-name">${displayRegionName(name)}</span><span class="rank-value">${n(value)}</span>`;
+   box.appendChild(row)
+ });
 }
 function renderRegionDefinitions(){
  const box=document.querySelector("#region-definition-list");box.innerHTML="";
