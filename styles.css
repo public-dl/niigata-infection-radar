@@ -1248,3 +1248,25 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
     animation:none;
   }
 }
+
+
+/* =========================================================
+   v19 — 前年同期比較の見出しに週の日付レンジを追加
+   ========================================================= */
+.comparison-row-week{
+  line-height:1.35;
+  word-break:keep-all;
+}
+
+.comparison-row .compare-label{
+  line-height:1.45;
+}
+
+@media(max-width:820px){
+  .comparison-row-week{
+    font-size:.88rem;
+  }
+  .comparison-row .compare-label{
+    font-size:.84rem;
+  }
+}

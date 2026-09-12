@@ -20,6 +20,7 @@ const DISPLAY_REGION={"新潟市":"新潟"};
 let allWeeks=[],trendChart=null,latestWeek=null,geoDataPromise=null;
 
 function displayRegionName(name){return DISPLAY_REGION[name]||name}
+function compareHeading(w){return w ? `${w.year} 第${w.week}週${w.label?`（${w.label}）`:""}` : "--"}
 function n(v,digits=2){if(v===null||v===undefined||Number.isNaN(Number(v)))return"--";return Number(v).toFixed(digits).replace(/\.00$/,"").replace(/(\.\d)0$/,"$1")}
 function tierKey(v){if(v>=30)return"purple";if(v>=10)return"red";if(v>=1)return"yellow";return"blue"}
 function level(v){
@@ -129,7 +130,7 @@ function renderComparison(weeks,latest){
 
    const head=document.createElement("div");
    head.className="comparison-row-head";
-   head.innerHTML=`<span class="comparison-row-badge ${idx===0?"compare-badge-alert-blink":""}">${idx===0?"最新":"過去"}</span><span class="comparison-row-week">${current.year} 第${current.week}週</span>`;
+   head.innerHTML=`<span class="comparison-row-badge ${idx===0?"compare-badge-alert-blink":""}">${idx===0?"最新":"過去"}</span><span class="comparison-row-week">${compareHeading(current)}</span>`;
 
    const body=document.createElement("div");
    body.className="comparison-body";
@@ -138,7 +139,7 @@ function renderComparison(weeks,latest){
    prevWrap.className="compare-period";
    const prevLabel=document.createElement("span");
    prevLabel.className="compare-label";
-   prevLabel.textContent=target?`${target.year} 第${target.week}週`:`${current.year-1} 同週`;
+   prevLabel.textContent=target?compareHeading(target):`${current.year-1} 同週`;
    const prevValue=document.createElement("strong");
    prevValue.className="compare-value";
    if(target){
@@ -157,7 +158,7 @@ function renderComparison(weeks,latest){
    currWrap.className="compare-period";
    const currLabel=document.createElement("span");
    currLabel.className="compare-label";
-   currLabel.textContent=`${current.year} 第${current.week}週`;
+   currLabel.textContent=compareHeading(current);
    const currValue=document.createElement("strong");
    currValue.className="compare-value";
    currValue.textContent=n(current.prefecture);
@@ -184,7 +185,7 @@ function renderComparison(weeks,latest){
  const topTarget=weeks.find(w=>w.year===topCurrent.year-1&&w.week===topCurrent.week);
  if(topTarget){
    const diff=Number(topCurrent.prefecture)-Number(topTarget.prefecture);
-   note.textContent=`最新の ${topCurrent.year} 第${topCurrent.week}週 は、前年同週より ${diff>=0?"+":""}${n(diff)} ポイントです。`;
+   note.textContent=`最新の ${compareHeading(topCurrent)} は、前年同週より ${diff>=0?"+":""}${n(diff)} ポイントです。`;
  }else{
    note.textContent="最新週の前年同週データはまだ蓄積されていません。";
  }
