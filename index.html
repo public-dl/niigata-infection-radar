@@ -11,16 +11,44 @@
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-<header class="hero">
-  <div class="hero-shape hero-shape-1"></div><div class="hero-shape hero-shape-2"></div>
-  <div class="rice rice-1">穂</div><div class="rice rice-2">穂</div>
-  <div class="hero-inner">
-    <p class="eyebrow">NIIGATA INFLUENZA RADAR</p>
-    <h1>インフルエンザレーダー<span>（新潟県）</span></h1>
-    <p class="hero-copy">新潟県の週報データを、いま必要な情報に。</p>
-    <div class="hero-meta"><span id="latest-period">読み込み中…</span><span class="dot"></span><span>インフルエンザ</span></div>
+<header class="hero hero-photo">
+  <div class="hero-photo-bg" aria-hidden="true"></div>
+  <div class="hero-photo-overlay" aria-hidden="true"></div>
+  <div class="hero-science-lines" aria-hidden="true"></div>
+
+  <div class="hero-topbar">
+    <div class="hero-brand">
+      <div class="brand-mark" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div>
+        <div class="brand-title">インフルエンザレーダー（新潟県）</div>
+        <div class="brand-en">NIIGATA INFLUENZA RADAR</div>
+      </div>
+    </div>
+    <div class="hero-topnote">新潟県の週報データを、わかりやすく可視化。</div>
   </div>
-  <div class="wave wave-a"></div><div class="wave wave-b"></div>
+
+  <div class="hero-inner hero-content">
+    <div class="hero-copy-block">
+      <p class="hero-kicker">新潟のいまを、データで見える化</p>
+      <h1>インフルエンザレーダー<span>（新潟県）</span></h1>
+      <p class="hero-subtitle">NIIGATA INFLUENZA RADAR</p>
+      <p class="hero-description">
+        新潟県におけるインフルエンザの発生状況を、<br>
+        週次データに基づいてわかりやすくお伝えします。
+      </p>
+      <div class="hero-meta hero-meta-pill">
+        <span class="hero-meta-label">最新週</span>
+        <strong id="latest-period">読み込み中…</strong>
+      </div>
+    </div>
+
+    <div class="hero-visual-note">
+      <div class="niigata-silhouette" aria-hidden="true">新潟県</div>
+      <p>地域の健康を、<br>確かなデータで。</p>
+    </div>
+  </div>
 </header>
 
 <main>

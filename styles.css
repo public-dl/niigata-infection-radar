@@ -243,3 +243,254 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
 .signal-item[data-signal="warning"].is-current{
   border-color:#7b4bb7 !important;
 }
+
+
+/* =========================
+   v8 hero: official research / pharma inspired
+   Uses user's Bandaibashi photo.
+   ========================= */
+.hero.hero-photo{
+  position:relative;
+  min-height:520px;
+  overflow:hidden;
+  color:#082d59;
+  background:#eaf6ff;
+  border-bottom:1px solid rgba(20,75,120,.12);
+}
+.hero-photo-bg{
+  position:absolute;
+  inset:0;
+  background-image:url("./assets/bandaibashi003.jpg");
+  background-size:cover;
+  background-position:center 73%;
+  transform:scale(1.01);
+}
+.hero-photo-overlay{
+  position:absolute;
+  inset:0;
+  background:
+    linear-gradient(90deg,
+      rgba(255,255,255,.98) 0%,
+      rgba(255,255,255,.95) 26%,
+      rgba(255,255,255,.70) 48%,
+      rgba(215,240,255,.28) 67%,
+      rgba(45,141,220,.10) 100%),
+    linear-gradient(180deg,rgba(255,255,255,.78) 0%,rgba(255,255,255,.02) 42%,rgba(2,83,144,.08) 100%);
+}
+.hero-science-lines{
+  position:absolute;
+  right:-40px;
+  top:82px;
+  width:560px;
+  height:360px;
+  opacity:.24;
+  background:
+    radial-gradient(circle at 25% 20%,#6fb8eb 0 5px,transparent 6px),
+    radial-gradient(circle at 55% 10%,#6fb8eb 0 4px,transparent 5px),
+    radial-gradient(circle at 70% 38%,#6fb8eb 0 5px,transparent 6px),
+    radial-gradient(circle at 45% 58%,#6fb8eb 0 5px,transparent 6px);
+}
+.hero-science-lines::before,
+.hero-science-lines::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  border:1px solid rgba(45,130,190,.28);
+  border-radius:50%;
+  transform:rotate(-14deg);
+}
+.hero-science-lines::after{
+  inset:62px 40px 38px 110px;
+  transform:rotate(22deg);
+}
+.hero-topbar{
+  position:relative;
+  z-index:4;
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:24px;
+  padding:0 max(26px,calc((100vw - 1180px)/2));
+  background:rgba(255,255,255,.93);
+  border-bottom:1px solid rgba(30,90,130,.12);
+  backdrop-filter:blur(10px);
+}
+.hero-brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.brand-mark{
+  width:46px;
+  height:36px;
+  position:relative;
+}
+.brand-mark span{
+  position:absolute;
+  left:0;
+  width:46px;
+  height:8px;
+  border-radius:999px;
+  background:linear-gradient(90deg,#1d74b7,#68c9ef);
+  transform:skewX(-22deg);
+}
+.brand-mark span:nth-child(1){top:3px;width:36px}
+.brand-mark span:nth-child(2){top:14px;width:44px}
+.brand-mark span:nth-child(3){top:25px;width:31px}
+.brand-title{
+  font-size:1rem;
+  line-height:1.2;
+  font-weight:900;
+  letter-spacing:.02em;
+  color:#0a315e;
+}
+.brand-en{
+  margin-top:4px;
+  font-size:.62rem;
+  letter-spacing:.22em;
+  font-weight:700;
+  color:#4d789a;
+}
+.hero-topnote{
+  font-size:.78rem;
+  letter-spacing:.08em;
+  color:#47728f;
+  font-weight:700;
+}
+.hero.hero-photo .hero-inner{
+  position:relative;
+  z-index:3;
+  max-width:1180px;
+  min-height:444px;
+  margin:0 auto;
+  padding:72px 28px 62px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:36px;
+}
+.hero-copy-block{
+  width:min(650px,64%);
+}
+.hero-kicker{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  margin:0 0 24px;
+  color:#1a6da5;
+  font-weight:800;
+  font-size:.95rem;
+  letter-spacing:.06em;
+}
+.hero-kicker::before{
+  content:"";
+  width:44px;
+  height:2px;
+  background:#3f97ca;
+}
+.hero.hero-photo h1{
+  margin:0;
+  color:#082d59;
+  font-size:clamp(2.55rem,5vw,4.55rem);
+  line-height:1.08;
+  letter-spacing:-.03em;
+  text-shadow:0 1px 0 rgba(255,255,255,.4);
+}
+.hero.hero-photo h1 span{
+  display:inline-block;
+  margin-left:.08em;
+  font-size:.48em;
+  font-weight:800;
+  letter-spacing:.01em;
+}
+.hero-subtitle{
+  margin:18px 0 0;
+  color:#265d8c;
+  font-size:.92rem;
+  font-weight:800;
+  letter-spacing:.28em;
+}
+.hero-description{
+  margin:30px 0 0;
+  color:#214967;
+  font-size:1rem;
+  font-weight:650;
+  line-height:1.9;
+}
+.hero-meta-pill{
+  display:inline-flex!important;
+  margin-top:28px!important;
+  padding:10px 16px;
+  gap:10px!important;
+  border-radius:999px;
+  color:#0a5a96;
+  background:rgba(255,255,255,.88);
+  border:1px solid rgba(48,137,192,.25);
+  box-shadow:0 10px 26px rgba(15,83,126,.10);
+}
+.hero-meta-label{
+  font-size:.74rem;
+  color:#69879b;
+  font-weight:800;
+}
+.hero-visual-note{
+  align-self:flex-start;
+  margin-top:62px;
+  width:220px;
+  text-align:right;
+  color:#0a548e;
+}
+.hero-visual-note p{
+  margin:14px 0 0;
+  font-size:1rem;
+  line-height:1.8;
+  letter-spacing:.08em;
+  font-weight:800;
+}
+.niigata-silhouette{
+  display:inline-grid;
+  place-items:center;
+  width:132px;
+  height:180px;
+  margin-right:14px;
+  color:rgba(255,255,255,.96);
+  font-size:.74rem;
+  font-weight:900;
+  letter-spacing:.12em;
+  background:linear-gradient(180deg,rgba(17,121,188,.62),rgba(68,166,219,.42));
+  clip-path:polygon(65% 0,78% 8%,75% 23%,87% 34%,77% 45%,83% 58%,70% 69%,66% 84%,49% 100%,35% 90%,38% 75%,27% 63%,36% 50%,26% 36%,42% 26%,46% 10%);
+  filter:drop-shadow(0 8px 14px rgba(6,77,121,.16));
+}
+/* remove old decorative layers if still present */
+.hero.hero-photo .hero-shape,
+.hero.hero-photo .rice,
+.hero.hero-photo .wave{display:none}
+
+@media(max-width:900px){
+  .hero-topnote{display:none}
+  .hero.hero-photo .hero-inner{min-height:420px;padding-top:58px}
+  .hero-copy-block{width:76%}
+  .hero-visual-note{width:150px}
+}
+@media(max-width:680px){
+  .hero.hero-photo{min-height:500px}
+  .hero-topbar{height:68px;padding:0 18px}
+  .brand-title{font-size:.88rem}
+  .brand-en{font-size:.54rem}
+  .brand-mark{transform:scale(.86);transform-origin:left center}
+  .hero.hero-photo .hero-inner{
+    min-height:432px;
+    display:block;
+    padding:54px 20px 52px;
+  }
+  .hero-copy-block{width:100%}
+  .hero.hero-photo h1{font-size:clamp(2.25rem,10vw,3.4rem)}
+  .hero.hero-photo h1 span{display:block;margin:8px 0 0;font-size:.48em}
+  .hero-description{font-size:.92rem}
+  .hero-visual-note{display:none}
+  .hero-photo-overlay{
+    background:linear-gradient(90deg,rgba(255,255,255,.98),rgba(255,255,255,.86) 72%,rgba(219,241,255,.50));
+  }
+  .hero-photo-bg{background-position:center 76%}
+}
