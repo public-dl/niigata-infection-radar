@@ -169,3 +169,77 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
   .compare-label{font-size:.9rem}
   .compare-value{font-size:2.15rem!important}
 }
+
+
+/* v7: signal legend uses fixed category colors for all items */
+.signal-item{
+  opacity: 1 !important;
+  border-width: 1px;
+}
+
+.signal-item[data-signal="pre"]{
+  background:#eef7fc;
+  border-color:#cfe3ef;
+}
+.signal-item[data-signal="pre"] .signal-dot{
+  background:#0b79b6;
+}
+.signal-item[data-signal="pre"] strong{
+  color:#0b79b6;
+}
+
+.signal-item[data-signal="active"]{
+  background:#fdf7df;
+  border-color:#ead78b;
+}
+.signal-item[data-signal="active"] .signal-dot{
+  background:#f2c94c;
+}
+.signal-item[data-signal="active"] strong{
+  color:#aa7d00;
+}
+
+.signal-item[data-signal="caution"]{
+  background:#fff0ec;
+  border-color:#f2c1b7;
+}
+.signal-item[data-signal="caution"] .signal-dot{
+  background:#ef6a5b;
+}
+.signal-item[data-signal="caution"] strong{
+  color:#c84d3f;
+}
+
+.signal-item[data-signal="warning"]{
+  background:#f4eefc;
+  border-color:#d9c8f1;
+}
+.signal-item[data-signal="warning"] .signal-dot{
+  background:#7b4bb7;
+}
+.signal-item[data-signal="warning"] strong{
+  color:#6c3faa;
+}
+
+.signal-item span{
+  color:#667986;
+}
+
+/* current item: thicker border only */
+.signal-item.is-current{
+  border-width:3px !important;
+  box-shadow:none !important;
+}
+
+.signal-item[data-signal="pre"].is-current{
+  border-color:#0b79b6 !important;
+}
+.signal-item[data-signal="active"].is-current{
+  border-color:#d7af23 !important;
+}
+.signal-item[data-signal="caution"].is-current{
+  border-color:#ef6a5b !important;
+}
+.signal-item[data-signal="warning"].is-current{
+  border-color:#7b4bb7 !important;
+}
