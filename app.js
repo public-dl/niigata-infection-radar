@@ -169,16 +169,25 @@ function fetchGeoData(){
 }
 function geometryRings(geometry){
  if(!geometry) return [];
- if(geometry.type==="Polygon") return (geometry.coordinates||[]).map(ring=>ring||[]).filter(r=>r.length>=3);
- if(geometry.type==="MultiPolygon") return (geometry.coordinates||[]).flatMap(poly=>(poly||[]).map(ring=>ring||[]).filter(r=>r.length>=3));
+
+ // シルエット用途では「各ポリゴンの外周」だけを使う。
+ // Polygon: coordinates[0] が外周
+ // MultiPolygon: 各 polygon の coordinates[0] がそれぞれの外周
+ if(geometry.type==="Polygon"){
+   const outer=geometry.coordinates?.[0]||[];
+   return outer.length>=3 ? [outer] : [];
+ }
+ if(geometry.type==="MultiPolygon"){
+   return (geometry.coordinates||[])
+     .map(poly=>poly?.[0]||[])
+     .filter(ring=>ring.length>=3);
+ }
  return [];
 }
 function buildNiigataSilhouetteSvg(geo,{viewW=220,viewH=240,fillId="niigataGradient",opacity=1}={}){
  const rings=[];
  geo.features.forEach(feature=>{
-   geometryRings(feature.geometry).forEach((ring,idx)=>{
-     if(idx===0) rings.push(ring);
-   });
+   geometryRings(feature.geometry).forEach(ring=>rings.push(ring));
  });
  if(!rings.length) return "";
 
