@@ -245,9 +245,14 @@ function buildTrendSilhouette(geo){
 }
 
 async function renderMap(latest,geo){
- const map=L.map("map",{zoomControl:true,attributionControl:true,scrollWheelZoom:false}).setView([37.55,138.85],8);map.attributionControl.setPrefix(false);
+ const map=L.map("map",{zoomControl:true,attributionControl:true,scrollWheelZoom:false,zoomSnap:0.25,zoomDelta:0.25}).setView([37.55,138.85],8);map.attributionControl.setPrefix(false);
  const layer=L.geoJSON(geo,{style:feature=>{const p=feature.properties||{},region=regionForFeature(p),v=region?Number(latest.regions?.[region]??0):0;return{color:"rgba(255,255,255,.92)",weight:1.2,fillColor:color(v),fillOpacity:.9}},
  onEachFeature:(feature,l)=>{const p=feature.properties||{},m=municipalityLabel(p),region=regionForFeature(p),v=region?Number(latest.regions?.[region]??0):0,regionLabel=region?displayRegionName(region):"地域未対応";l.bindTooltip(`<strong>${m}</strong><br>${regionLabel}${region?`：${n(v)}`:""}`,{sticky:true});l.on({mouseover:e=>e.target.setStyle({weight:2.3,color:"#173f55",fillOpacity:1}),mouseout:e=>layer.resetStyle(e.target)})}}).addTo(map);
- try{map.fitBounds(layer.getBounds(),{padding:[18,18]})}catch(e){}
+ try{
+   map.fitBounds(layer.getBounds(),{padding:[4,4]});
+   // fitBoundsだけでは余白が大きく見えるため、半段階だけ寄る。
+   // 新潟県全体を極端に切らず、画面占有率を高める。
+   map.setZoom(map.getZoom()+0.5,{animate:false});
+ }catch(e){}
 }
 main().catch(err=>{console.error(err);document.querySelector("#weekly-topic").textContent="データの読み込みに失敗しました。data/influenza_history.json の配置を確認してください。"});
