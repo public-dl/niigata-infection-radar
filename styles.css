@@ -1291,3 +1291,59 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
     font-size:1.04rem;
   }
 }
+
+
+/* =========================================================
+   v21 — スマートフォン用QRコードをトップに追加
+   ========================================================= */
+.hero-qr-card{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  width:194px;
+  margin:18px 0 0 auto;
+  padding:10px 11px;
+  border-radius:15px;
+  background:rgba(255,255,255,.94);
+  border:1px solid rgba(83,153,196,.26);
+  box-shadow:0 12px 28px rgba(22,82,122,.14);
+  text-decoration:none;
+  color:#0b315f;
+  backdrop-filter:blur(8px);
+  transition:transform .18s ease,box-shadow .18s ease;
+}
+.hero-qr-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 16px 34px rgba(22,82,122,.19);
+}
+.hero-qr-card img{
+  flex:0 0 auto;
+  width:64px;
+  height:64px;
+  display:block;
+  border-radius:7px;
+}
+.hero-qr-card span{
+  display:block;
+  text-align:left;
+}
+.hero-qr-card strong{
+  display:block;
+  margin-bottom:4px;
+  font-size:.82rem;
+  font-weight:900;
+  color:#0d5f96;
+}
+.hero-qr-card small{
+  display:block;
+  font-size:.66rem;
+  line-height:1.45;
+  color:#668093;
+}
+
+/* スマホ自身ではQRコードは不要なので非表示 */
+@media(max-width:780px){
+  .hero-qr-card{
+    display:none;
+  }
+}
