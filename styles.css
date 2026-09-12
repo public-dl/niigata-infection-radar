@@ -1088,3 +1088,91 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
     font-size:.92rem;
   }
 }
+
+
+/* =========================================================
+   v16 — 前年同期との比較を直近5週に拡張
+   ========================================================= */
+.comparison-list{
+  display:grid;
+  gap:12px;
+  margin:20px 0 10px;
+}
+
+.comparison-row{
+  padding:14px 15px;
+  border-radius:18px;
+  border:1px solid #e1ebf1;
+  background:linear-gradient(180deg,#ffffff 0%,#f8fbfd 100%);
+}
+
+.comparison-row-head{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin-bottom:12px;
+}
+
+.comparison-row-badge{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:46px;
+  padding:5px 10px;
+  border-radius:999px;
+  background:#e8f5fb;
+  color:#0b79b6;
+  font-size:.72rem;
+  font-weight:900;
+  letter-spacing:.04em;
+}
+
+.comparison-row-week{
+  font-size:.96rem;
+  font-weight:800;
+  color:#4c6777;
+}
+
+.comparison-row .comparison-body{
+  margin:0;
+  gap:18px;
+}
+
+.comparison-row .compare-label{
+  font-size:.94rem;
+  margin-bottom:8px;
+}
+
+.comparison-row .compare-value{
+  font-size:2.35rem !important;
+}
+
+.comparison-row-note{
+  margin-top:10px;
+  font-size:.88rem;
+  font-weight:800;
+  color:#617483;
+}
+
+@media(max-width:520px){
+  .comparison-row{
+    padding:12px 12px;
+  }
+  .comparison-row-head{
+    align-items:flex-start;
+    flex-direction:column;
+    gap:6px;
+  }
+  .comparison-row .comparison-body{
+    gap:10px;
+  }
+  .comparison-row .compare-label{
+    font-size:.82rem;
+  }
+  .comparison-row .compare-value{
+    font-size:1.95rem !important;
+  }
+  .comparison-row-note{
+    font-size:.8rem;
+  }
+}

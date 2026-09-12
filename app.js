@@ -113,32 +113,81 @@ function wireRangeButtons(){
  document.querySelector("#to-latest").addEventListener("click",()=>{const s=document.querySelector("#chart-scroll");s.scrollTo({left:s.scrollWidth,behavior:"smooth"})});
 }
 function renderComparison(weeks,latest){
- const target=weeks.find(w=>w.year===latest.year-1&&w.week===latest.week);
- const thisLabel=document.querySelector("#this-period-label");
- const thisValue=document.querySelector("#this-period-value");
- const lastLabel=document.querySelector("#last-period-label");
- const lastValue=document.querySelector("#last-period-value");
+ const list=document.querySelector("#comparison-list");
+ const note=document.querySelector("#year-compare-note");
+ list.innerHTML="";
 
- thisLabel.textContent=`${latest.year} 第${latest.week}週`;
- thisValue.textContent=n(latest.prefecture);
- thisValue.classList.remove("tier-blue","tier-yellow","tier-red","tier-purple");
- thisValue.classList.add(`tier-${tierKey(Number(latest.prefecture))}`);
+ const latestIndex=weeks.findIndex(w=>w.year===latest.year&&w.week===latest.week);
+ const recent=(latestIndex>=0?weeks.slice(Math.max(0,latestIndex-4),latestIndex+1):[latest]).reverse();
 
- if(!target){
-   lastLabel.textContent=`${latest.year-1} 同週`;
-   lastValue.textContent="--";
-   lastValue.classList.remove("tier-blue","tier-yellow","tier-red","tier-purple");
-   document.querySelector("#year-compare-note").textContent="前年同週データはまだ蓄積されていません。";
-   return;
+ recent.forEach((current,idx)=>{
+   const target=weeks.find(w=>w.year===current.year-1&&w.week===current.week);
+   const currentTier=tierKey(Number(current.prefecture));
+
+   const row=document.createElement("div");
+   row.className="comparison-row";
+
+   const head=document.createElement("div");
+   head.className="comparison-row-head";
+   head.innerHTML=`<span class="comparison-row-badge">${idx===0?"最新":"過去"}</span><span class="comparison-row-week">${current.year} 第${current.week}週</span>`;
+
+   const body=document.createElement("div");
+   body.className="comparison-body";
+
+   const prevWrap=document.createElement("div");
+   prevWrap.className="compare-period";
+   const prevLabel=document.createElement("span");
+   prevLabel.className="compare-label";
+   prevLabel.textContent=target?`${target.year} 第${target.week}週`:`${current.year-1} 同週`;
+   const prevValue=document.createElement("strong");
+   prevValue.className="compare-value";
+   if(target){
+     prevValue.textContent=n(target.prefecture);
+     prevValue.classList.add(`tier-${tierKey(Number(target.prefecture))}`);
+   }else{
+     prevValue.textContent="--";
+   }
+   prevWrap.append(prevLabel,prevValue);
+
+   const arrow=document.createElement("div");
+   arrow.className="compare-arrow";
+   arrow.textContent="→";
+
+   const currWrap=document.createElement("div");
+   currWrap.className="compare-period";
+   const currLabel=document.createElement("span");
+   currLabel.className="compare-label";
+   currLabel.textContent=`${current.year} 第${current.week}週`;
+   const currValue=document.createElement("strong");
+   currValue.className="compare-value";
+   currValue.textContent=n(current.prefecture);
+   currValue.classList.add(`tier-${currentTier}`);
+   currWrap.append(currLabel,currValue);
+
+   body.append(prevWrap,arrow,currWrap);
+
+   const foot=document.createElement("div");
+   foot.className="comparison-row-note";
+   if(target){
+     const diff=Number(current.prefecture)-Number(target.prefecture);
+     foot.textContent=`前年差 ${diff>=0?"+":""}${n(diff)} ポイント`;
+     foot.classList.add(`tier-${currentTier}`);
+   }else{
+     foot.textContent="前年同週データなし";
+   }
+
+   row.append(head,body,foot);
+   list.appendChild(row);
+ });
+
+ const topCurrent=recent[0];
+ const topTarget=weeks.find(w=>w.year===topCurrent.year-1&&w.week===topCurrent.week);
+ if(topTarget){
+   const diff=Number(topCurrent.prefecture)-Number(topTarget.prefecture);
+   note.textContent=`最新の ${topCurrent.year} 第${topCurrent.week}週 は、前年同週より ${diff>=0?"+":""}${n(diff)} ポイントです。`;
+ }else{
+   note.textContent="最新週の前年同週データはまだ蓄積されていません。";
  }
-
- lastLabel.textContent=`${target.year} 第${target.week}週`;
- lastValue.textContent=n(target.prefecture);
- lastValue.classList.remove("tier-blue","tier-yellow","tier-red","tier-purple");
- lastValue.classList.add(`tier-${tierKey(Number(target.prefecture))}`);
-
- const diff=latest.prefecture-target.prefecture;
- document.querySelector("#year-compare-note").textContent=`前年同週より ${diff>=0?"+":""}${n(diff)} ポイント。`;
 }
 function renderRanking(latest){
  const entries=Object.entries(latest.regions||{}).sort((a,b)=>b[1]-a[1]),box=document.querySelector("#ranking");box.innerHTML="";
