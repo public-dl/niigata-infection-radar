@@ -143,7 +143,12 @@ function renderComparison(weeks,latest){
    prevValue.className="compare-value";
    if(target){
      prevValue.textContent=n(target.prefecture);
-     prevValue.classList.add(`tier-${tierKey(Number(target.prefecture))}`);
+     if(idx===0){
+       // 最上段（最新週）の前年同期値は重要シグナルとして赤く強調
+       prevValue.classList.add("tier-red","compare-alert-blink");
+     }else{
+       prevValue.classList.add(`tier-${tierKey(Number(target.prefecture))}`);
+     }
    }else{
      prevValue.textContent="--";
    }
