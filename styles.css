@@ -1018,3 +1018,73 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
     display:block;
   }
 }
+
+
+/* =========================================================
+   v15 — 重要シグナルを大きく・穏やかに点滅
+   ========================================================= */
+.level-badge{
+  padding:13px 20px;
+  min-height:50px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:1rem;
+  font-weight:900;
+  letter-spacing:.01em;
+  border-width:2px;
+  box-shadow:0 7px 18px rgba(43,99,129,.10);
+  animation:signalPulse 1.8s ease-in-out infinite;
+  transform-origin:center;
+}
+
+@keyframes signalPulse{
+  0%,100%{
+    opacity:1;
+    transform:scale(1);
+    box-shadow:0 7px 18px rgba(43,99,129,.10);
+  }
+  50%{
+    opacity:.76;
+    transform:scale(1.035);
+    box-shadow:0 9px 24px rgba(43,99,129,.20);
+  }
+}
+
+/* 色階層ごとに発光色を合わせる */
+.level-badge.tier-blue{--signal-glow:rgba(11,121,182,.25)}
+.level-badge.tier-yellow{--signal-glow:rgba(242,201,76,.34)}
+.level-badge.tier-red{--signal-glow:rgba(239,106,91,.32)}
+.level-badge.tier-purple{--signal-glow:rgba(123,75,183,.32)}
+
+.level-badge{
+  animation-name:signalTierPulse;
+}
+
+@keyframes signalTierPulse{
+  0%,100%{
+    opacity:1;
+    transform:scale(1);
+    box-shadow:0 0 0 0 var(--signal-glow),0 7px 18px rgba(43,99,129,.10);
+  }
+  50%{
+    opacity:.78;
+    transform:scale(1.04);
+    box-shadow:0 0 0 8px transparent,0 10px 26px var(--signal-glow);
+  }
+}
+
+/* モーションを減らす設定では点滅しない */
+@media (prefers-reduced-motion: reduce){
+  .level-badge{
+    animation:none;
+  }
+}
+
+@media(max-width:520px){
+  .level-badge{
+    padding:11px 16px;
+    min-height:46px;
+    font-size:.92rem;
+  }
+}
