@@ -129,7 +129,7 @@ function renderComparison(weeks,latest){
 
    const head=document.createElement("div");
    head.className="comparison-row-head";
-   head.innerHTML=`<span class="comparison-row-badge">${idx===0?"最新":"過去"}</span><span class="comparison-row-week">${current.year} 第${current.week}週</span>`;
+   head.innerHTML=`<span class="comparison-row-badge ${idx===0?"compare-badge-alert-blink":""}">${idx===0?"最新":"過去"}</span><span class="comparison-row-week">${current.year} 第${current.week}週</span>`;
 
    const body=document.createElement("div");
    body.className="comparison-body";
@@ -143,12 +143,7 @@ function renderComparison(weeks,latest){
    prevValue.className="compare-value";
    if(target){
      prevValue.textContent=n(target.prefecture);
-     if(idx===0){
-       // 最上段（最新週）の前年同期値は重要シグナルとして赤く強調
-       prevValue.classList.add("tier-red","compare-alert-blink");
-     }else{
-       prevValue.classList.add(`tier-${tierKey(Number(target.prefecture))}`);
-     }
+     prevValue.classList.add(`tier-${tierKey(Number(target.prefecture))}`);
    }else{
      prevValue.textContent="--";
    }

@@ -1207,3 +1207,44 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
     animation: none;
   }
 }
+
+
+/* =========================================================
+   v18 — 点滅対象を「最新」バッジへ修正
+   ========================================================= */
+
+/* 数値は通常の区分色に戻す */
+.compare-alert-blink{
+  animation:none !important;
+  text-shadow:none !important;
+  transform:none !important;
+}
+
+/* 「最新」ラベルのみ赤系で点滅 */
+.compare-badge-alert-blink{
+  background:#ffe2dd !important;
+  color:#d94d3f !important;
+  border:2px solid #ef6a5b;
+  box-shadow:0 6px 16px rgba(239,106,91,.16);
+  animation:latestBadgeBlink 1.35s ease-in-out infinite;
+  transform-origin:center;
+}
+
+@keyframes latestBadgeBlink{
+  0%,100%{
+    opacity:1;
+    transform:scale(1);
+    box-shadow:0 6px 16px rgba(239,106,91,.16);
+  }
+  50%{
+    opacity:.66;
+    transform:scale(1.06);
+    box-shadow:0 10px 24px rgba(239,106,91,.28);
+  }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .compare-badge-alert-blink{
+    animation:none;
+  }
+}
