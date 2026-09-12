@@ -21,11 +21,62 @@ let allWeeks=[],trendChart=null,latestWeek=null;
 
 function displayRegionName(name){return DISPLAY_REGION[name]||name}
 function n(v,digits=2){if(v===null||v===undefined||Number.isNaN(Number(v)))return"--";return Number(v).toFixed(digits).replace(/\.00$/,"").replace(/(\.\d)0$/,"$1")}
-function level(v){if(v>=30)return["警報の目安以上"];if(v>=10)return["注意報の目安以上"];if(v>=1)return["流行期"];return["流行期前"]}
+function level(v){
+ if(v>=30)return["従来の警報基準相当","warning"];
+ if(v>=10)return["従来の注意報基準相当","caution"];
+ if(v>=1)return["流行期入りの目安以上","active"];
+ return["流行期入りの目安未満","pre"];
+}
 function color(v){if(v>=30)return"#7b4bb7";if(v>=10)return"#ef6a5b";if(v>=1)return"#f2c94c";return"#0b79b6"}
-function municipalityName(p){return p.N03_004||p.N03_003||p.name||p.NAME||""}
-function regionForMunicipality(name){for(const [r,ms] of Object.entries(REGION_MUNICIPALITIES)){if(ms.includes(name))return r}return null}
-function cleanTopic(t){if(!t)return"今週はインフルエンザに関する特記事項は掲載されていません。";return t.replace(/^インフルエンザ/,"").replace(/（別紙.*?参照）/g,"").replace(/[○〇]/g,"\n○").trim()}
+function municipalityLabel(p){
+ const city=(p.N03_003||"").trim(), town=(p.N03_004||"").trim();
+ if(city==="新潟市" && town) return `${city}${town}`;
+ return town||city||p.name||p.NAME||"";
+}
+function regionForFeature(p){
+ const city=(p.N03_003||"").trim(), town=(p.N03_004||"").trim();
+ // 政令指定都市の8区はすべて「新潟」地域として扱う
+ if(city==="新潟市") return "新潟市";
+ const candidates=[town,city].filter(Boolean);
+ for(const [region, municipalities] of Object.entries(REGION_MUNICIPALITIES)){
+   if(candidates.some(name=>municipalities.includes(name))) return region;
+ }
+ return null;
+}
+function highlightSignal(v){
+ const key=v>=30?"warning":v>=10?"caution":v>=1?"active":"pre";
+ document.querySelectorAll(".signal-item").forEach(el=>{
+   el.classList.toggle("is-current",el.dataset.signal===key);
+ });
+}
+function cleanTopic(t){
+ if(!t) return "今週はインフルエンザに関する特記事項は掲載されていません。";
+ let s=t
+   .replace(/（別紙.*?参照）/g,"")
+   .replace(/\r/g,"")
+   .replace(/[ \t]+/g," ")
+   .replace(/\n+/g,"\n")
+   .trim();
+
+ // ○ごとに段落化し、県週報の途中改行を文章としてつなぐ
+ const parts=s.split(/[○〇]/).map(x=>x.trim()).filter(Boolean);
+ if(!parts.length) return s;
+
+ const head=parts.shift()
+   .replace(/\n/g," ")
+   .replace(/\s{2,}/g," ")
+   .trim();
+
+ const body=parts.map(p=>{
+   return "○"+p
+     .replace(/\n/g," ")
+     .replace(/\s{2,}/g," ")
+     .replace(/全県で\s+([0-9.]+)/g,"全県で$1")
+     .trim();
+ }).join("\n\n");
+
+ return [head,body].filter(Boolean).join("\n\n");
+}
 
 async function main(){
  const res=await fetch(DATA_URL,{cache:"no-store"}); if(!res.ok)throw new Error("influenza_history.json を読み込めません");
@@ -34,7 +85,7 @@ async function main(){
  document.querySelector("#latest-period").textContent=latestWeek.label; document.querySelector("#map-period").textContent=latestWeek.label;
  document.querySelector("#latest-value").textContent=n(latestWeek.prefecture); document.querySelector("#prev-value").textContent=n(prev?.prefecture); document.querySelector("#prev2-value").textContent=n(prev2?.prefecture);
  const wow=prev?.prefecture?((latestWeek.prefecture-prev.prefecture)/prev.prefecture)*100:null; document.querySelector("#wow-value").textContent=wow===null?"--":`${wow>=0?"+":""}${n(wow,1)}%`;
- document.querySelector("#level-badge").textContent=level(latestWeek.prefecture)[0]; document.querySelector("#weekly-topic").textContent=cleanTopic(latestWeek.topic);
+ document.querySelector("#level-badge").textContent=level(latestWeek.prefecture)[0]; highlightSignal(latestWeek.prefecture); document.querySelector("#weekly-topic").textContent=cleanTopic(latestWeek.topic);
  renderTrend(13); wireRangeButtons(); renderComparison(allWeeks,latestWeek); renderRanking(latestWeek); renderMap(latestWeek); renderRegionDefinitions(); wireRegionDialog();
 }
 
@@ -72,8 +123,8 @@ function wireRegionDialog(){
 async function renderMap(latest){
  const map=L.map("map",{zoomControl:true,attributionControl:true,scrollWheelZoom:false}).setView([37.55,138.85],8);map.attributionControl.setPrefix(false);
  const geo=await fetch(GEOJSON_URL).then(r=>{if(!r.ok)throw new Error("GeoJSONを読み込めません");return r.json()});
- const layer=L.geoJSON(geo,{style:feature=>{const m=municipalityName(feature.properties||{}),region=regionForMunicipality(m),v=region?Number(latest.regions?.[region]??0):0;return{color:"rgba(255,255,255,.92)",weight:1.2,fillColor:color(v),fillOpacity:.9}},
- onEachFeature:(feature,l)=>{const m=municipalityName(feature.properties||{}),region=regionForMunicipality(m),v=region?Number(latest.regions?.[region]??0):0,regionLabel=region?displayRegionName(region):"地域未対応";l.bindTooltip(`<strong>${m}</strong><br>${regionLabel}${region?`：${n(v)}`:""}`,{sticky:true});l.on({mouseover:e=>e.target.setStyle({weight:2.3,color:"#173f55",fillOpacity:1}),mouseout:e=>layer.resetStyle(e.target)})}}).addTo(map);
+ const layer=L.geoJSON(geo,{style:feature=>{const p=feature.properties||{},region=regionForFeature(p),v=region?Number(latest.regions?.[region]??0):0;return{color:"rgba(255,255,255,.92)",weight:1.2,fillColor:color(v),fillOpacity:.9}},
+ onEachFeature:(feature,l)=>{const p=feature.properties||{},m=municipalityLabel(p),region=regionForFeature(p),v=region?Number(latest.regions?.[region]??0):0,regionLabel=region?displayRegionName(region):"地域未対応";l.bindTooltip(`<strong>${m}</strong><br>${regionLabel}${region?`：${n(v)}`:""}`,{sticky:true});l.on({mouseover:e=>e.target.setStyle({weight:2.3,color:"#173f55",fillOpacity:1}),mouseout:e=>layer.resetStyle(e.target)})}}).addTo(map);
  try{map.fitBounds(layer.getBounds(),{padding:[18,18]})}catch(e){}
 }
 main().catch(err=>{console.error(err);document.querySelector("#weekly-topic").textContent="データの読み込みに失敗しました。data/influenza_history.json の配置を確認してください。"});
