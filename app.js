@@ -23,6 +23,18 @@ let allWeeks=[],trendChart=null,latestWeek=null,geoDataPromise=null,mapInstance=
 function displayRegionName(name){return DISPLAY_REGION[name]||name}
 function compareHeading(w){return w ? `${w.year} 第${w.week}週${w.label?`（${w.label}）`:""}` : "--"}
 function n(v,digits=2){if(v===null||v===undefined||Number.isNaN(Number(v)))return"--";return Number(v).toFixed(digits).replace(/\.00$/,"").replace(/(\.\d)0$/,"$1")}
+
+function deltaFromPrevious(current, previous){
+ const c=Number(current),p=Number(previous);
+ if(!Number.isFinite(c)||!Number.isFinite(p)) return null;
+ return +(c-p).toFixed(2);
+}
+function signedN(v){
+ const x=Number(v);
+ if(!Number.isFinite(x)) return "-";
+ return `${x>0?"+":x<0?"−":""}${n(Math.abs(x))}`;
+}
+
 function tierKey(v){if(v>=30)return"purple";if(v>=10)return"red";if(v>=1)return"yellow";return"blue"}
 function level(v){
  if(v>=30)return["従来の警報基準相当","warning"];
