@@ -1,0 +1,256 @@
+/*
+  Influenza Radar — Screen Optimization v26
+  基準: 1440px前後のPC表示
+  小型ノート（1366px幅前後）では約5〜10%コンパクトに調整
+  既存の styles.css の「後」に読み込んでください。
+*/
+
+/* 1440px以下：13〜14インチノートを含む標準PC向け */
+@media (max-width: 1440px) and (min-width: 821px) {
+  .hero-sample .hero-sitebar {
+    height: 70px;
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  .hero-sample .hero-nav a {
+    padding-left: 12px;
+    padding-right: 12px;
+    font-size: .80rem;
+  }
+
+  .hero-stage,
+  .hero-stage-inner {
+    min-height: 455px;
+  }
+
+  .hero-stage-inner {
+    max-width: 1160px;
+    padding: 44px 30px 72px;
+  }
+
+  .hero-sample .hero-copy-block {
+    width: min(650px, 62%);
+  }
+
+  .hero-sample h1 {
+    font-size: clamp(2.7rem, 4.65vw, 4.25rem);
+  }
+
+  .hero-sample .hero-kicker {
+    margin-bottom: 16px;
+    font-size: .88rem;
+  }
+
+  .hero-sample .hero-subtitle {
+    margin-top: 14px;
+    font-size: .88rem;
+  }
+
+  .hero-sample .hero-description {
+    margin-top: 22px;
+    font-size: .98rem;
+    line-height: 1.75;
+  }
+
+  .hero-sample .hero-meta-pill {
+    margin-top: 20px !important;
+  }
+
+  .hero-right-message {
+    width: 220px;
+    margin-top: 34px;
+  }
+
+  .hero-map-mark {
+    width: 156px;
+    height: 182px;
+  }
+
+  .hero-right-message p {
+    font-size: .92rem;
+    line-height: 1.65;
+  }
+
+  .hero-shortcuts {
+    max-width: 1160px;
+    margin-top: -48px;
+    padding-left: 24px;
+    padding-right: 24px;
+    gap: 14px;
+  }
+
+  .hero-shortcut {
+    min-height: 116px;
+    padding: 18px 20px;
+    grid-template-columns: 52px 1fr auto;
+    gap: 13px;
+  }
+
+  .shortcut-icon {
+    width: 50px;
+    height: 50px;
+    font-size: 1.25rem;
+  }
+
+  .hero-shortcut strong {
+    font-size: 1rem;
+    margin-bottom: 4px;
+  }
+
+  main {
+    max-width: 1120px;
+    padding-left: 18px;
+    padding-right: 18px;
+  }
+
+  .card {
+    padding: 22px;
+    border-radius: 21px;
+  }
+
+  .map-feature {
+    padding: 23px;
+  }
+
+  .map {
+    height: 620px;
+  }
+
+  .map-layout {
+    gap: 18px;
+  }
+
+  .chart-shell {
+    height: 390px;
+  }
+
+  .comparison-body strong {
+    font-size: 1.75rem;
+  }
+}
+
+/* 1366px以下：13.3インチWindowsノートで特に効く調整 */
+@media (max-width: 1366px) and (min-width: 821px) {
+  .hero-sample .hero-sitebar {
+    height: 66px;
+  }
+
+  .hero-sample .brand-title {
+    font-size: .93rem;
+  }
+
+  .hero-sample .brand-mark {
+    width: 39px;
+    height: 30px;
+  }
+
+  .hero-sample .hero-nav a {
+    padding-left: 9px;
+    padding-right: 9px;
+    font-size: .75rem;
+  }
+
+  .hero-stage,
+  .hero-stage-inner {
+    min-height: 420px;
+  }
+
+  .hero-stage-inner {
+    padding-top: 36px;
+    padding-bottom: 64px;
+  }
+
+  .hero-sample h1 {
+    font-size: clamp(2.55rem, 4.4vw, 3.9rem);
+  }
+
+  .hero-sample .hero-description {
+    font-size: .94rem;
+  }
+
+  .hero-right-message {
+    width: 190px;
+    margin-top: 28px;
+  }
+
+  .hero-map-mark {
+    width: 140px;
+    height: 164px;
+  }
+
+  .hero-shortcuts {
+    margin-top: -44px;
+  }
+
+  .hero-shortcut {
+    min-height: 106px;
+    padding: 15px 18px;
+  }
+
+  main {
+    max-width: 1060px;
+  }
+
+  .card {
+    padding: 20px;
+  }
+
+  .map {
+    height: 575px;
+  }
+
+  .map-timeline {
+    padding: 12px 14px 10px;
+  }
+
+  .timeline-button,
+  .map-range-button {
+    min-height: 31px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+
+  .rank-row {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+}
+
+/* 縦方向が狭いPC（例: 1366×768）向け */
+@media (max-height: 800px) and (min-width: 821px) {
+  .hero-stage,
+  .hero-stage-inner {
+    min-height: 405px;
+  }
+
+  .hero-stage-inner {
+    padding-top: 34px;
+    padding-bottom: 60px;
+  }
+
+  .hero-sample .hero-description {
+    margin-top: 18px;
+    line-height: 1.65;
+  }
+
+  .hero-sample .hero-meta-pill {
+    margin-top: 16px !important;
+  }
+
+  .map {
+    height: 560px;
+  }
+}
+
+/* 大画面では横に広がりすぎない */
+@media (min-width: 1680px) {
+  .hero-stage-inner,
+  .hero-shortcuts {
+    max-width: 1240px;
+  }
+
+  main {
+    max-width: 1180px;
+  }
+}
