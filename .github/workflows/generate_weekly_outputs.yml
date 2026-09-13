@@ -2,7 +2,15 @@ name: Generate AI insight and weekly PDF
 
 on:
   workflow_dispatch:
+    inputs:
+      force_regenerate:
+        description: "同じ週でもAIコメントを強制再生成する"
+        required: false
+        type: boolean
+        default: false
+
   schedule:
+    # 毎日 10:00 UTC = 日本時間 19:00
     - cron: "0 10 * * *"
 
 permissions:
@@ -38,7 +46,10 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-5.6-luna
-        run: python scripts/generate_ai_comment.py
+          FORCE_AI_COMMENT: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.force_regenerate || 'false' }}
+        run: |
+          echo "FORCE_AI_COMMENT=$FORCE_AI_COMMENT"
+          python scripts/generate_ai_comment.py
 
       - name: Generate A4 landscape PDF
         run: python scripts/generate_weekly_report.py
