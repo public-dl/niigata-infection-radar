@@ -1,0 +1,246 @@
+/*
+  Influenza Radar — Compact Laptop Optimization v27
+  対象: 13.3インチ級ノート / 1366×768前後のCSS viewport
+  読み込み順: styles.css → screen-optimization-v26.css → screen-optimization-v27.css
+*/
+
+/* 13〜14インチ級ノートで縦方向を優先して圧縮 */
+@media (max-width: 1440px) and (min-width: 821px) {
+
+  /* 全体 */
+  body{
+    font-size: 15px;
+  }
+
+  main{
+    max-width: 1080px !important;
+    padding-left: 14px !important;
+    padding-right: 14px !important;
+  }
+
+  section{
+    margin-top: 24px;
+  }
+
+  .card{
+    padding: 17px !important;
+    border-radius: 18px !important;
+  }
+
+  .section-title-row{
+    margin-bottom: 12px !important;
+  }
+
+  .section-title-row h2{
+    font-size: 1.28rem !important;
+  }
+
+  .card-kicker{
+    font-size: .69rem !important;
+    letter-spacing: .16em !important;
+  }
+
+  /* 地図セクションをかなりコンパクトに */
+  .map-feature{
+    padding: 17px !important;
+  }
+
+  .map-feature > p,
+  .map-feature .section-lead{
+    margin-bottom: 12px !important;
+    font-size: .88rem !important;
+    line-height: 1.55 !important;
+  }
+
+  .map-timeline{
+    margin-top: 12px !important;
+    padding: 10px 13px 8px !important;
+    border-radius: 15px !important;
+  }
+
+  .map-timeline-head{
+    gap: 10px !important;
+    margin-bottom: 7px !important;
+  }
+
+  .map-timeline-period{
+    gap: 1px !important;
+  }
+
+  .map-timeline-period strong{
+    font-size: .94rem !important;
+  }
+
+  .map-timeline-tools{
+    gap: 5px !important;
+  }
+
+  .map-range-buttons{
+    gap: 5px !important;
+  }
+
+  .map-range-button{
+    min-height: 27px !important;
+    padding: 3px 10px !important;
+    font-size: .72rem !important;
+  }
+
+  .map-timeline-controls{
+    gap: 5px !important;
+  }
+
+  .timeline-button{
+    min-height: 29px !important;
+    padding: 4px 10px !important;
+    font-size: .75rem !important;
+  }
+
+  .timeline-play{
+    min-width: 76px !important;
+  }
+
+  .map-timeline-scale{
+    margin-top: 1px !important;
+    font-size: .66rem !important;
+  }
+
+  .map-layout{
+    margin-top: 14px !important;
+  }
+
+  /* ここを大きく縮小 */
+  .map{
+    height: 465px !important;
+    min-height: 0 !important;
+  }
+
+  /* 地図内の凡例も縮小 */
+  .map-side{
+    top: 14px !important;
+    right: 14px !important;
+    width: 172px !important;
+    padding: 13px !important;
+    border-radius: 16px !important;
+  }
+
+  .map-side h3{
+    font-size: .92rem !important;
+    margin-bottom: 9px !important;
+  }
+
+  .map-side .legend-item{
+    margin-bottom: 7px !important;
+    font-size: .78rem !important;
+  }
+
+  .map-side .legend-swatch{
+    width: 28px !important;
+    height: 14px !important;
+  }
+
+  .map-side .legend-note,
+  .map-side p{
+    font-size: .72rem !important;
+    line-height: 1.48 !important;
+  }
+
+  /* ランキング */
+  .rank-row{
+    min-height: 0 !important;
+    padding: 6px 9px !important;
+  }
+
+  .rank-no{
+    font-size: .78rem !important;
+  }
+
+  .rank-name{
+    font-size: .82rem !important;
+  }
+
+  .rank-value{
+    font-size: .92rem !important;
+  }
+
+  /* グラフ */
+  .chart-shell{
+    height: 335px !important;
+  }
+
+  /* 前年比較 */
+  .comparison-row{
+    padding: 11px !important;
+  }
+
+  .comparison-body strong{
+    font-size: 1.5rem !important;
+  }
+}
+
+/* 1366px級ではさらにもう一段圧縮 */
+@media (max-width: 1366px) and (min-width: 821px) {
+  main{
+    max-width: 1030px !important;
+  }
+
+  .map{
+    height: 430px !important;
+  }
+
+  .map-side{
+    width: 164px !important;
+    padding: 11px !important;
+  }
+
+  .map-timeline{
+    padding-top: 8px !important;
+    padding-bottom: 7px !important;
+  }
+
+  .map-range-button{
+    padding-left: 9px !important;
+    padding-right: 9px !important;
+  }
+
+  .timeline-button{
+    padding-left: 9px !important;
+    padding-right: 9px !important;
+  }
+
+  .chart-shell{
+    height: 315px !important;
+  }
+}
+
+/* 1366×768など、実用上もっとも窮屈なケース */
+@media (max-height: 800px) and (min-width: 821px) {
+  section{
+    margin-top: 20px !important;
+  }
+
+  .map{
+    height: 405px !important;
+  }
+
+  .map-timeline{
+    margin-top: 9px !important;
+  }
+
+  .map-timeline-head{
+    margin-bottom: 5px !important;
+  }
+
+  .map-side{
+    top: 11px !important;
+    right: 11px !important;
+  }
+
+  .chart-shell{
+    height: 290px !important;
+  }
+}
+
+/* スマホ側には影響させない */
+@media (max-width: 820px){
+  /* 既存レスポンシブをそのまま利用 */
+}

@@ -395,6 +395,16 @@ async function renderMap(latest,geo){
  mapInstance=L.map("map",{zoomControl:true,attributionControl:true,scrollWheelZoom:false,zoomSnap:0.25,zoomDelta:0.25}).setView([37.55,138.85],8);
  mapInstance.attributionControl.setPrefix(false);
 
+ // 再生中でも「いま何週か」を地図上で確認できる週表示
+ const mapEl=document.querySelector("#map");
+ if(mapEl&&!mapEl.querySelector("#map-week-overlay")){
+   const overlay=document.createElement("div");
+   overlay.id="map-week-overlay";
+   overlay.className="map-week-overlay";
+   overlay.setAttribute("aria-live","polite");
+   mapEl.appendChild(overlay);
+ }
+
  const styleForFeature=feature=>{
    const p=feature.properties||{};
    const region=regionForFeature(p);
@@ -451,7 +461,11 @@ function updateMapLayerContent(weekData){
  const period=document.querySelector("#map-period");
  if(period) period.textContent=weekData.label||`${weekData.year} 第${weekData.week}週`;
  const selected=document.querySelector("#map-selected-period");
- if(selected) selected.textContent=`${weekData.year} 第${weekData.week}週（${weekData.label||""}）`;
+ const weekText=`${weekData.year} 第${weekData.week}週（${weekData.label||""}）`;
+ if(selected) selected.textContent=weekText;
+
+ const mapOverlay=document.querySelector("#map-week-overlay");
+ if(mapOverlay) mapOverlay.textContent=weekText;
 
  renderRanking(weekData);
 }

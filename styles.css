@@ -1538,3 +1538,51 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
     justify-content:flex-start;
   }
 }
+
+
+/* =========================================================
+   v28 — 地図上に選択週を常時表示
+   ========================================================= */
+.map-week-overlay{
+  position:absolute;
+  z-index:650;
+  left:72px;
+  top:26px;
+  pointer-events:none;
+  padding:10px 15px;
+  border-radius:14px;
+  background:rgba(255,255,255,.90);
+  border:1px solid rgba(113,159,184,.30);
+  box-shadow:0 7px 18px rgba(52,102,128,.12);
+  backdrop-filter:blur(7px);
+  color:#135379;
+  font-size:1rem;
+  font-weight:900;
+  line-height:1.2;
+  letter-spacing:.01em;
+  white-space:nowrap;
+}
+
+/* 13〜14インチノートでは少し小さく */
+@media(max-width:1440px) and (min-width:821px){
+  .map-week-overlay{
+    left:68px;
+    top:20px;
+    padding:8px 12px;
+    border-radius:12px;
+    font-size:.88rem;
+  }
+}
+
+/* スマホでは地図の幅を邪魔しないよう左下寄せ */
+@media(max-width:820px){
+  .map-week-overlay{
+    left:12px;
+    top:auto;
+    bottom:12px;
+    max-width:calc(100% - 24px);
+    padding:8px 10px;
+    font-size:.78rem;
+    white-space:normal;
+  }
+}
