@@ -24,15 +24,18 @@ function displayRegionName(name){return DISPLAY_REGION[name]||name}
 function compareHeading(w){return w ? `${w.year} 第${w.week}週${w.label?`（${w.label}）`:""}` : "--"}
 function n(v,digits=2){if(v===null||v===undefined||Number.isNaN(Number(v)))return"--";return Number(v).toFixed(digits).replace(/\.00$/,"").replace(/(\.\d)0$/,"$1")}
 
-function deltaFromPrevious(current, previous){
- const c=Number(current),p=Number(previous);
- if(!Number.isFinite(c)||!Number.isFinite(p)) return null;
- return +(c-p).toFixed(2);
+function absoluteWeekDiff(current, previous){
+  const c = Number(current);
+  const p = Number(previous);
+  if(!Number.isFinite(c) || !Number.isFinite(p)) return null;
+  return +(c - p).toFixed(2);
 }
-function signedN(v){
- const x=Number(v);
- if(!Number.isFinite(x)) return "-";
- return `${x>0?"+":x<0?"−":""}${n(Math.abs(x))}`;
+
+function formatSignedPerSentinel(value){
+  const v = Number(value);
+  if(!Number.isFinite(v)) return "-";
+  const sign = v > 0 ? "+" : v < 0 ? "−" : "";
+  return `${sign}${Math.abs(v).toFixed(2).replace(/\.00$/,"").replace(/(\.\d)0$/,"$1")}人／定点`;
 }
 
 function tierKey(v){if(v>=30)return"purple";if(v>=10)return"red";if(v>=1)return"yellow";return"blue"}
@@ -99,7 +102,11 @@ async function main(){
  latestWeek=allWeeks.at(-1); const prev=allWeeks.at(-2),prev2=allWeeks.at(-3);
  document.querySelector("#latest-period").textContent=latestWeek.label; document.querySelector("#map-period").textContent=latestWeek.label;
  document.querySelector("#latest-value").textContent=n(latestWeek.prefecture); document.querySelector("#prev-value").textContent=n(prev?.prefecture); document.querySelector("#prev2-value").textContent=n(prev2?.prefecture);
- const wow=prev?.prefecture?((latestWeek.prefecture-prev.prefecture)/prev.prefecture)*100:null; document.querySelector("#wow-value").textContent=wow===null?"--":`${wow>=0?"+":""}${n(wow,1)}%`;
+ const weekDiff=(prev?.prefecture===null||prev?.prefecture===undefined)
+  ? null
+  : Number(latestWeek.prefecture)-Number(prev.prefecture);
+ document.querySelector("#wow-value").textContent=
+  weekDiff===null ? "--" : `${weekDiff>=0?"+":"−"}${n(Math.abs(weekDiff))}人／定点`;
  document.querySelector("#level-badge").textContent=level(latestWeek.prefecture)[0];
  const tier=tierKey(latestWeek.prefecture);
  const badge=document.querySelector("#level-badge");
