@@ -17,7 +17,7 @@ const REGION_MUNICIPALITIES={
 "佐渡":["佐渡市"]
 };
 const DISPLAY_REGION={"新潟市":"新潟"};
-let allWeeks=[],trendChart=null,latestWeek=null,geoDataPromise=null,mapInstance=null,mapGeoLayer=null,currentMapWeek=null,mapPlayTimer=null;
+let allWeeks=[],trendChart=null,latestWeek=null,geoDataPromise=null,mapInstance=null,mapGeoLayer=null,currentMapWeek=null,mapPlayTimer=null,mapRangeStartIndex=0,mapRangeWeeks=52;
 
 function displayRegionName(name){return DISPLAY_REGION[name]||name}
 function compareHeading(w){return w ? `${w.year} 第${w.week}週${w.label?`（${w.label}）`:""}` : "--"}
@@ -467,10 +467,50 @@ function stopMapPlayback(){
 
 function setMapWeekIndex(index,{stopPlayback=true}={}){
  const slider=document.querySelector("#map-week-slider");
- const clamped=Math.max(0,Math.min(allWeeks.length-1,Number(index)));
+ const min=mapRangeStartIndex;
+ const max=allWeeks.length-1;
+ const clamped=Math.max(min,Math.min(max,Number(index)));
  if(stopPlayback) stopMapPlayback();
  if(slider) slider.value=String(clamped);
  updateMapLayerContent(allWeeks[clamped]);
+}
+
+function applyMapRange(rangeValue,{jumpToLatest=true}={}){
+ const slider=document.querySelector("#map-week-slider");
+ if(!slider||!allWeeks.length) return;
+
+ stopMapPlayback();
+
+ mapRangeWeeks=rangeValue==="all" ? "all" : Number(rangeValue);
+ const total=allWeeks.length;
+ mapRangeStartIndex=mapRangeWeeks==="all" ? 0 : Math.max(0,total-mapRangeWeeks);
+
+ slider.min=String(mapRangeStartIndex);
+ slider.max=String(total-1);
+
+ const first=document.querySelector("#map-first-week");
+ const last=document.querySelector("#map-last-week");
+ const firstWeek=allWeeks[mapRangeStartIndex];
+ const lastWeek=allWeeks.at(-1);
+
+ if(first) first.textContent=`${firstWeek.year} 第${firstWeek.week}週`;
+ if(last) last.textContent=`${lastWeek.year} 第${lastWeek.week}週`;
+
+ document.querySelectorAll(".map-range-button").forEach(btn=>{
+   const v=btn.dataset.mapRange;
+   const active=(mapRangeWeeks==="all"&&v==="all")||(String(mapRangeWeeks)===v);
+   btn.classList.toggle("is-active",active);
+   btn.setAttribute("aria-pressed",active?"true":"false");
+ });
+
+ if(jumpToLatest){
+   slider.value=String(total-1);
+   updateMapLayerContent(lastWeek);
+ }else{
+   const current=Math.max(mapRangeStartIndex,Number(slider.value));
+   slider.value=String(current);
+   updateMapLayerContent(allWeeks[current]);
+ }
 }
 
 function wireMapTimeline(){
@@ -479,25 +519,20 @@ function wireMapTimeline(){
  const prev=document.querySelector("#map-prev-week");
  const next=document.querySelector("#map-next-week");
  const latest=document.querySelector("#map-latest");
+ const rangeButtons=[...document.querySelectorAll(".map-range-button")];
  if(!slider||!play||!prev||!next||!latest||!allWeeks.length) return;
 
- slider.min="0";
- slider.max=String(allWeeks.length-1);
- slider.value=String(allWeeks.length-1);
-
- const first=document.querySelector("#map-first-week");
- const last=document.querySelector("#map-last-week");
- if(first) first.textContent=`${allWeeks[0].year} 第${allWeeks[0].week}週`;
- if(last) last.textContent=`${allWeeks.at(-1).year} 第${allWeeks.at(-1).week}週`;
-
- const selected=document.querySelector("#map-selected-period");
- if(selected) selected.textContent=`${latestWeek.year} 第${latestWeek.week}週（${latestWeek.label||""}）`;
+ applyMapRange(52);
 
  slider.addEventListener("input",()=>setMapWeekIndex(Number(slider.value)));
 
  prev.addEventListener("click",()=>setMapWeekIndex(Number(slider.value)-1));
  next.addEventListener("click",()=>setMapWeekIndex(Number(slider.value)+1));
  latest.addEventListener("click",()=>setMapWeekIndex(allWeeks.length-1));
+
+ rangeButtons.forEach(btn=>{
+   btn.addEventListener("click",()=>applyMapRange(btn.dataset.mapRange));
+ });
 
  play.addEventListener("click",()=>{
    if(mapPlayTimer){
@@ -506,8 +541,9 @@ function wireMapTimeline(){
    }
 
    let index=Number(slider.value);
+
    if(index>=allWeeks.length-1){
-     index=0;
+     index=mapRangeStartIndex;
      setMapWeekIndex(index,{stopPlayback:false});
    }
 

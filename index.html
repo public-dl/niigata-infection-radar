@@ -154,11 +154,19 @@
         <span class="card-kicker">TIME SLIDER</span>
         <strong id="map-selected-period">--</strong>
       </div>
-      <div class="map-timeline-controls">
-        <button id="map-prev-week" class="timeline-button" type="button" aria-label="1週戻る">◀</button>
-        <button id="map-play" class="timeline-button timeline-play" type="button">▶ 再生</button>
-        <button id="map-next-week" class="timeline-button" type="button" aria-label="1週進む">▶</button>
-        <button id="map-latest" class="timeline-button timeline-latest" type="button">最新へ</button>
+      <div class="map-timeline-tools">
+        <div class="map-range-buttons" role="group" aria-label="地図の表示期間">
+          <button class="map-range-button" type="button" data-map-range="13">3か月</button>
+          <button class="map-range-button" type="button" data-map-range="26">半年</button>
+          <button class="map-range-button is-active" type="button" data-map-range="52">1年</button>
+          <button class="map-range-button" type="button" data-map-range="all">すべて</button>
+        </div>
+        <div class="map-timeline-controls">
+          <button id="map-prev-week" class="timeline-button" type="button" aria-label="1週戻る">◀</button>
+          <button id="map-play" class="timeline-button timeline-play" type="button">▶ 再生</button>
+          <button id="map-next-week" class="timeline-button" type="button" aria-label="1週進む">▶</button>
+          <button id="map-latest" class="timeline-button timeline-latest" type="button">最新へ</button>
+        </div>
       </div>
     </div>
     <input id="map-week-slider" class="map-week-slider" type="range" min="0" max="0" value="0" step="1" aria-label="表示する週">

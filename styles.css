@@ -1484,3 +1484,57 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
     min-width:78px;
   }
 }
+
+
+/* =========================================================
+   v25 — 地図タイムスライダーの期間切替
+   ========================================================= */
+.map-timeline-tools{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:8px;
+}
+
+.map-range-buttons{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.map-range-button{
+  min-height:32px;
+  padding:6px 12px;
+  border-radius:999px;
+  border:1px solid #c9dce7;
+  background:#fff;
+  color:#557486;
+  font-size:.78rem;
+  font-weight:900;
+  cursor:pointer;
+  transition:.16s ease;
+}
+
+.map-range-button:hover{
+  background:#eef8fc;
+  color:#0b6f9f;
+}
+
+.map-range-button.is-active{
+  background:#0b79b6;
+  border-color:#0b79b6;
+  color:#fff;
+  box-shadow:0 5px 14px rgba(11,121,182,.18);
+}
+
+@media(max-width:820px){
+  .map-timeline-tools{
+    align-items:flex-start;
+    width:100%;
+  }
+  .map-range-buttons{
+    justify-content:flex-start;
+  }
+}
