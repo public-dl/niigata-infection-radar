@@ -1,4 +1,5 @@
 const DATA_URL="./data/influenza_history.json";
+const AI_COMMENT_URL="./data/ai_comment.json";
 const GEOJSON_URL="https://raw.githubusercontent.com/smartnews-smri/japan-topography/refs/heads/main/data/municipality/geojson/s0010/N03-21_15_210101.json";
 
 const REGION_MUNICIPALITIES={
@@ -95,11 +96,69 @@ async function main(){
  const big=document.querySelector("#latest-value");
  big.classList.remove("tier-blue","tier-yellow","tier-red","tier-purple");
  big.classList.add(`tier-${tier}`);
- highlightSignal(latestWeek.prefecture); document.querySelector("#weekly-topic").textContent=cleanTopic(latestWeek.topic);
+ highlightSignal(latestWeek.prefecture); await renderWeeklyInsight(latestWeek);
  const geo=await fetchGeoData();
  buildHeroSilhouette(geo);
  buildTrendSilhouette(geo);
  renderTrend(13); wireRangeButtons(); renderComparison(allWeeks,latestWeek); renderRanking(latestWeek); renderMap(latestWeek,geo); wireMapTimeline(); renderRegionDefinitions(); wireRegionDialog();
+}
+
+async function renderWeeklyInsight(latest){
+ const box=document.querySelector("#weekly-topic");
+ const source=document.querySelector("#weekly-source");
+ const note=document.querySelector("#ai-topic-note");
+ if(!box) return;
+
+ try{
+   const res=await fetch(AI_COMMENT_URL,{cache:"no-store"});
+   if(!res.ok) throw new Error("AIコメント未生成");
+   const ai=await res.json();
+
+   const src=ai.source_week||{};
+   const sameWeek=Number(src.year)===Number(latest.year) && Number(src.week)===Number(latest.week);
+   if(!sameWeek) throw new Error("AIコメントが最新週ではありません");
+
+   box.innerHTML="";
+
+   if(ai.headline){
+     const lead=document.createElement("p");
+     lead.className="ai-insight-headline";
+     lead.textContent=ai.headline;
+     box.appendChild(lead);
+   }
+
+   [
+     ["概況",ai.summary],
+     ["推移",ai.trend],
+     ["地域",ai.regional],
+     ["前年同期",ai.year_on_year]
+   ].forEach(([label,text])=>{
+     if(!text) return;
+     const p=document.createElement("p");
+     p.className="ai-insight-paragraph";
+
+     const tag=document.createElement("span");
+     tag.className="ai-insight-label";
+     tag.textContent=label;
+
+     const body=document.createElement("span");
+     body.textContent=text;
+
+     p.append(tag,body);
+     box.appendChild(p);
+   });
+
+   if(source) source.textContent="AI自動生成";
+   if(note){
+     note.textContent=ai.disclaimer||"新潟県公表データをもとにAIが自動生成した分析コメントです。";
+     note.hidden=false;
+   }
+ }catch(err){
+   // API生成前・通信失敗時は従来の県週報トピックに自動フォールバック
+   box.textContent=cleanTopic(latest.topic);
+   if(source) source.textContent="新潟県週報";
+   if(note) note.hidden=true;
+ }
 }
 
 function renderTrend(weeksCount){
