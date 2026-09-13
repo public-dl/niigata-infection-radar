@@ -1911,3 +1911,19 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
     margin:0 0 5px;
   }
 }
+
+
+/* =========================================================
+   v33 — AI JSONをWeb/PDFで共通利用 + PDFダウンロード
+   ========================================================= */
+.nav-report-download{
+  border:1px solid rgba(11,121,182,.22);
+  border-radius:999px;
+  background:#eef8fc;
+  color:#0b6f9f !important;
+  font-weight:900 !important;
+}
+.nav-report-download:hover{
+  background:#0b79b6 !important;
+  color:#fff !important;
+}
