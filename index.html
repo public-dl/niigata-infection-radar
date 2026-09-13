@@ -259,41 +259,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="./app.js?v=44"></script>
-
-<script>
-(() => {
-  const currentEl = document.querySelector("#latest-value");
-  const prevEl = document.querySelector("#prev-value");
-  const diffEl = document.querySelector("#wow-value");
-  if (!currentEl || !prevEl || !diffEl) return;
-
-  const format = value => {
-    const sign = value > 0 ? "+" : value < 0 ? "−" : "";
-    const number = Math.abs(value).toFixed(2).replace(/\.00$/, "").replace(/(\.\d)0$/, "$1");
-    return `${sign}${number}人／定点`;
-  };
-
-  const update = () => {
-    const current = Number.parseFloat(currentEl.textContent);
-    const previous = Number.parseFloat(prevEl.textContent);
-    if (!Number.isFinite(current) || !Number.isFinite(previous)) return;
-
-    const labelEl = diffEl.previousElementSibling;
-    if (labelEl) labelEl.textContent = "前週から";
-
-    const expected = format(current - previous);
-    if (diffEl.textContent !== expected) diffEl.textContent = expected;
-  };
-
-  const observer = new MutationObserver(update);
-  observer.observe(currentEl, {childList:true, subtree:true, characterData:true});
-  observer.observe(prevEl, {childList:true, subtree:true, characterData:true});
-  observer.observe(diffEl, {childList:true, subtree:true, characterData:true});
-
-  update();
-})();
-</script>
-
+<script src="./app-v45.js"></script>
 </body>
 </html>
