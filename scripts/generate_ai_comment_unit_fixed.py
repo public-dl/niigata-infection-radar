@@ -38,19 +38,22 @@ SYSTEM_INSTRUCTIONS = """
 - 10、30は「従来の注意報基準相当」「従来の警報基準相当」と表現する。
 - 1は「流行期入りの目安」と表現する。
 - 前年同週がある場合は、今年との違いを簡潔に示す。
-- 地域差は上位地域を中心に、数値を伴って説明する。
 - 定点当たり報告数の数値には、原則として毎回「人／定点」を付ける。
-- 見出し、概況、推移、地域、前年同期のすべてで、単独の報告数を「6.13」「1.0」のように無単位で書かない。
-- 例: 「6.13人／定点」「1.0人／定点」「10人／定点の従来の注意報基準相当」。
-- 週番号、前週比の％、年などには「人／定点」を付けない。
+- 見出し、概況、推移、地域、前年同期のすべてで、報告数を「6.13」「1.0」のように無単位で書かない。
+- 例：「6.13人／定点」「1.0人／定点」「10人／定点の従来の注意報基準相当」。
+- 前週からの変化は、割合（％）ではなく定点当たり報告数の絶対差で表現する。
+- 「前週比71.2％増加」「71.2％増」のような割合表現は使用しない。
+- 例：最新6.13人／定点、前週3.58人／定点なら「前週から2.55人／定点増加」とする。
+- 減少時も同様に「前週から0.80人／定点減少」のように書く。
+- 地域差は上位地域を中心に、数値を伴って説明する。
 - 過剰に不安をあおらない。
 - 文章はニュース・行政資料のように簡潔で落ち着いた文体にする。
 - 出力はJSONオブジェクトのみ。Markdownやコードフェンスは禁止。
 
 出力JSON:
 {
-  "headline": "20〜40文字程度の見出し。定点当たり報告数を含める場合は必ず『人／定点』を付ける",
-  "summary": "全県の最新値と前週からの動きを1〜2文",
+  "headline": "20〜35文字程度の見出し",
+  "summary": "全県の最新値と前週からの絶対差（人／定点）を1〜2文。％は使わない",
   "trend": "直近の推移を1〜2文",
   "regional": "地域別の特徴を1〜2文",
   "year_on_year": "前年同週との比較を1〜2文。比較不能ならその旨を簡潔に"
@@ -84,9 +87,9 @@ def build_payload(weeks):
 
     latest_value = num(latest.get("prefecture"))
     prev_value = num(prev.get("prefecture")) if prev else None
-    wow = None
-    if prev_value not in (None, 0):
-        wow = round((latest_value - prev_value) / prev_value * 100, 1)
+    week_diff = None
+    if latest_value is not None and prev_value is not None:
+        week_diff = round(latest_value - prev_value, 2)
 
     same_week_last_year = next(
         (
@@ -132,7 +135,7 @@ def build_payload(weeks):
             "label": prev2.get("label", ""),
             "prefecture": num(prev2.get("prefecture")),
         },
-        "week_over_week_percent": wow,
+        "week_over_week_difference_per_sentinel": week_diff,
         "same_week_last_year": None if not same_week_last_year else {
             "year": int(same_week_last_year["year"]),
             "week": int(same_week_last_year["week"]),
