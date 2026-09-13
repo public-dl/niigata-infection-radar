@@ -103,11 +103,102 @@ async function main(){
 }
 
 function renderTrend(weeksCount){
- const visible=allWeeks.slice(-Math.min(weeksCount,allWeeks.length)), labels=visible.map(w=>w.label), values=visible.map(w=>w.prefecture);
+ const visible=allWeeks.slice(-Math.min(weeksCount,allWeeks.length));
+ const labels=visible.map(w=>w.label);
+ const values=visible.map(w=>w.prefecture);
+
+ // 3か月・半年・1年では、各週と同じ「前年の週番号」を重ねて比較する
+ const showPreviousYear=[13,26,52].includes(weeksCount);
+ const previousValues=showPreviousYear
+   ? visible.map(w=>{
+       const prev=allWeeks.find(x=>x.year===w.year-1&&x.week===w.week);
+       return prev ? prev.prefecture : null;
+     })
+   : [];
+
  if(trendChart)trendChart.destroy();
- trendChart=new Chart(document.querySelector("#trend-chart"),{type:"line",data:{labels,datasets:[{label:"県全体",data:values,borderColor:"#0b79b6",backgroundColor:"rgba(11,121,182,.10)",pointRadius:3,pointHoverRadius:5,borderWidth:2.6,tension:.22,fill:true}]},options:{responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>` 定点当たり ${n(c.raw)}`}}},scales:{x:{grid:{display:false},ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:weeksCount<=13?13:weeksCount<=26?13:16,font:{size:10}}},y:{beginAtZero:true,grid:{color:"rgba(90,130,150,.12)"},title:{display:true,text:"定点当たり報告数"}}}}});
- const inner=document.querySelector(".chart-inner"); inner.style.minWidth=weeksCount<=26?"100%":weeksCount<=52?"1250px":"1800px";
- requestAnimationFrame(()=>{const s=document.querySelector("#chart-scroll");s.scrollLeft=s.scrollWidth});
+
+ const datasets=[
+   {
+     label:`今年（${latestWeek.year}）`,
+     data:values,
+     borderColor:"#0b79b6",
+     backgroundColor:"rgba(11,121,182,.10)",
+     pointRadius:3,
+     pointHoverRadius:5,
+     borderWidth:2.8,
+     tension:.22,
+     fill:true
+   }
+ ];
+
+ if(showPreviousYear){
+   datasets.push({
+     label:"前年同期",
+     data:previousValues,
+     borderColor:"#8fa3b1",
+     backgroundColor:"transparent",
+     pointRadius:2.4,
+     pointHoverRadius:4,
+     borderWidth:2.2,
+     borderDash:[7,5],
+     tension:.22,
+     fill:false,
+     spanGaps:false
+   });
+ }
+
+ trendChart=new Chart(document.querySelector("#trend-chart"),{
+   type:"line",
+   data:{labels,datasets},
+   options:{
+     responsive:true,
+     maintainAspectRatio:false,
+     interaction:{mode:"index",intersect:false},
+     plugins:{
+       legend:{
+         display:showPreviousYear,
+         position:"top",
+         align:"end",
+         labels:{
+           usePointStyle:true,
+           boxWidth:8,
+           boxHeight:8,
+           padding:16,
+           font:{size:11,weight:"700"}
+         }
+       },
+       tooltip:{
+         callbacks:{
+           label:c=>` ${c.dataset.label}：定点当たり ${n(c.raw)}`
+         }
+       }
+     },
+     scales:{
+       x:{
+         grid:{display:false},
+         ticks:{
+           maxRotation:0,
+           autoSkip:true,
+           maxTicksLimit:weeksCount<=13?13:weeksCount<=26?13:16,
+           font:{size:10}
+         }
+       },
+       y:{
+         beginAtZero:true,
+         grid:{color:"rgba(90,130,150,.12)"},
+         title:{display:true,text:"定点当たり報告数"}
+       }
+     }
+   }
+ });
+
+ const inner=document.querySelector(".chart-inner");
+ inner.style.minWidth=weeksCount<=26?"100%":weeksCount<=52?"1250px":"1800px";
+ requestAnimationFrame(()=>{
+   const s=document.querySelector("#chart-scroll");
+   s.scrollLeft=s.scrollWidth;
+ });
 }
 function wireRangeButtons(){
  document.querySelectorAll(".range-button").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".range-button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");renderTrend(Number(btn.dataset.weeks))}));
