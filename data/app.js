@@ -102,7 +102,8 @@ async function main(){
  latestWeek=allWeeks.at(-1); const prev=allWeeks.at(-2),prev2=allWeeks.at(-3);
  document.querySelector("#latest-period").textContent=latestWeek.label; document.querySelector("#map-period").textContent=latestWeek.label;
  document.querySelector("#latest-value").textContent=n(latestWeek.prefecture); document.querySelector("#prev-value").textContent=n(prev?.prefecture); document.querySelector("#prev2-value").textContent=n(prev2?.prefecture);
- const wow=prev?.prefecture?((latestWeek.prefecture-prev.prefecture)/prev.prefecture)*100:null; document.querySelector("#wow-value").textContent=wow===null?"--":`${wow>=0?"+":""}${formatSignedPerSentinel(absoluteWeekDiff(latest.prefecture, prev.prefecture))}`;
+ const weekDiff=(prev?.prefecture===null||prev?.prefecture===undefined)?null:absoluteWeekDiff(latestWeek.prefecture,prev.prefecture);
+ document.querySelector("#wow-value").textContent=weekDiff===null?"--":formatSignedPerSentinel(weekDiff);
  document.querySelector("#level-badge").textContent=level(latestWeek.prefecture)[0];
  const tier=tierKey(latestWeek.prefecture);
  const badge=document.querySelector("#level-badge");
