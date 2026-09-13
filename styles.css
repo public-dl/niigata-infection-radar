@@ -1363,3 +1363,124 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
     margin-left:0;
   }
 }
+
+
+/* =========================================================
+   v24 — 地域別地図の週次タイムスライダー
+   ========================================================= */
+.map-timeline{
+  margin-top:20px;
+  padding:15px 17px 12px;
+  border-radius:18px;
+  background:linear-gradient(180deg,#f8fcfe 0%,#f1f8fc 100%);
+  border:1px solid #d8e8f1;
+}
+
+.map-timeline-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  margin-bottom:12px;
+}
+
+.map-timeline-period{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.map-timeline-period strong{
+  font-size:1.06rem;
+  color:#174f75;
+  font-weight:900;
+}
+
+.map-timeline-controls{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+.timeline-button{
+  min-height:36px;
+  padding:7px 12px;
+  border-radius:999px;
+  border:1px solid #c6dce8;
+  background:#fff;
+  color:#1a638a;
+  font-weight:900;
+  cursor:pointer;
+  transition:.16s ease;
+}
+
+.timeline-button:hover{
+  background:#eaf6fb;
+  transform:translateY(-1px);
+}
+
+.timeline-play{
+  min-width:88px;
+  background:#0b79b6;
+  border-color:#0b79b6;
+  color:#fff;
+}
+
+.timeline-play:hover{
+  background:#08699e;
+}
+
+.timeline-latest{
+  border-color:#8fc6df;
+}
+
+.map-week-slider{
+  width:100%;
+  accent-color:#0b79b6;
+  cursor:pointer;
+}
+
+.map-timeline-scale{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  margin-top:4px;
+  color:#718795;
+  font-size:.72rem;
+  font-weight:700;
+}
+
+.ranking-actions{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+}
+
+@media(max-width:820px){
+  .map-timeline-head{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+  .map-timeline-controls{
+    justify-content:flex-start;
+  }
+  .ranking-actions{
+    justify-content:flex-start;
+  }
+}
+
+@media(max-width:520px){
+  .map-timeline{
+    padding:13px 12px 10px;
+  }
+  .timeline-button{
+    padding:7px 10px;
+  }
+  .timeline-play{
+    min-width:78px;
+  }
+}

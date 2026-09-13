@@ -148,6 +148,26 @@
       <span id="map-period" class="source-chip">--</span>
     </div>
   </div>
+  <div class="map-timeline" aria-label="地図の表示週を選択">
+    <div class="map-timeline-head">
+      <div class="map-timeline-period">
+        <span class="card-kicker">TIME SLIDER</span>
+        <strong id="map-selected-period">--</strong>
+      </div>
+      <div class="map-timeline-controls">
+        <button id="map-prev-week" class="timeline-button" type="button" aria-label="1週戻る">◀</button>
+        <button id="map-play" class="timeline-button timeline-play" type="button">▶ 再生</button>
+        <button id="map-next-week" class="timeline-button" type="button" aria-label="1週進む">▶</button>
+        <button id="map-latest" class="timeline-button timeline-latest" type="button">最新へ</button>
+      </div>
+    </div>
+    <input id="map-week-slider" class="map-week-slider" type="range" min="0" max="0" value="0" step="1" aria-label="表示する週">
+    <div class="map-timeline-scale">
+      <span id="map-first-week">--</span>
+      <span id="map-last-week">--</span>
+    </div>
+  </div>
+
   <div class="map-layout">
     <div id="map" class="map"></div>
     <aside class="map-side">
@@ -197,7 +217,10 @@
   <article class="card">
     <div class="section-title-row">
       <div><div class="card-kicker">RANKING</div><h2>地域別ランキング</h2></div>
-      <button class="ghost-button region-info-button" type="button">地域区分を見る</button>
+      <div class="ranking-actions">
+        <span id="ranking-period" class="source-chip">--</span>
+        <button class="ghost-button region-info-button" type="button">地域区分を見る</button>
+      </div>
     </div>
     <div id="ranking" class="ranking"></div>
   </article>

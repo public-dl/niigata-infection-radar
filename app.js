@@ -17,7 +17,7 @@ const REGION_MUNICIPALITIES={
 "佐渡":["佐渡市"]
 };
 const DISPLAY_REGION={"新潟市":"新潟"};
-let allWeeks=[],trendChart=null,latestWeek=null,geoDataPromise=null;
+let allWeeks=[],trendChart=null,latestWeek=null,geoDataPromise=null,mapInstance=null,mapGeoLayer=null,currentMapWeek=null,mapPlayTimer=null;
 
 function displayRegionName(name){return DISPLAY_REGION[name]||name}
 function compareHeading(w){return w ? `${w.year} 第${w.week}週${w.label?`（${w.label}）`:""}` : "--"}
@@ -99,7 +99,7 @@ async function main(){
  const geo=await fetchGeoData();
  buildHeroSilhouette(geo);
  buildTrendSilhouette(geo);
- renderTrend(13); wireRangeButtons(); renderComparison(allWeeks,latestWeek); renderRanking(latestWeek); renderMap(latestWeek,geo); renderRegionDefinitions(); wireRegionDialog();
+ renderTrend(13); wireRangeButtons(); renderComparison(allWeeks,latestWeek); renderRanking(latestWeek); renderMap(latestWeek,geo); wireMapTimeline(); renderRegionDefinitions(); wireRegionDialog();
 }
 
 function renderTrend(weeksCount){
@@ -281,14 +281,19 @@ function renderComparison(weeks,latest){
    note.textContent="最新週の前年同週データはまだ蓄積されていません。";
  }
 }
-function renderRanking(latest){
- const entries=Object.entries(latest.regions||{}).sort((a,b)=>b[1]-a[1]),box=document.querySelector("#ranking");box.innerHTML="";
+function renderRanking(weekData){
+ const entries=Object.entries(weekData.regions||{}).sort((a,b)=>b[1]-a[1]);
+ const box=document.querySelector("#ranking");
+ box.innerHTML="";
+ const period=document.querySelector("#ranking-period");
+ if(period) period.textContent=weekData.label||`${weekData.year} 第${weekData.week}週`;
+
  entries.forEach(([name,value],i)=>{
    const row=document.createElement("div");
    const tier=tierKey(Number(value));
    row.className=`rank-row tier-bg-${tier}`;
    row.innerHTML=`<span class="rank-no">${i+1}</span><span class="rank-name">${displayRegionName(name)}</span><span class="rank-value">${n(value)}</span>`;
-   box.appendChild(row)
+   box.appendChild(row);
  });
 }
 function renderRegionDefinitions(){
@@ -386,14 +391,136 @@ function buildTrendSilhouette(geo){
 }
 
 async function renderMap(latest,geo){
- const map=L.map("map",{zoomControl:true,attributionControl:true,scrollWheelZoom:false,zoomSnap:0.25,zoomDelta:0.25}).setView([37.55,138.85],8);map.attributionControl.setPrefix(false);
- const layer=L.geoJSON(geo,{style:feature=>{const p=feature.properties||{},region=regionForFeature(p),v=region?Number(latest.regions?.[region]??0):0;return{color:"rgba(255,255,255,.92)",weight:1.2,fillColor:color(v),fillOpacity:.9}},
- onEachFeature:(feature,l)=>{const p=feature.properties||{},m=municipalityLabel(p),region=regionForFeature(p),v=region?Number(latest.regions?.[region]??0):0,regionLabel=region?displayRegionName(region):"地域未対応";l.bindTooltip(`<strong>${m}</strong><br>${regionLabel}${region?`：${n(v)}`:""}`,{sticky:true});l.on({mouseover:e=>e.target.setStyle({weight:2.3,color:"#173f55",fillOpacity:1}),mouseout:e=>layer.resetStyle(e.target)})}}).addTo(map);
+ currentMapWeek=latest;
+ mapInstance=L.map("map",{zoomControl:true,attributionControl:true,scrollWheelZoom:false,zoomSnap:0.25,zoomDelta:0.25}).setView([37.55,138.85],8);
+ mapInstance.attributionControl.setPrefix(false);
+
+ const styleForFeature=feature=>{
+   const p=feature.properties||{};
+   const region=regionForFeature(p);
+   const v=region?Number(currentMapWeek?.regions?.[region]??0):0;
+   return{
+     color:"rgba(255,255,255,.92)",
+     weight:1.2,
+     fillColor:color(v),
+     fillOpacity:.9
+   };
+ };
+
+ mapGeoLayer=L.geoJSON(geo,{
+   style:styleForFeature,
+   onEachFeature:(feature,l)=>{
+     l.on({
+       mouseover:e=>e.target.setStyle({weight:2.3,color:"#173f55",fillOpacity:1}),
+       mouseout:e=>mapGeoLayer.resetStyle(e.target)
+     });
+   }
+ }).addTo(mapInstance);
+
+ updateMapLayerContent(latest);
+
  try{
-   map.fitBounds(layer.getBounds(),{padding:[4,4]});
-   // fitBoundsだけでは余白が大きく見えるため、半段階だけ寄る。
-   // 新潟県全体を極端に切らず、画面占有率を高める。
-   map.setZoom(map.getZoom()+0.5,{animate:false});
+   mapInstance.fitBounds(mapGeoLayer.getBounds(),{padding:[4,4]});
+   mapInstance.setZoom(mapInstance.getZoom()+0.5,{animate:false});
  }catch(e){}
+}
+
+function updateMapLayerContent(weekData){
+ if(!weekData||!mapGeoLayer) return;
+ currentMapWeek=weekData;
+
+ mapGeoLayer.eachLayer(l=>{
+   const p=l.feature?.properties||{};
+   const municipality=municipalityLabel(p);
+   const region=regionForFeature(p);
+   const value=region?Number(weekData.regions?.[region]??0):0;
+   const regionLabel=region?displayRegionName(region):"地域未対応";
+
+   l.setStyle({
+     color:"rgba(255,255,255,.92)",
+     weight:1.2,
+     fillColor:color(value),
+     fillOpacity:.9
+   });
+   l.bindTooltip(
+     `<strong>${municipality}</strong><br>${regionLabel}${region?`：${n(value)}`:""}<br><span style="font-size:11px;color:#687f8d">${weekData.label||""}</span>`,
+     {sticky:true}
+   );
+ });
+
+ const period=document.querySelector("#map-period");
+ if(period) period.textContent=weekData.label||`${weekData.year} 第${weekData.week}週`;
+ const selected=document.querySelector("#map-selected-period");
+ if(selected) selected.textContent=`${weekData.year} 第${weekData.week}週（${weekData.label||""}）`;
+
+ renderRanking(weekData);
+}
+
+function stopMapPlayback(){
+ if(mapPlayTimer){
+   clearInterval(mapPlayTimer);
+   mapPlayTimer=null;
+ }
+ const play=document.querySelector("#map-play");
+ if(play) play.textContent="▶ 再生";
+}
+
+function setMapWeekIndex(index,{stopPlayback=true}={}){
+ const slider=document.querySelector("#map-week-slider");
+ const clamped=Math.max(0,Math.min(allWeeks.length-1,Number(index)));
+ if(stopPlayback) stopMapPlayback();
+ if(slider) slider.value=String(clamped);
+ updateMapLayerContent(allWeeks[clamped]);
+}
+
+function wireMapTimeline(){
+ const slider=document.querySelector("#map-week-slider");
+ const play=document.querySelector("#map-play");
+ const prev=document.querySelector("#map-prev-week");
+ const next=document.querySelector("#map-next-week");
+ const latest=document.querySelector("#map-latest");
+ if(!slider||!play||!prev||!next||!latest||!allWeeks.length) return;
+
+ slider.min="0";
+ slider.max=String(allWeeks.length-1);
+ slider.value=String(allWeeks.length-1);
+
+ const first=document.querySelector("#map-first-week");
+ const last=document.querySelector("#map-last-week");
+ if(first) first.textContent=`${allWeeks[0].year} 第${allWeeks[0].week}週`;
+ if(last) last.textContent=`${allWeeks.at(-1).year} 第${allWeeks.at(-1).week}週`;
+
+ const selected=document.querySelector("#map-selected-period");
+ if(selected) selected.textContent=`${latestWeek.year} 第${latestWeek.week}週（${latestWeek.label||""}）`;
+
+ slider.addEventListener("input",()=>setMapWeekIndex(Number(slider.value)));
+
+ prev.addEventListener("click",()=>setMapWeekIndex(Number(slider.value)-1));
+ next.addEventListener("click",()=>setMapWeekIndex(Number(slider.value)+1));
+ latest.addEventListener("click",()=>setMapWeekIndex(allWeeks.length-1));
+
+ play.addEventListener("click",()=>{
+   if(mapPlayTimer){
+     stopMapPlayback();
+     return;
+   }
+
+   let index=Number(slider.value);
+   if(index>=allWeeks.length-1){
+     index=0;
+     setMapWeekIndex(index,{stopPlayback:false});
+   }
+
+   play.textContent="Ⅱ 一時停止";
+   mapPlayTimer=setInterval(()=>{
+     index=Number(slider.value)+1;
+     if(index>=allWeeks.length){
+       setMapWeekIndex(allWeeks.length-1,{stopPlayback:false});
+       stopMapPlayback();
+       return;
+     }
+     setMapWeekIndex(index,{stopPlayback:false});
+   },700);
+ });
 }
 main().catch(err=>{console.error(err);document.querySelector("#weekly-topic").textContent="データの読み込みに失敗しました。data/influenza_history.json の配置を確認してください。"});
