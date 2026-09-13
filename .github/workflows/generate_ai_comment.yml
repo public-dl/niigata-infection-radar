@@ -1,0 +1,47 @@
+name: Generate AI weekly insight
+
+on:
+  workflow_dispatch:
+  schedule:
+    # 毎日 10:00 UTC = 日本時間 19:00
+    # 最新週が変わっていなければAPIは呼ばずに終了します。
+    - cron: "0 10 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install OpenAI SDK
+        run: pip install --upgrade openai
+
+      - name: Generate AI weekly insight
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-5.6-luna
+        run: python scripts/generate_ai_comment.py
+
+      - name: Commit generated comment
+        run: |
+          if git diff --quiet -- data/ai_comment.json; then
+            echo "No AI comment changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/ai_comment.json
+          git commit -m "Update AI weekly influenza insight"
+          git push
