@@ -105,8 +105,8 @@ async function main(){
  const weekDiff=(prev?.prefecture===null||prev?.prefecture===undefined)
   ? null
   : Number(latestWeek.prefecture)-Number(prev.prefecture);
- document.querySelector("#wow-value").textContent=
-  weekDiff===null ? "--" : `${weekDiff>=0?"+":"−"}${n(Math.abs(weekDiff))}人／定点`;
+document.querySelector("#wow-value").textContent=
+  weekDiff===null ? "--" : `${weekDiff>=0?"+":"−"}${n(Math.abs(weekDiff))}`;
  document.querySelector("#level-badge").textContent=level(latestWeek.prefecture)[0];
  const tier=tierKey(latestWeek.prefecture);
  const badge=document.querySelector("#level-badge");
