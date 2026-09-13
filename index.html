@@ -148,7 +148,14 @@
       <span id="map-period" class="source-chip">--</span>
     </div>
   </div>
-  <div class="map-timeline" aria-label="地図の表示週を選択">
+  
+
+  <div class="map-layout map-layout-horizontal">
+    <div class="map-main-column">
+      <div id="map" class="map"></div>
+    </div>
+    <aside class="map-control-column">
+      <div class="map-timeline" aria-label="地図の表示週を選択">
     <div class="map-timeline-head">
       <div class="map-timeline-period">
         <span class="card-kicker">TIME SLIDER</span>
@@ -175,9 +182,7 @@
       <span id="map-last-week">--</span>
     </div>
   </div>
-
-  <div class="map-layout">
-    <div id="map" class="map"></div>
+    </aside>
     <aside class="map-side">
       <div class="legend">
         <h3>定点当たり報告数</h3>
