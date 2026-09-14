@@ -18,7 +18,7 @@
     "generated_by": "scripts/backfill.py",
     "weeks_discovered": 88,
     "weeks_ok": 88,
-    "weeks_with_age_data": 87,
+    "weeks_with_age_data": 88,
     "weeks_failed": 0
   },
   "weeks": [
@@ -120,8 +120,24 @@
         "佐渡": 28.33,
         "上越": 42.38
       },
-      "age_counts": {},
-      "age_per_sentinel": {},
+      "age_counts": {
+        "0歳": 61.0,
+        "1～4歳": 501.0,
+        "5～9歳": 569.0,
+        "10～14歳": 355.0,
+        "15～19歳": 170.0,
+        "20～59歳": 997.0,
+        "60歳以上": 388.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.17,
+        "1～4歳": 0.51,
+        "5～9歳": 0.4,
+        "10～14歳": 0.52,
+        "15～19歳": 0.48,
+        "20～59歳": 4.06,
+        "60歳以上": 3.05
+      },
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0702.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/431360.xlsx",
@@ -140,10 +156,22 @@
         "strategy": "main_regional_table_only"
       },
       "_age_parser": {
-        "strategy": "not_found",
-        "diagnostics": [
-          "公表用: 年代別定点値合計差が大きい 9.19 vs 35.36"
-        ]
+        "sheet": "公表用",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 50,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 3041.0,
+          "age_count_sum": 3041.0,
+          "count_difference": 0.0,
+          "expected_rate": 35.36,
+          "age_rate_sum": 9.19,
+          "rate_difference": -26.17
+        },
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
