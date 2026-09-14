@@ -306,7 +306,8 @@ async function main(){
  const weekDiff=(prev?.prefecture===null||prev?.prefecture===undefined)?null:absoluteWeekDiff(latestWeek.prefecture,prev.prefecture);
  const wowValueEl=document.querySelector("#wow-value");
  if(wowValueEl){
-  wowValueEl.textContent=weekDiff===null?"--":formatSignedPerSentinel(weekDiff);
+ wowValueEl.textContent=
+   weekDiff===null ? "--" : `${weekDiff>=0?"+":"−"}${n(Math.abs(weekDiff))}`;
   const labelEl=wowValueEl.previousElementSibling;
   if(labelEl) labelEl.textContent="前週から";
  }
