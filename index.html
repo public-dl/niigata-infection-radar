@@ -98,7 +98,7 @@
     <div class="mini-grid">
       <div><span>前週</span><strong id="prev-value">--</strong></div>
       <div><span>前々週</span><strong id="prev2-value">--</strong></div>
-      <div><span>前週から</span><strong id="wow-value">--</strong></div>
+      <div><span>前週比</span><strong id="wow-value">--</strong></div>
     </div>
 
     <div class="signal-guide" aria-label="流行水準の凡例">
@@ -239,6 +239,92 @@
     </div>
     <div id="ranking" class="ranking"></div>
   </article>
+</section>
+
+
+
+<section class="age-section" id="age-stats" aria-labelledby="age-stats-title">
+  <div class="age-section-head">
+    <div>
+      <div class="card-kicker">AGE GROUPS</div>
+      <h2 id="age-stats-title">年代別の発生状況</h2>
+      <p class="section-lead">年代ごとの報告状況と、時間の経過による変化を確認できます。詳しい傾向を見たい方向けの統計です。</p>
+    </div>
+    <span class="source-chip">新潟県週報・年代別</span>
+  </div>
+
+  <article class="card age-heatmap-card">
+    <div class="section-title-row age-card-head">
+      <div>
+        <div class="card-kicker">AGE HEATMAP</div>
+        <h3>年代別 流行ヒートマップ</h3>
+        <p class="muted small">各年代の過去最大値を100%として、流行の強弱を色で表示します。セルに触れると「人/定点」と実数を確認できます。</p>
+      </div>
+      <div class="age-current-week">
+        <span>表示週</span>
+        <strong id="age-heatmap-period">--</strong>
+      </div>
+    </div>
+
+    <div class="age-timeline" aria-label="年代別ヒートマップの表示週を選択">
+      <div class="age-timeline-tools">
+        <div class="age-range-buttons" role="group" aria-label="ヒートマップの表示期間">
+          <button class="age-range-button is-active" type="button" data-age-range="13">3か月</button>
+          <button class="age-range-button" type="button" data-age-range="26">半年</button>
+          <button class="age-range-button" type="button" data-age-range="52">1年</button>
+          <button class="age-range-button" type="button" data-age-range="104">2年</button>
+        </div>
+        <div class="age-playback-controls">
+          <button id="age-prev-week" class="timeline-button" type="button" aria-label="1週戻る">◀</button>
+          <button id="age-play" class="timeline-button timeline-play" type="button">▶ 再生</button>
+          <button id="age-next-week" class="timeline-button" type="button" aria-label="1週進む">▶</button>
+          <button id="age-latest" class="timeline-button timeline-latest" type="button">最新へ</button>
+        </div>
+      </div>
+      <input id="age-week-slider" class="map-week-slider age-week-slider" type="range" min="0" max="0" value="0" step="1" aria-label="年代別ヒートマップの表示週">
+      <div class="map-timeline-scale age-timeline-scale">
+        <span id="age-first-week">--</span>
+        <span id="age-last-week">--</span>
+      </div>
+    </div>
+
+    <div class="age-heatmap-scroll" id="age-heatmap-scroll" tabindex="0" aria-label="年代別流行ヒートマップ">
+      <div id="age-heatmap" class="age-heatmap"></div>
+    </div>
+    <div class="age-heatmap-legend" aria-hidden="true">
+      <span>低い</span><div class="age-legend-gradient"></div><span>高い</span>
+      <span class="age-legend-note">※ 色は各年代内での相対的な強さ</span>
+    </div>
+  </article>
+
+  <div class="age-grid">
+    <article class="card age-latest-card">
+      <div class="section-title-row age-card-head">
+        <div><div class="card-kicker">LATEST WEEK</div><h3>最新週の年代別比較</h3></div>
+        <span id="age-latest-period" class="source-chip">--</span>
+      </div>
+      <div class="age-chart-wrap age-latest-chart-wrap"><canvas id="age-latest-chart"></canvas></div>
+      <p class="muted small">グラフは定点当たり報告数（人/定点）。実数はグラフに触れると確認できます。</p>
+    </article>
+
+    <article class="card age-series-card">
+      <div class="section-title-row age-card-head">
+        <div><div class="card-kicker">TIME SERIES</div><h3>年代別の時系列推移</h3></div>
+        <div class="age-series-range range-switch" role="group" aria-label="年代別時系列の表示期間">
+          <button type="button" class="age-series-range-button active" data-age-series-weeks="13">3か月</button>
+          <button type="button" class="age-series-range-button" data-age-series-weeks="26">半年</button>
+          <button type="button" class="age-series-range-button" data-age-series-weeks="52">1年</button>
+          <button type="button" class="age-series-range-button" data-age-series-weeks="104">2年</button>
+        </div>
+      </div>
+      <div id="age-series-toggles" class="age-series-toggles" aria-label="表示する年代"></div>
+      <div class="age-series-scroll" id="age-series-scroll">
+        <div class="age-series-inner"><canvas id="age-series-chart"></canvas></div>
+      </div>
+    </article>
+  </div>
+
+  <p class="age-data-note">年代別の「人/定点」は県公表値をそのまま使用しています。年代によって年齢幅や受診状況が異なるため、年代間の値の大小だけで感染リスクを単純比較するものではありません。</p>
 </section>
 
 <section class="footer-note" id="about">
