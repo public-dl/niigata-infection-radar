@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>お問い合わせ | インフルエンザレーダー（新潟県）</title>
+  <meta name="description" content="インフルエンザレーダー（新潟県）へのお問い合わせ、取材、データ・画面利用、講演等のご連絡はこちら。">
+  <link rel="stylesheet" href="./contact.css?v=54">
+  <script defer src="./analytics.js?v=54"></script>
+</head>
+<body class="contact-page">
+  <main class="contact-shell">
+    <div class="contact-topbar">
+      <a class="contact-brand" href="./">インフルエンザレーダー（新潟県）</a>
+      <a class="contact-back" href="./">← サイトへ戻る</a>
+    </div>
+
+    <section class="contact-card">
+      <p class="contact-kicker">CONTACT</p>
+      <h1>お問い合わせ</h1>
+      <p class="contact-lead">
+        インフルエンザレーダー（新潟県）についてのご連絡はこちらからお願いします。
+      </p>
+
+      <form name="influenza-radar-contact"
+            method="POST"
+            action="/thanks.html"
+            data-netlify="true"
+            data-netlify-honeypot="bot-field">
+
+        <input type="hidden" name="form-name" value="influenza-radar-contact">
+
+        <p hidden>
+          <label>この欄は入力しないでください <input name="bot-field"></label>
+        </p>
+
+        <div class="contact-grid">
+          <div class="contact-field">
+            <label for="category">お問い合わせ種別<span class="required">必須</span></label>
+            <select id="category" name="category" required>
+              <option value="">選択してください</option>
+              <option value="site-feedback">サイトへのご意見・ご感想</option>
+              <option value="media">取材・報道・メディア利用</option>
+              <option value="data-use">データ・画面利用について</option>
+              <option value="government">自治体・医療・介護関係者からの相談</option>
+              <option value="lecture">講演・登壇・研修について</option>
+              <option value="business">制作・業務相談</option>
+              <option value="other">その他</option>
+            </select>
+          </div>
+
+          <div class="contact-field full">
+            <label for="organization">所属・団体名</label>
+            <input id="organization" name="organization" type="text" autocomplete="organization">
+          </div>
+
+          <div class="contact-field">
+            <label for="name">お名前<span class="required">必須</span></label>
+            <input id="name" name="name" type="text" autocomplete="name" required>
+          </div>
+
+          <div class="contact-field">
+            <label for="email">メールアドレス<span class="required">必須</span></label>
+            <input id="email" name="email" type="email" autocomplete="email" required>
+          </div>
+
+          <div class="contact-field full">
+            <label for="message">お問い合わせ内容<span class="required">必須</span></label>
+            <textarea id="message" name="message" required
+              placeholder="お問い合わせ内容をご記入ください。"></textarea>
+          </div>
+        </div>
+
+        <p class="contact-note">
+          医療相談・診断に関する個別のご相談には対応していません。
+          また、患者名・病歴などの個人情報や機微な医療情報は送信しないでください。
+        </p>
+
+        <label class="contact-consent">
+          <input type="checkbox" name="privacy_agree" value="yes" required>
+          <span>入力した情報が、お問い合わせへの回答・連絡のために利用されることに同意します。</span>
+        </label>
+
+        <button class="contact-submit" type="submit">送信する</button>
+      </form>
+    </section>
+
+    <p class="contact-footer">Powered by CivITech</p>
+  </main>
+</body>
+</html>
