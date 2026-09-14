@@ -19,6 +19,8 @@ FORCE = os.getenv("FORCE_AI_COMMENT", "").lower() in {"1", "true", "yes"}
 
 SCHEMA_VERSION = 3
 
+REGION_DISPLAY_NAMES = {"新潟市": "新潟"}
+
 REQUIRED_FIELDS = [
     "headline",
     "summary",
@@ -121,7 +123,7 @@ def build_payload(weeks):
     )
 
     regions = [
-        {"region": k, "value": num(v)}
+        {"region": REGION_DISPLAY_NAMES.get(k, k), "value": num(v)}
         for k, v in (latest.get("regions") or {}).items()
     ]
     regions.sort(key=lambda x: x["value"] if x["value"] is not None else -1, reverse=True)
