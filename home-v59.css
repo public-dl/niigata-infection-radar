@@ -439,3 +439,9 @@
     line-height:1.2 !important;
   }
 }
+
+@media (max-width:390px){
+  .hero-sample h1{
+    font-size:2.35rem !important;
+  }
+}
