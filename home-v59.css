@@ -119,3 +119,25 @@
     font-size:.78rem;
   }
 }
+
+
+/* =========================================================
+   v62 — 「現在のステータス」を帯で強調
+   ========================================================= */
+.hero-primary-card .hero-status-label{
+  display:flex !important;
+  width:100% !important;
+  box-sizing:border-box !important;
+  justify-content:center !important;
+  align-items:center !important;
+  margin:0 0 12px !important;
+  padding:9px 12px !important;
+  border-radius:12px !important;
+  background:linear-gradient(90deg,#e8f6fc 0%,#dff2fb 100%) !important;
+  border:1px solid #c5e4f2 !important;
+  color:#0b6594 !important;
+  font-size:.92rem !important;
+  font-weight:900 !important;
+  letter-spacing:.08em !important;
+  text-align:center !important;
+}
