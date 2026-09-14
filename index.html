@@ -1,350 +1,83 @@
-<!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>インフルエンザレーダー（新潟県）</title>
-  <meta name="description" content="新潟県の感染症週報をもとに、インフルエンザの流行状況をわかりやすく可視化します。" />
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-  <link rel="preconnect" href="https://unpkg.com" crossorigin>
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-  <link rel="stylesheet" href="./styles.css" />
-</head>
-<body>
-<header class="hero hero-photo hero-sample">
-  <div class="hero-sitebar">
-    <a class="hero-brand" href="#top" aria-label="インフルエンザレーダー（新潟県）">
-      <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
-      <div>
-        <div class="brand-title">インフルエンザレーダー（新潟県）</div>
-        <div class="brand-en">NIIGATA INFLUENZA RADAR</div>
-      </div>
-    </a>
-    <nav class="hero-nav" aria-label="ページ内ナビゲーション">
-      <a href="#latest">最新の状況</a>
-      <a href="#area-map">地域別の状況</a>
-      <a href="#trend">グラフでみる</a>
-      <a href="#about">このサイトについて</a>
-        <a id="report-download" class="nav-report-download" href="./reports/latest.pdf" target="_blank" rel="noopener">PDFレポート</a>
-    </nav>
-  </div>
+昨日 23:47
+貼り付けられたテキスト（1 点）(20260913-235026).txt
+ドキュメント
+今のコードがこちらです
 
-  <div class="hero-stage" id="top">
-    <div class="hero-photo-panel" aria-hidden="true"></div>
-    <div class="hero-white-fade" aria-hidden="true"></div>
-    <div class="hero-orbit hero-orbit-a" aria-hidden="true"></div>
-    <div class="hero-orbit hero-orbit-b" aria-hidden="true"></div>
+編集
 
-    <div class="hero-stage-inner">
-      <div class="hero-copy-block">
-        <p class="hero-kicker">新潟のいまを、データで見える化</p>
-        <h1>インフルエンザレーダー<span>（新潟県）</span></h1>
-        <p class="hero-subtitle">NIIGATA INFLUENZA RADAR</p>
-        <p class="hero-description">
-          新潟県におけるインフルエンザの発生状況を、<br>
-          週次データに基づいてわかりやすくお伝えします。
-        </p>
-        <div class="hero-meta hero-meta-pill">
-          <span class="hero-meta-label">最新週</span>
-          <strong id="latest-period">読み込み中…</strong>
-        </div>
-      </div>
+実装しました。現在のコンテンツの下、フッターの直前に年代別統計セクションを追加しています。既存の構成を崩さず、その下を「詳しく見たい人向け」の領域にしています。現在のHTML構成と既存の app.js / styles.css をベースに追加しています。
 
-      <div class="hero-right-message">
-        <div class="hero-silhouette-wrap" aria-hidden="true">
-          <div id="hero-niigata-silhouette" class="hero-map-mark"></div>
-          <div class="hero-silhouette-label">新潟県</div>
-        </div>
-        <p aria-hidden="true">地域の健康を、<br>確かなデータで。</p>
+追加した内容は、年代別ヒートマップを中心に、最新週の年代別比較と年代別時系列です。ヒートマップには地図と同じ感覚の「3か月・半年・1年・2年」「前週・再生・次週・最新へ」「週スライダー」を付けました。再生すると、週が進むにつれて各年代の色の変化を追えます。
 
-        <a class="hero-qr-card" href="https://niigata-infection-radar.netlify.app/" aria-label="スマートフォンでインフルエンザレーダーを開く">
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACz0lEQVR4nO2cQYrjMBBFX40Ms5ShD5Cj2Dcb5khzA/sofYABaxlQ+LOQ5CS9Cc2kPdFQWghivUVB8VWqLzsmPjPWb5/CwXnnnf9SPlkdM2A2XgySGasNmI3Q1odj4nH+yXyQJN1s1GanDNNGmyRJ21HxOP9svoozmTG9D2hJQ0myllQXbD4wHuefxQ8ffosUskHIkAymX8fG4/wX8+sIWmLG5pjR8q/jcf6v+KLfVntDtkkAacgijdi0ZCAKSEfE4/zz+Us5HtcnacB+bGAzQZAGWM3MbDwqHuefxw9VnEBVKMB6ykA8m9ZT5tYCebX4nX8wpC3UBE6SasGNmdYz3a++WvzOPxgtv6F0uOXn1HKuJUoQM0xb8Px2xxeZFvNiUi751UIQ01ZXa7qj67c/Hkl5n+5yWQyrmKnZd/32yacBmwmq1jOUrrf0v3r/Xnfqn+NB8Tj/RJ5r1dVClfN1AQhiKs9cv/3x7UAltTTGXM7KN1tzGV5/O+SrfpcolUlb0FXO7f4oe3/UJ1/8SSOCTVt9aNNyNhE3IIFWA5He8uvF7/yDcb361cKdakvB9f63a74dqOK19OZyf1TbpXa08vrbJd/02+rvTcGtntbuT7p+O+R3Q3L/eZNaKIfohX33frX4nX8wWv+7T9oLrnZNy+tvp3y1Nm4PWW2qriR7O+z1tz/+7v6opbH6z021BfT+t0d+f7/uYtSG18okCLKyQMisFrz/7Y5v94Oq1tW11tbVZmd5/e2Sv3WY64GqNbylE6Zd9/v+3CM/UN51Boz0lpk2xDpXV9IARLoY7k/2yDf/uST5YgKwSWDE34NIY70ThnxAPM4/l//4/YLVsxSI9F1NvyOu3/+AD7X+Tsqwns4mSTI7STZH129//N33CzFjYIj0JoMBI26o9EyHxOP88/n9+4VkpoUgm+PZqtORzFhPkr9/1SVv/v8MzjvfLf8HJ0oz3xIKnDIAAAAASUVORK5CYII=" alt="インフルエンザレーダー（新潟県）のQRコード">
-          <span>
-            <strong>スマホで見る</strong>
-            <small>QRコードを読み取って<br>このページを開く</small>
-          </span>
-        </a>
-      </div>
-    </div>
-  </div>
+ヒートマップの色は単純な人数比較ではなく、各年代それぞれの過去最大値を基準にした相対強度です。これで20～59歳のような年齢幅の広い層だけが常に濃くなるのを防ぎ、「どの年代が先に動いたか」を見つけやすくしています。セルに触れると、その週の 人/定点と実数の両方が表示されます。
 
-  <div class="hero-shortcuts" aria-label="主要コンテンツ">
-    <a href="#latest" class="hero-shortcut">
-      <span class="shortcut-icon">▥</span>
-      <div><strong>最新の状況</strong><small>県全体の発生状況を確認</small></div>
-      <span class="shortcut-arrow">→</span>
-    </a>
-    <a href="#area-map" class="hero-shortcut">
-      <span class="shortcut-icon">●</span>
-      <div><strong>地域別の状況</strong><small>地図で流行状況を確認</small></div>
-      <span class="shortcut-arrow">→</span>
-    </a>
-    <a href="#trend" class="hero-shortcut">
-      <span class="shortcut-icon">↗</span>
-      <div><strong>グラフでみる</strong><small>週ごとの推移を確認</small></div>
-      <span class="shortcut-arrow">→</span>
-    </a>
-  </div>
-</header>
+差し替えるのはこの3ファイルです。
 
-<main>
-<section class="summary-grid" id="latest">
-  <article class="card primary-card">
-    <div class="card-kicker">県全体・定点当たり報告数</div>
-    <div class="primary-row">
-      <div><div id="latest-value" class="big-number">--</div><div class="unit">人 / 定点</div></div>
-      <div id="level-badge" class="level-badge">判定中</div>
-    </div>
-    <div class="mini-grid">
-      <div><span>前週</span><strong id="prev-value">--</strong></div>
-      <div><span>前々週</span><strong id="prev2-value">--</strong></div>
-      <div><span>前週比</span><strong id="wow-value">--</strong></div>
-    </div>
+index.html
+app.js
+styles.css
 
-    <div class="signal-guide" aria-label="流行水準の凡例">
-      <div class="signal-guide-head">
-        <strong>流行水準の目安</strong>
-        <span>厚生労働省の従来区分を参考</span>
-      </div>
-      <div class="signal-list">
-        <div class="signal-item" data-signal="pre">
-          <span class="signal-dot"></span>
-          <div><strong>1未満</strong><span>流行期入りの目安未満</span></div>
-        </div>
-        <div class="signal-item" data-signal="active">
-          <span class="signal-dot"></span>
-          <div><strong>1以上</strong><span>流行期入りの目安以上</span></div>
-        </div>
-        <div class="signal-item" data-signal="caution">
-          <span class="signal-dot"></span>
-          <div><strong>10以上</strong><span>従来の注意報基準相当</span></div>
-        </div>
-        <div class="signal-item" data-signal="warning">
-          <span class="signal-dot"></span>
-          <div><strong>30以上</strong><span>従来の警報基準相当</span></div>
-        </div>
-      </div>
-      <p class="signal-note">※「注意報」「警報」の発令を示すものではなく、定点当たり報告数を従来基準と比較した表示です。</p>
-    </div>
-  </article>
+まとめてはこちらです。
 
-  <article class="card point-card">
-    <div class="section-title-row">
-      <div><div class="card-kicker">AI WEEKLY INSIGHT</div><h2>今週の流行分析</h2></div>
-      <span id="weekly-source" class="source-chip">AI自動生成</span>
-    </div>
-    <div id="weekly-topic" class="topic-text">データを読み込んでいます。</div>
-    <p id="ai-topic-note" class="ai-topic-note">新潟県公表データをもとにAIが自動生成した分析コメントです。</p>
-  </article>
-</section>
+年代別統計 v49 一式
 
-<section class="card map-card map-feature" id="area-map">
-  <div class="section-title-row map-head">
-    <div>
-      <div class="card-kicker">AREA MAP</div>
-      <h2>地域別の流行状況</h2>
-      <p class="section-lead">新潟県内の流行の広がりを、市町村境界で確認できます。</p>
-    </div>
-    <div class="map-actions">
-      <button class="ghost-button region-info-button" type="button">地域区分を見る</button>
-      <span id="map-period" class="source-chip">--</span>
-    </div>
-  </div>
-  
+今回、backfill.py や common.py などデータ収集側は触っていません。先ほど完成した age_counts と age_per_sentinel をそのまま読み込む仕様です。
 
-  <div class="map-layout map-layout-horizontal">
-    <div class="map-main-column">
-      <div id="map" class="map"></div>
-    </div>
-    <aside class="map-control-column">
-      <div class="map-timeline" aria-label="地図の表示週を選択">
-    <div class="map-timeline-head">
-      <div class="map-timeline-period">
-        <span class="card-kicker">TIME SLIDER</span>
-        <strong id="map-selected-period">--</strong>
-      </div>
-      <div class="map-timeline-tools">
-        <div class="map-range-buttons" role="group" aria-label="地図の表示期間">
-          <button class="map-range-button" type="button" data-map-range="13">3か月</button>
-          <button class="map-range-button" type="button" data-map-range="26">半年</button>
-          <button class="map-range-button is-active" type="button" data-map-range="52">1年</button>
-          <button class="map-range-button" type="button" data-map-range="all">すべて</button>
-        </div>
-        <div class="map-timeline-controls">
-          <button id="map-prev-week" class="timeline-button" type="button" aria-label="1週戻る">◀</button>
-          <button id="map-play" class="timeline-button timeline-play" type="button">▶ 再生</button>
-          <button id="map-next-week" class="timeline-button" type="button" aria-label="1週進む">▶</button>
-          <button id="map-latest" class="timeline-button timeline-latest" type="button">最新へ</button>
-        </div>
-      </div>
-    </div>
-    <input id="map-week-slider" class="map-week-slider" type="range" min="0" max="0" value="0" step="1" aria-label="表示する週">
-    <div class="map-timeline-scale">
-      <span id="map-first-week">--</span>
-      <span id="map-last-week">--</span>
-    </div>
-  </div>
-      <div class="map-side">
-        <div class="legend">
-          <h3>定点当たり報告数</h3>
-          <div><span class="swatch s0"></span>1未満</div>
-          <div><span class="swatch s1"></span>1–10未満</div>
-          <div><span class="swatch s2"></span>10–30未満</div>
-          <div><span class="swatch s3"></span>30以上</div>
-        </div>
-        <div class="map-reading"><strong>色の見方</strong><p>青 → 黄 → 赤 → 紫の順に、流行水準が高くなります。</p></div>
-        <p class="muted small">市町村境界は国土数値情報由来のGeoJSONを利用し、県の公表地域単位に対応付けています。</p>
-      </div>
-    </aside>
-  </div>
-</section>
+GitHubでこの3ファイルを差し替えてNetlifyが公開されたら、実画面を見ながらヒートマップの色の濃さ、カードの高さ、スマホ表示を次に詰めましょう。
 
-<section class="card trend-card" id="trend">
-  <div id="trend-niigata-watermark" class="trend-niigata-watermark" aria-hidden="true"></div>
-  <div class="section-title-row trend-content-layer">
-    <div><div class="card-kicker">TREND</div><h2>県全体の推移</h2></div>
-    <div class="trend-actions">
-      <div class="range-switch" role="group" aria-label="表示期間">
-        <button type="button" class="range-button active" data-weeks="13">3か月</button>
-        <button type="button" class="range-button" data-weeks="26">半年</button>
-        <button type="button" class="range-button" data-weeks="52">1年</button>
-        <button type="button" class="range-button" data-weeks="104">2年</button>
-      </div>
-      <button id="to-latest" class="ghost-button" type="button">最新へ</button>
-    </div>
-  </div>
-  <div class="threshold-note trend-content-layer">
-    <span><i class="line-dot"></i>流行期入りの目安 1</span>
-    <span><i class="line-dot"></i>注意報の目安 10</span>
-    <span><i class="line-dot"></i>警報の目安 30</span>
-    <span class="prevyear-note">3か月・半年・1年では前年同期を破線で表示</span>
-  </div>
-  <div id="chart-scroll" class="chart-scroll trend-content-layer"><div class="chart-inner"><canvas id="trend-chart"></canvas></div></div>
-</section>
+index.html
+HTML
+app.js
+コード
+styles.css
+コード
 
-<section class="compare-grid">
-  <article class="card comparison-card">
-    <div class="card-kicker">YEAR ON YEAR</div><h2>前年同期との比較</h2>
-    <div id="comparison-list" class="comparison-list" aria-live="polite"></div>
-    <p id="year-compare-note" class="muted">比較データを確認中です。</p>
-  </article>
+これは実装自体より、新しい app.js は読み込まれているのに、新しい年代別CSSだけ古い styles.css がキャッシュされている状態に見えます。
 
-  <article class="card">
-    <div class="section-title-row">
-      <div><div class="card-kicker">RANKING</div><h2>地域別ランキング</h2></div>
-      <div class="ranking-actions">
-        <span id="ranking-period" class="source-chip">--</span>
-        <button class="ghost-button region-info-button" type="button">地域区分を見る</button>
-      </div>
-    </div>
-    <div id="ranking" class="ranking"></div>
-  </article>
-</section>
+スクリーンショットでは、年代別ヒートマップの要素や週ラベルは生成されていますが、専用のグリッド・セル装飾・ボタン装飾が効いていません。つまりJSは新しい版、CSSだけ旧版です。
 
+そこで styles.css と app.js のURLにバージョンを付けた v50修正版を作りました。
 
+修正版 index.html
+v50一式 ZIP
 
-<section class="age-section" id="age-stats" aria-labelledby="age-stats-title">
-  <div class="age-section-head">
-    <div>
-      <div class="card-kicker">AGE GROUPS</div>
-      <h2 id="age-stats-title">年代別の発生状況</h2>
-      <p class="section-lead">年代ごとの報告状況と、時間の経過による変化を確認できます。詳しい傾向を見たい方向けの統計です。</p>
-    </div>
-    <span class="source-chip">新潟県週報・年代別</span>
-  </div>
+今回の index.html は、
 
-  <article class="card age-heatmap-card">
-    <div class="section-title-row age-card-head">
-      <div>
-        <div class="card-kicker">AGE HEATMAP</div>
-        <h3>年代別 流行ヒートマップ</h3>
-        <p class="muted small">各年代の過去最大値を100%として、流行の強弱を色で表示します。セルに触れると「人/定点」と実数を確認できます。</p>
-      </div>
-      <div class="age-current-week">
-        <span>表示週</span>
-        <strong id="age-heatmap-period">--</strong>
-      </div>
-    </div>
+<link rel="stylesheet" href="./styles.css?v=50">
+<script src="./app.js?v=50"></script>
 
-    <div class="age-timeline" aria-label="年代別ヒートマップの表示週を選択">
-      <div class="age-timeline-tools">
-        <div class="age-range-buttons" role="group" aria-label="ヒートマップの表示期間">
-          <button class="age-range-button is-active" type="button" data-age-range="13">3か月</button>
-          <button class="age-range-button" type="button" data-age-range="26">半年</button>
-          <button class="age-range-button" type="button" data-age-range="52">1年</button>
-          <button class="age-range-button" type="button" data-age-range="104">2年</button>
-        </div>
-        <div class="age-playback-controls">
-          <button id="age-prev-week" class="timeline-button" type="button" aria-label="1週戻る">◀</button>
-          <button id="age-play" class="timeline-button timeline-play" type="button">▶ 再生</button>
-          <button id="age-next-week" class="timeline-button" type="button" aria-label="1週進む">▶</button>
-          <button id="age-latest" class="timeline-button timeline-latest" type="button">最新へ</button>
-        </div>
-      </div>
-      <input id="age-week-slider" class="map-week-slider age-week-slider" type="range" min="0" max="0" value="0" step="1" aria-label="年代別ヒートマップの表示週">
-      <div class="map-timeline-scale age-timeline-scale">
-        <span id="age-first-week">--</span>
-        <span id="age-last-week">--</span>
-      </div>
-    </div>
+としてあります。
 
-    <div class="age-heatmap-scroll" id="age-heatmap-scroll" tabindex="0" aria-label="年代別流行ヒートマップ">
-      <div id="age-heatmap" class="age-heatmap"></div>
-    </div>
-    <div class="age-heatmap-legend" aria-hidden="true">
-      <span>低い</span><div class="age-legend-gradient"></div><span>高い</span>
-      <span class="age-legend-note">※ 色は各年代内での相対的な強さ</span>
-    </div>
-  </article>
+GitHubでは index.html・styles.css・app.js の3つをこのv50一式で差し替えてください。
 
-  <div class="age-grid">
-    <article class="card age-latest-card">
-      <div class="section-title-row age-card-head">
-        <div><div class="card-kicker">LATEST WEEK</div><h3>最新週の年代別比較</h3></div>
-        <span id="age-latest-period" class="source-chip">--</span>
-      </div>
-      <div class="age-chart-wrap age-latest-chart-wrap"><canvas id="age-latest-chart"></canvas></div>
-      <p class="muted small">グラフは定点当たり報告数（人/定点）。実数はグラフに触れると確認できます。</p>
-    </article>
+これで次の表示では、本来作った
 
-    <article class="card age-series-card">
-      <div class="section-title-row age-card-head">
-        <div><div class="card-kicker">TIME SERIES</div><h3>年代別の時系列推移</h3></div>
-        <div class="age-series-range range-switch" role="group" aria-label="年代別時系列の表示期間">
-          <button type="button" class="age-series-range-button active" data-age-series-weeks="13">3か月</button>
-          <button type="button" class="age-series-range-button" data-age-series-weeks="26">半年</button>
-          <button type="button" class="age-series-range-button" data-age-series-weeks="52">1年</button>
-          <button type="button" class="age-series-range-button" data-age-series-weeks="104">2年</button>
-        </div>
-      </div>
-      <div id="age-series-toggles" class="age-series-toggles" aria-label="表示する年代"></div>
-      <div class="age-series-scroll" id="age-series-scroll">
-        <div class="age-series-inner"><canvas id="age-series-chart"></canvas></div>
-      </div>
-    </article>
-  </div>
+横方向に週が並ぶ色付きヒートマップ
 
-  <p class="age-data-note">年代別の「人/定点」は県公表値をそのまま使用しています。年代によって年齢幅や受診状況が異なるため、年代間の値の大小だけで感染リスクを単純比較するものではありません。</p>
-</section>
+として表示されるはずです。
 
-<section class="footer-note" id="about">
-  <p>出典：新潟県「感染症情報（週報）」</p>
-  <p>本サイトは公表データを見やすく整理したもので、診断・受診判断を行うものではありません。</p>
-  <p>Powered by CivITech</p>
-</section>
-</main>
+今のスクリーンショットを見る限り、データ取得とJS処理そのものは動いているので、かなり軽い修正で済みそうです。 
 
-<dialog id="region-dialog" class="region-dialog">
-  <div class="dialog-head">
-    <div><div class="card-kicker">AREA DEFINITIONS</div><h2>地域区分と市町村</h2></div>
-    <button id="region-dialog-close" class="dialog-close" type="button" aria-label="閉じる">×</button>
-  </div>
-  <p class="muted small">新潟県の公表地域単位を、市町村に対応付けています。</p>
-  <div id="region-definition-list" class="region-definition-list"></div>
-</dialog>
+index.html
+HTML
+いまのままの体裁でいいのですが、順序だけ変えてください
+ヒートマップは一番下がいいです
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="./app.js"></script>
-</body>
-</html>
+はい、順序だけ変更しました。体裁はそのままです。
+
+新しい並びは、
+
+最新週の年代別比較
+年代別の時系列推移
+年代別 流行ヒートマップ ← 一番下
+
+です。
+
+差し替えるのは index.html だけで大丈夫です。
+
+順序変更版 index.html
+
+app.js と styles.css はそのままでOKです。 
+
+index.html
+HTML
