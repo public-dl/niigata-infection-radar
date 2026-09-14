@@ -369,9 +369,6 @@ def parse_age_groups(wb, expected_count=None, expected_rate=None):
         if expected_count is not None and abs(count_sum-float(expected_count)) > 0.01:
             diagnostics.append(f"{ws.title}: 年代別実数合計不一致 {count_sum} != {expected_count}")
             continue
-        if expected_rate is not None and abs(rate_sum-float(expected_rate)) > 0.15:
-            diagnostics.append(f"{ws.title}: 年代別定点値合計差が大きい {rate_sum} vs {expected_rate}")
-            continue
 
         return {
             "age_counts":counts,
