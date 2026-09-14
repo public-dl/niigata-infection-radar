@@ -595,3 +595,19 @@
 .hero-status-panel .hero-signal-dot{
   border:1.5px solid rgba(0,0,0,.65) !important;
 }
+
+/* アクティブなシグナルだけ点滅 */
+.hero-status-panel .hero-signal-dot.is-active{
+  animation:signalBlink 1.4s ease-in-out infinite !important;
+}
+
+@keyframes signalBlink{
+  0%,100%{
+    opacity:1;
+    transform:scale(1.18);
+  }
+  50%{
+    opacity:.45;
+    transform:scale(1);
+  }
+}
