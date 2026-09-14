@@ -9,14 +9,19 @@ def main():
     data=read_json(OUT)
     weeks=data.get("weeks",[])
 
-    # 新しい週に加え、既存週でも age_groups が未取得なら再取得する。
     existing={(x["year"],x["week"]):x for x in weeks}
     pages=discover_week_pages(2025)
 
+    # 新週だけでなく、
+    # age_counts / age_per_sentinel のどちらかが無い既存週も再取得する。
     pending=[]
     for p in pages:
         old=existing.get((p.year,p.week))
-        if old is None or not old.get("age_groups"):
+        if (
+            old is None
+            or not old.get("age_counts")
+            or not old.get("age_per_sentinel")
+        ):
             pending.append(p)
 
     if not pending:
@@ -30,20 +35,28 @@ def main():
             refreshed.append(w)
             print(
                 f"updated {p.year} W{p.week:02d}: "
-                f"{w['prefecture']} / age_groups={len(w.get('age_groups',{}))}"
+                f"{w['prefecture']} / "
+                f"age_counts={len(w.get('age_counts',{}))} / "
+                f"age_per_sentinel={len(w.get('age_per_sentinel',{}))}"
             )
         except Exception as e:
             print(f"skip {p.year} W{p.week:02d}: {e}")
         time.sleep(.45)
 
-    # 同じ year/week は refreshed 側を優先して置換。
     data["weeks"]=dedupe(weeks+refreshed)
 
     meta=data.setdefault("meta",{})
     meta["weeks_ok"]=len(data["weeks"])
-    meta["age_unit"]="報告数（人）"
+    meta["age_count_unit"]="報告数（人）"
+    meta["age_per_sentinel_unit"]="人/定点"
     meta["age_groups"]=["0歳","1～4歳","5～9歳","10～14歳","15～19歳","20～59歳","60歳以上"]
-    meta["weeks_with_age_data"]=sum(1 for w in data["weeks"] if w.get("age_groups"))
+    meta["weeks_with_age_data"]=sum(
+        1 for w in data["weeks"]
+        if w.get("age_counts") and w.get("age_per_sentinel")
+    )
+
+    # 旧キーは今後使わないので meta から除去
+    meta.pop("age_unit",None)
 
     write_json(OUT,data)
     print(f"updated {OUT} (+/refresh {len(refreshed)})")
