@@ -326,6 +326,11 @@ async function main(){
  latestWeek=allWeeks.at(-1); const prev=allWeeks.at(-2),prev2=allWeeks.at(-3);
  document.querySelector("#latest-period").textContent=latestWeek.label; document.querySelector("#map-period").textContent=latestWeek.label;
  document.querySelector("#latest-value").textContent=n(latestWeek.prefecture); document.querySelector("#prev-value").textContent=n(prev?.prefecture); document.querySelector("#prev2-value").textContent=n(prev2?.prefecture);
+ const sentinelValue=n(latestWeek.prefecture);
+ const sentinelCurrent=document.querySelector("#sentinel-current-value");
+ const sentinelInline=document.querySelector("#sentinel-current-value-inline");
+ if(sentinelCurrent) sentinelCurrent.textContent=sentinelValue;
+ if(sentinelInline) sentinelInline.textContent=sentinelValue;
  const weekDiff=(prev?.prefecture===null||prev?.prefecture===undefined)?null:absoluteWeekDiff(latestWeek.prefecture,prev.prefecture);
  const wowValueEl=document.querySelector("#wow-value");
  if(wowValueEl){
