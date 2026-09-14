@@ -88,6 +88,19 @@ function highlightSignal(v){
    el.classList.toggle("is-current",el.dataset.signal===key);
  });
 }
+function updateHeroSignal(v){
+ const tier=tierKey(Number(v));
+ const lights=document.querySelector("#hero-signal-lights");
+ if(!lights) return;
+
+ lights.querySelectorAll(".hero-signal-dot").forEach(dot=>dot.classList.remove("is-active"));
+
+ const active=lights.querySelector(`.signal-${tier}`);
+ if(active) active.classList.add("is-active");
+
+ lights.classList.remove("tier-blue","tier-yellow","tier-red","tier-purple");
+ lights.classList.add(`tier-${tier}`);
+}
 function cleanTopic(t){
  if(!t) return "今週はインフルエンザに関する特記事項は掲載されていません。";
  let s=t
@@ -328,7 +341,7 @@ async function main(){
  const big=document.querySelector("#latest-value");
  big.classList.remove("tier-blue","tier-yellow","tier-red","tier-purple");
  big.classList.add(`tier-${tier}`);
- highlightSignal(latestWeek.prefecture); await renderWeeklyInsight(latestWeek);
+ highlightSignal(latestWeek.prefecture); updateHeroSignal(latestWeek.prefecture); await renderWeeklyInsight(latestWeek);
  const geo=await fetchGeoData();
  buildHeroSilhouette(geo);
  buildTrendSilhouette(geo);
