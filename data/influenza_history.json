@@ -19,7 +19,9 @@
     "weeks_discovered": 88,
     "weeks_ok": 88,
     "weeks_with_age_data": 88,
-    "weeks_failed": 0
+    "weeks_failed": 0,
+    "updated_at": "2026-09-14T15:22:54+09:00",
+    "updated_by": "scripts/update.py"
   },
   "weeks": [
     {
