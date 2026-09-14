@@ -17,7 +17,7 @@ OUTPUT_PATH = ROOT / "data" / "ai_comment.json"
 MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6-luna")
 FORCE = os.getenv("FORCE_AI_COMMENT", "").lower() in {"1", "true", "yes"}
 
-SCHEMA_VERSION = 2
+SCHEMA_VERSION = 3
 
 REQUIRED_FIELDS = [
     "headline",
