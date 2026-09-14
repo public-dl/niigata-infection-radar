@@ -4,7 +4,8 @@
     "index_url": "https://www.pref.niigata.lg.jp/sec/kanyaku/1232482573101.html",
     "disease": "インフルエンザ",
     "unit": "定点当たり報告数",
-    "age_unit": "報告数（人）",
+    "age_count_unit": "報告数（人）",
+    "age_per_sentinel_unit": "人/定点",
     "age_groups": [
       "0歳",
       "1～4歳",
@@ -17,7 +18,7 @@
     "generated_by": "scripts/backfill.py",
     "weeks_discovered": 88,
     "weeks_ok": 88,
-    "weeks_with_age_data": 88,
+    "weeks_with_age_data": 87,
     "weeks_failed": 0
   },
   "weeks": [
@@ -43,7 +44,7 @@
         "佐渡": 40.33,
         "上越": 9.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 31.0,
         "1～4歳": 163.0,
         "5～9歳": 291.0,
@@ -52,16 +53,15 @@
         "20～59歳": 809.0,
         "60歳以上": 296.0
       },
-      "age_raw": {
-        "0歳": 31.0,
-        "1～4歳": 163.0,
-        "5～9歳": 291.0,
-        "10～14歳": 186.0,
-        "15～19歳": 135.0,
-        "20～59歳": 809.0,
-        "60歳以上": 296.0
+      "age_per_sentinel": {
+        "0歳": 0.36,
+        "1～4歳": 1.87,
+        "5～9歳": 3.34,
+        "10～14歳": 2.14,
+        "15～19歳": 1.55,
+        "20～59歳": 9.3,
+        "60歳以上": 3.4
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0701.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/430923.xlsx",
@@ -84,13 +84,18 @@
         "title_row": 46,
         "header_row": 46,
         "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1911.0,
-          "age_sum": 1911.0,
-          "difference": 0.0
+          "expected_count": 1911.0,
+          "age_count_sum": 1911.0,
+          "count_difference": 0.0,
+          "expected_rate": 21.97,
+          "age_rate_sum": 21.96,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -115,25 +120,8 @@
         "佐渡": 28.33,
         "上越": 42.38
       },
-      "age_groups": {
-        "0歳": 61.0,
-        "1～4歳": 501.0,
-        "5～9歳": 569.0,
-        "10～14歳": 355.0,
-        "15～19歳": 170.0,
-        "20～59歳": 997.0,
-        "60歳以上": 388.0
-      },
-      "age_raw": {
-        "0歳": 61.0,
-        "1～4歳": 501.0,
-        "5～9歳": 569.0,
-        "10～14歳": 355.0,
-        "15～19歳": 170.0,
-        "20～59歳": 997.0,
-        "60歳以上": 388.0
-      },
-      "age_unit": "報告数（人）",
+      "age_counts": {},
+      "age_per_sentinel": {},
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0702.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/431360.xlsx",
@@ -152,17 +140,10 @@
         "strategy": "main_regional_table_only"
       },
       "_age_parser": {
-        "sheet": "公表用",
-        "title_row": 46,
-        "header_row": 46,
-        "flu_row": 47,
-        "raw_age_columns": 7,
-        "verification": {
-          "expected_total": 3041.0,
-          "age_sum": 3041.0,
-          "difference": 0.0
-        },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "not_found",
+        "diagnostics": [
+          "公表用: 年代別定点値合計差が大きい 9.19 vs 35.36"
+        ]
       }
     },
     {
@@ -187,7 +168,7 @@
         "佐渡": 31.33,
         "上越": 44.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 27.0,
         "1～4歳": 342.0,
         "5～9歳": 554.0,
@@ -196,16 +177,15 @@
         "20～59歳": 409.0,
         "60歳以上": 173.0
       },
-      "age_raw": {
-        "0歳": 27.0,
-        "1～4歳": 342.0,
-        "5～9歳": 554.0,
-        "10～14歳": 360.0,
-        "15～19歳": 89.0,
-        "20～59歳": 409.0,
-        "60歳以上": 173.0
+      "age_per_sentinel": {
+        "0歳": 0.31,
+        "1～4歳": 3.98,
+        "5～9歳": 6.44,
+        "10～14歳": 4.19,
+        "15～19歳": 1.03,
+        "20～59歳": 4.76,
+        "60歳以上": 2.01
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0703.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/432214.xlsx",
@@ -228,13 +208,18 @@
         "title_row": 46,
         "header_row": 46,
         "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1954.0,
-          "age_sum": 1954.0,
-          "difference": 0.0
+          "expected_count": 1954.0,
+          "age_count_sum": 1954.0,
+          "count_difference": 0.0,
+          "expected_rate": 22.72,
+          "age_rate_sum": 22.72,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -259,7 +244,7 @@
         "佐渡": 28.33,
         "上越": 42.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 13.0,
         "1～4歳": 219.0,
         "5～9歳": 577.0,
@@ -268,16 +253,15 @@
         "20～59歳": 297.0,
         "60歳以上": 94.0
       },
-      "age_raw": {
-        "0歳": 13.0,
-        "1～4歳": 219.0,
-        "5～9歳": 577.0,
-        "10～14歳": 501.0,
-        "15～19歳": 72.0,
-        "20～59歳": 297.0,
-        "60歳以上": 94.0
+      "age_per_sentinel": {
+        "0歳": 0.15,
+        "1～4歳": 2.55,
+        "5～9歳": 6.71,
+        "10～14歳": 5.83,
+        "15～19歳": 0.84,
+        "20～59歳": 3.45,
+        "60歳以上": 1.09
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0704.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/432872.xlsx",
@@ -300,13 +284,18 @@
         "title_row": 46,
         "header_row": 46,
         "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1773.0,
-          "age_sum": 1773.0,
-          "difference": 0.0
+          "expected_count": 1773.0,
+          "age_count_sum": 1773.0,
+          "count_difference": 0.0,
+          "expected_rate": 20.62,
+          "age_rate_sum": 20.62,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -331,7 +320,7 @@
         "佐渡": 26.0,
         "上越": 19.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 8.0,
         "1～4歳": 180.0,
         "5～9歳": 450.0,
@@ -340,16 +329,15 @@
         "20～59歳": 167.0,
         "60歳以上": 49.0
       },
-      "age_raw": {
-        "0歳": 8.0,
-        "1～4歳": 180.0,
-        "5～9歳": 450.0,
-        "10～14歳": 355.0,
-        "15～19歳": 76.0,
-        "20～59歳": 167.0,
-        "60歳以上": 49.0
+      "age_per_sentinel": {
+        "0歳": 0.09,
+        "1～4歳": 2.09,
+        "5～9歳": 5.23,
+        "10～14歳": 4.13,
+        "15～19歳": 0.88,
+        "20～59歳": 1.94,
+        "60歳以上": 0.57
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0705.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/433748.xlsx",
@@ -372,13 +360,18 @@
         "title_row": 46,
         "header_row": 46,
         "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1285.0,
-          "age_sum": 1285.0,
-          "difference": 0.0
+          "expected_count": 1285.0,
+          "age_count_sum": 1285.0,
+          "count_difference": 0.0,
+          "expected_rate": 14.94,
+          "age_rate_sum": 14.93,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -403,7 +396,7 @@
         "佐渡": 29.67,
         "上越": 11.88
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 5.0,
         "1～4歳": 195.0,
         "5～9歳": 310.0,
@@ -412,16 +405,15 @@
         "20～59歳": 132.0,
         "60歳以上": 41.0
       },
-      "age_raw": {
-        "0歳": 5.0,
-        "1～4歳": 195.0,
-        "5～9歳": 310.0,
-        "10～14歳": 217.0,
-        "15～19歳": 28.0,
-        "20～59歳": 132.0,
-        "60歳以上": 41.0
+      "age_per_sentinel": {
+        "0歳": 0.06,
+        "1～4歳": 2.27,
+        "5～9歳": 3.6,
+        "10～14歳": 2.52,
+        "15～19歳": 0.33,
+        "20～59歳": 1.53,
+        "60歳以上": 0.48
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0706.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/434690.xlsx",
@@ -444,13 +436,18 @@
         "title_row": 46,
         "header_row": 46,
         "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 928.0,
-          "age_sum": 928.0,
-          "difference": 0.0
+          "expected_count": 928.0,
+          "age_count_sum": 928.0,
+          "count_difference": 0.0,
+          "expected_rate": 10.79,
+          "age_rate_sum": 10.79,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -475,7 +472,7 @@
         "佐渡": 18.67,
         "上越": 4.88
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 4.0,
         "1～4歳": 90.0,
         "5～9歳": 231.0,
@@ -484,16 +481,15 @@
         "20～59歳": 74.0,
         "60歳以上": 36.0
       },
-      "age_raw": {
-        "0歳": 4.0,
-        "1～4歳": 90.0,
-        "5～9歳": 231.0,
-        "10～14歳": 144.0,
-        "15～19歳": 20.0,
-        "20～59歳": 74.0,
-        "60歳以上": 36.0
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 1.05,
+        "5～9歳": 2.69,
+        "10～14歳": 1.67,
+        "15～19歳": 0.23,
+        "20～59歳": 0.86,
+        "60歳以上": 0.42
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの警報を解除します。（別紙１参照）\n〇県内では定点当たりの報告数が全県で6.97と前週の10.79に比べ減少しました。国の示す終息基準（定点当たり10）を下回ったため、警報を解除します。\n〇ただし、一部保健所管内では、注意報基準（定点当たり10）を上回っており、児童福祉施設等での集団発生も報告されていることから、引き続き注意が必要です。\n〇発熱や咳などの症状がある場合は、外出を控えてください。\n〇やむを得ず外出される場合には、マスクを着用するとともに、うがいや手洗いの励行や咳エチケット等の基本的な感染対策をお願いします。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0707.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/435745.xlsx",
@@ -516,13 +512,18 @@
         "title_row": 46,
         "header_row": 46,
         "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 599.0,
-          "age_sum": 599.0,
-          "difference": 0.0
+          "expected_count": 599.0,
+          "age_count_sum": 599.0,
+          "count_difference": 0.0,
+          "expected_rate": 6.97,
+          "age_rate_sum": 6.97,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -547,7 +548,7 @@
         "佐渡": 4.33,
         "上越": 1.63
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 4.0,
         "1～4歳": 73.0,
         "5～9歳": 201.0,
@@ -556,16 +557,15 @@
         "20～59歳": 47.0,
         "60歳以上": 17.0
       },
-      "age_raw": {
-        "0歳": 4.0,
-        "1～4歳": 73.0,
-        "5～9歳": 201.0,
-        "10～14歳": 152.0,
-        "15～19歳": 28.0,
-        "20～59歳": 47.0,
-        "60歳以上": 17.0
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 0.85,
+        "5～9歳": 2.34,
+        "10～14歳": 1.77,
+        "15～19歳": 0.33,
+        "20～59歳": 0.55,
+        "60歳以上": 0.2
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0709.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/436391.xlsx",
@@ -588,13 +588,18 @@
         "title_row": 46,
         "header_row": 46,
         "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 522.0,
-          "age_sum": 522.0,
-          "difference": 0.0
+          "expected_count": 522.0,
+          "age_count_sum": 522.0,
+          "count_difference": 0.0,
+          "expected_rate": 6.07,
+          "age_rate_sum": 6.09,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -619,7 +624,7 @@
         "佐渡": 4.33,
         "上越": 6.13
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 3.0,
         "1～4歳": 76.0,
         "5～9歳": 107.0,
@@ -628,16 +633,15 @@
         "20～59歳": 58.0,
         "60歳以上": 13.0
       },
-      "age_raw": {
-        "0歳": 3.0,
-        "1～4歳": 76.0,
-        "5～9歳": 107.0,
-        "10～14歳": 71.0,
-        "15～19歳": 21.0,
-        "20～59歳": 58.0,
-        "60歳以上": 13.0
+      "age_per_sentinel": {
+        "0歳": 0.03,
+        "1～4歳": 0.88,
+        "5～9歳": 1.24,
+        "10～14歳": 0.83,
+        "15～19歳": 0.24,
+        "20～59歳": 0.67,
+        "60歳以上": 0.15
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho07099.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/437444.xlsx",
@@ -660,13 +664,18 @@
         "title_row": 46,
         "header_row": 46,
         "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 349.0,
-          "age_sum": 349.0,
-          "difference": 0.0
+          "expected_count": 349.0,
+          "age_count_sum": 349.0,
+          "count_difference": 0.0,
+          "expected_rate": 4.06,
+          "age_rate_sum": 4.04,
+          "rate_difference": -0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -691,7 +700,7 @@
         "佐渡": 0.33,
         "上越": 13.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 62.0,
         "5～9歳": 177.0,
@@ -700,16 +709,15 @@
         "20～59歳": 43.0,
         "60歳以上": 11.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 62.0,
-        "5～9歳": 177.0,
-        "10～14歳": 83.0,
-        "15～19歳": 33.0,
-        "20～59歳": 43.0,
-        "60歳以上": 11.0
+        "1～4歳": 0.72,
+        "5～9歳": 2.06,
+        "10～14歳": 0.97,
+        "15～19歳": 0.38,
+        "20～59歳": 0.5,
+        "60歳以上": 0.13
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0710.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/438900.xlsx",
@@ -732,13 +740,18 @@
         "title_row": 46,
         "header_row": 46,
         "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 409.0,
-          "age_sum": 409.0,
-          "difference": 0.0
+          "expected_count": 409.0,
+          "age_count_sum": 409.0,
+          "count_difference": 0.0,
+          "expected_rate": 4.76,
+          "age_rate_sum": 4.76,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -763,7 +776,7 @@
         "佐渡": 0.33,
         "上越": 6.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 10.0,
         "1～4歳": 86.0,
         "5～9歳": 196.0,
@@ -772,16 +785,15 @@
         "20～59歳": 56.0,
         "60歳以上": 13.0
       },
-      "age_raw": {
-        "0歳": 10.0,
-        "1～4歳": 86.0,
-        "5～9歳": 196.0,
-        "10～14歳": 120.0,
-        "15～19歳": 23.0,
-        "20～59歳": 56.0,
-        "60歳以上": 13.0
+      "age_per_sentinel": {
+        "0歳": 0.12,
+        "1～4歳": 1.0,
+        "5～9歳": 2.28,
+        "10～14歳": 1.4,
+        "15～19歳": 0.27,
+        "20～59歳": 0.65,
+        "60歳以上": 0.15
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0711.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/440069.xlsx",
@@ -804,13 +816,18 @@
         "title_row": 46,
         "header_row": 46,
         "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 504.0,
-          "age_sum": 504.0,
-          "difference": 0.0
+          "expected_count": 504.0,
+          "age_count_sum": 504.0,
+          "count_difference": 0.0,
+          "expected_rate": 5.86,
+          "age_rate_sum": 5.87,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -835,7 +852,7 @@
         "佐渡": 1.67,
         "上越": 2.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 6.0,
         "1～4歳": 54.0,
         "5～9歳": 161.0,
@@ -844,16 +861,15 @@
         "20～59歳": 56.0,
         "60歳以上": 20.0
       },
-      "age_raw": {
-        "0歳": 6.0,
-        "1～4歳": 54.0,
-        "5～9歳": 161.0,
-        "10～14歳": 117.0,
-        "15～19歳": 18.0,
-        "20～59歳": 56.0,
-        "60歳以上": 20.0
+      "age_per_sentinel": {
+        "0歳": 0.07,
+        "1～4歳": 0.63,
+        "5～9歳": 1.87,
+        "10～14歳": 1.36,
+        "15～19歳": 0.21,
+        "20～59歳": 0.65,
+        "60歳以上": 0.23
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0712.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/442416.xlsx",
@@ -876,13 +892,18 @@
         "title_row": 46,
         "header_row": 46,
         "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 432.0,
-          "age_sum": 432.0,
-          "difference": 0.0
+          "expected_count": 432.0,
+          "age_count_sum": 432.0,
+          "count_difference": 0.0,
+          "expected_rate": 5.02,
+          "age_rate_sum": 5.02,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -907,7 +928,7 @@
         "佐渡": 0.33,
         "上越": 1.88
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 3.0,
         "1～4歳": 39.0,
         "5～9歳": 89.0,
@@ -916,16 +937,15 @@
         "20～59歳": 56.0,
         "60歳以上": 17.0
       },
-      "age_raw": {
-        "0歳": 3.0,
-        "1～4歳": 39.0,
-        "5～9歳": 89.0,
-        "10～14歳": 75.0,
-        "15～19歳": 16.0,
-        "20～59歳": 56.0,
-        "60歳以上": 17.0
+      "age_per_sentinel": {
+        "0歳": 0.03,
+        "1～4歳": 0.45,
+        "5～9歳": 1.03,
+        "10～14歳": 0.87,
+        "15～19歳": 0.19,
+        "20～59歳": 0.65,
+        "60歳以上": 0.2
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho07130.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/445220.xlsx",
@@ -948,13 +968,18 @@
         "title_row": 46,
         "header_row": 46,
         "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 295.0,
-          "age_sum": 295.0,
-          "difference": 0.0
+          "expected_count": 295.0,
+          "age_count_sum": 295.0,
+          "count_difference": 0.0,
+          "expected_rate": 3.43,
+          "age_rate_sum": 3.42,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -979,7 +1004,7 @@
         "佐渡": 0.67,
         "上越": 1.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 3.0,
         "1～4歳": 30.0,
         "5～9歳": 45.0,
@@ -988,16 +1013,15 @@
         "20～59歳": 45.0,
         "60歳以上": 5.0
       },
-      "age_raw": {
-        "0歳": 3.0,
-        "1～4歳": 30.0,
-        "5～9歳": 45.0,
-        "10～14歳": 23.0,
-        "15～19歳": 5.0,
-        "20～59歳": 45.0,
-        "60歳以上": 5.0
+      "age_per_sentinel": {
+        "0歳": 0.03,
+        "1～4歳": 0.35,
+        "5～9歳": 0.52,
+        "10～14歳": 0.27,
+        "15～19歳": 0.06,
+        "20～59歳": 0.52,
+        "60歳以上": 0.06
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0714.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/446107.xlsx",
@@ -1020,13 +1044,18 @@
         "title_row": 46,
         "header_row": 46,
         "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 156.0,
-          "age_sum": 156.0,
-          "difference": 0.0
+          "expected_count": 156.0,
+          "age_count_sum": 156.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.81,
+          "age_rate_sum": 1.81,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1051,7 +1080,7 @@
         "佐渡": 2.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 2.0,
         "1～4歳": 28.0,
         "5～9歳": 11.0,
@@ -1060,16 +1089,15 @@
         "20～59歳": 20.0,
         "60歳以上": 8.0
       },
-      "age_raw": {
-        "0歳": 2.0,
-        "1～4歳": 28.0,
-        "5～9歳": 11.0,
-        "10～14歳": 4.0,
-        "15～19歳": 5.0,
-        "20～59歳": 20.0,
-        "60歳以上": 8.0
+      "age_per_sentinel": {
+        "0歳": 0.04,
+        "1～4歳": 0.51,
+        "5～9歳": 0.21,
+        "10～14歳": 0.07,
+        "15～19歳": 0.09,
+        "20～59歳": 0.37,
+        "60歳以上": 0.15
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0715.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/447372.xlsx",
@@ -1092,13 +1120,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 78.0,
-          "age_sum": 78.0,
-          "difference": 0.0
+          "expected_count": 78.0,
+          "age_count_sum": 78.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.44,
+          "age_rate_sum": 1.44,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1123,7 +1156,7 @@
         "佐渡": 0.5,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 15.0,
         "5～9歳": 21.0,
@@ -1132,16 +1165,15 @@
         "20～59歳": 14.0,
         "60歳以上": 8.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 15.0,
-        "5～9歳": 21.0,
-        "10～14歳": 11.0,
-        "15～19歳": 15.0,
-        "20～59歳": 14.0,
-        "60歳以上": 8.0
+        "1～4歳": 0.27,
+        "5～9歳": 0.38,
+        "10～14歳": 0.2,
+        "15～19歳": 0.27,
+        "20～59歳": 0.24,
+        "60歳以上": 0.15
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0716.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/448226.xlsx",
@@ -1164,13 +1196,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 84.0,
-          "age_sum": 84.0,
-          "difference": 0.0
+          "expected_count": 84.0,
+          "age_count_sum": 84.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.53,
+          "age_rate_sum": 1.51,
+          "rate_difference": -0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1195,7 +1232,7 @@
         "佐渡": 0.0,
         "上越": 0.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 1.0,
         "1～4歳": 8.0,
         "5～9歳": 20.0,
@@ -1204,16 +1241,15 @@
         "20～59歳": 18.0,
         "60歳以上": 1.0
       },
-      "age_raw": {
-        "0歳": 1.0,
-        "1～4歳": 8.0,
-        "5～9歳": 20.0,
-        "10～14歳": 20.0,
-        "15～19歳": 13.0,
-        "20～59歳": 18.0,
-        "60歳以上": 1.0
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.14,
+        "5～9歳": 0.37,
+        "10～14歳": 0.36,
+        "15～19歳": 0.24,
+        "20～59歳": 0.33,
+        "60歳以上": 0.02
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0717.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/449174.xlsx",
@@ -1236,13 +1272,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 81.0,
-          "age_sum": 81.0,
-          "difference": 0.0
+          "expected_count": 81.0,
+          "age_count_sum": 81.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.47,
+          "age_rate_sum": 1.48,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1267,7 +1308,7 @@
         "佐渡": 0.0,
         "上越": 0.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 6.0,
         "5～9歳": 36.0,
@@ -1276,16 +1317,15 @@
         "20～59歳": 7.0,
         "60歳以上": 1.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 6.0,
-        "5～9歳": 36.0,
-        "10～14歳": 11.0,
-        "15～19歳": 3.0,
-        "20～59歳": 7.0,
-        "60歳以上": 1.0
+        "1～4歳": 0.12,
+        "5～9歳": 0.65,
+        "10～14歳": 0.2,
+        "15～19歳": 0.05,
+        "20～59歳": 0.13,
+        "60歳以上": 0.02
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0718.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/449685.xlsx",
@@ -1308,13 +1348,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 64.0,
-          "age_sum": 64.0,
-          "difference": 0.0
+          "expected_count": 64.0,
+          "age_count_sum": 64.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.16,
+          "age_rate_sum": 1.17,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1339,7 +1384,7 @@
         "佐渡": 0.0,
         "上越": 0.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 2.0,
         "5～9歳": 15.0,
@@ -1348,16 +1393,15 @@
         "20～59歳": 8.0,
         "60歳以上": 4.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 2.0,
-        "5～9歳": 15.0,
-        "10～14歳": 6.0,
-        "15～19歳": 5.0,
-        "20～59歳": 8.0,
-        "60歳以上": 4.0
+        "1～4歳": 0.04,
+        "5～9歳": 0.27,
+        "10～14歳": 0.11,
+        "15～19歳": 0.09,
+        "20～59歳": 0.15,
+        "60歳以上": 0.08
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0719.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/450180.xlsx",
@@ -1380,13 +1424,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 40.0,
-          "age_sum": 40.0,
-          "difference": 0.0
+          "expected_count": 40.0,
+          "age_count_sum": 40.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.73,
+          "age_rate_sum": 0.74,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1411,7 +1460,7 @@
         "佐渡": 0.0,
         "上越": 1.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 3.0,
         "5～9歳": 8.0,
@@ -1420,16 +1469,15 @@
         "20～59歳": 7.0,
         "60歳以上": 1.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 3.0,
-        "5～9歳": 8.0,
-        "10～14歳": 8.0,
-        "15～19歳": 1.0,
-        "20～59歳": 7.0,
-        "60歳以上": 1.0
+        "1～4歳": 0.06,
+        "5～9歳": 0.15,
+        "10～14歳": 0.15,
+        "15～19歳": 0.02,
+        "20～59歳": 0.13,
+        "60歳以上": 0.02
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0720.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/451112.xlsx",
@@ -1452,13 +1500,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 28.0,
-          "age_sum": 28.0,
-          "difference": 0.0
+          "expected_count": 28.0,
+          "age_count_sum": 28.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.51,
+          "age_rate_sum": 0.53,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1483,7 +1536,7 @@
         "佐渡": 0.0,
         "上越": 0.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 4.0,
         "5～9歳": 9.0,
@@ -1492,16 +1545,15 @@
         "20～59歳": 4.0,
         "60歳以上": 2.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 4.0,
-        "5～9歳": 9.0,
-        "10～14歳": 3.0,
-        "15～19歳": 3.0,
-        "20～59歳": 4.0,
-        "60歳以上": 2.0
+        "1～4歳": 0.07,
+        "5～9歳": 0.16,
+        "10～14歳": 0.05,
+        "15～19歳": 0.05,
+        "20～59歳": 0.08,
+        "60歳以上": 0.04
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0721.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/452012.xlsx",
@@ -1524,13 +1576,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 25.0,
-          "age_sum": 25.0,
-          "difference": 0.0
+          "expected_count": 25.0,
+          "age_count_sum": 25.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.45,
+          "age_rate_sum": 0.45,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1555,7 +1612,7 @@
         "佐渡": 0.0,
         "上越": 0.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 1.0,
         "1～4歳": 5.0,
         "5～9歳": 2.0,
@@ -1564,16 +1621,15 @@
         "20～59歳": 4.0,
         "60歳以上": 2.0
       },
-      "age_raw": {
-        "0歳": 1.0,
-        "1～4歳": 5.0,
-        "5～9歳": 2.0,
-        "10～14歳": 3.0,
-        "15～19歳": 2.0,
-        "20～59歳": 4.0,
-        "60歳以上": 2.0
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.1,
+        "5～9歳": 0.04,
+        "10～14歳": 0.05,
+        "15～19歳": 0.04,
+        "20～59歳": 0.08,
+        "60歳以上": 0.04
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0722.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/453033.xlsx",
@@ -1596,13 +1652,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 19.0,
-          "age_sum": 19.0,
-          "difference": 0.0
+          "expected_count": 19.0,
+          "age_count_sum": 19.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.35,
+          "age_rate_sum": 0.37,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1627,7 +1688,7 @@
         "佐渡": 0.0,
         "上越": 0.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 1.0,
         "5～9歳": 1.0,
@@ -1636,16 +1697,15 @@
         "20～59歳": 0.0,
         "60歳以上": 3.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 1.0,
-        "5～9歳": 1.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.02,
         "10～14歳": 0.0,
-        "15～19歳": 1.0,
+        "15～19歳": 0.02,
         "20～59歳": 0.0,
-        "60歳以上": 3.0
+        "60歳以上": 0.06
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0723.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/453586.xlsx",
@@ -1668,13 +1728,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 6.0,
-          "age_sum": 6.0,
-          "difference": 0.0
+          "expected_count": 6.0,
+          "age_count_sum": 6.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.11,
+          "age_rate_sum": 0.12,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1699,7 +1764,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 1.0,
         "5～9歳": 0.0,
@@ -1708,16 +1773,15 @@
         "20～59歳": 3.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 1.0,
+        "1～4歳": 0.02,
         "5～9歳": 0.0,
         "10～14歳": 0.0,
-        "15～19歳": 1.0,
-        "20～59歳": 3.0,
+        "15～19歳": 0.02,
+        "20～59歳": 0.06,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0724.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/454501.xlsx",
@@ -1740,13 +1804,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 5.0,
-          "age_sum": 5.0,
-          "difference": 0.0
+          "expected_count": 5.0,
+          "age_count_sum": 5.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.09,
+          "age_rate_sum": 0.1,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1771,7 +1840,7 @@
         "佐渡": 0.0,
         "上越": 0.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 1.0,
         "5～9歳": 3.0,
@@ -1780,16 +1849,15 @@
         "20～59歳": 4.0,
         "60歳以上": 3.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 1.0,
-        "5～9歳": 3.0,
-        "10～14歳": 4.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.06,
+        "10～14歳": 0.07,
         "15～19歳": 0.0,
-        "20～59歳": 4.0,
-        "60歳以上": 3.0
+        "20～59歳": 0.07,
+        "60歳以上": 0.06
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0725.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/455886.xlsx",
@@ -1812,13 +1880,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 15.0,
-          "age_sum": 15.0,
-          "difference": 0.0
+          "expected_count": 15.0,
+          "age_count_sum": 15.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.27,
+          "age_rate_sum": 0.28,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1843,7 +1916,7 @@
         "佐渡": 0.0,
         "上越": 1.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 1.0,
         "5～9歳": 2.0,
@@ -1852,16 +1925,15 @@
         "20～59歳": 2.0,
         "60歳以上": 3.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 1.0,
-        "5～9歳": 2.0,
-        "10～14歳": 19.0,
-        "15～19歳": 4.0,
-        "20～59歳": 2.0,
-        "60歳以上": 3.0
+        "1～4歳": 0.02,
+        "5～9歳": 0.04,
+        "10～14歳": 0.35,
+        "15～19歳": 0.07,
+        "20～59歳": 0.04,
+        "60歳以上": 0.06
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0726.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/457518.xlsx",
@@ -1884,13 +1956,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 31.0,
-          "age_sum": 31.0,
-          "difference": 0.0
+          "expected_count": 31.0,
+          "age_count_sum": 31.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.56,
+          "age_rate_sum": 0.58,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1915,7 +1992,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 1.0,
         "5～9歳": 9.0,
@@ -1924,16 +2001,15 @@
         "20～59歳": 3.0,
         "60歳以上": 1.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 1.0,
-        "5～9歳": 9.0,
-        "10～14歳": 26.0,
-        "15～19歳": 7.0,
-        "20～59歳": 3.0,
-        "60歳以上": 1.0
+        "1～4歳": 0.02,
+        "5～9歳": 0.17,
+        "10～14歳": 0.47,
+        "15～19歳": 0.13,
+        "20～59歳": 0.06,
+        "60歳以上": 0.02
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0727.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/458462.xlsx",
@@ -1956,13 +2032,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 47.0,
-          "age_sum": 47.0,
-          "difference": 0.0
+          "expected_count": 47.0,
+          "age_count_sum": 47.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.85,
+          "age_rate_sum": 0.87,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -1987,7 +2068,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 1.0,
         "5～9歳": 12.0,
@@ -1996,16 +2077,15 @@
         "20～59歳": 3.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 1.0,
-        "5～9歳": 12.0,
-        "10～14歳": 9.0,
-        "15～19歳": 4.0,
-        "20～59歳": 3.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.23,
+        "10～14歳": 0.16,
+        "15～19歳": 0.07,
+        "20～59歳": 0.06,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0728.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/459293.xlsx",
@@ -2028,13 +2108,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 29.0,
-          "age_sum": 29.0,
-          "difference": 0.0
+          "expected_count": 29.0,
+          "age_count_sum": 29.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.53,
+          "age_rate_sum": 0.54,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2059,7 +2144,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 4.0,
         "5～9歳": 9.0,
@@ -2068,16 +2153,15 @@
         "20～59歳": 3.0,
         "60歳以上": 1.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 4.0,
-        "5～9歳": 9.0,
-        "10～14歳": 6.0,
-        "15～19歳": 2.0,
-        "20～59歳": 3.0,
-        "60歳以上": 1.0
+        "1～4歳": 0.08,
+        "5～9歳": 0.17,
+        "10～14歳": 0.11,
+        "15～19歳": 0.04,
+        "20～59歳": 0.06,
+        "60歳以上": 0.02
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0729.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/459998.xlsx",
@@ -2100,13 +2184,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 25.0,
-          "age_sum": 25.0,
-          "difference": 0.0
+          "expected_count": 25.0,
+          "age_count_sum": 25.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.46,
+          "age_rate_sum": 0.48,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2131,7 +2220,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 3.0,
         "5～9歳": 6.0,
@@ -2140,16 +2229,15 @@
         "20～59歳": 4.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 3.0,
-        "5～9歳": 6.0,
-        "10～14歳": 4.0,
+        "1～4歳": 0.06,
+        "5～9歳": 0.12,
+        "10～14歳": 0.07,
         "15～19歳": 0.0,
-        "20～59歳": 4.0,
+        "20～59歳": 0.08,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0730.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/460951.xlsx",
@@ -2172,13 +2260,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 17.0,
-          "age_sum": 17.0,
-          "difference": 0.0
+          "expected_count": 17.0,
+          "age_count_sum": 17.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.31,
+          "age_rate_sum": 0.33,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2203,7 +2296,7 @@
         "佐渡": 0.0,
         "上越": 0.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 2.0,
         "5～9歳": 3.0,
@@ -2212,16 +2305,15 @@
         "20～59歳": 3.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 2.0,
-        "5～9歳": 3.0,
+        "1～4歳": 0.04,
+        "5～9歳": 0.06,
         "10～14歳": 0.0,
-        "15～19歳": 2.0,
-        "20～59歳": 3.0,
+        "15～19歳": 0.04,
+        "20～59歳": 0.06,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0731.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/461523.xlsx",
@@ -2244,13 +2336,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 10.0,
-          "age_sum": 10.0,
-          "difference": 0.0
+          "expected_count": 10.0,
+          "age_count_sum": 10.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.18,
+          "age_rate_sum": 0.2,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2275,7 +2372,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 3.0,
         "5～9歳": 2.0,
@@ -2284,16 +2381,15 @@
         "20～59歳": 3.0,
         "60歳以上": 2.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 3.0,
-        "5～9歳": 2.0,
+        "1～4歳": 0.06,
+        "5～9歳": 0.04,
         "10～14歳": 0.0,
         "15～19歳": 0.0,
-        "20～59歳": 3.0,
-        "60歳以上": 2.0
+        "20～59歳": 0.06,
+        "60歳以上": 0.04
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0732.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/462048.xlsx",
@@ -2316,13 +2412,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 10.0,
-          "age_sum": 10.0,
-          "difference": 0.0
+          "expected_count": 10.0,
+          "age_count_sum": 10.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.2,
+          "age_rate_sum": 0.2,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2347,7 +2448,7 @@
         "佐渡": 0.5,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 4.0,
         "5～9歳": 7.0,
@@ -2356,16 +2457,15 @@
         "20～59歳": 5.0,
         "60歳以上": 4.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 4.0,
-        "5～9歳": 7.0,
-        "10～14歳": 1.0,
-        "15～19歳": 1.0,
-        "20～59歳": 5.0,
-        "60歳以上": 4.0
+        "1～4歳": 0.08,
+        "5～9歳": 0.13,
+        "10～14歳": 0.02,
+        "15～19歳": 0.02,
+        "20～59歳": 0.1,
+        "60歳以上": 0.08
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0733.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/462765.xlsx",
@@ -2388,13 +2488,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 22.0,
-          "age_sum": 22.0,
-          "difference": 0.0
+          "expected_count": 22.0,
+          "age_count_sum": 22.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.41,
+          "age_rate_sum": 0.43,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2419,7 +2524,7 @@
         "佐渡": 0.0,
         "上越": 0.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 3.0,
         "5～9歳": 4.0,
@@ -2428,16 +2533,15 @@
         "20～59歳": 3.0,
         "60歳以上": 3.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 3.0,
-        "5～9歳": 4.0,
-        "10～14歳": 3.0,
+        "1～4歳": 0.06,
+        "5～9歳": 0.08,
+        "10～14歳": 0.06,
         "15～19歳": 0.0,
-        "20～59歳": 3.0,
-        "60歳以上": 3.0
+        "20～59歳": 0.06,
+        "60歳以上": 0.06
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0734.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/463440.xlsx",
@@ -2460,13 +2564,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 16.0,
-          "age_sum": 16.0,
-          "difference": 0.0
+          "expected_count": 16.0,
+          "age_count_sum": 16.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.3,
+          "age_rate_sum": 0.32,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2491,7 +2600,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 1.0,
         "5～9歳": 1.0,
@@ -2500,16 +2609,15 @@
         "20～59歳": 1.0,
         "60歳以上": 2.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 1.0,
-        "5～9歳": 1.0,
-        "10～14歳": 2.0,
-        "15～19歳": 1.0,
-        "20～59歳": 1.0,
-        "60歳以上": 2.0
+        "1～4歳": 0.02,
+        "5～9歳": 0.02,
+        "10～14歳": 0.04,
+        "15～19歳": 0.02,
+        "20～59歳": 0.02,
+        "60歳以上": 0.04
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0735.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/464190.xlsx",
@@ -2532,13 +2640,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 8.0,
-          "age_sum": 8.0,
-          "difference": 0.0
+          "expected_count": 8.0,
+          "age_count_sum": 8.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.15,
+          "age_rate_sum": 0.16,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2563,7 +2676,7 @@
         "佐渡": 0.0,
         "上越": 0.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 2.0,
         "5～9歳": 3.0,
@@ -2572,16 +2685,15 @@
         "20～59歳": 3.0,
         "60歳以上": 5.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 2.0,
-        "5～9歳": 3.0,
-        "10～14歳": 1.0,
-        "15～19歳": 1.0,
-        "20～59歳": 3.0,
-        "60歳以上": 5.0
+        "1～4歳": 0.04,
+        "5～9歳": 0.06,
+        "10～14歳": 0.02,
+        "15～19歳": 0.02,
+        "20～59歳": 0.06,
+        "60歳以上": 0.09
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0736.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/464788.xlsx",
@@ -2604,13 +2716,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 15.0,
-          "age_sum": 15.0,
-          "difference": 0.0
+          "expected_count": 15.0,
+          "age_count_sum": 15.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.27,
+          "age_rate_sum": 0.29,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2635,7 +2752,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
@@ -2644,16 +2761,15 @@
         "20～59歳": 5.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
         "10～14歳": 0.0,
         "15～19歳": 0.0,
-        "20～59歳": 5.0,
+        "20～59歳": 0.09,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0737.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/465431.xlsx",
@@ -2676,13 +2792,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 5.0,
-          "age_sum": 5.0,
-          "difference": 0.0
+          "expected_count": 5.0,
+          "age_count_sum": 5.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.09,
+          "age_rate_sum": 0.09,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2707,7 +2828,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
@@ -2716,16 +2837,15 @@
         "20～59歳": 6.0,
         "60歳以上": 2.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
-        "10～14歳": 6.0,
-        "15～19歳": 1.0,
-        "20～59歳": 6.0,
-        "60歳以上": 2.0
+        "10～14歳": 0.11,
+        "15～19歳": 0.02,
+        "20～59歳": 0.11,
+        "60歳以上": 0.04
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0738.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/465984.xlsx",
@@ -2748,13 +2868,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 15.0,
-          "age_sum": 15.0,
-          "difference": 0.0
+          "expected_count": 15.0,
+          "age_count_sum": 15.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.27,
+          "age_rate_sum": 0.28,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2779,7 +2904,7 @@
         "佐渡": 1.0,
         "上越": 0.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 2.0,
@@ -2788,16 +2913,15 @@
         "20～59歳": 7.0,
         "60歳以上": 1.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
         "1～4歳": 0.0,
-        "5～9歳": 2.0,
+        "5～9歳": 0.04,
         "10～14歳": 0.0,
-        "15～19歳": 1.0,
-        "20～59歳": 7.0,
-        "60歳以上": 1.0
+        "15～19歳": 0.02,
+        "20～59歳": 0.13,
+        "60歳以上": 0.02
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0739.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/466758.xlsx",
@@ -2820,13 +2944,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 11.0,
-          "age_sum": 11.0,
-          "difference": 0.0
+          "expected_count": 11.0,
+          "age_count_sum": 11.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.2,
+          "age_rate_sum": 0.21,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2851,7 +2980,7 @@
         "佐渡": 1.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 1.0,
         "5～9歳": 5.0,
@@ -2860,16 +2989,15 @@
         "20～59歳": 3.0,
         "60歳以上": 2.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 1.0,
-        "5～9歳": 5.0,
-        "10～14歳": 1.0,
-        "15～19歳": 1.0,
-        "20～59歳": 3.0,
-        "60歳以上": 2.0
+        "1～4歳": 0.02,
+        "5～9歳": 0.09,
+        "10～14歳": 0.02,
+        "15～19歳": 0.02,
+        "20～59歳": 0.05,
+        "60歳以上": 0.04
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0740.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/467389.xlsx",
@@ -2892,13 +3020,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 13.0,
-          "age_sum": 13.0,
-          "difference": 0.0
+          "expected_count": 13.0,
+          "age_count_sum": 13.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.24,
+          "age_rate_sum": 0.24,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2923,7 +3056,7 @@
         "佐渡": 1.0,
         "上越": 0.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 2.0,
         "5～9歳": 2.0,
@@ -2932,16 +3065,15 @@
         "20～59歳": 11.0,
         "60歳以上": 2.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 2.0,
-        "5～9歳": 2.0,
-        "10～14歳": 4.0,
-        "15～19歳": 2.0,
-        "20～59歳": 11.0,
-        "60歳以上": 2.0
+        "1～4歳": 0.04,
+        "5～9歳": 0.04,
+        "10～14歳": 0.07,
+        "15～19歳": 0.04,
+        "20～59歳": 0.2,
+        "60歳以上": 0.04
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0741.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/467731.xlsx",
@@ -2964,13 +3096,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 23.0,
-          "age_sum": 23.0,
-          "difference": 0.0
+          "expected_count": 23.0,
+          "age_count_sum": 23.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.42,
+          "age_rate_sum": 0.43,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -2995,7 +3132,7 @@
         "佐渡": 0.0,
         "上越": 0.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 1.0,
         "1～4歳": 8.0,
         "5～9歳": 5.0,
@@ -3004,16 +3141,15 @@
         "20～59歳": 15.0,
         "60歳以上": 6.0
       },
-      "age_raw": {
-        "0歳": 1.0,
-        "1～4歳": 8.0,
-        "5～9歳": 5.0,
-        "10～14歳": 5.0,
-        "15～19歳": 7.0,
-        "20～59歳": 15.0,
-        "60歳以上": 6.0
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.15,
+        "5～9歳": 0.1,
+        "10～14歳": 0.09,
+        "15～19歳": 0.13,
+        "20～59歳": 0.28,
+        "60歳以上": 0.11
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0742.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/468344.xlsx",
@@ -3036,13 +3172,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 47.0,
-          "age_sum": 47.0,
-          "difference": 0.0
+          "expected_count": 47.0,
+          "age_count_sum": 47.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.85,
+          "age_rate_sum": 0.88,
+          "rate_difference": 0.03
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -3067,7 +3208,7 @@
         "佐渡": 0.5,
         "上越": 1.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 2.0,
         "1～4歳": 33.0,
         "5～9歳": 30.0,
@@ -3076,16 +3217,15 @@
         "20～59歳": 17.0,
         "60歳以上": 11.0
       },
-      "age_raw": {
-        "0歳": 2.0,
-        "1～4歳": 33.0,
-        "5～9歳": 30.0,
-        "10～14歳": 15.0,
-        "15～19歳": 5.0,
-        "20～59歳": 17.0,
-        "60歳以上": 11.0
+      "age_per_sentinel": {
+        "0歳": 0.04,
+        "1～4歳": 0.59,
+        "5～9歳": 0.55,
+        "10～14歳": 0.27,
+        "15～19歳": 0.09,
+        "20～59歳": 0.31,
+        "60歳以上": 0.19
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの流行期に入りました。\n○県内では定点当たりの報告数が全県で2.05と流行期入りの目安（定点当たりの報告数１）を\n超えました。（前週：0.85）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染\n対策の徹底をお願いします。\n※参考 直近のシーズンにおける流行期入りの週\n2024(令和６)年第46週（11月11日～11月17日）：定点当たり1.75\n注意報の基準 定点当たりの報告数   10",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0743.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/468927.xlsx",
@@ -3108,13 +3248,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 113.0,
-          "age_sum": 113.0,
-          "difference": 0.0
+          "expected_count": 113.0,
+          "age_count_sum": 113.0,
+          "count_difference": 0.0,
+          "expected_rate": 2.05,
+          "age_rate_sum": 2.04,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -3139,7 +3284,7 @@
         "佐渡": 1.0,
         "上越": 1.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 3.0,
         "1～4歳": 39.0,
         "5～9歳": 57.0,
@@ -3148,16 +3293,15 @@
         "20～59歳": 50.0,
         "60歳以上": 11.0
       },
-      "age_raw": {
-        "0歳": 3.0,
-        "1～4歳": 39.0,
-        "5～9歳": 57.0,
-        "10～14歳": 37.0,
-        "15～19歳": 31.0,
-        "20～59歳": 50.0,
-        "60歳以上": 11.0
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 0.71,
+        "5～9歳": 1.03,
+        "10～14歳": 0.67,
+        "15～19歳": 0.56,
+        "20～59歳": 0.92,
+        "60歳以上": 0.2
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの流行期に入っています。\n○県内では定点当たりの報告数が全県で4.15と流行期入りの目安（定点当たりの報告数1）を\n超えています。（前週：2.05、前々週：0.85）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染\n対策の徹底をお願いします。\n※参考　直近のシーズンにおける流行期入りの週\n2024（令和6）年第46週（11月11日～11月17日）：定点当たり1.75\n注意報の基準　定点当たりの報告数   10",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0744.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/469357.xlsx",
@@ -3180,13 +3324,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 228.0,
-          "age_sum": 228.0,
-          "difference": 0.0
+          "expected_count": 228.0,
+          "age_count_sum": 228.0,
+          "count_difference": 0.0,
+          "expected_rate": 4.15,
+          "age_rate_sum": 4.14,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -3211,7 +3360,7 @@
         "佐渡": 4.5,
         "上越": 4.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 5.0,
         "1～4歳": 77.0,
         "5～9歳": 160.0,
@@ -3220,16 +3369,15 @@
         "20～59歳": 133.0,
         "60歳以上": 33.0
       },
-      "age_raw": {
-        "0歳": 5.0,
-        "1～4歳": 77.0,
-        "5～9歳": 160.0,
-        "10～14歳": 128.0,
-        "15～19歳": 80.0,
-        "20～59歳": 133.0,
-        "60歳以上": 33.0
+      "age_per_sentinel": {
+        "0歳": 0.09,
+        "1～4歳": 1.4,
+        "5～9歳": 2.91,
+        "10～14歳": 2.33,
+        "15～19歳": 1.45,
+        "20～59歳": 2.43,
+        "60歳以上": 0.6
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの定点当たりの報告数が国の示す注意報基準を超えたため、全県に注意報を発令します。\n○県内では定点当たりの報告数が全県で11.20と注意報基準（定点当たりの報告数10）を超えました。\n（前週：4.15、前々週：2.05）\n○昨シーズンに比べて注意報発令時期が１か月程度早くなっています。\n○学校において、学級閉鎖等が増加しています。\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策\nの徹底をお願いします。\n※【参考】過去３シーズンの注意報基準を越えた週\n・2024/2025シーズン：2024(令和６)年第50週(12月９日～12月15日)：定点当たり10.34\n・2023/2024シーズン：2023(令和５)年第43週(10月23日～10月29日)：定点当たり12.12\n・2022/2023シーズン：2023(令和５)年第10週(３月６日～３月12日)：定点当たり15.59",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0745.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/470004.xlsx",
@@ -3252,13 +3400,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 616.0,
-          "age_sum": 616.0,
-          "difference": 0.0
+          "expected_count": 616.0,
+          "age_count_sum": 616.0,
+          "count_difference": 0.0,
+          "expected_rate": 11.2,
+          "age_rate_sum": 11.21,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -3283,7 +3436,7 @@
         "佐渡": 11.0,
         "上越": 4.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 8.0,
         "1～4歳": 174.0,
         "5～9歳": 439.0,
@@ -3292,16 +3445,15 @@
         "20～59歳": 234.0,
         "60歳以上": 67.0
       },
-      "age_raw": {
-        "0歳": 8.0,
-        "1～4歳": 174.0,
-        "5～9歳": 439.0,
-        "10～14歳": 307.0,
-        "15～19歳": 120.0,
-        "20～59歳": 234.0,
-        "60歳以上": 67.0
+      "age_per_sentinel": {
+        "0歳": 0.15,
+        "1～4歳": 3.17,
+        "5～9歳": 7.98,
+        "10～14歳": 5.58,
+        "15～19歳": 2.18,
+        "20～59歳": 4.26,
+        "60歳以上": 1.21
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0746.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/471496.xlsx",
@@ -3324,13 +3476,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1349.0,
-          "age_sum": 1349.0,
-          "difference": 0.0
+          "expected_count": 1349.0,
+          "age_count_sum": 1349.0,
+          "count_difference": 0.0,
+          "expected_rate": 24.53,
+          "age_rate_sum": 24.53,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -3355,7 +3512,7 @@
         "佐渡": 15.5,
         "上越": 28.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 10.0,
         "1～4歳": 390.0,
         "5～9歳": 867.0,
@@ -3364,16 +3521,15 @@
         "20～59歳": 524.0,
         "60歳以上": 145.0
       },
-      "age_raw": {
-        "0歳": 10.0,
-        "1～4歳": 390.0,
-        "5～9歳": 867.0,
-        "10～14歳": 646.0,
-        "15～19歳": 248.0,
-        "20～59歳": 524.0,
-        "60歳以上": 145.0
+      "age_per_sentinel": {
+        "0歳": 0.18,
+        "1～4歳": 7.09,
+        "5～9歳": 15.76,
+        "10～14歳": 11.75,
+        "15～19歳": 4.51,
+        "20～59歳": 9.52,
+        "60歳以上": 2.64
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの定点あたりの報告数が国の示す警報基準を超えたため、全県に警報を発令します。\n○県内では定点当たりの報告数が全県で51.45と警報基準（定点あたりの報告数30）を超えています\n（前週：24.53）。全国的にも警報基準を超えている都道府県が増加しています。\n○昨シーズンに比べて警報発令時期が１か月以上早い状況です。\n​○学校や児童福祉施設での集団発生が多い状況です。\n​○感染予防のため、適宜換気を行いましょう。\n○発熱や咳などの症状がある場合は、早めに医療機関を受診してください。\n○また、症状がある場合は外出を控え、やむを得ず外出される場合にはマスクを着用するとともに、\n手洗いの励行など基本的な感染対策の徹底をお願いします。\n​○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0747.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/472065.xlsx",
@@ -3396,13 +3552,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 2830.0,
-          "age_sum": 2830.0,
-          "difference": 0.0
+          "expected_count": 2830.0,
+          "age_count_sum": 2830.0,
+          "count_difference": 0.0,
+          "expected_rate": 51.45,
+          "age_rate_sum": 51.45,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -3427,7 +3588,7 @@
         "佐渡": 55.0,
         "上越": 65.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 45.0,
         "1～4歳": 433.0,
         "5～9歳": 794.0,
@@ -3436,16 +3597,15 @@
         "20～59歳": 784.0,
         "60歳以上": 199.0
       },
-      "age_raw": {
-        "0歳": 45.0,
-        "1～4歳": 433.0,
-        "5～9歳": 794.0,
-        "10～14歳": 744.0,
-        "15～19歳": 182.0,
-        "20～59歳": 784.0,
-        "60歳以上": 199.0
+      "age_per_sentinel": {
+        "0歳": 0.82,
+        "1～4歳": 7.88,
+        "5～9歳": 14.43,
+        "10～14歳": 13.53,
+        "15～19歳": 3.31,
+        "20～59歳": 14.25,
+        "60歳以上": 3.62
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0748.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/472764.xlsx",
@@ -3468,13 +3628,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 3181.0,
-          "age_sum": 3181.0,
-          "difference": 0.0
+          "expected_count": 3181.0,
+          "age_count_sum": 3181.0,
+          "count_difference": 0.0,
+          "expected_rate": 57.84,
+          "age_rate_sum": 57.84,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -3499,7 +3664,7 @@
         "佐渡": 43.0,
         "上越": 47.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 25.0,
         "1～4歳": 425.0,
         "5～9歳": 715.0,
@@ -3508,16 +3673,15 @@
         "20～59歳": 557.0,
         "60歳以上": 178.0
       },
-      "age_raw": {
-        "0歳": 25.0,
-        "1～4歳": 425.0,
-        "5～9歳": 715.0,
-        "10～14歳": 534.0,
-        "15～19歳": 156.0,
-        "20～59歳": 557.0,
-        "60歳以上": 178.0
+      "age_per_sentinel": {
+        "0歳": 0.45,
+        "1～4歳": 7.73,
+        "5～9歳": 13.0,
+        "10～14歳": 9.71,
+        "15～19歳": 2.84,
+        "20～59歳": 10.13,
+        "60歳以上": 3.24
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0749.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/473555.xlsx",
@@ -3540,13 +3704,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 2590.0,
-          "age_sum": 2590.0,
-          "difference": 0.0
+          "expected_count": 2590.0,
+          "age_count_sum": 2590.0,
+          "count_difference": 0.0,
+          "expected_rate": 47.09,
+          "age_rate_sum": 47.1,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -3571,7 +3740,7 @@
         "佐渡": 21.5,
         "上越": 34.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 29.0,
         "1～4歳": 328.0,
         "5～9歳": 688.0,
@@ -3580,16 +3749,15 @@
         "20～59歳": 428.0,
         "60歳以上": 127.0
       },
-      "age_raw": {
-        "0歳": 29.0,
-        "1～4歳": 328.0,
-        "5～9歳": 688.0,
-        "10～14歳": 422.0,
-        "15～19歳": 189.0,
-        "20～59歳": 428.0,
-        "60歳以上": 127.0
+      "age_per_sentinel": {
+        "0歳": 0.53,
+        "1～4歳": 5.96,
+        "5～9歳": 12.5,
+        "10～14歳": 7.67,
+        "15～19歳": 3.44,
+        "20～59歳": 7.78,
+        "60歳以上": 2.3
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0750.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/474199.xlsx",
@@ -3612,13 +3780,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 2211.0,
-          "age_sum": 2211.0,
-          "difference": 0.0
+          "expected_count": 2211.0,
+          "age_count_sum": 2211.0,
+          "count_difference": 0.0,
+          "expected_rate": 40.2,
+          "age_rate_sum": 40.18,
+          "rate_difference": -0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -3643,7 +3816,7 @@
         "佐渡": 18.5,
         "上越": 32.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 18.0,
         "1～4歳": 306.0,
         "5～9歳": 507.0,
@@ -3652,16 +3825,15 @@
         "20～59歳": 327.0,
         "60歳以上": 132.0
       },
-      "age_raw": {
-        "0歳": 18.0,
-        "1～4歳": 306.0,
-        "5～9歳": 507.0,
-        "10～14歳": 384.0,
-        "15～19歳": 150.0,
-        "20～59歳": 327.0,
-        "60歳以上": 132.0
+      "age_per_sentinel": {
+        "0歳": 0.33,
+        "1～4歳": 5.57,
+        "5～9歳": 9.23,
+        "10～14歳": 6.98,
+        "15～19歳": 2.73,
+        "20～59歳": 5.95,
+        "60歳以上": 2.4
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0751.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/474975.xlsx",
@@ -3684,13 +3856,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1824.0,
-          "age_sum": 1824.0,
-          "difference": 0.0
+          "expected_count": 1824.0,
+          "age_count_sum": 1824.0,
+          "count_difference": 0.0,
+          "expected_rate": 33.16,
+          "age_rate_sum": 33.19,
+          "rate_difference": 0.03
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -3715,7 +3892,7 @@
         "佐渡": 14.5,
         "上越": 25.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 19.0,
         "1～4歳": 205.0,
         "5～9歳": 334.0,
@@ -3724,16 +3901,15 @@
         "20～59歳": 268.0,
         "60歳以上": 85.0
       },
-      "age_raw": {
-        "0歳": 19.0,
-        "1～4歳": 205.0,
-        "5～9歳": 334.0,
-        "10～14歳": 295.0,
-        "15～19歳": 114.0,
-        "20～59歳": 268.0,
-        "60歳以上": 85.0
+      "age_per_sentinel": {
+        "0歳": 0.34,
+        "1～4歳": 3.73,
+        "5～9歳": 6.07,
+        "10～14歳": 5.36,
+        "15～19歳": 2.07,
+        "20～59歳": 4.88,
+        "60歳以上": 1.54
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0752.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/475667.xlsx",
@@ -3756,13 +3932,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1320.0,
-          "age_sum": 1320.0,
-          "difference": 0.0
+          "expected_count": 1320.0,
+          "age_count_sum": 1320.0,
+          "count_difference": 0.0,
+          "expected_rate": 24.0,
+          "age_rate_sum": 23.99,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -3787,7 +3968,7 @@
         "佐渡": 23.0,
         "上越": 4.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 12.0,
         "1～4歳": 58.0,
         "5～9歳": 61.0,
@@ -3796,16 +3977,15 @@
         "20～59歳": 203.0,
         "60歳以上": 62.0
       },
-      "age_raw": {
-        "0歳": 12.0,
-        "1～4歳": 58.0,
-        "5～9歳": 61.0,
-        "10～14歳": 36.0,
-        "15～19歳": 44.0,
-        "20～59歳": 203.0,
-        "60歳以上": 62.0
+      "age_per_sentinel": {
+        "0歳": 0.22,
+        "1～4歳": 1.06,
+        "5～9歳": 1.11,
+        "10～14歳": 0.65,
+        "15～19歳": 0.8,
+        "20～59歳": 3.69,
+        "60歳以上": 1.13
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0801.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/475871.xlsx",
@@ -3828,13 +4008,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 476.0,
-          "age_sum": 476.0,
-          "difference": 0.0
+          "expected_count": 476.0,
+          "age_count_sum": 476.0,
+          "count_difference": 0.0,
+          "expected_rate": 8.65,
+          "age_rate_sum": 8.66,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -3859,7 +4044,7 @@
         "佐渡": 7.0,
         "上越": 2.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 3.0,
         "1～4歳": 59.0,
         "5～9歳": 62.0,
@@ -3868,16 +4053,15 @@
         "20～59歳": 163.0,
         "60歳以上": 53.0
       },
-      "age_raw": {
-        "0歳": 3.0,
-        "1～4歳": 59.0,
-        "5～9歳": 62.0,
-        "10～14歳": 48.0,
-        "15～19歳": 32.0,
-        "20～59歳": 163.0,
-        "60歳以上": 53.0
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 1.07,
+        "5～9歳": 1.13,
+        "10～14歳": 0.87,
+        "15～19歳": 0.58,
+        "20～59歳": 2.97,
+        "60歳以上": 0.97
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの警報を解除します。\n○県内では定点当たりの報告数が全県で7.64と前週の8.65に比べ減少しました。\n○前週に引き続き国の示す終息基準（定点当たり10）を下回ったため、警報を解除します。\n○一部保健所管内では、注意報基準（定点当たり10）を上回っており、また、学校の授業も\n再開されていることから、引き続き注意が必要です。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0802.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/476168.xlsx",
@@ -3900,13 +4084,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 420.0,
-          "age_sum": 420.0,
-          "difference": 0.0
+          "expected_count": 420.0,
+          "age_count_sum": 420.0,
+          "count_difference": 0.0,
+          "expected_rate": 7.64,
+          "age_rate_sum": 7.64,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -3931,7 +4120,7 @@
         "佐渡": 2.0,
         "上越": 4.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 9.0,
         "1～4歳": 59.0,
         "5～9歳": 72.0,
@@ -3940,16 +4129,15 @@
         "20～59歳": 73.0,
         "60歳以上": 25.0
       },
-      "age_raw": {
-        "0歳": 9.0,
-        "1～4歳": 59.0,
-        "5～9歳": 72.0,
-        "10～14歳": 51.0,
-        "15～19歳": 34.0,
-        "20～59歳": 73.0,
-        "60歳以上": 25.0
+      "age_per_sentinel": {
+        "0歳": 0.17,
+        "1～4歳": 1.08,
+        "5～9歳": 1.3,
+        "10～14歳": 0.93,
+        "15～19歳": 0.62,
+        "20～59歳": 1.32,
+        "60歳以上": 0.46
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの状況は下記のとおりです。\n​○県内では定点当たりの報告数が全県で5.87と前週の7.64に比べ減少しました。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など、\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0803.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/476775.xlsx",
@@ -3972,13 +4160,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 323.0,
-          "age_sum": 323.0,
-          "difference": 0.0
+          "expected_count": 323.0,
+          "age_count_sum": 323.0,
+          "count_difference": 0.0,
+          "expected_rate": 5.87,
+          "age_rate_sum": 5.88,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4003,7 +4196,7 @@
         "佐渡": 1.0,
         "上越": 4.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 1.0,
         "1～4歳": 46.0,
         "5～9歳": 106.0,
@@ -4012,16 +4205,15 @@
         "20～59歳": 77.0,
         "60歳以上": 11.0
       },
-      "age_raw": {
-        "0歳": 1.0,
-        "1～4歳": 46.0,
-        "5～9歳": 106.0,
-        "10～14歳": 138.0,
-        "15～19歳": 44.0,
-        "20～59歳": 77.0,
-        "60歳以上": 11.0
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.84,
+        "5～9歳": 1.92,
+        "10～14歳": 2.51,
+        "15～19歳": 0.8,
+        "20～59歳": 1.4,
+        "60歳以上": 0.19
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザ患者が増加しています。\n○県内では定点当たりの報告数が全県で7.69と前週の5.87に比べ増加しており、学校における\n学級閉鎖等が増えています。\n○県保健環境科学研究所の検査結果報告では、Ｂ型の報告も増えており、引き続き\nインフルエンザへの注意が必要です。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など、\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0804.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/477602.xlsx",
@@ -4044,13 +4236,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 423.0,
-          "age_sum": 423.0,
-          "difference": 0.0
+          "expected_count": 423.0,
+          "age_count_sum": 423.0,
+          "count_difference": 0.0,
+          "expected_rate": 7.69,
+          "age_rate_sum": 7.68,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4075,7 +4272,7 @@
         "佐渡": 4.0,
         "上越": 12.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 7.0,
         "1～4歳": 85.0,
         "5～9歳": 318.0,
@@ -4084,16 +4281,15 @@
         "20～59歳": 127.0,
         "60歳以上": 30.0
       },
-      "age_raw": {
-        "0歳": 7.0,
-        "1～4歳": 85.0,
-        "5～9歳": 318.0,
-        "10～14歳": 409.0,
-        "15～19歳": 99.0,
-        "20～59歳": 127.0,
-        "60歳以上": 30.0
+      "age_per_sentinel": {
+        "0歳": 0.13,
+        "1～4歳": 1.54,
+        "5～9歳": 5.77,
+        "10～14歳": 7.44,
+        "15～19歳": 1.8,
+        "20～59歳": 2.31,
+        "60歳以上": 0.55
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの定点当たりの報告数が国の示す注意報基準を超えたため、\n改めて全県に注意報を発令します。\n○県内の定点当たりの報告数は再び増加し、全県で19.55と注意報基準（定点あたりの報告数10）を\n超えており、インフルエンザへの注意が必要です。（前週：7.69）\n○全国的にも報告数が増加しております。全国のインフルエンザウイルスの検出報告では、\nB型の割合も増えており、本県の検出報告においても同様の傾向にあります。\n○5～14歳の割合が高くなっており、学校における学級閉鎖等も増加しています。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など、\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0805.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/478304.xlsx",
@@ -4116,13 +4312,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1075.0,
-          "age_sum": 1075.0,
-          "difference": 0.0
+          "expected_count": 1075.0,
+          "age_count_sum": 1075.0,
+          "count_difference": 0.0,
+          "expected_rate": 19.55,
+          "age_rate_sum": 19.54,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4147,7 +4348,7 @@
         "佐渡": 13.5,
         "上越": 14.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 3.0,
         "1～4歳": 87.0,
         "5～9歳": 463.0,
@@ -4156,16 +4357,15 @@
         "20～59歳": 173.0,
         "60歳以上": 18.0
       },
-      "age_raw": {
-        "0歳": 3.0,
-        "1～4歳": 87.0,
-        "5～9歳": 463.0,
-        "10～14歳": 548.0,
-        "15～19歳": 160.0,
-        "20～59歳": 173.0,
-        "60歳以上": 18.0
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 1.59,
+        "5～9歳": 8.42,
+        "10～14歳": 9.96,
+        "15～19歳": 2.91,
+        "20～59歳": 3.14,
+        "60歳以上": 0.32
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの定点当たりの報告数が国の示す注意報基準を超えています\n○県内では定点当たりの報告数が全県で26.40と注意報基準（定点当たりの報告数10）を\n超えています。（前週：19.55）\n※警報基準：定点当たりの報告数30\n○全国的にも報告数が増加しております。全国のインフルエンザウイルスの検出報告では、\nB型の割合も増えており、本県の検出報告においても同様の傾向にあります。\n○5～14歳の割合が高くなっており、学校における学級閉鎖等も増加しています。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など、\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0806.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/479009.xlsx",
@@ -4188,13 +4388,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1452.0,
-          "age_sum": 1452.0,
-          "difference": 0.0
+          "expected_count": 1452.0,
+          "age_count_sum": 1452.0,
+          "count_difference": 0.0,
+          "expected_rate": 26.4,
+          "age_rate_sum": 26.39,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4219,7 +4424,7 @@
         "佐渡": 47.0,
         "上越": 15.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 8.0,
         "1～4歳": 130.0,
         "5～9歳": 597.0,
@@ -4228,16 +4433,15 @@
         "20～59歳": 215.0,
         "60歳以上": 23.0
       },
-      "age_raw": {
-        "0歳": 8.0,
-        "1～4歳": 130.0,
-        "5～9歳": 597.0,
-        "10～14歳": 580.0,
-        "15～19歳": 146.0,
-        "20～59歳": 215.0,
-        "60歳以上": 23.0
+      "age_per_sentinel": {
+        "0歳": 0.15,
+        "1～4歳": 2.37,
+        "5～9歳": 10.85,
+        "10～14歳": 10.55,
+        "15～19歳": 2.65,
+        "20～59歳": 3.91,
+        "60歳以上": 0.42
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの定点当たりの報告数が国の示す警報基準を超えたため、\n再度全県に警報を発令します。\n○県内では定点当たりの報告数が全県で30.89と警報基準（定点当たりの報告数30）\nを超えました。（前週：26.40）\n○全国第６週では警報基準を超えている状況です。\n○県保健環境科学研究所の検査結果報告では、Ｂ型の報告が増えており、\n学校における学級閉鎖等や児童福祉施設（保育園等）における集団発生も\n増加しています。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での\n換気の実施など、基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。\nやむを得ず外出が必要な場合はマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0807.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/479728.xlsx",
@@ -4260,13 +4464,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1699.0,
-          "age_sum": 1699.0,
-          "difference": 0.0
+          "expected_count": 1699.0,
+          "age_count_sum": 1699.0,
+          "count_difference": 0.0,
+          "expected_rate": 30.89,
+          "age_rate_sum": 30.9,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4291,7 +4500,7 @@
         "佐渡": 42.0,
         "上越": 23.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 10.0,
         "1～4歳": 176.0,
         "5～9歳": 641.0,
@@ -4300,16 +4509,15 @@
         "20～59歳": 261.0,
         "60歳以上": 21.0
       },
-      "age_raw": {
-        "0歳": 10.0,
-        "1～4歳": 176.0,
-        "5～9歳": 641.0,
-        "10～14歳": 570.0,
-        "15～19歳": 232.0,
-        "20～59歳": 261.0,
-        "60歳以上": 21.0
+      "age_per_sentinel": {
+        "0歳": 0.19,
+        "1～4歳": 3.19,
+        "5～9歳": 11.65,
+        "10～14歳": 10.36,
+        "15～19歳": 4.22,
+        "20～59歳": 4.75,
+        "60歳以上": 0.38
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0808.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/480320.xlsx",
@@ -4332,13 +4540,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1911.0,
-          "age_sum": 1911.0,
-          "difference": 0.0
+          "expected_count": 1911.0,
+          "age_count_sum": 1911.0,
+          "count_difference": 0.0,
+          "expected_rate": 34.75,
+          "age_rate_sum": 34.74,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4363,7 +4576,7 @@
         "佐渡": 28.5,
         "上越": 18.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 13.0,
         "1～4歳": 140.0,
         "5～9歳": 486.0,
@@ -4372,16 +4585,15 @@
         "20～59歳": 284.0,
         "60歳以上": 13.0
       },
-      "age_raw": {
-        "0歳": 13.0,
-        "1～4歳": 140.0,
-        "5～9歳": 486.0,
-        "10～14歳": 483.0,
-        "15～19歳": 158.0,
-        "20～59歳": 284.0,
-        "60歳以上": 13.0
+      "age_per_sentinel": {
+        "0歳": 0.23,
+        "1～4歳": 2.55,
+        "5～9歳": 8.82,
+        "10～14歳": 8.78,
+        "15～19歳": 2.87,
+        "20～59歳": 5.17,
+        "60歳以上": 0.24
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0809.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/481850.xlsx",
@@ -4404,13 +4616,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1577.0,
-          "age_sum": 1577.0,
-          "difference": 0.0
+          "expected_count": 1577.0,
+          "age_count_sum": 1577.0,
+          "count_difference": 0.0,
+          "expected_rate": 28.67,
+          "age_rate_sum": 28.66,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4435,7 +4652,7 @@
         "佐渡": 33.5,
         "上越": 24.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 11.0,
         "1～4歳": 149.0,
         "5～9歳": 408.0,
@@ -4444,16 +4661,15 @@
         "20～59歳": 200.0,
         "60歳以上": 23.0
       },
-      "age_raw": {
-        "0歳": 11.0,
-        "1～4歳": 149.0,
-        "5～9歳": 408.0,
-        "10～14歳": 395.0,
-        "15～19歳": 146.0,
-        "20～59歳": 200.0,
-        "60歳以上": 23.0
+      "age_per_sentinel": {
+        "0歳": 0.2,
+        "1～4歳": 2.71,
+        "5～9歳": 7.42,
+        "10～14歳": 7.18,
+        "15～19歳": 2.65,
+        "20～59歳": 3.63,
+        "60歳以上": 0.41
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0810.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/483862.xlsx",
@@ -4476,13 +4692,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1332.0,
-          "age_sum": 1332.0,
-          "difference": 0.0
+          "expected_count": 1332.0,
+          "age_count_sum": 1332.0,
+          "count_difference": 0.0,
+          "expected_rate": 24.22,
+          "age_rate_sum": 24.2,
+          "rate_difference": -0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4507,7 +4728,7 @@
         "佐渡": 21.5,
         "上越": 14.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 9.0,
         "1～4歳": 121.0,
         "5～9歳": 372.0,
@@ -4516,16 +4737,15 @@
         "20～59歳": 206.0,
         "60歳以上": 10.0
       },
-      "age_raw": {
-        "0歳": 9.0,
-        "1～4歳": 121.0,
-        "5～9歳": 372.0,
-        "10～14歳": 318.0,
-        "15～19歳": 102.0,
-        "20～59歳": 206.0,
-        "60歳以上": 10.0
+      "age_per_sentinel": {
+        "0歳": 0.16,
+        "1～4歳": 2.21,
+        "5～9歳": 6.76,
+        "10～14歳": 5.78,
+        "15～19歳": 1.85,
+        "20～59歳": 3.75,
+        "60歳以上": 0.18
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0811.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/486506.xlsx",
@@ -4548,13 +4768,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1138.0,
-          "age_sum": 1138.0,
-          "difference": 0.0
+          "expected_count": 1138.0,
+          "age_count_sum": 1138.0,
+          "count_difference": 0.0,
+          "expected_rate": 20.69,
+          "age_rate_sum": 20.69,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4579,7 +4804,7 @@
         "佐渡": 23.0,
         "上越": 15.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 3.0,
         "1～4歳": 113.0,
         "5～9歳": 288.0,
@@ -4588,16 +4813,15 @@
         "20～59歳": 184.0,
         "60歳以上": 16.0
       },
-      "age_raw": {
-        "0歳": 3.0,
-        "1～4歳": 113.0,
-        "5～9歳": 288.0,
-        "10～14歳": 248.0,
-        "15～19歳": 67.0,
-        "20～59歳": 184.0,
-        "60歳以上": 16.0
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 2.05,
+        "5～9歳": 5.24,
+        "10～14歳": 4.51,
+        "15～19歳": 1.22,
+        "20～59歳": 3.34,
+        "60歳以上": 0.29
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0812.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/487706.xlsx",
@@ -4620,13 +4844,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 919.0,
-          "age_sum": 919.0,
-          "difference": 0.0
+          "expected_count": 919.0,
+          "age_count_sum": 919.0,
+          "count_difference": 0.0,
+          "expected_rate": 16.71,
+          "age_rate_sum": 16.7,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4651,7 +4880,7 @@
         "佐渡": 17.0,
         "上越": 9.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 5.0,
         "1～4歳": 103.0,
         "5～9歳": 190.0,
@@ -4660,16 +4889,15 @@
         "20～59歳": 146.0,
         "60歳以上": 18.0
       },
-      "age_raw": {
-        "0歳": 5.0,
-        "1～4歳": 103.0,
-        "5～9歳": 190.0,
-        "10～14歳": 143.0,
-        "15～19歳": 53.0,
-        "20～59歳": 146.0,
-        "60歳以上": 18.0
+      "age_per_sentinel": {
+        "0歳": 0.09,
+        "1～4歳": 1.87,
+        "5～9歳": 3.45,
+        "10～14歳": 2.6,
+        "15～19歳": 0.96,
+        "20～59歳": 2.65,
+        "60歳以上": 0.33
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0813.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/490118.xlsx",
@@ -4692,13 +4920,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 658.0,
-          "age_sum": 658.0,
-          "difference": 0.0
+          "expected_count": 658.0,
+          "age_count_sum": 658.0,
+          "count_difference": 0.0,
+          "expected_rate": 11.96,
+          "age_rate_sum": 11.95,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4723,7 +4956,7 @@
         "佐渡": 7.0,
         "上越": 5.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 5.0,
         "1～4歳": 49.0,
         "5～9歳": 88.0,
@@ -4732,16 +4965,15 @@
         "20～59歳": 103.0,
         "60歳以上": 9.0
       },
-      "age_raw": {
-        "0歳": 5.0,
-        "1～4歳": 49.0,
-        "5～9歳": 88.0,
-        "10～14歳": 49.0,
-        "15～19歳": 22.0,
-        "20～59歳": 103.0,
-        "60歳以上": 9.0
+      "age_per_sentinel": {
+        "0歳": 0.09,
+        "1～4歳": 0.89,
+        "5～9歳": 1.59,
+        "10～14歳": 0.89,
+        "15～19歳": 0.4,
+        "20～59歳": 1.88,
+        "60歳以上": 0.16
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの警報を解除します。\n○県内で定点当たりの報告数が全県で5.91と前週の11.96に比べて減少し、国の示す終息基準（定点当たり10）を下回ったため、警報を解除します。",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0814.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/491004.xlsx",
@@ -4764,13 +4996,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 325.0,
-          "age_sum": 325.0,
-          "difference": 0.0
+          "expected_count": 325.0,
+          "age_count_sum": 325.0,
+          "count_difference": 0.0,
+          "expected_rate": 5.91,
+          "age_rate_sum": 5.9,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4795,7 +5032,7 @@
         "佐渡": 5.0,
         "上越": 1.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 1.0,
         "1～4歳": 25.0,
         "5～9歳": 41.0,
@@ -4804,16 +5041,15 @@
         "20～59歳": 31.0,
         "60歳以上": 5.0
       },
-      "age_raw": {
-        "0歳": 1.0,
-        "1～4歳": 25.0,
-        "5～9歳": 41.0,
-        "10～14歳": 16.0,
-        "15～19歳": 2.0,
-        "20～59歳": 31.0,
-        "60歳以上": 5.0
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.44,
+        "5～9歳": 0.75,
+        "10～14歳": 0.29,
+        "15～19歳": 0.04,
+        "20～59歳": 0.57,
+        "60歳以上": 0.09
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0815.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/491835.xlsx",
@@ -4836,13 +5072,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 121.0,
-          "age_sum": 121.0,
-          "difference": 0.0
+          "expected_count": 121.0,
+          "age_count_sum": 121.0,
+          "count_difference": 0.0,
+          "expected_rate": 2.2,
+          "age_rate_sum": 2.2,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4867,7 +5108,7 @@
         "佐渡": 3.5,
         "上越": 3.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 1.0,
         "1～4歳": 25.0,
         "5～9歳": 41.0,
@@ -4876,16 +5117,15 @@
         "20～59歳": 20.0,
         "60歳以上": 5.0
       },
-      "age_raw": {
-        "0歳": 1.0,
-        "1～4歳": 25.0,
-        "5～9歳": 41.0,
-        "10～14歳": 10.0,
-        "15～19歳": 2.0,
-        "20～59歳": 20.0,
-        "60歳以上": 5.0
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.45,
+        "5～9歳": 0.75,
+        "10～14歳": 0.18,
+        "15～19歳": 0.04,
+        "20～59歳": 0.36,
+        "60歳以上": 0.09
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0816.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/493693.xlsx",
@@ -4908,13 +5148,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 104.0,
-          "age_sum": 104.0,
-          "difference": 0.0
+          "expected_count": 104.0,
+          "age_count_sum": 104.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.89,
+          "age_rate_sum": 1.89,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -4939,7 +5184,7 @@
         "佐渡": 3.5,
         "上越": 2.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 2.0,
         "1～4歳": 13.0,
         "5～9歳": 11.0,
@@ -4948,16 +5193,15 @@
         "20～59歳": 16.0,
         "60歳以上": 1.0
       },
-      "age_raw": {
-        "0歳": 2.0,
-        "1～4歳": 13.0,
-        "5～9歳": 11.0,
-        "10～14歳": 13.0,
-        "15～19歳": 3.0,
-        "20～59歳": 16.0,
-        "60歳以上": 1.0
+      "age_per_sentinel": {
+        "0歳": 0.04,
+        "1～4歳": 0.23,
+        "5～9歳": 0.19,
+        "10～14歳": 0.24,
+        "15～19歳": 0.05,
+        "20～59歳": 0.3,
+        "60歳以上": 0.02
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0817.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/495100.xlsx",
@@ -4980,13 +5224,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 59.0,
-          "age_sum": 59.0,
-          "difference": 0.0
+          "expected_count": 59.0,
+          "age_count_sum": 59.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.07,
+          "age_rate_sum": 1.07,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5011,7 +5260,7 @@
         "佐渡": 0.5,
         "上越": 0.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 1.0,
         "1～4歳": 4.0,
         "5～9歳": 10.0,
@@ -5020,16 +5269,15 @@
         "20～59歳": 8.0,
         "60歳以上": 1.0
       },
-      "age_raw": {
-        "0歳": 1.0,
-        "1～4歳": 4.0,
-        "5～9歳": 10.0,
-        "10～14歳": 4.0,
-        "15～19歳": 2.0,
-        "20～59歳": 8.0,
-        "60歳以上": 1.0
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.08,
+        "5～9歳": 0.19,
+        "10～14歳": 0.07,
+        "15～19歳": 0.04,
+        "20～59歳": 0.15,
+        "60歳以上": 0.02
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0818.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/495690.xlsx",
@@ -5052,13 +5300,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 30.0,
-          "age_sum": 30.0,
-          "difference": 0.0
+          "expected_count": 30.0,
+          "age_count_sum": 30.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.55,
+          "age_rate_sum": 0.57,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5083,7 +5336,7 @@
         "佐渡": 0.5,
         "上越": 0.75
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 3.0,
         "5～9歳": 4.0,
@@ -5092,16 +5345,15 @@
         "20～59歳": 3.0,
         "60歳以上": 2.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 3.0,
-        "5～9歳": 4.0,
-        "10～14歳": 4.0,
+        "1～4歳": 0.06,
+        "5～9歳": 0.07,
+        "10～14歳": 0.07,
         "15～19歳": 0.0,
-        "20～59歳": 3.0,
-        "60歳以上": 2.0
+        "20～59歳": 0.06,
+        "60歳以上": 0.04
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0819.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/496157.xlsx",
@@ -5124,13 +5376,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 16.0,
-          "age_sum": 16.0,
-          "difference": 0.0
+          "expected_count": 16.0,
+          "age_count_sum": 16.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.29,
+          "age_rate_sum": 0.3,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5155,7 +5412,7 @@
         "佐渡": 0.0,
         "上越": 0.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 2.0,
@@ -5164,16 +5421,15 @@
         "20～59歳": 1.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
         "1～4歳": 0.0,
-        "5～9歳": 2.0,
-        "10～14歳": 3.0,
+        "5～9歳": 0.04,
+        "10～14歳": 0.05,
         "15～19歳": 0.0,
-        "20～59歳": 1.0,
+        "20～59歳": 0.02,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0820.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/496673.xlsx",
@@ -5196,13 +5452,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 6.0,
-          "age_sum": 6.0,
-          "difference": 0.0
+          "expected_count": 6.0,
+          "age_count_sum": 6.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.11,
+          "age_rate_sum": 0.11,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5227,7 +5488,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
@@ -5236,16 +5497,15 @@
         "20～59歳": 1.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
         "10～14歳": 0.0,
         "15～19歳": 0.0,
-        "20～59歳": 1.0,
+        "20～59歳": 0.02,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0821.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/497591.xlsx",
@@ -5268,13 +5528,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 1.0,
-          "age_sum": 1.0,
-          "difference": 0.0
+          "expected_count": 1.0,
+          "age_count_sum": 1.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.02,
+          "age_rate_sum": 0.02,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5299,7 +5564,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
@@ -5308,7 +5573,7 @@
         "20～59歳": 0.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
@@ -5317,7 +5582,6 @@
         "20～59歳": 0.0,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0822.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/498484.xlsx",
@@ -5340,13 +5604,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 0.0,
-          "age_sum": 0.0,
-          "difference": 0.0
+          "expected_count": 0.0,
+          "age_count_sum": 0.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.0,
+          "age_rate_sum": 0.0,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5371,7 +5640,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
@@ -5380,7 +5649,7 @@
         "20～59歳": 0.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
@@ -5389,7 +5658,6 @@
         "20～59歳": 0.0,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0823.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/499323.xlsx",
@@ -5412,13 +5680,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 0.0,
-          "age_sum": 0.0,
-          "difference": 0.0
+          "expected_count": 0.0,
+          "age_count_sum": 0.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.0,
+          "age_rate_sum": 0.0,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5443,7 +5716,7 @@
         "佐渡": 0.0,
         "上越": 0.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
@@ -5452,16 +5725,15 @@
         "20～59歳": 1.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
         "10～14歳": 0.0,
-        "15～19歳": 1.0,
-        "20～59歳": 1.0,
+        "15～19歳": 0.02,
+        "20～59歳": 0.02,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0824.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/500102.xlsx",
@@ -5484,13 +5756,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 2.0,
-          "age_sum": 2.0,
-          "difference": 0.0
+          "expected_count": 2.0,
+          "age_count_sum": 2.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.04,
+          "age_rate_sum": 0.04,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5515,7 +5792,7 @@
         "佐渡": 0.0,
         "上越": 1.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 1.0,
         "5～9歳": 3.0,
@@ -5524,16 +5801,15 @@
         "20～59歳": 0.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 1.0,
-        "5～9歳": 3.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.06,
         "10～14歳": 0.0,
         "15～19歳": 0.0,
         "20～59歳": 0.0,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0825.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/501335.xlsx",
@@ -5556,13 +5832,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 4.0,
-          "age_sum": 4.0,
-          "difference": 0.0
+          "expected_count": 4.0,
+          "age_count_sum": 4.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.07,
+          "age_rate_sum": 0.08,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5587,7 +5868,7 @@
         "佐渡": 0.0,
         "上越": 0.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 0.0,
         "5～9歳": 1.0,
@@ -5596,16 +5877,15 @@
         "20～59歳": 0.0,
         "60歳以上": 2.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
         "1～4歳": 0.0,
-        "5～9歳": 1.0,
-        "10～14歳": 1.0,
+        "5～9歳": 0.02,
+        "10～14歳": 0.02,
         "15～19歳": 0.0,
         "20～59歳": 0.0,
-        "60歳以上": 2.0
+        "60歳以上": 0.04
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0826.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/502639.xlsx",
@@ -5628,13 +5908,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 4.0,
-          "age_sum": 4.0,
-          "difference": 0.0
+          "expected_count": 4.0,
+          "age_count_sum": 4.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.07,
+          "age_rate_sum": 0.08,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5659,7 +5944,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 1.0,
         "5～9歳": 0.0,
@@ -5668,16 +5953,15 @@
         "20～59歳": 0.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 1.0,
+        "1～4歳": 0.02,
         "5～9歳": 0.0,
-        "10～14歳": 1.0,
+        "10～14歳": 0.02,
         "15～19歳": 0.0,
         "20～59歳": 0.0,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0827.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/503323.xlsx",
@@ -5700,13 +5984,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 2.0,
-          "age_sum": 2.0,
-          "difference": 0.0
+          "expected_count": 2.0,
+          "age_count_sum": 2.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.04,
+          "age_rate_sum": 0.04,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5731,7 +6020,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 1.0,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
@@ -5740,16 +6029,15 @@
         "20～59歳": 3.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
-        "0歳": 1.0,
+      "age_per_sentinel": {
+        "0歳": 0.02,
         "1～4歳": 0.0,
         "5～9歳": 0.0,
         "10～14歳": 0.0,
         "15～19歳": 0.0,
-        "20～59歳": 3.0,
+        "20～59歳": 0.06,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0828.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/504335.xlsx",
@@ -5772,13 +6060,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 4.0,
-          "age_sum": 4.0,
-          "difference": 0.0
+          "expected_count": 4.0,
+          "age_count_sum": 4.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.07,
+          "age_rate_sum": 0.08,
+          "rate_difference": 0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5803,7 +6096,7 @@
         "佐渡": 0.0,
         "上越": 0.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 1.0,
         "5～9歳": 0.0,
@@ -5812,16 +6105,15 @@
         "20～59歳": 6.0,
         "60歳以上": 2.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 1.0,
+        "1～4歳": 0.02,
         "5～9歳": 0.0,
-        "10～14歳": 1.0,
+        "10～14歳": 0.02,
         "15～19歳": 0.0,
-        "20～59歳": 6.0,
-        "60歳以上": 2.0
+        "20～59歳": 0.12,
+        "60歳以上": 0.04
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0829.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/504955.xlsx",
@@ -5844,13 +6136,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 10.0,
-          "age_sum": 10.0,
-          "difference": 0.0
+          "expected_count": 10.0,
+          "age_count_sum": 10.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.18,
+          "age_rate_sum": 0.2,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5875,7 +6172,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 4.0,
         "5～9歳": 3.0,
@@ -5884,16 +6181,15 @@
         "20～59歳": 4.0,
         "60歳以上": 0.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 4.0,
-        "5～9歳": 3.0,
+        "1～4歳": 0.08,
+        "5～9歳": 0.05,
         "10～14歳": 0.0,
-        "15～19歳": 1.0,
-        "20～59歳": 4.0,
+        "15～19歳": 0.02,
+        "20～59歳": 0.07,
         "60歳以上": 0.0
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0830.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/505795.xlsx",
@@ -5916,13 +6212,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 12.0,
-          "age_sum": 12.0,
-          "difference": 0.0
+          "expected_count": 12.0,
+          "age_count_sum": 12.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.22,
+          "age_rate_sum": 0.22,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -5947,7 +6248,7 @@
         "佐渡": 0.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 1.0,
         "1～4歳": 5.0,
         "5～9歳": 10.0,
@@ -5956,16 +6257,15 @@
         "20～59歳": 11.0,
         "60歳以上": 10.0
       },
-      "age_raw": {
-        "0歳": 1.0,
-        "1～4歳": 5.0,
-        "5～9歳": 10.0,
-        "10～14歳": 4.0,
-        "15～19歳": 3.0,
-        "20～59歳": 11.0,
-        "60歳以上": 10.0
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.1,
+        "5～9歳": 0.18,
+        "10～14歳": 0.07,
+        "15～19歳": 0.05,
+        "20～59歳": 0.2,
+        "60歳以上": 0.18
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0831.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/506689.xlsx",
@@ -5988,13 +6288,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 44.0,
-          "age_sum": 44.0,
-          "difference": 0.0
+          "expected_count": 44.0,
+          "age_count_sum": 44.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.8,
+          "age_rate_sum": 0.8,
+          "rate_difference": 0.0
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -6019,7 +6324,7 @@
         "佐渡": 1.5,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 0.0,
         "1～4歳": 23.0,
         "5～9歳": 23.0,
@@ -6028,16 +6333,15 @@
         "20～59歳": 17.0,
         "60歳以上": 13.0
       },
-      "age_raw": {
+      "age_per_sentinel": {
         "0歳": 0.0,
-        "1～4歳": 23.0,
-        "5～9歳": 23.0,
-        "10～14歳": 14.0,
+        "1～4歳": 0.41,
+        "5～9歳": 0.41,
+        "10～14歳": 0.25,
         "15～19歳": 0.0,
-        "20～59歳": 17.0,
-        "60歳以上": 13.0
+        "20～59歳": 0.3,
+        "60歳以上": 0.24
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0832.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/507175.xlsx",
@@ -6060,13 +6364,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 90.0,
-          "age_sum": 90.0,
-          "difference": 0.0
+          "expected_count": 90.0,
+          "age_count_sum": 90.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.64,
+          "age_rate_sum": 1.61,
+          "rate_difference": -0.03
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -6091,7 +6400,7 @@
         "佐渡": 2.0,
         "上越": 0.0
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 1.0,
         "1～4歳": 9.0,
         "5～9歳": 16.0,
@@ -6100,16 +6409,15 @@
         "20～59歳": 19.0,
         "60歳以上": 5.0
       },
-      "age_raw": {
-        "0歳": 1.0,
-        "1～4歳": 9.0,
-        "5～9歳": 16.0,
-        "10～14歳": 8.0,
-        "15～19歳": 2.0,
-        "20～59歳": 19.0,
-        "60歳以上": 5.0
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.17,
+        "5～9歳": 0.29,
+        "10～14歳": 0.15,
+        "15～19歳": 0.04,
+        "20～59歳": 0.34,
+        "60歳以上": 0.1
       },
-      "age_unit": "報告数（人）",
       "topic": "",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0833.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/507805.xlsx",
@@ -6132,13 +6440,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 60.0,
-          "age_sum": 60.0,
-          "difference": 0.0
+          "expected_count": 60.0,
+          "age_count_sum": 60.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.09,
+          "age_rate_sum": 1.11,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -6163,7 +6476,7 @@
         "佐渡": 0.0,
         "上越": 0.5
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 2.0,
         "1～4歳": 14.0,
         "5～9歳": 24.0,
@@ -6172,16 +6485,15 @@
         "20～59歳": 26.0,
         "60歳以上": 12.0
       },
-      "age_raw": {
-        "0歳": 2.0,
-        "1～4歳": 14.0,
-        "5～9歳": 24.0,
-        "10～14歳": 10.0,
-        "15～19歳": 3.0,
-        "20～59歳": 26.0,
-        "60歳以上": 12.0
+      "age_per_sentinel": {
+        "0歳": 0.04,
+        "1～4歳": 0.24,
+        "5～9歳": 0.43,
+        "10～14歳": 0.18,
+        "15～19歳": 0.05,
+        "20～59歳": 0.48,
+        "60歳以上": 0.22
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの流行期に入りました。（別紙１参照）\n○県内では定点当たりの報告数が全県で\n1.65\nと流行期入りの目安（定点当たりの報告数１）を３週連続で超えました。（前々週：1.64、前週：1.09）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策の徹底をお願いします。\n※参考　直近のシーズンにおける流行期入りの週\n2025(令和７)年第43週（10月20日～10月26日）：定点当たり2.05\n注意報の基準　　定点当たりの報告数   10",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0834.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/508336.xlsx",
@@ -6204,13 +6516,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 91.0,
-          "age_sum": 91.0,
-          "difference": 0.0
+          "expected_count": 91.0,
+          "age_count_sum": 91.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.65,
+          "age_rate_sum": 1.64,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -6235,7 +6552,7 @@
         "佐渡": 1.0,
         "上越": 0.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 3.0,
         "1～4歳": 49.0,
         "5～9歳": 55.0,
@@ -6244,16 +6561,15 @@
         "20～59歳": 50.0,
         "60歳以上": 24.0
       },
-      "age_raw": {
-        "0歳": 3.0,
-        "1～4歳": 49.0,
-        "5～9歳": 55.0,
-        "10～14歳": 14.0,
-        "15～19歳": 2.0,
-        "20～59歳": 50.0,
-        "60歳以上": 24.0
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 0.89,
+        "5～9歳": 1.0,
+        "10～14歳": 0.25,
+        "15～19歳": 0.04,
+        "20～59歳": 0.91,
+        "60歳以上": 0.43
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの流行期に入っています。（別紙1参照）\n○県内では定点当たりの報告数が全県で\n3.58\nと流行期入りの目安（定点当たりの報告数1）を超えています。（前週：1.65、前々週：1.09）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策の徹底をお願いします。\n※参考　直近のシーズンにおける流行期入りの週\n2025(令和7)年第43週（10月20日～10月26日）：定点当たり2.05\n注意報の基準　　定点当たりの報告数   10",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0835.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/509166.xlsx",
@@ -6276,13 +6592,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 197.0,
-          "age_sum": 197.0,
-          "difference": 0.0
+          "expected_count": 197.0,
+          "age_count_sum": 197.0,
+          "count_difference": 0.0,
+          "expected_rate": 3.58,
+          "age_rate_sum": 3.57,
+          "rate_difference": -0.01
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     },
     {
@@ -6307,7 +6628,7 @@
         "佐渡": 7.0,
         "上越": 1.25
       },
-      "age_groups": {
+      "age_counts": {
         "0歳": 6.0,
         "1～4歳": 53.0,
         "5～9歳": 122.0,
@@ -6316,16 +6637,15 @@
         "20～59歳": 74.0,
         "60歳以上": 21.0
       },
-      "age_raw": {
-        "0歳": 6.0,
-        "1～4歳": 53.0,
-        "5～9歳": 122.0,
-        "10～14歳": 52.0,
-        "15～19歳": 9.0,
-        "20～59歳": 74.0,
-        "60歳以上": 21.0
+      "age_per_sentinel": {
+        "0歳": 0.11,
+        "1～4歳": 0.97,
+        "5～9歳": 2.22,
+        "10～14歳": 0.95,
+        "15～19歳": 0.16,
+        "20～59歳": 1.35,
+        "60歳以上": 0.39
       },
-      "age_unit": "報告数（人）",
       "topic": "インフルエンザの流行期に入っています。（別紙1参照）\n○県内では定点当たりの報告数が全県で\n6.13\nと流行期入りの目安（定点当たりの報告数1）を超えています。（前週：3.58、前々週：1.65）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策の徹底をお願いします。\n※参考　直近のシーズンにおける流行期入りの週\n2025(令和7)年第43週（10月20日～10月26日）：定点当たり2.05\n注意報の基準　　定点当たりの報告数   10",
       "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0836.html",
       "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/509796.xlsx",
@@ -6348,13 +6668,18 @@
         "title_row": 49,
         "header_row": 49,
         "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
         "raw_age_columns": 7,
         "verification": {
-          "expected_total": 337.0,
-          "age_sum": 337.0,
-          "difference": 0.0
+          "expected_count": 337.0,
+          "age_count_sum": 337.0,
+          "count_difference": 0.0,
+          "expected_rate": 6.13,
+          "age_rate_sum": 6.15,
+          "rate_difference": 0.02
         },
-        "strategy": "age_table_by_headers_and_influenza_row"
+        "strategy": "age_counts_and_per_sentinel"
       }
     }
   ]
