@@ -28,6 +28,21 @@ REQUIRED_FIELDS = [
     "year_on_year",
 ]
 
+
+AI_COMMENT_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "headline": {"type": "string"},
+        "summary": {"type": "string"},
+        "trend": {"type": "string"},
+        "regional": {"type": "string"},
+        "age_group": {"type": "string"},
+        "year_on_year": {"type": "string"},
+    },
+    "required": REQUIRED_FIELDS,
+    "additionalProperties": False,
+}
+
 SYSTEM_INSTRUCTIONS = """
 あなたは「インフルエンザレーダー（新潟県）」の週次データ分析担当です。
 入力される新潟県のインフルエンザ公表データだけを根拠に、
@@ -225,17 +240,44 @@ def generate_comment(payload):
     for attempt in range(2):
         extra = ""
         if attempt == 1:
-            extra = "\n前回の出力がJSONとして解析できませんでした。今回は必ずJSONオブジェクトだけを返してください。"
+            extra = "\n前回の生成に失敗しました。短く簡潔に、指定されたJSONスキーマに従って出力してください。"
+
         try:
             response = client.responses.create(
                 model=MODEL,
+                reasoning={"effort": "low"},
                 instructions=SYSTEM_INSTRUCTIONS + extra,
                 input=user_input,
-                max_output_tokens=700,
+                max_output_tokens=2000,
+                text={
+                    "format": {
+                        "type": "json_schema",
+                        "name": "weekly_influenza_insight",
+                        "schema": AI_COMMENT_SCHEMA,
+                        "strict": True,
+                    }
+                },
             )
-            return parse_json_object(response.output_text)
+
+            raw = (getattr(response, "output_text", None) or "").strip()
+
+            if not raw:
+                # GitHub Actions 上で原因を追えるよう、空応答時だけ診断情報を残す
+                status = getattr(response, "status", None)
+                incomplete = getattr(response, "incomplete_details", None)
+                raise ValueError(
+                    f"API応答本文が空です。status={status}, incomplete_details={incomplete}"
+                )
+
+            return parse_json_object(raw)
+
         except Exception as exc:
             last_error = exc
+            print(
+                f"WARN: AIコメント生成 attempt {attempt + 1}/2 失敗: {exc}",
+                file=sys.stderr,
+            )
+
     raise RuntimeError(f"AIコメント生成に失敗しました: {last_error}")
 
 
