@@ -19,24 +19,32 @@ def main():
 
     weeks=[]; failures=[]
     age_ok=0
+
     for i,wp in enumerate(pages,1):
         try:
             w=scrape_week(wp)
             weeks.append(w)
-            age_count=len(w.get("age_groups",{}))
-            if age_count:
+
+            counts=len(w.get("age_counts",{}))
+            rates=len(w.get("age_per_sentinel",{}))
+            if counts and rates:
                 age_ok+=1
+
             print(
                 f"[{i}/{len(pages)}] OK {wp.year} W{wp.week:02d}: "
-                f"{w['prefecture']} / regions={len(w['regions'])} / age_groups={age_count}"
+                f"{w['prefecture']} / regions={len(w['regions'])} / "
+                f"age_counts={counts} / age_per_sentinel={rates}"
             )
-            if not age_count:
+
+            if not counts or not rates:
                 diag=w.get("_age_parser",{}).get("diagnostics",[])
                 if diag:
                     print("   age diagnostics:", " | ".join(diag[:3]))
+
         except Exception as e:
             failures.append({"year":wp.year,"week":wp.week,"url":wp.url,"error":str(e)})
             print(f"[{i}/{len(pages)}] FAIL {wp.year} W{wp.week:02d}: {e}")
+
         time.sleep(args.delay)
 
     payload={
@@ -45,7 +53,8 @@ def main():
         "index_url":"https://www.pref.niigata.lg.jp/sec/kanyaku/1232482573101.html",
         "disease":"インフルエンザ",
         "unit":"定点当たり報告数",
-        "age_unit":"報告数（人）",
+        "age_count_unit":"報告数（人）",
+        "age_per_sentinel_unit":"人/定点",
         "age_groups":["0歳","1～4歳","5～9歳","10～14歳","15～19歳","20～59歳","60歳以上"],
         "generated_by":"scripts/backfill.py",
         "weeks_discovered":len(pages),
@@ -55,6 +64,7 @@ def main():
       },
       "weeks":dedupe(weeks)
     }
+
     write_json(OUT,payload)
     write_json(FAIL,failures)
 
