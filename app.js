@@ -61,10 +61,10 @@ function formatSignedPerSentinel(value){
 
 function tierKey(v){if(v>=30)return"purple";if(v>=10)return"red";if(v>=1)return"yellow";return"blue"}
 function level(v){
- if(v>=30)return["従来の警報基準相当","warning"];
- if(v>=10)return["従来の注意報基準相当","caution"];
- if(v>=1)return["流行期入りの目安以上","active"];
- return["流行期入りの目安未満","pre"];
+ if(v>=30)return["従来の警報基準\n相当","warning"];
+ if(v>=10)return["従来の注意報基準\n相当","caution"];
+ if(v>=1)return["流行期入りの目安\n以上","active"];
+ return["流行期入りの目安\n未満","pre"];
 }
 function color(v){if(v>=30)return"#7b4bb7";if(v>=10)return"#ef6a5b";if(v>=1)return"#f2c94c";return"#0b79b6"}
 function municipalityLabel(p){

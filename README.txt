@@ -1,21 +1,22 @@
-v58 — 最終更新日時の自動表示
+v61
+変更:
+1. ヘッダーの「新潟県感染症週報サマリー（PDF）」を
+   新潟県感染症週報サマリー
+   （PDF）
+   の2行・中央揃えに固定。
+
+2. 現在の状況の判定ラベルを
+   流行期入りの目安
+   以上
+   のように2行・中央揃えに変更。
+
+3. 流行水準の目安の小カードも、
+   「流行期入りの目安 / 未満・以上」
+   「従来の注意報基準 / 相当」
+   「従来の警報基準 / 相当」
+   の位置で改行。
 
 差し替え:
 - index.html
+- home-v59.css
 - app.js
-- scripts/update.py
-- scripts/backfill.py
-
-追加:
-- home-v58.css
-
-そのまま:
-- styles.css
-- contact.html / contact.css / thanks.html
-- analytics.js
-- generate_ai_comment.py
-
-導入直後:
-GitHub Actions の Update influenza data を1回手動実行してください。
-既存JSONに updated_at が無ければ、その時刻を初期値として保存します。
-以後は新しい週を取得した時だけ updated_at を更新します。
