@@ -2,6 +2,12 @@ name: Generate AI weekly insight
 
 on:
   workflow_dispatch:
+    inputs:
+      force:
+        description: "同じ週でもAIコメントを再生成する"
+        required: false
+        default: false
+        type: boolean
   schedule:
     # 毎日 10:00 UTC = 日本時間 19:00
     # 最新週が変わっていなければAPIは呼ばずに終了します。
@@ -31,18 +37,20 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-5.6-luna
-        run: python scripts/generate_ai_comment.py
+          FORCE_AI_COMMENT: ${{ github.event_name == 'workflow_dispatch' && inputs.force && 'true' || 'false' }}
+        run: |
+          echo "FORCE_AI_COMMENT=$FORCE_AI_COMMENT"
+          python scripts/generate_ai_comment.py
 
       - name: Commit generated comment
         run: |
-          git add data/ai_comment.json
-
-          if git diff --cached --quiet; then
+          if git diff --quiet -- data/ai_comment.json; then
             echo "No AI comment changes."
             exit 0
           fi
 
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/ai_comment.json
           git commit -m "Update AI weekly influenza insight"
           git push
