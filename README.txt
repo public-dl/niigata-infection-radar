@@ -1,20 +1,21 @@
-v54: アクセス解析 + お問い合わせフォーム
+v58 — 最終更新日時の自動表示
 
-配置するファイル:
+差し替え:
 - index.html
+- app.js
+- scripts/update.py
+- scripts/backfill.py
+
+追加:
+- home-v58.css
+
+そのまま:
+- styles.css
+- contact.html / contact.css / thanks.html
 - analytics.js
-- contact.html
-- contact.css
-- thanks.html
+- generate_ai_comment.py
 
-Google Analytics:
-analytics.js の
-  const MEASUREMENT_ID = "G-XXXXXXXXXX";
-を実際の GA4 測定IDに置き換えるだけです。
-未設定のままではアクセス情報を送信しません。
-
-Netlify Forms:
-Netlify管理画面 > Forms > Enable form detection を有効にしてからデプロイしてください。
-送信内容は Netlify > Forms > influenza-radar-contact で確認できます。
-
-フォーム項目: 所属・団体名 / お名前 / メールアドレス / お問い合わせ内容
+導入直後:
+GitHub Actions の Update influenza data を1回手動実行してください。
+既存JSONに updated_at が無ければ、その時刻を初期値として保存します。
+以後は新しい週を取得した時だけ updated_at を更新します。

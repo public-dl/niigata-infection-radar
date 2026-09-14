@@ -36,6 +36,15 @@ function displayRegionName(name){return DISPLAY_REGION[name]||name}
 function compareHeading(w){return w ? `${w.year} 第${w.week}週${w.label?`（${w.label}）`:""}` : "--"}
 function n(v,digits=2){if(v===null||v===undefined||Number.isNaN(Number(v)))return"--";return Number(v).toFixed(digits).replace(/\.00$/,"").replace(/(\.\d)0$/,"$1")}
 
+function formatUpdatedAt(value){
+ if(!value)return"--";
+ const d=new Date(value);
+ if(Number.isNaN(d.getTime()))return String(value);
+ const parts=new Intl.DateTimeFormat("ja-JP",{timeZone:"Asia/Tokyo",year:"numeric",month:"numeric",day:"numeric",hour:"2-digit",minute:"2-digit",hour12:false}).formatToParts(d);
+ const get=t=>parts.find(x=>x.type===t)?.value||"";
+ return `${get("year")}/${get("month")}/${get("day")} ${get("hour")}:${get("minute")}`;
+}
+
 function absoluteWeekDiff(current, previous){
   const c = Number(current);
   const p = Number(previous);
@@ -300,14 +309,14 @@ function initAgeStatistics(){
 async function main(){
  const res=await fetch(DATA_URL,{cache:"no-store"}); if(!res.ok)throw new Error("influenza_history.json を読み込めません");
  const data=await res.json(); allWeeks=(data.weeks||[]).slice().sort((a,b)=>(a.year-b.year)||(a.week-b.week)); if(!allWeeks.length)throw new Error("週データがありません");
+ const updatedEl=document.querySelector("#data-updated-at"); if(updatedEl)updatedEl.textContent=formatUpdatedAt(data.meta?.updated_at);
  latestWeek=allWeeks.at(-1); const prev=allWeeks.at(-2),prev2=allWeeks.at(-3);
  document.querySelector("#latest-period").textContent=latestWeek.label; document.querySelector("#map-period").textContent=latestWeek.label;
  document.querySelector("#latest-value").textContent=n(latestWeek.prefecture); document.querySelector("#prev-value").textContent=n(prev?.prefecture); document.querySelector("#prev2-value").textContent=n(prev2?.prefecture);
  const weekDiff=(prev?.prefecture===null||prev?.prefecture===undefined)?null:absoluteWeekDiff(latestWeek.prefecture,prev.prefecture);
  const wowValueEl=document.querySelector("#wow-value");
  if(wowValueEl){
- wowValueEl.textContent=
-   weekDiff===null ? "--" : `${weekDiff>=0?"+":"−"}${n(Math.abs(weekDiff))}`;
+  wowValueEl.textContent=weekDiff===null?"--":`${weekDiff>=0?"+":"−"}${n(Math.abs(weekDiff))}`;
   const labelEl=wowValueEl.previousElementSibling;
   if(labelEl) labelEl.textContent="前週から";
  }

@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
   <link rel="stylesheet" href="./styles.css?v=51" />
+  <link rel="stylesheet" href="./home-v58.css?v=58" />
   <script defer src="./analytics.js?v=54"></script>
 </head>
 <body>
@@ -46,26 +47,42 @@
           新潟県におけるインフルエンザの発生状況を、<br>
           週次データに基づいてわかりやすくお伝えします。
         </p>
-        <div class="hero-meta hero-meta-pill">
-          <span class="hero-meta-label">最新週</span>
-          <strong id="latest-period">読み込み中…</strong>
+        <div class="hero-meta-row">
+          <div class="hero-meta hero-meta-pill">
+            <span class="hero-meta-label">最新週</span>
+            <strong id="latest-period">読み込み中…</strong>
+          </div>
+          <div class="hero-meta hero-meta-pill hero-update-pill">
+            <span class="hero-meta-label">最終更新</span>
+            <strong id="data-updated-at">読み込み中…</strong>
+          </div>
         </div>
       </div>
 
-      <div class="hero-right-message">
-        <div class="hero-silhouette-wrap" aria-hidden="true">
-          <div id="hero-niigata-silhouette" class="hero-map-mark"></div>
-          <div class="hero-silhouette-label">新潟県</div>
-        </div>
-        <p aria-hidden="true">地域の健康を、<br>確かなデータで。</p>
-
-        <a class="hero-qr-card" href="https://niigata-infection-radar.netlify.app/" aria-label="スマートフォンでインフルエンザレーダーを開く">
-          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyAQAAAADAX2ykAAACz0lEQVR4nO2cQYrjMBBFX40Ms5ShD5Cj2Dcb5khzA/sofYABaxlQ+LOQ5CS9Cc2kPdFQWghivUVB8VWqLzsmPjPWb5/CwXnnnf9SPlkdM2A2XgySGasNmI3Q1odj4nH+yXyQJN1s1GanDNNGmyRJ21HxOP9svoozmTG9D2hJQ0myllQXbD4wHuefxQ8ffosUskHIkAymX8fG4/wX8+sIWmLG5pjR8q/jcf6v+KLfVntDtkkAacgijdi0ZCAKSEfE4/zz+Us5HtcnacB+bGAzQZAGWM3MbDwqHuefxw9VnEBVKMB6ykA8m9ZT5tYCebX4nX8wpC3UBE6SasGNmdYz3a++WvzOPxgtv6F0uOXn1HKuJUoQM0xb8Px2xxeZFvNiUi751UIQ01ZXa7qj67c/Hkl5n+5yWQyrmKnZd/32yacBmwmq1jOUrrf0v3r/Xnfqn+NB8Tj/RJ5r1dVClfN1AQhiKs9cv/3x7UAltTTGXM7KN1tzGV5/O+SrfpcolUlb0FXO7f4oe3/UJ1/8SSOCTVt9aNNyNhE3IIFWA5He8uvF7/yDcb361cKdakvB9f63a74dqOK19OZyf1TbpXa08vrbJd/02+rvTcGtntbuT7p+O+R3Q3L/eZNaKIfohX33frX4nX8wWv+7T9oLrnZNy+tvp3y1Nm4PWW2qriR7O+z1tz/+7v6opbH6z021BfT+t0d+f7/uYtSG18okCLKyQMisFrz/7Y5v94Oq1tW11tbVZmd5/e2Sv3WY64GqNbylE6Zd9/v+3CM/UN51Boz0lpk2xDpXV9IARLoY7k/2yDf/uST5YgKwSWDE34NIY70ThnxAPM4/l//4/YLVsxSI9F1NvyOu3/+AD7X+Tsqwns4mSTI7STZH129//N33CzFjYIj0JoMBI26o9EyHxOP88/n9+4VkpoUgm+PZqtORzFhPkr9/1SVv/v8MzjvfLf8HJ0oz3xIKnDIAAAAASUVORK5CYII=" alt="インフルエンザレーダー（新潟県）のQRコード">
-          <span>
-            <strong>スマホで見る</strong>
-            <small>QRコードを読み取って<br>このページを開く</small>
-          </span>
-        </a>
+      <div class="hero-status-panel" id="latest">
+        <article class="card primary-card hero-primary-card">
+          <div class="hero-status-label">現在の状況</div>
+          <div class="card-kicker">県全体・定点当たり報告数</div>
+          <div class="primary-row">
+            <div><div id="latest-value" class="big-number">--</div><div class="unit">人 / 定点</div></div>
+            <div id="level-badge" class="level-badge">判定中</div>
+          </div>
+          <div class="mini-grid">
+            <div><span>前週</span><strong id="prev-value">--</strong></div>
+            <div><span>前々週</span><strong id="prev2-value">--</strong></div>
+            <div><span>前週から</span><strong id="wow-value">--</strong></div>
+          </div>
+          <div class="signal-guide" aria-label="流行水準の凡例">
+            <div class="signal-guide-head"><strong>流行水準の目安</strong><span>厚生労働省の従来区分を参考</span></div>
+            <div class="signal-list">
+              <div class="signal-item" data-signal="pre"><span class="signal-dot"></span><div><strong>1未満</strong><span>流行期入りの目安未満</span></div></div>
+              <div class="signal-item" data-signal="active"><span class="signal-dot"></span><div><strong>1以上</strong><span>流行期入りの目安以上</span></div></div>
+              <div class="signal-item" data-signal="caution"><span class="signal-dot"></span><div><strong>10以上</strong><span>従来の注意報基準相当</span></div></div>
+              <div class="signal-item" data-signal="warning"><span class="signal-dot"></span><div><strong>30以上</strong><span>従来の警報基準相当</span></div></div>
+            </div>
+            <p class="signal-note">※「注意報」「警報」の発令を示すものではなく、定点当たり報告数を従来基準と比較した表示です。</p>
+          </div>
+        </article>
       </div>
     </div>
   </div>
@@ -90,46 +107,7 @@
 </header>
 
 <main>
-<section class="summary-grid" id="latest">
-  <article class="card primary-card">
-    <div class="card-kicker">県全体・定点当たり報告数</div>
-    <div class="primary-row">
-      <div><div id="latest-value" class="big-number">--</div><div class="unit">人 / 定点</div></div>
-      <div id="level-badge" class="level-badge">判定中</div>
-    </div>
-    <div class="mini-grid">
-      <div><span>前週</span><strong id="prev-value">--</strong></div>
-      <div><span>前々週</span><strong id="prev2-value">--</strong></div>
-      <div><span>前週比</span><strong id="wow-value">--</strong></div>
-    </div>
-
-    <div class="signal-guide" aria-label="流行水準の凡例">
-      <div class="signal-guide-head">
-        <strong>流行水準の目安</strong>
-        <span>厚生労働省の従来区分を参考</span>
-      </div>
-      <div class="signal-list">
-        <div class="signal-item" data-signal="pre">
-          <span class="signal-dot"></span>
-          <div><strong>1未満</strong><span>流行期入りの目安未満</span></div>
-        </div>
-        <div class="signal-item" data-signal="active">
-          <span class="signal-dot"></span>
-          <div><strong>1以上</strong><span>流行期入りの目安以上</span></div>
-        </div>
-        <div class="signal-item" data-signal="caution">
-          <span class="signal-dot"></span>
-          <div><strong>10以上</strong><span>従来の注意報基準相当</span></div>
-        </div>
-        <div class="signal-item" data-signal="warning">
-          <span class="signal-dot"></span>
-          <div><strong>30以上</strong><span>従来の警報基準相当</span></div>
-        </div>
-      </div>
-      <p class="signal-note">※「注意報」「警報」の発令を示すものではなく、定点当たり報告数を従来基準と比較した表示です。</p>
-    </div>
-  </article>
-
+<section class="summary-grid summary-grid-insight-only" id="weekly-insight">
   <article class="card point-card">
     <div class="section-title-row">
       <div><div class="card-kicker">AI WEEKLY INSIGHT</div><h2>今週の流行分析</h2></div>
@@ -349,6 +327,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="./app.js?v=53"></script>
+<script src="./app.js?v=58"></script>
 </body>
 </html>
