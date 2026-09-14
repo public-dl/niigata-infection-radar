@@ -1,10 +1,16 @@
 from pathlib import Path
+from datetime import datetime, timezone, timedelta
 import argparse, time
 from common import discover_week_pages, scrape_week, write_json, dedupe
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"data/influenza_history.json"
 FAIL=ROOT/"data/backfill_failures.json"
+JST=timezone(timedelta(hours=9))
+
+def now_jst_iso():
+    return datetime.now(JST).isoformat(timespec="seconds")
+
 
 def main():
     ap=argparse.ArgumentParser()
@@ -60,7 +66,9 @@ def main():
         "weeks_discovered":len(pages),
         "weeks_ok":len(weeks),
         "weeks_with_age_data":age_ok,
-        "weeks_failed":len(failures)
+        "weeks_failed":len(failures),
+        "updated_at":now_jst_iso(),
+        "updated_by":"scripts/backfill.py"
       },
       "weeks":dedupe(weeks)
     }

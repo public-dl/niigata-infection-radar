@@ -1,9 +1,15 @@
 from pathlib import Path
+from datetime import datetime, timezone, timedelta
 import time
 from common import discover_week_pages, scrape_week, read_json, write_json, dedupe
 
 ROOT=Path(__file__).resolve().parents[1]
 OUT=ROOT/"data/influenza_history.json"
+JST=timezone(timedelta(hours=9))
+
+def now_jst_iso():
+    return datetime.now(JST).isoformat(timespec="seconds")
+
 
 def main():
     data=read_json(OUT)
@@ -25,7 +31,14 @@ def main():
             pending.append(p)
 
     if not pending:
-        print("新しい週・年代別未取得週はありません。")
+        meta=data.setdefault("meta",{})
+        if not meta.get("updated_at"):
+            meta["updated_at"]=now_jst_iso()
+            meta["updated_by"]="scripts/update.py"
+            write_json(OUT,data)
+            print(f"更新日時を初期化しました: {meta['updated_at']}")
+        else:
+            print("新しい週・年代別未取得週はありません。")
         return
 
     refreshed=[]
@@ -57,6 +70,10 @@ def main():
 
     # 旧キーは今後使わないので meta から除去
     meta.pop("age_unit",None)
+
+    if refreshed:
+        meta["updated_at"]=now_jst_iso()
+        meta["updated_by"]="scripts/update.py"
 
     write_json(OUT,data)
     print(f"updated {OUT} (+/refresh {len(refreshed)})")
