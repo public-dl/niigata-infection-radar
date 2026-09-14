@@ -1737,10 +1737,10 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
   }
 
   .map-layout-horizontal .map{
-    height:405px !important;
-    min-height:405px !important;
+    height:560px !important;
+    min-height:560px !important;
   }
-
+  
   .map-control-column .map-timeline{
     padding:11px 11px 10px !important;
   }
@@ -1753,8 +1753,8 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
 /* 画面が縦に狭い場合 */
 @media(max-height:800px) and (min-width:821px){
   .map-layout-horizontal .map{
-    height:385px !important;
-    min-height:385px !important;
+    height:560px !important;
+    min-height:560px !important;
   }
 }
 
