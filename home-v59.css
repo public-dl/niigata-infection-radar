@@ -318,3 +318,28 @@
     margin-bottom:5px !important;
   }
 }
+
+/* v64：6.13の単位を数値の下・右寄りへ配置 */
+
+.hero-primary-card .hero-value-wrap{
+  display:flex !important;
+  flex-direction:column !important;
+  align-items:flex-start !important;
+  gap:0 !important;
+  position:relative !important;
+}
+
+.hero-primary-card .hero-value-wrap .big-number{
+  margin:0 !important;
+  line-height:.88 !important;
+}
+
+.hero-primary-card .hero-value-unit{
+  display:block !important;
+  margin:7px 0 0 118px !important;
+  font-size:.94rem !important;
+  line-height:1 !important;
+  font-weight:800 !important;
+  color:#61788b !important;
+  white-space:nowrap !important;
+}
