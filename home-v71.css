@@ -590,3 +590,8 @@
   transform:scale(1.18) !important;
   box-shadow:0 0 0 4px rgba(123,75,183,.13),0 0 10px rgba(123,75,183,.34) !important;
 }
+
+/* シグナル4灯の輪郭を黒くして視認性を上げる */
+.hero-status-panel .hero-signal-dot{
+  border:1.5px solid rgba(0,0,0,.65) !important;
+}
