@@ -17,17 +17,20 @@ OUTPUT_PATH = ROOT / "data" / "ai_comment.json"
 MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6-luna")
 FORCE = os.getenv("FORCE_AI_COMMENT", "").lower() in {"1", "true", "yes"}
 
+SCHEMA_VERSION = 2
+
 REQUIRED_FIELDS = [
     "headline",
     "summary",
     "trend",
     "regional",
+    "age_group",
     "year_on_year",
 ]
 
 SYSTEM_INSTRUCTIONS = """
 あなたは「インフルエンザレーダー（新潟県）」の週次データ分析担当です。
-入力される新潟県のインフルエンザ定点当たり報告数だけを根拠に、
+入力される新潟県のインフルエンザ公表データだけを根拠に、
 一般向けの短い日本語コメントを作成してください。
 
 厳守事項:
@@ -35,10 +38,18 @@ SYSTEM_INSTRUCTIONS = """
 - 原因推測をしない。
 - 医療診断、受診勧奨、薬の推奨など個別の医療助言をしない。
 - 「注意報」「警報」が実際に発令されたと断定しない。
-- 10、30は「従来の注意報基準相当」「従来の警報基準相当」と表現する。
-- 1は「流行期入りの目安」と表現する。
+- 10 人/定点、30 人/定点は「従来の注意報基準相当」「従来の警報基準相当」と表現する。
+- 1 人/定点は「流行期入りの目安」と表現する。
+- 定点当たり報告数には原則として毎回「 人/定点」を付ける。
+- 数値と単位の間には半角スペースを1つ入れ、半角スラッシュの「人/定点」を使う。
+- 前週からの変化は割合（％）ではなく、人/定点の絶対差で表現する。
 - 前年同週がある場合は、今年との違いを簡潔に示す。
 - 地域差は上位地域を中心に、数値を伴って説明する。
+- 年代別データがある場合は必ず「age_group」で触れる。
+- 年代別分析は age_per_sentinel（人/定点）を主指標とし、age_counts（実数）は必要な場合だけ補足する。
+- 年代別では、最新週の特徴だけでなく直近の推移も確認し、増加が目立つ年代を簡潔に述べる。
+- 年代間の因果関係を断定しない。「子どもから大人へ感染した」などの表現は禁止。
+- 時間差が見えても「先行して増加する傾向がみられる」「今後の推移を注視」といった慎重な表現にする。
 - 過剰に不安をあおらない。
 - 文章はニュース・行政資料のように簡潔で落ち着いた文体にする。
 - 出力はJSONオブジェクトのみ。Markdownやコードフェンスは禁止。
@@ -49,6 +60,7 @@ SYSTEM_INSTRUCTIONS = """
   "summary": "全県の最新値と前週からの動きを1〜2文",
   "trend": "直近の推移を1〜2文",
   "regional": "地域別の特徴を1〜2文",
+  "age_group": "年代別の特徴を1〜2文。年代別データがある場合は必ず具体的な年代と人/定点を含める",
   "year_on_year": "前年同週との比較を1〜2文。比較不能ならその旨を簡潔に"
 }
 """.strip()
@@ -80,9 +92,9 @@ def build_payload(weeks):
 
     latest_value = num(latest.get("prefecture"))
     prev_value = num(prev.get("prefecture")) if prev else None
-    wow = None
-    if prev_value not in (None, 0):
-        wow = round((latest_value - prev_value) / prev_value * 100, 1)
+    week_diff = None
+    if latest_value is not None and prev_value is not None:
+        week_diff = round(latest_value - prev_value, 2)
 
     same_week_last_year = next(
         (
@@ -109,6 +121,33 @@ def build_payload(weeks):
         for w in weeks[-13:]
     ]
 
+    age_groups = ["0歳","1～4歳","5～9歳","10～14歳","15～19歳","20～59歳","60歳以上"]
+
+    latest_age = {
+        g: {
+            "per_sentinel": num((latest.get("age_per_sentinel") or {}).get(g)),
+            "count": num((latest.get("age_counts") or {}).get(g)),
+        }
+        for g in age_groups
+    }
+
+    recent_age = [
+        {
+            "year": int(w["year"]),
+            "week": int(w["week"]),
+            "label": w.get("label", ""),
+            "age_per_sentinel": {
+                g: num((w.get("age_per_sentinel") or {}).get(g))
+                for g in age_groups
+            },
+            "age_counts": {
+                g: num((w.get("age_counts") or {}).get(g))
+                for g in age_groups
+            },
+        }
+        for w in weeks[-8:]
+    ]
+
     payload = {
         "latest": {
             "year": int(latest["year"]),
@@ -128,7 +167,7 @@ def build_payload(weeks):
             "label": prev2.get("label", ""),
             "prefecture": num(prev2.get("prefecture")),
         },
-        "week_over_week_percent": wow,
+        "week_over_week_difference_per_sentinel": week_diff,
         "same_week_last_year": None if not same_week_last_year else {
             "year": int(same_week_last_year["year"]),
             "week": int(same_week_last_year["week"]),
@@ -137,6 +176,8 @@ def build_payload(weeks):
         },
         "regions_ranked": regions,
         "recent_13_weeks": recent,
+        "age_groups_latest": latest_age,
+        "age_groups_recent_8_weeks": recent_age,
         "reference_levels": {
             "epidemic_entry_guide": 1,
             "legacy_advisory_equivalent": 10,
@@ -150,7 +191,8 @@ def same_source_week(existing, latest):
     try:
         src = existing.get("source_week", {})
         return (
-            int(src.get("year")) == int(latest["year"])
+            int(existing.get("schema_version", 0)) == SCHEMA_VERSION
+            and int(src.get("year")) == int(latest["year"])
             and int(src.get("week")) == int(latest["week"])
         )
     except Exception:
@@ -219,6 +261,7 @@ def main():
     generated = generate_comment(payload)
 
     result = {
+        "schema_version": SCHEMA_VERSION,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "model": MODEL,
         "source_week": {
