@@ -409,8 +409,8 @@
 @media (max-width:820px){
 
   .hero-sample h1{
-    font-size:clamp(3.1rem,14vw,4.7rem) !important;
-    line-height:1.02 !important;
+    font-size:clamp(2.5rem,11vw,3.7rem) !important;
+    line-height:1.03 !important;
     white-space:normal !important;
     color:#062f59 !important;
   }
