@@ -1,12 +1,13 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import json, math, os, re, shutil, subprocess, sys, urllib.request
+import json
+import os, math, os, re, shutil, subprocess, sys, urllib.request
 from datetime import datetime
 from pathlib import Path
 
 ROOT=Path(__file__).resolve().parents[1]
-HISTORY=ROOT/'data'/'influenza_history.json'
-AI=ROOT/'data'/'ai_comment.json'
+HISTORY=Path(os.environ.get('INFLUENZA_HISTORY_PATH', ROOT/'data'/'influenza_history.json'))
+AI=Path(os.environ.get('AI_COMMENT_PATH', ROOT/'data'/'ai_comment.json'))
 TEMPLATE=ROOT/'reports'/'template'/'report.html'
 OUT=ROOT/'reports'
 OUT.mkdir(exist_ok=True)
@@ -162,6 +163,13 @@ def fmt(v): return '--' if v is None else f'{float(v):.2f}'
 
 def main():
     data=load(HISTORY,{'weeks':[]}); weeks=sorted(data['weeks'],key=lambda x:(x.get('year',0),x.get('week',0)))
+    # Safety guard: never silently generate a production report from a truncated/sample history.
+    if len(weeks) < 20 and os.environ.get('ALLOW_SHORT_HISTORY') != '1':
+        raise RuntimeError(
+            f'influenza_history.json has only {len(weeks)} weeks. '
+            'Refusing to generate because this looks like sample/truncated data. '
+            'Restore the repository production history first.'
+        )
     latest=weeks[-1]; prev=weeks[-2] if len(weeks)>1 else {}
     ai=load(AI,{})
     v=float(latest.get('prefecture') or 0); pv=float(prev.get('prefecture') or 0); diff=v-pv
