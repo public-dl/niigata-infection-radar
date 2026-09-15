@@ -71,7 +71,7 @@ def svg_trend(weeks,w=430,h=170):
     s.append(f'<path d="{d}" fill="none" stroke="#0f5fa8" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>')
     for i,(x,y,v) in enumerate(pts):
         s.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4.3" fill="#1976c9" stroke="white" stroke-width="1.6"/>')
-        if i>=len(pts)-3: s.append(f'<text x="{x:.1f}" y="{y-8:.1f}" text-anchor="middle" class="value-label">{v:.2f}</text>')
+        s.append(f'<text x="{x:.1f}" y="{max(12,y-8):.1f}" text-anchor="middle" class="value-label">{v:.2f}</text>')
         s.append(f'<text x="{x:.1f}" y="{h-9}" text-anchor="middle" class="axis">第{weeks[i].get("week")}週</text>')
     s.append('</svg>'); return ''.join(s)
 
