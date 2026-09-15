@@ -1,0 +1,10 @@
+/* v84 — 最新週年代別比較：数値ラベルを読みやすくする余白 */
+.age-section .age-latest-chart-wrap{
+  padding-top:8px;
+}
+
+@media (max-width:820px){
+  .age-section .age-latest-chart-wrap{
+    min-height:390px !important;
+  }
+}

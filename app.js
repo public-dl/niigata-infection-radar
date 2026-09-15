@@ -269,6 +269,41 @@ function updateAgeLatestControls(){
   if(latest) latest.disabled=ageLatestWeekIndex>=allWeeks.length-1;
 }
 
+const ageLatestValueLabelsPlugin={
+  id:"ageLatestValueLabels",
+  afterDatasetsDraw(chart){
+    const ctx=chart.ctx;
+    const barMeta=chart.getDatasetMeta(0);
+    const lineMeta=chart.getDatasetMeta(1);
+    const barData=chart.data.datasets[0]?.data||[];
+    const lineData=chart.data.datasets[1]?.data||[];
+
+    ctx.save();
+    ctx.textAlign="center";
+    ctx.textBaseline="bottom";
+
+    // 棒グラフ（人/定点）の実数値
+    barMeta.data.forEach((el,i)=>{
+      const v=barData[i];
+      if(v===null||v===undefined||!Number.isFinite(Number(v))) return;
+      ctx.font='700 12px system-ui,-apple-system,"Segoe UI",sans-serif';
+      ctx.fillStyle="#0b5f94";
+      ctx.fillText(n(Number(v)),el.x,Math.max(16,el.y-6));
+    });
+
+    // 折れ線（報告数）の実数値
+    lineMeta.data.forEach((el,i)=>{
+      const v=lineData[i];
+      if(v===null||v===undefined||!Number.isFinite(Number(v))) return;
+      ctx.font='800 12px system-ui,-apple-system,"Segoe UI",sans-serif';
+      ctx.fillStyle="#173f63";
+      ctx.fillText(`${n(Number(v),0)}人`,el.x,Math.max(16,el.y-10));
+    });
+
+    ctx.restore();
+  }
+};
+
 function renderAgeLatestAt(index){
   const canvas=document.querySelector("#age-latest-chart");
   if(!canvas||typeof Chart==="undefined"||!allWeeks.length) return;
@@ -279,92 +314,121 @@ function renderAgeLatestAt(index){
   const counts=AGE_GROUPS.map(g=>ageCount(week,g));
   const colors=AGE_GROUPS.map(g=>AGE_COLORS[g]);
 
-  if(ageLatestChart) ageLatestChart.destroy();
-
-  ageLatestChart=new Chart(canvas,{
-    data:{
-      labels:AGE_GROUPS,
-      datasets:[
-        {
-          type:"bar",
-          label:"人/定点",
-          data:values,
-          yAxisID:"ySentinel",
-          backgroundColor:colors,
-          borderColor:colors,
-          borderWidth:1,
-          borderRadius:6,
-          borderSkipped:false,
-          order:2
-        },
-        {
-          type:"line",
-          label:"報告数（人）",
-          data:counts,
-          yAxisID:"yCount",
-          borderColor:"rgba(46,88,120,.60)",
-          backgroundColor:colors,
-          pointBackgroundColor:colors,
-          pointBorderColor:"#ffffff",
-          pointBorderWidth:2,
-          pointRadius:5,
-          pointHoverRadius:7,
-          borderWidth:2.2,
-          tension:.22,
-          spanGaps:true,
-          order:1,
-          segment:{
-            borderColor:ctx=>colors[Math.min(ctx.p0DataIndex,colors.length-1)] || "rgba(46,88,120,.60)"
-          }
-        }
-      ]
-    },
-    options:{
-      responsive:true,
-      maintainAspectRatio:false,
-      animation:{duration:650,easing:"easeOutQuart"},
-      interaction:{mode:"index",intersect:false},
-      plugins:{
-        legend:{
-          display:true,
-          position:"top",
-          align:"end",
-          labels:{usePointStyle:true,boxWidth:10,boxHeight:10,font:{weight:"700"}}
-        },
-        tooltip:{
-          callbacks:{
-            title:items=>items?.[0]?.label||"",
-            label:c=>{
-              const i=c.dataIndex;
-              if(c.dataset.yAxisID==="ySentinel") return ` 人/定点：${values[i]===null?"--":n(values[i])}`;
-              return ` 報告数：${counts[i]===null?"--":n(counts[i],0)}人`;
+  if(!ageLatestChart){
+    ageLatestChart=new Chart(canvas,{
+      plugins:[ageLatestValueLabelsPlugin],
+      data:{
+        labels:AGE_GROUPS,
+        datasets:[
+          {
+            type:"bar",
+            label:"人/定点",
+            data:values,
+            yAxisID:"ySentinel",
+            backgroundColor:colors,
+            borderColor:colors,
+            borderWidth:1,
+            borderRadius:6,
+            borderSkipped:false,
+            order:2
+          },
+          {
+            type:"line",
+            label:"報告数（人）",
+            data:counts,
+            yAxisID:"yCount",
+            borderColor:"rgba(46,88,120,.60)",
+            backgroundColor:colors,
+            pointBackgroundColor:colors,
+            pointBorderColor:"#ffffff",
+            pointBorderWidth:2,
+            pointRadius:5,
+            pointHoverRadius:7,
+            borderWidth:2.2,
+            tension:.34,
+            cubicInterpolationMode:"monotone",
+            spanGaps:true,
+            order:1,
+            segment:{
+              borderColor:ctx=>colors[Math.min(ctx.p0DataIndex,colors.length-1)] || "rgba(46,88,120,.60)"
             }
           }
-        }
+        ]
       },
-      scales:{
-        x:{
-          grid:{display:false},
-          ticks:{font:{weight:"700"}}
+      options:{
+        responsive:true,
+        maintainAspectRatio:false,
+        animation:{
+          duration:900,
+          easing:"easeInOutCubic"
         },
-        ySentinel:{
-          type:"linear",
-          position:"left",
-          beginAtZero:true,
-          grid:{color:"rgba(90,130,150,.10)"},
-          title:{display:true,text:"人/定点",font:{weight:"700"}}
+        transitions:{
+          active:{animation:{duration:250}},
+          resize:{animation:{duration:350}},
+          show:{animations:{x:{from:0},y:{from:0}}},
+          hide:{animations:{x:{to:0},y:{to:0}}}
         },
-        yCount:{
-          type:"linear",
-          position:"right",
-          beginAtZero:true,
-          grid:{drawOnChartArea:false},
-          title:{display:true,text:"報告数（人）",font:{weight:"700"}},
-          ticks:{precision:0}
+        interaction:{mode:"index",intersect:false},
+        plugins:{
+          legend:{
+            display:true,
+            position:"top",
+            align:"end",
+            labels:{usePointStyle:true,boxWidth:10,boxHeight:10,font:{weight:"700"}}
+          },
+          tooltip:{
+            callbacks:{
+              title:items=>items?.[0]?.label||"",
+              label:c=>{
+                const i=c.dataIndex;
+                if(c.dataset.yAxisID==="ySentinel") return ` 人/定点：${values[i]===null?"--":n(values[i])}`;
+                return ` 報告数：${counts[i]===null?"--":n(counts[i],0)}人`;
+              }
+            }
+          }
+        },
+        layout:{padding:{top:22}},
+        scales:{
+          x:{
+            grid:{display:false},
+            ticks:{font:{weight:"700"}}
+          },
+          ySentinel:{
+            type:"linear",
+            position:"left",
+            beginAtZero:true,
+            grace:"14%",
+            grid:{color:"rgba(90,130,150,.10)"},
+            title:{display:true,text:"人/定点",font:{weight:"700"}}
+          },
+          yCount:{
+            type:"linear",
+            position:"right",
+            beginAtZero:true,
+            grace:"18%",
+            grid:{drawOnChartArea:false},
+            title:{display:true,text:"報告数（人）",font:{weight:"700"}},
+            ticks:{precision:0}
+          }
         }
       }
-    }
-  });
+    });
+  }else{
+    // 破棄して作り直さず、既存チャートの値だけ更新することで滑らかに遷移
+    ageLatestChart.data.datasets[0].data=values;
+    ageLatestChart.data.datasets[0].backgroundColor=colors;
+    ageLatestChart.data.datasets[0].borderColor=colors;
+    ageLatestChart.data.datasets[1].data=counts;
+    ageLatestChart.data.datasets[1].backgroundColor=colors;
+    ageLatestChart.data.datasets[1].pointBackgroundColor=colors;
+    ageLatestChart.data.datasets[1].segment={
+      borderColor:ctx=>colors[Math.min(ctx.p0DataIndex,colors.length-1)] || "rgba(46,88,120,.60)"
+    };
+
+    // 週送り時は900msの補間アニメーション
+    ageLatestChart.options.animation={duration:900,easing:"easeInOutCubic"};
+    ageLatestChart.update();
+  }
 
   const period=document.querySelector("#age-latest-period");
   if(period) period.textContent=compareHeading(week);
@@ -405,7 +469,7 @@ function wireAgeLatestPlayback(){
     ageLatestTimer=setInterval(()=>{
       if(ageLatestWeekIndex>=allWeeks.length-1){stopAgeLatestPlayback();return;}
       renderAgeLatestAt(ageLatestWeekIndex+1);
-    },850);
+    },1050);
   });
 
   updateAgeLatestControls();
