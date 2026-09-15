@@ -237,12 +237,42 @@ def main():
     updated=data.get('meta',{}).get('updated_at') or datetime.now().isoformat()
     try: update=datetime.fromisoformat(updated.replace('Z','+00:00')).strftime('%Y/%m/%d %H:%M')
     except: update=str(updated)
+    ai_rows=[]
+    for label,key in [('県全体','summary'),('地域別','regional'),('年代別','age_group'),('前年同期','year_on_year')]:
+        text=str(ai.get(key,'') or '').strip()
+        if text:
+            ai_rows.append(f'<div class="ai-row"><b>{esc(label)}</b><p>{esc(text)}</p></div>')
+    ai_rows_html=''.join(ai_rows) or '<div class="ai-row"><b>分析</b><p>AI週次分析データを読み込めませんでした。</p></div>'
+
+    region_rows=[]
+    for r in REGION_ORDER:
+        name=REGION_DISPLAY.get(r,r)
+        now=regions.get(r); before=prev_regions.get(r)
+        delta='--' if now is None or before is None else f'{float(now)-float(before):+.2f}'
+        delta_cls=' class="delta"' if delta!='--' else ''
+        region_rows.append(
+            f'<tr><td>{esc(name)}</td><td>{fmt(now)}</td><td>{fmt(before)}</td><td{delta_cls}>{delta}</td></tr>'
+        )
+    region_rows_html=''.join(region_rows)
+
     repl={
       'TITLE_PERIOD':period_text(latest),'UPDATE_TIME':update,'LATEST_VALUE':f'{v:.2f}','PREV_VALUE':f'{pv:.2f}','DIFF_VALUE':f'{diff:+.2f}',
-      'SIGNAL_COLOR':color,'SIGNAL_TEXT':sig,'Y_ACTIVE':'active' if level=='yellow' else '','R_ACTIVE':'active' if level=='red' else '','P_ACTIVE':'active' if level=='purple' else '',
+      'SIGNAL_COLOR':color,'SIGNAL_TEXT':sig,
+      'B_ACTIVE':'active' if level=='blue' else '',
+      'Y_ACTIVE':'active' if level=='yellow' else '',
+      'R_ACTIVE':'active' if level=='red' else '',
+      'P_ACTIVE':'active' if level=='purple' else '',
       'TREND_SVG':svg_trend(weeks[-6:]),'YOY_VALUE':f'{yoy:.2f}','YOY_DIFF':f'{v-yoy:+.2f}',
+      'HEADLINE':esc(ai.get('headline','今週の流行状況')),
+      'AI_ROWS':ai_rows_html,
+      'MAP_SVG':map_html(display),
+      'MAP_SOURCE_NOTE':'新潟県公表値を地域区分に対応させて表示',
+      'TOP_REGION_ROWS':top_rows,
+      'AGE_SVG':svg_age(counts,rates),
+      'REGION_ROWS':region_rows_html,
+      # 旧テンプレート互換キーも残す
       'AI_SUMMARY':esc(ai.get('summary','')),'AI_REGIONAL':esc(ai.get('regional','')),'AI_AGE':esc(ai.get('age_group','')),'AI_YOY':esc(ai.get('year_on_year','')),
-      'MAP_HTML':map_html(display),'TOP_REGION_ROWS':top_rows,'AGE_SVG':svg_age(counts,rates),'AGE_HEADERS':age_headers,'AGE_RATE_CELLS':age_rate,'AGE_COUNT_CELLS':age_count,'AGE_SHARE_CELLS':age_share,
+      'MAP_HTML':map_html(display),'AGE_HEADERS':age_headers,'AGE_RATE_CELLS':age_rate,'AGE_COUNT_CELLS':age_count,'AGE_SHARE_CELLS':age_share,
       'TOP1_TEXT':esc(top1_text),'AGE_TOP_TEXT':esc(age_top_text),'REGION_HEADERS':reg_headers,'REGION_NOW':reg_now,'REGION_PREV':reg_prev,'REGION_DIFF':reg_diff
     }
     html=TEMPLATE.read_text(encoding='utf-8')
