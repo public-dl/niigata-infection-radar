@@ -57,7 +57,7 @@ def period_text(w):
 def svg_trend(weeks,w=430,h=170):
     vals=[float(x.get('prefecture') or 0) for x in weeks]
     vmax=max(7.0,max(vals)*1.12)
-    ml,mr,mt,mb=32,8,12,30
+    ml,mr,mt,mb=50,8,12,30
     pw,ph=w-ml-mr,h-mt-mb
     pts=[]
     for i,v in enumerate(vals):
