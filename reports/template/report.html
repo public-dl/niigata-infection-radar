@@ -1,8 +1,24 @@
-<!doctype html><html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="./report.css"></head>
-<body><main class="sheet">
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="./report.css">
+</head>
+<body>
+<main class="sheet">
   <header class="report-head">
-    <div class="title-wrap"><div class="title-rule"></div><div><h1>新潟県 インフルエンザ週次レポート</h1><div class="period">{{TITLE_PERIOD}}</div></div></div>
-    <div class="head-meta"><span>INFLUENZA WEEKLY REPORT</span><strong>最終更新 {{UPDATE_TIME}}</strong></div>
+    <div class="title-wrap">
+      <div class="title-rule"></div>
+      <div>
+        <h1>新潟県 インフルエンザ週次レポート</h1>
+        <div class="period">{{TITLE_PERIOD}}</div>
+      </div>
+    </div>
+    <div class="head-meta">
+      <span>INFLUENZA WEEKLY REPORT</span>
+      <strong>最終更新 {{UPDATE_TIME}}</strong>
+    </div>
     <div class="ripple r1"></div><div class="ripple r2"></div>
   </header>
 
@@ -10,28 +26,96 @@
     <article class="card status-card">
       <div class="card-title invert">県全体・定点当たり報告数 <small>（人 / 定点）</small></div>
       <div class="status-main"><div class="big">{{LATEST_VALUE}}</div><div class="unit">人 / 定点</div></div>
-      <div class="status-sub"><div><span>前週</span><b>{{PREV_VALUE}}</b></div><div><span>前週から</span><b class="up">{{DIFF_VALUE}}</b></div><div><span>前年同期</span><b>{{YOY_VALUE}}</b></div></div>
-      <div class="signal-row"><div class="signal-chip" style="--signal:{{SIGNAL_COLOR}}">{{SIGNAL_TEXT}}</div><div class="lights"><span class="blue {{B_ACTIVE}}"></span><span class="yellow {{Y_ACTIVE}}"></span><span class="red {{R_ACTIVE}}"></span><span class="purple {{P_ACTIVE}}"></span></div></div>
-      <div class="signal-scale"><span>1未満</span><span>1-10未満</span><span>10-30未満</span><span>30以上</span></div>
+      <div class="status-sub">
+        <div><span>前週</span><b>{{PREV_VALUE}}</b></div>
+        <div><span>前週から</span><b class="up">{{DIFF_VALUE}}</b></div>
+        <div><span>前年同期</span><b>{{YOY_VALUE}}</b></div>
+      </div>
+      <div class="signal-chip" style="--signal:{{SIGNAL_COLOR}}">{{SIGNAL_TEXT}}</div>
+      <div class="signal-legend">
+        <span><i class="blue"></i>1未満</span>
+        <span><i class="yellow"></i>1-10未満</span>
+        <span><i class="red"></i>10-30未満</span>
+        <span><i class="purple"></i>30以上</span>
+      </div>
     </article>
 
-    <article class="card trend-card"><div class="card-title">県全体の推移 <small>定点当たり報告数</small></div><div class="chart-box">{{TREND_SVG}}</div><div class="micro-note">直近6週 / 最新値を強調表示</div></article>
+    <article class="card trend-card">
+      <div class="card-title">県全体の推移 <small>定点当たり報告数</small></div>
+      <div class="trend-layout">
+        <div class="chart-box">{{TREND_SVG}}</div>
+        <div class="trend-stats">
+          <div><span>最新値</span><b>{{LATEST_VALUE}}</b><small>人 / 定点</small></div>
+          <div><span>前年同期</span><b>{{YOY_VALUE}}</b><small>人 / 定点</small></div>
+          <div><span>前年差</span><b class="up">{{YOY_DIFF}}</b><small>人 / 定点</small></div>
+        </div>
+      </div>
+    </article>
 
-    <article class="card ai-card"><div class="card-title">AI週次分析</div><div class="ai-headline">{{HEADLINE}}</div><div class="ai-list">{{AI_ROWS}}</div></article>
+    <article class="card ai-card">
+      <div class="card-title">AI週次分析</div>
+      <div class="ai-headline">{{HEADLINE}}</div>
+      <div class="ai-list">{{AI_ROWS}}</div>
+    </article>
   </section>
 
   <section class="grid middle-grid">
-    <article class="card map-card"><div class="card-title">地域別の状況 <small>定点当たり報告数</small></div><div class="map-layout"><div class="map-wrap">{{MAP_SVG}}</div><div class="map-side"><div class="blue-legend"><i class="b1"></i><span>1未満</span><i class="b2"></i><span>1-4未満</span><i class="b3"></i><span>4-7未満</span><i class="b4"></i><span>7-10未満</span><i class="b5"></i><span>10以上</span></div><table class="rank"><thead><tr><th>#</th><th>地域</th><th>人/定点</th></tr></thead><tbody>{{TOP_REGION_ROWS}}</tbody></table></div></div><div class="micro-note">{{MAP_SOURCE_NOTE}}</div></article>
+    <article class="card map-card">
+      <div class="card-title">地域別の状況 <small>定点当たり報告数</small></div>
+      <div class="map-layout">
+        <div class="map-wrap">{{MAP_SVG}}</div>
+        <div class="map-side">
+          <div class="blue-legend">
+            <i class="b1"></i><span>1未満</span>
+            <i class="b2"></i><span>1-4未満</span>
+            <i class="b3"></i><span>4-7未満</span>
+            <i class="b4"></i><span>7-10未満</span>
+            <i class="b5"></i><span>10以上</span>
+          </div>
+          <div class="rank-title">上位5地域</div>
+          <table class="rank"><thead><tr><th>#</th><th>地域</th><th>人/定点</th></tr></thead><tbody>{{TOP_REGION_ROWS}}</tbody></table>
+        </div>
+      </div>
+      <div class="micro-note">{{MAP_SOURCE_NOTE}}</div>
+    </article>
 
-    <article class="card age-card"><div class="card-title">年代別の状況 <small>報告数（人） / 人・定点</small></div><div class="chart-box age-box">{{AGE_SVG}}</div></article>
-
-
+    <article class="card age-card">
+      <div class="card-title">年代別の状況 <small>報告数（人） / 人・定点</small></div>
+      <div class="chart-box age-box">{{AGE_SVG}}</div>
+      <table class="age-table">
+        <thead><tr><th>年齢区分</th>{{AGE_HEADERS}}</tr></thead>
+        <tbody>
+          <tr><th>人 / 定点</th>{{AGE_RATE_CELLS}}</tr>
+          <tr><th>報告数（件）</th>{{AGE_COUNT_CELLS}}</tr>
+          <tr><th>構成比（%）</th>{{AGE_SHARE_CELLS}}</tr>
+        </tbody>
+      </table>
+    </article>
   </section>
 
   <section class="grid bottom-grid">
-    <article class="card region-table-card"><div class="card-title">地域別詳細</div><table class="region-table"><thead><tr><th>地域</th><th>今週</th><th>前週</th><th>増減</th></tr></thead><tbody>{{REGION_ROWS}}</tbody></table></article>
-    <article class="card outlook-card"><div class="card-title">今後の見通し</div><p>県全体で増加が続いており、当面は流行の広がりを継続して確認する必要があります。学校・家庭・職場では、体調不良時に無理をせず、手洗い・換気など基本的な感染対策を状況に応じて行ってください。</p><div class="threshold-note"><b>シグナル表示</b><span>青：1未満</span><span>黄：1以上</span><span>赤：10以上</span><span>紫：30以上</span></div></article>
+    <article class="card region-table-card">
+      <div class="card-title">地域別詳細 <small>（人 / 定点）</small></div>
+      <table class="region-wide-table">
+        <thead><tr><th>地域</th>{{REGION_HEADERS}}</tr></thead>
+        <tbody>
+          <tr><th>今週</th>{{REGION_NOW}}</tr>
+          <tr><th>前週</th>{{REGION_PREV}}</tr>
+          <tr class="delta-row"><th>増減</th>{{REGION_DIFF}}</tr>
+        </tbody>
+      </table>
+    </article>
+
+    <article class="card comment-card">
+      <div class="card-title">AIコメント</div>
+      <p>{{AI_COMMENT}}</p>
+    </article>
   </section>
 
-  <footer><span>出典：新潟県「感染症情報（週報）」 / 地図：国土交通省 国土数値情報（行政区域）由来</span><span>※ シグナルは定点当たり報告数を基準とした表示で、実際の注意報・警報の発令を示すものではありません。</span></footer>
-</main></body></html>
+  <footer>
+    <span>出典：新潟県「感染症情報（週報）」 / 地図：国土交通省 国土数値情報（行政区域）由来</span>
+    <span>※ 本レポートは公表資料をもとに作成した参考情報で、公式の注意報・警報の発令を示すものではありません。</span>
+  </footer>
+</main>
+</body>
+</html>
