@@ -1,0 +1,41 @@
+/* v82 — 最新週の年代別比較：複合グラフ＋週送りアニメーション */
+.age-latest-playback{
+  display:grid;
+  grid-template-columns:auto minmax(160px,1fr) auto;
+  gap:10px;
+  align-items:center;
+  margin-top:10px;
+  padding:10px 12px;
+  border:1px solid rgba(80,140,180,.18);
+  border-radius:14px;
+  background:rgba(247,251,254,.72);
+}
+.age-latest-playback-buttons{
+  display:flex;
+  gap:6px;
+  align-items:center;
+  flex-wrap:wrap;
+}
+.age-latest-week-slider{
+  width:100%;
+}
+.age-latest-playback-label{
+  white-space:nowrap;
+  color:#0b5f94;
+  font-size:.78rem;
+}
+.age-latest-playback .timeline-button:disabled{
+  opacity:.38;
+  cursor:default;
+}
+@media (max-width:820px){
+  .age-latest-playback{
+    grid-template-columns:1fr;
+  }
+  .age-latest-playback-buttons{
+    justify-content:center;
+  }
+  .age-latest-playback-label{
+    text-align:center;
+  }
+}

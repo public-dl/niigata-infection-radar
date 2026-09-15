@@ -41,6 +41,7 @@
   <link rel="stylesheet" href="./sentinel-v75.css?v=75" />
   <link rel="stylesheet" href="./mobile-v77.css?v=77" />
   <link rel="stylesheet" href="./status-v81.css?v=81" />
+  <link rel="stylesheet" href="./age-latest-v82.css?v=82" />
 </head>
 <body>
 <header class="hero hero-photo hero-sample">
@@ -290,7 +291,17 @@
         <span id="age-latest-period" class="source-chip">--</span>
       </div>
       <div class="age-chart-wrap age-latest-chart-wrap"><canvas id="age-latest-chart"></canvas></div>
-      <p class="muted small">グラフは定点当たり報告数（人/定点）。実数はグラフに触れると確認できます。</p>
+      <div class="age-latest-playback" aria-label="年代別比較の週送り">
+        <div class="age-latest-playback-buttons">
+          <button id="age-latest-prev" class="timeline-button" type="button" aria-label="1週戻る">◀</button>
+          <button id="age-latest-play" class="timeline-button timeline-play" type="button">▶ 再生</button>
+          <button id="age-latest-next" class="timeline-button" type="button" aria-label="1週進む">▶</button>
+          <button id="age-latest-latest" class="timeline-button timeline-latest" type="button">最新へ</button>
+        </div>
+        <input id="age-latest-week-slider" class="map-week-slider age-latest-week-slider" type="range" min="0" max="0" value="0" step="1" aria-label="年代別比較の表示週">
+        <strong id="age-latest-playback-label" class="age-latest-playback-label">--</strong>
+      </div>
+      <p class="muted small">棒グラフは人/定点（左軸）、折れ線は報告数（右軸）。年代ごとの色は時系列グラフと共通です。</p>
     </article>
 
     <article class="card age-series-card">
@@ -377,6 +388,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="./app.js?v=80"></script>
+<script src="./app.js?v=82"></script>
 </body>
 </html>

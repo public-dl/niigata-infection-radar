@@ -19,7 +19,7 @@ const REGION_MUNICIPALITIES={
 };
 const DISPLAY_REGION={"新潟市":"新潟"};
 let allWeeks=[],trendChart=null,latestWeek=null,geoDataPromise=null,mapInstance=null,mapGeoLayer=null,currentMapWeek=null,mapPlayTimer=null,mapRangeStartIndex=0,mapRangeWeeks=13;
-let ageLatestChart=null,ageSeriesChart=null,ageHeatmapTimer=null,ageHeatmapRange=13,ageHeatmapEndIndex=0,ageSeriesWeeks=13;
+let ageLatestChart=null,ageLatestTimer=null,ageLatestWeekIndex=0,ageSeriesChart=null,ageHeatmapTimer=null,ageHeatmapRange=13,ageHeatmapEndIndex=0,ageSeriesWeeks=13;
 const AGE_GROUPS=["0歳","1～4歳","5～9歳","10～14歳","15～19歳","20～59歳","60歳以上"];
 const AGE_COLORS={
   "0歳":"#76b7e5",
@@ -252,23 +252,165 @@ function wireAgeHeatmap(){
     },650);
   });
 }
-function renderAgeLatest(){
+function stopAgeLatestPlayback(){
+  if(ageLatestTimer){clearInterval(ageLatestTimer);ageLatestTimer=null;}
+  const play=document.querySelector("#age-latest-play");
+  if(play) play.textContent="▶ 再生";
+}
+
+function updateAgeLatestControls(){
+  const slider=document.querySelector("#age-latest-week-slider");
+  const prev=document.querySelector("#age-latest-prev");
+  const next=document.querySelector("#age-latest-next");
+  const latest=document.querySelector("#age-latest-latest");
+  if(slider) slider.value=String(ageLatestWeekIndex);
+  if(prev) prev.disabled=ageLatestWeekIndex<=0;
+  if(next) next.disabled=ageLatestWeekIndex>=allWeeks.length-1;
+  if(latest) latest.disabled=ageLatestWeekIndex>=allWeeks.length-1;
+}
+
+function renderAgeLatestAt(index){
   const canvas=document.querySelector("#age-latest-chart");
-  if(!canvas||!latestWeek||typeof Chart==="undefined") return;
+  if(!canvas||typeof Chart==="undefined"||!allWeeks.length) return;
+
+  ageLatestWeekIndex=Math.max(0,Math.min(Number(index)||0,allWeeks.length-1));
+  const week=allWeeks[ageLatestWeekIndex];
+  const values=AGE_GROUPS.map(g=>ageRate(week,g));
+  const counts=AGE_GROUPS.map(g=>ageCount(week,g));
+  const colors=AGE_GROUPS.map(g=>AGE_COLORS[g]);
+
   if(ageLatestChart) ageLatestChart.destroy();
-  const values=AGE_GROUPS.map(g=>ageRate(latestWeek,g));
-  const counts=AGE_GROUPS.map(g=>ageCount(latestWeek,g));
+
   ageLatestChart=new Chart(canvas,{
-    type:"bar",
-    data:{labels:AGE_GROUPS,datasets:[{label:"人/定点",data:values,backgroundColor:AGE_GROUPS.map(g=>AGE_COLORS[g]),borderRadius:5,borderSkipped:false}]},
+    data:{
+      labels:AGE_GROUPS,
+      datasets:[
+        {
+          type:"bar",
+          label:"人/定点",
+          data:values,
+          yAxisID:"ySentinel",
+          backgroundColor:colors,
+          borderColor:colors,
+          borderWidth:1,
+          borderRadius:6,
+          borderSkipped:false,
+          order:2
+        },
+        {
+          type:"line",
+          label:"報告数（人）",
+          data:counts,
+          yAxisID:"yCount",
+          borderColor:"rgba(46,88,120,.60)",
+          backgroundColor:colors,
+          pointBackgroundColor:colors,
+          pointBorderColor:"#ffffff",
+          pointBorderWidth:2,
+          pointRadius:5,
+          pointHoverRadius:7,
+          borderWidth:2.2,
+          tension:.22,
+          spanGaps:true,
+          order:1,
+          segment:{
+            borderColor:ctx=>colors[Math.min(ctx.p0DataIndex,colors.length-1)] || "rgba(46,88,120,.60)"
+          }
+        }
+      ]
+    },
     options:{
-      indexAxis:"y",responsive:true,maintainAspectRatio:false,
-      plugins:{legend:{display:false},tooltip:{callbacks:{label:c=>{const i=c.dataIndex;return ` ${n(c.raw)} 人/定点（実数 ${counts[i]===null?"--":n(counts[i],0)}人）`;}}}},
-      scales:{x:{beginAtZero:true,grid:{color:"rgba(90,130,150,.10)"},title:{display:true,text:"定点当たり報告数（人/定点）"}},y:{grid:{display:false},ticks:{font:{weight:"700"}}}}
+      responsive:true,
+      maintainAspectRatio:false,
+      animation:{duration:650,easing:"easeOutQuart"},
+      interaction:{mode:"index",intersect:false},
+      plugins:{
+        legend:{
+          display:true,
+          position:"top",
+          align:"end",
+          labels:{usePointStyle:true,boxWidth:10,boxHeight:10,font:{weight:"700"}}
+        },
+        tooltip:{
+          callbacks:{
+            title:items=>items?.[0]?.label||"",
+            label:c=>{
+              const i=c.dataIndex;
+              if(c.dataset.yAxisID==="ySentinel") return ` 人/定点：${values[i]===null?"--":n(values[i])}`;
+              return ` 報告数：${counts[i]===null?"--":n(counts[i],0)}人`;
+            }
+          }
+        }
+      },
+      scales:{
+        x:{
+          grid:{display:false},
+          ticks:{font:{weight:"700"}}
+        },
+        ySentinel:{
+          type:"linear",
+          position:"left",
+          beginAtZero:true,
+          grid:{color:"rgba(90,130,150,.10)"},
+          title:{display:true,text:"人/定点",font:{weight:"700"}}
+        },
+        yCount:{
+          type:"linear",
+          position:"right",
+          beginAtZero:true,
+          grid:{drawOnChartArea:false},
+          title:{display:true,text:"報告数（人）",font:{weight:"700"}},
+          ticks:{precision:0}
+        }
+      }
     }
   });
-  const period=document.querySelector("#age-latest-period");if(period)period.textContent=compareHeading(latestWeek);
+
+  const period=document.querySelector("#age-latest-period");
+  if(period) period.textContent=compareHeading(week);
+
+  const rangeLabel=document.querySelector("#age-latest-playback-label");
+  if(rangeLabel) rangeLabel.textContent=week.label||`${week.year} 第${week.week}週`;
+
+  updateAgeLatestControls();
 }
+
+function renderAgeLatest(){
+  ageLatestWeekIndex=Math.max(0,allWeeks.length-1);
+  renderAgeLatestAt(ageLatestWeekIndex);
+}
+
+function wireAgeLatestPlayback(){
+  const slider=document.querySelector("#age-latest-week-slider");
+  const play=document.querySelector("#age-latest-play");
+  const prev=document.querySelector("#age-latest-prev");
+  const next=document.querySelector("#age-latest-next");
+  const latest=document.querySelector("#age-latest-latest");
+  if(!slider||!play||!prev||!next||!latest||!allWeeks.length) return;
+
+  slider.min="0";
+  slider.max=String(allWeeks.length-1);
+  slider.value=String(allWeeks.length-1);
+  ageLatestWeekIndex=allWeeks.length-1;
+
+  slider.addEventListener("input",()=>{stopAgeLatestPlayback();renderAgeLatestAt(Number(slider.value));});
+  prev.addEventListener("click",()=>{stopAgeLatestPlayback();renderAgeLatestAt(ageLatestWeekIndex-1);});
+  next.addEventListener("click",()=>{stopAgeLatestPlayback();renderAgeLatestAt(ageLatestWeekIndex+1);});
+  latest.addEventListener("click",()=>{stopAgeLatestPlayback();renderAgeLatestAt(allWeeks.length-1);});
+  play.addEventListener("click",()=>{
+    if(ageLatestTimer){stopAgeLatestPlayback();return;}
+    if(ageLatestWeekIndex>=allWeeks.length-1) ageLatestWeekIndex=Math.max(0,allWeeks.length-13);
+    renderAgeLatestAt(ageLatestWeekIndex);
+    play.textContent="Ⅱ 一時停止";
+    ageLatestTimer=setInterval(()=>{
+      if(ageLatestWeekIndex>=allWeeks.length-1){stopAgeLatestPlayback();return;}
+      renderAgeLatestAt(ageLatestWeekIndex+1);
+    },850);
+  });
+
+  updateAgeLatestControls();
+}
+
 function renderAgeSeriesToggles(){
   const host=document.querySelector("#age-series-toggles");if(!host)return;
   host.innerHTML="";
@@ -313,6 +455,7 @@ function initAgeStatistics(){
   if(!hasAge){section.hidden=true;return;}
   ageHeatmapEndIndex=allWeeks.length-1;
   renderAgeLatest();
+  wireAgeLatestPlayback();
   renderAgeSeriesToggles();
   renderAgeSeries(13);
   wireAgeSeriesRange();
