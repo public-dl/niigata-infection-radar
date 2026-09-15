@@ -89,7 +89,7 @@ def svg_age(counts,rates,w=520,h=195):
         cx=ml+pw*(i+.5)/len(vals); bh=v/vmax*ph; y=mt+ph-bh
         s.append(f'<rect x="{cx-bw/2:.1f}" y="{y:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="3" fill="{COLORS[i]}"/>')
         s.append(f'<text x="{cx:.1f}" y="{max(10,y-5):.1f}" text-anchor="middle" class="value-label">{int(v)}人</text>')
-        s.append(f'<text x="{cx:.1f}" y="{h-9}" text-anchor="middle" class="axis age-axis">{esc(g)}</text>')
+        s.append(f'<text x="{cx:.1f}" y="{h-9}" text-anchor="middle" font-size="5.3" font-weight="600" fill="#52799d">{esc(g)}</text>')
     s.append('</svg>'); return ''.join(s)
 
 def _walk_coords(geom):
