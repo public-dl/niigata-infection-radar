@@ -11,7 +11,7 @@
       <div class="card-title invert">県全体・定点当たり報告数 <small>（人 / 定点）</small></div>
       <div class="status-main"><div class="big">{{LATEST_VALUE}}</div><div class="unit">人 / 定点</div></div>
       <div class="status-sub"><div><span>前週</span><b>{{PREV_VALUE}}</b></div><div><span>前週から</span><b class="up">{{DIFF_VALUE}}</b></div><div><span>前年同期</span><b>{{YOY_VALUE}}</b></div></div>
-      <div class="signal-row"><div class="signal-chip" style="--signal:{{SIGNAL_COLOR}}">{{SIGNAL_TEXT}}</div><div class="lights"><span class="blue"></span><span class="yellow active"></span><span class="red"></span><span class="purple"></span></div></div>
+      <div class="signal-row"><div class="signal-chip" style="--signal:{{SIGNAL_COLOR}}">{{SIGNAL_TEXT}}</div><div class="lights"><span class="blue {{B_ACTIVE}}"></span><span class="yellow {{Y_ACTIVE}}"></span><span class="red {{R_ACTIVE}}"></span><span class="purple {{P_ACTIVE}}"></span></div></div>
       <div class="signal-scale"><span>1未満</span><span>1-10未満</span><span>10-30未満</span><span>30以上</span></div>
     </article>
 
