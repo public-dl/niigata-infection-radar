@@ -57,11 +57,11 @@ def period_text(w):
 def svg_trend(weeks,w=430,h=170):
     vals=[float(x.get('prefecture') or 0) for x in weeks]
     vmax=max(7.0,max(vals)*1.12)
-    ml,mr,mt,mb=50,8,12,30
+    ml,mr,mt,mb=52,8,12,30
     pw,ph=w-ml-mr,h-mt-mb
     pts=[]
     for i,v in enumerate(vals):
-        x=ml+pw*(i/(max(1,len(vals)-1))); y=mt+ph-(v/vmax)*ph; pts.append((x,y,v))
+        x=ml+10+(pw-20)*(i/(max(1,len(vals)-1))); y=mt+ph-(v/vmax)*ph; pts.append((x,y,v))
     s=[f'<svg viewBox="0 0 {w} {h}" class="svg-chart">']
     for t in range(5):
         y=mt+ph*t/4; val=vmax*(1-t/4)
@@ -265,6 +265,7 @@ def main():
       'TREND_SVG':svg_trend(weeks[-6:]),'YOY_VALUE':f'{yoy:.2f}','YOY_DIFF':f'{v-yoy:+.2f}',
       'HEADLINE':esc(ai.get('headline','今週の流行状況')),
       'AI_ROWS':ai_rows_html,
+      'AI_COMMENT':esc(ai.get('comment') or ai.get('summary') or '今週の流行状況を継続して確認してください。'),
       'MAP_SVG':map_html(display),
       'MAP_SOURCE_NOTE':'新潟県公表値を地域区分に対応させて表示',
       'TOP_REGION_ROWS':top_rows,
