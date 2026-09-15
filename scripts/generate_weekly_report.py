@@ -57,7 +57,7 @@ def period_text(w):
 def svg_trend(weeks,w=430,h=170):
     vals=[float(x.get('prefecture') or 0) for x in weeks]
     vmax=max(7.0,max(vals)*1.12)
-    ml,mr,mt,mb=52,8,12,30
+    ml,mr,mt,mb=58,8,14,34
     pw,ph=w-ml-mr,h-mt-mb
     pts=[]
     for i,v in enumerate(vals):
@@ -78,7 +78,7 @@ def svg_trend(weeks,w=430,h=170):
 def svg_age(counts,rates,w=520,h=195):
     vals=[float(counts.get(g,0) or 0) for g in AGE_GROUPS]
     vmax=max(150,max(vals)*1.15)
-    ml,mr,mt,mb=30,8,15,31; pw,ph=w-ml-mr,h-mt-mb
+    ml,mr,mt,mb=42,8,17,38; pw,ph=w-ml-mr,h-mt-mb
     s=[f'<svg viewBox="0 0 {w} {h}" class="svg-chart">']
     for t in range(4):
         y=mt+ph*t/3; val=vmax*(1-t/3)
@@ -89,7 +89,7 @@ def svg_age(counts,rates,w=520,h=195):
         cx=ml+pw*(i+.5)/len(vals); bh=v/vmax*ph; y=mt+ph-bh
         s.append(f'<rect x="{cx-bw/2:.1f}" y="{y:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="3" fill="{COLORS[i]}"/>')
         s.append(f'<text x="{cx:.1f}" y="{max(10,y-5):.1f}" text-anchor="middle" class="value-label">{int(v)}人</text>')
-        s.append(f'<text x="{cx:.1f}" y="{h-9}" text-anchor="middle" font-size="5.3" font-weight="600" fill="#52799d">{esc(g)}</text>')
+        s.append(f'<text x="{cx:.1f}" y="{h-9}" text-anchor="middle" font-size="10.5pt" font-weight="600" fill="#52799d">{esc(g)}</text>')
     s.append('</svg>'); return ''.join(s)
 
 def _walk_coords(geom):
