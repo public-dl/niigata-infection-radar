@@ -1,0 +1,5 @@
+/* v87 — 最新週の年代別比較は静的表示
+   再生・前週/次週・スライダーを廃止 */
+.age-latest-playback{
+  display:none !important;
+}
