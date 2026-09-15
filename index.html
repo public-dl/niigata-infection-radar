@@ -44,6 +44,8 @@
   <link rel="stylesheet" href="./age-latest-v82.css?v=82" />
   <link rel="stylesheet" href="./age-layout-v83.css?v=83" />
   <link rel="stylesheet" href="./age-latest-v84.css?v=84" />
+  <link rel="stylesheet" href="./age-latest-v85.css?v=85" />
+  <link rel="stylesheet" href="./age-latest-v86.css?v=86" />
 </head>
 <body>
 <header class="hero hero-photo hero-sample">
@@ -293,6 +295,7 @@
         <span id="age-latest-period" class="source-chip">--</span>
       </div>
       <div class="age-chart-wrap age-latest-chart-wrap"><canvas id="age-latest-chart"></canvas></div>
+      <div id="age-latest-values" class="age-latest-values" aria-label="最新週の年代別数値一覧"></div>
       <div class="age-latest-playback" aria-label="年代別比較の週送り">
         <div class="age-latest-playback-buttons">
           <button id="age-latest-prev" class="timeline-button" type="button" aria-label="1週戻る">◀</button>
@@ -303,7 +306,7 @@
         <input id="age-latest-week-slider" class="map-week-slider age-latest-week-slider" type="range" min="0" max="0" value="0" step="1" aria-label="年代別比較の表示週">
         <strong id="age-latest-playback-label" class="age-latest-playback-label">--</strong>
       </div>
-      <p class="muted small">棒グラフは人/定点（左軸）、折れ線は報告数（右軸）。年代ごとの色は時系列グラフと共通です。</p>
+      <p class="muted small">棒グラフは報告数（人）。棒の上に人数を表示し、下の表で各年代の人/定点を確認できます。</p>
     </article>
 
     <article class="card age-series-card">
@@ -390,6 +393,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="./app.js?v=84"></script>
+<script src="./app.js?v=86"></script>
 </body>
 </html>

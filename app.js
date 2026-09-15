@@ -269,35 +269,43 @@ function updateAgeLatestControls(){
   if(latest) latest.disabled=ageLatestWeekIndex>=allWeeks.length-1;
 }
 
-const ageLatestValueLabelsPlugin={
-  id:"ageLatestValueLabels",
+function renderAgeLatestValueTable(values, colors){
+  const host=document.querySelector("#age-latest-values");
+  if(!host) return;
+
+  const ageHeader=AGE_GROUPS.map((group,i)=>`<div class="age-latest-cell age-latest-age" style="--age-color:${colors[i]}">${group}</div>`).join("");
+  const rateRow=AGE_GROUPS.map((group,i)=>`<div class="age-latest-cell age-latest-value age-latest-rate" style="--age-color:${colors[i]}">${values[i]===null?"--":n(values[i])}</div>`).join("");
+
+  host.innerHTML=`
+    <div class="age-latest-table">
+      <div class="age-latest-table-row age-latest-table-head">
+        <div class="age-latest-row-label age-latest-head-label">年齢</div>
+        ${ageHeader}
+      </div>
+      <div class="age-latest-table-row">
+        <div class="age-latest-row-label">人/定点</div>
+        ${rateRow}
+      </div>
+    </div>`;
+}
+
+const ageLatestBarLabelsPlugin={
+  id:"ageLatestBarLabels",
   afterDatasetsDraw(chart){
     const ctx=chart.ctx;
-    const barMeta=chart.getDatasetMeta(0);
-    const lineMeta=chart.getDatasetMeta(1);
-    const barData=chart.data.datasets[0]?.data||[];
-    const lineData=chart.data.datasets[1]?.data||[];
+    const meta=chart.getDatasetMeta(0);
+    const data=chart.data.datasets[0]?.data||[];
 
     ctx.save();
     ctx.textAlign="center";
     ctx.textBaseline="bottom";
+    ctx.font='800 12px system-ui,-apple-system,"Segoe UI",sans-serif';
+    ctx.fillStyle="#173f63";
 
-    // 棒グラフ（人/定点）の実数値
-    barMeta.data.forEach((el,i)=>{
-      const v=barData[i];
+    meta.data.forEach((el,i)=>{
+      const v=data[i];
       if(v===null||v===undefined||!Number.isFinite(Number(v))) return;
-      ctx.font='700 12px system-ui,-apple-system,"Segoe UI",sans-serif';
-      ctx.fillStyle="#0b5f94";
-      ctx.fillText(n(Number(v)),el.x,Math.max(16,el.y-6));
-    });
-
-    // 折れ線（報告数）の実数値
-    lineMeta.data.forEach((el,i)=>{
-      const v=lineData[i];
-      if(v===null||v===undefined||!Number.isFinite(Number(v))) return;
-      ctx.font='800 12px system-ui,-apple-system,"Segoe UI",sans-serif';
-      ctx.fillStyle="#173f63";
-      ctx.fillText(`${n(Number(v),0)}人`,el.x,Math.max(16,el.y-10));
+      ctx.fillText(`${n(Number(v),0)}人`,el.x,Math.max(16,el.y-8));
     });
 
     ctx.restore();
@@ -316,42 +324,20 @@ function renderAgeLatestAt(index){
 
   if(!ageLatestChart){
     ageLatestChart=new Chart(canvas,{
-      plugins:[ageLatestValueLabelsPlugin],
+      type:"bar",
+      plugins:[ageLatestBarLabelsPlugin],
       data:{
         labels:AGE_GROUPS,
         datasets:[
           {
-            type:"bar",
-            label:"人/定点",
-            data:values,
-            yAxisID:"ySentinel",
+            label:"報告数（人）",
+            data:counts,
             backgroundColor:colors,
             borderColor:colors,
             borderWidth:1,
-            borderRadius:6,
+            borderRadius:7,
             borderSkipped:false,
-            order:2
-          },
-          {
-            type:"line",
-            label:"報告数（人）",
-            data:counts,
-            yAxisID:"yCount",
-            borderColor:"rgba(46,88,120,.60)",
-            backgroundColor:colors,
-            pointBackgroundColor:colors,
-            pointBorderColor:"#ffffff",
-            pointBorderWidth:2,
-            pointRadius:5,
-            pointHoverRadius:7,
-            borderWidth:2.2,
-            tension:.34,
-            cubicInterpolationMode:"monotone",
-            spanGaps:true,
-            order:1,
-            segment:{
-              borderColor:ctx=>colors[Math.min(ctx.p0DataIndex,colors.length-1)] || "rgba(46,88,120,.60)"
-            }
+            maxBarThickness:86
           }
         ]
       },
@@ -359,7 +345,7 @@ function renderAgeLatestAt(index){
         responsive:true,
         maintainAspectRatio:false,
         animation:{
-          duration:900,
+          duration:950,
           easing:"easeInOutCubic"
         },
         transitions:{
@@ -370,43 +356,29 @@ function renderAgeLatestAt(index){
         },
         interaction:{mode:"index",intersect:false},
         plugins:{
-          legend:{
-            display:true,
-            position:"top",
-            align:"end",
-            labels:{usePointStyle:true,boxWidth:10,boxHeight:10,font:{weight:"700"}}
-          },
+          legend:{display:false},
           tooltip:{
             callbacks:{
               title:items=>items?.[0]?.label||"",
               label:c=>{
                 const i=c.dataIndex;
-                if(c.dataset.yAxisID==="ySentinel") return ` 人/定点：${values[i]===null?"--":n(values[i])}`;
-                return ` 報告数：${counts[i]===null?"--":n(counts[i],0)}人`;
+                const count=counts[i]===null?"--":`${n(counts[i],0)}人`;
+                const rate=values[i]===null?"--":`${n(values[i])} 人/定点`;
+                return [` 報告数：${count}`,` 人/定点：${rate}`];
               }
             }
           }
         },
-        layout:{padding:{top:22}},
+        layout:{padding:{top:24}},
         scales:{
           x:{
             grid:{display:false},
             ticks:{font:{weight:"700"}}
           },
-          ySentinel:{
-            type:"linear",
-            position:"left",
-            beginAtZero:true,
-            grace:"14%",
-            grid:{color:"rgba(90,130,150,.10)"},
-            title:{display:true,text:"人/定点",font:{weight:"700"}}
-          },
-          yCount:{
-            type:"linear",
-            position:"right",
+          y:{
             beginAtZero:true,
             grace:"18%",
-            grid:{drawOnChartArea:false},
+            grid:{color:"rgba(90,130,150,.10)"},
             title:{display:true,text:"報告数（人）",font:{weight:"700"}},
             ticks:{precision:0}
           }
@@ -414,19 +386,11 @@ function renderAgeLatestAt(index){
       }
     });
   }else{
-    // 破棄して作り直さず、既存チャートの値だけ更新することで滑らかに遷移
-    ageLatestChart.data.datasets[0].data=values;
+    // チャートを破棄せず値だけ更新し、週送りを滑らかに補間
+    ageLatestChart.data.datasets[0].data=counts;
     ageLatestChart.data.datasets[0].backgroundColor=colors;
     ageLatestChart.data.datasets[0].borderColor=colors;
-    ageLatestChart.data.datasets[1].data=counts;
-    ageLatestChart.data.datasets[1].backgroundColor=colors;
-    ageLatestChart.data.datasets[1].pointBackgroundColor=colors;
-    ageLatestChart.data.datasets[1].segment={
-      borderColor:ctx=>colors[Math.min(ctx.p0DataIndex,colors.length-1)] || "rgba(46,88,120,.60)"
-    };
-
-    // 週送り時は900msの補間アニメーション
-    ageLatestChart.options.animation={duration:900,easing:"easeInOutCubic"};
+    ageLatestChart.options.animation={duration:950,easing:"easeInOutCubic"};
     ageLatestChart.update();
   }
 
@@ -436,6 +400,7 @@ function renderAgeLatestAt(index){
   const rangeLabel=document.querySelector("#age-latest-playback-label");
   if(rangeLabel) rangeLabel.textContent=week.label||`${week.year} 第${week.week}週`;
 
+  renderAgeLatestValueTable(values, colors);
   updateAgeLatestControls();
 }
 
@@ -469,7 +434,7 @@ function wireAgeLatestPlayback(){
     ageLatestTimer=setInterval(()=>{
       if(ageLatestWeekIndex>=allWeeks.length-1){stopAgeLatestPlayback();return;}
       renderAgeLatestAt(ageLatestWeekIndex+1);
-    },1050);
+    },1150);
   });
 
   updateAgeLatestControls();

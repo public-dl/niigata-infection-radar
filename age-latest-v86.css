@@ -1,0 +1,30 @@
+/* v86 — 最新週年代別比較
+   棒=報告数、棒上=人数、下表=人/定点のみ */
+.age-latest-table{
+  gap:7px;
+}
+
+.age-latest-table-row{
+  grid-template-columns:92px repeat(7,minmax(0,1fr));
+}
+
+.age-latest-value.age-latest-rate{
+  min-height:48px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+
+.age-latest-count{
+  display:none !important;
+}
+
+.age-section .age-latest-chart-wrap{
+  min-height:330px !important;
+}
+
+@media (max-width:820px){
+  .age-section .age-latest-chart-wrap{
+    min-height:300px !important;
+  }
+}
