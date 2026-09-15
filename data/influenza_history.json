@@ -1,19 +1,6716 @@
 {
   "meta": {
     "source": "新潟県感染症情報（週報）",
-    "updated_at": "2026-09-15T15:22:00+09:00"
+    "index_url": "https://www.pref.niigata.lg.jp/sec/kanyaku/1232482573101.html",
+    "disease": "インフルエンザ",
+    "unit": "定点当たり報告数",
+    "age_count_unit": "報告数（人）",
+    "age_per_sentinel_unit": "人/定点",
+    "age_groups": [
+      "0歳",
+      "1～4歳",
+      "5～9歳",
+      "10～14歳",
+      "15～19歳",
+      "20～59歳",
+      "60歳以上"
+    ],
+    "generated_by": "scripts/backfill.py",
+    "weeks_discovered": 88,
+    "weeks_ok": 88,
+    "weeks_with_age_data": 88,
+    "weeks_failed": 0,
+    "updated_at": "2026-09-14T15:22:54+09:00",
+    "updated_by": "scripts/update.py"
   },
   "weeks": [
-    {"year": 2025, "week": 36, "label": "R7/9/1–9/7", "prefecture": 0.27},
-    {"year": 2026, "week": 31, "label": "R8/7/27–8/2", "prefecture": 0.80},
-    {"year": 2026, "week": 32, "label": "R8/8/3–8/9", "prefecture": 1.64},
-    {"year": 2026, "week": 33, "label": "R8/8/10–8/16", "prefecture": 1.09},
-    {"year": 2026, "week": 34, "label": "R8/8/17–8/23", "prefecture": 1.65},
-    {"year": 2026, "week": 35, "label": "R8/8/24–8/30", "prefecture": 3.58},
-    {"year": 2026, "week": 36, "label": "R8/8/31–9/6", "prefecture": 6.13,
-      "regions": {"村上":13.00,"新発田":6.75,"新潟市":8.56,"新津":5.50,"三条":2.00,"長岡":5.14,"魚沼":5.50,"南魚沼":4.67,"十日町":1.00,"柏崎":7.00,"上越":1.25,"糸魚川":6.50,"佐渡":7.00},
-      "age_counts": {"0歳":6,"1～4歳":53,"5～9歳":122,"10～14歳":52,"15～19歳":9,"20～59歳":74,"60歳以上":21},
-      "age_per_sentinel": {"0歳":0.11,"1～4歳":0.97,"5～9歳":2.22,"10～14歳":0.95,"15～19歳":0.16,"20～59歳":1.35,"60歳以上":0.39}
+    {
+      "year": 2025,
+      "week": 1,
+      "start": "2024-12-30",
+      "end": "2025-01-05",
+      "label": "R6/12/30–R7/1/5",
+      "prefecture": 21.97,
+      "regions": {
+        "新潟市": 13.68,
+        "新発田": 18.29,
+        "新津": 14.33,
+        "三条": 19.0,
+        "長岡": 27.31,
+        "魚沼": 57.67,
+        "南魚沼": 78.33,
+        "十日町": 17.67,
+        "柏崎": 20.2,
+        "糸魚川": 23.0,
+        "村上": 21.67,
+        "佐渡": 40.33,
+        "上越": 9.25
+      },
+      "age_counts": {
+        "0歳": 31.0,
+        "1～4歳": 163.0,
+        "5～9歳": 291.0,
+        "10～14歳": 186.0,
+        "15～19歳": 135.0,
+        "20～59歳": 809.0,
+        "60歳以上": 296.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.36,
+        "1～4歳": 1.87,
+        "5～9歳": 3.34,
+        "10～14歳": 2.14,
+        "15～19歳": 1.55,
+        "20～59歳": 9.3,
+        "60歳以上": 3.4
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0701.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/430923.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 1911.0
+      },
+      "_parser": {
+        "sheet": "公表用",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "公表用",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1911.0,
+          "age_count_sum": 1911.0,
+          "count_difference": 0.0,
+          "expected_rate": 21.97,
+          "age_rate_sum": 21.96,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 2,
+      "start": "2025-01-06",
+      "end": "2025-01-12",
+      "label": "R7/1/6–1/12",
+      "prefecture": 35.36,
+      "regions": {
+        "新潟市": 31.21,
+        "新発田": 42.71,
+        "新津": 30.33,
+        "三条": 39.88,
+        "長岡": 34.0,
+        "魚沼": 21.33,
+        "南魚沼": 58.67,
+        "十日町": 45.0,
+        "柏崎": 27.6,
+        "糸魚川": 38.67,
+        "村上": 29.33,
+        "佐渡": 28.33,
+        "上越": 42.38
+      },
+      "age_counts": {
+        "0歳": 61.0,
+        "1～4歳": 501.0,
+        "5～9歳": 569.0,
+        "10～14歳": 355.0,
+        "15～19歳": 170.0,
+        "20～59歳": 997.0,
+        "60歳以上": 388.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.17,
+        "1～4歳": 0.51,
+        "5～9歳": 0.4,
+        "10～14歳": 0.52,
+        "15～19歳": 0.48,
+        "20～59歳": 4.06,
+        "60歳以上": 3.05
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0702.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/431360.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 3041.0
+      },
+      "_parser": {
+        "sheet": "公表用",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "公表用",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 50,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 3041.0,
+          "age_count_sum": 3041.0,
+          "count_difference": 0.0,
+          "expected_rate": 35.36,
+          "age_rate_sum": 9.19,
+          "rate_difference": -26.17
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 3,
+      "start": "2025-01-13",
+      "end": "2025-01-19",
+      "label": "R7/1/13–1/19",
+      "prefecture": 22.72,
+      "regions": {
+        "新潟市": 16.58,
+        "新発田": 19.86,
+        "新津": 8.67,
+        "三条": 23.38,
+        "長岡": 24.38,
+        "魚沼": 11.0,
+        "南魚沼": 18.0,
+        "十日町": 24.0,
+        "柏崎": 23.4,
+        "糸魚川": 25.33,
+        "村上": 28.33,
+        "佐渡": 31.33,
+        "上越": 44.5
+      },
+      "age_counts": {
+        "0歳": 27.0,
+        "1～4歳": 342.0,
+        "5～9歳": 554.0,
+        "10～14歳": 360.0,
+        "15～19歳": 89.0,
+        "20～59歳": 409.0,
+        "60歳以上": 173.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.31,
+        "1～4歳": 3.98,
+        "5～9歳": 6.44,
+        "10～14歳": 4.19,
+        "15～19歳": 1.03,
+        "20～59歳": 4.76,
+        "60歳以上": 2.01
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0703.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/432214.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 1954.0
+      },
+      "_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1954.0,
+          "age_count_sum": 1954.0,
+          "count_difference": 0.0,
+          "expected_rate": 22.72,
+          "age_rate_sum": 22.72,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 4,
+      "start": "2025-01-20",
+      "end": "2025-01-26",
+      "label": "R7/1/20–1/26",
+      "prefecture": 20.62,
+      "regions": {
+        "新潟市": 13.75,
+        "新発田": 18.86,
+        "新津": 22.67,
+        "三条": 19.63,
+        "長岡": 20.54,
+        "魚沼": 1.67,
+        "南魚沼": 16.33,
+        "十日町": 18.67,
+        "柏崎": 23.6,
+        "糸魚川": 39.0,
+        "村上": 17.67,
+        "佐渡": 28.33,
+        "上越": 42.0
+      },
+      "age_counts": {
+        "0歳": 13.0,
+        "1～4歳": 219.0,
+        "5～9歳": 577.0,
+        "10～14歳": 501.0,
+        "15～19歳": 72.0,
+        "20～59歳": 297.0,
+        "60歳以上": 94.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.15,
+        "1～4歳": 2.55,
+        "5～9歳": 6.71,
+        "10～14歳": 5.83,
+        "15～19歳": 0.84,
+        "20～59歳": 3.45,
+        "60歳以上": 1.09
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0704.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/432872.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 1773.0
+      },
+      "_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1773.0,
+          "age_count_sum": 1773.0,
+          "count_difference": 0.0,
+          "expected_rate": 20.62,
+          "age_rate_sum": 20.62,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 5,
+      "start": "2025-01-27",
+      "end": "2025-02-02",
+      "label": "R7/1/27–2/2",
+      "prefecture": 14.94,
+      "regions": {
+        "新潟市": 9.92,
+        "新発田": 16.14,
+        "新津": 10.67,
+        "三条": 12.88,
+        "長岡": 19.0,
+        "魚沼": 0.67,
+        "南魚沼": 10.33,
+        "十日町": 12.0,
+        "柏崎": 20.8,
+        "糸魚川": 34.33,
+        "村上": 14.0,
+        "佐渡": 26.0,
+        "上越": 19.5
+      },
+      "age_counts": {
+        "0歳": 8.0,
+        "1～4歳": 180.0,
+        "5～9歳": 450.0,
+        "10～14歳": 355.0,
+        "15～19歳": 76.0,
+        "20～59歳": 167.0,
+        "60歳以上": 49.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.09,
+        "1～4歳": 2.09,
+        "5～9歳": 5.23,
+        "10～14歳": 4.13,
+        "15～19歳": 0.88,
+        "20～59歳": 1.94,
+        "60歳以上": 0.57
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0705.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/433748.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 1285.0
+      },
+      "_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1285.0,
+          "age_count_sum": 1285.0,
+          "count_difference": 0.0,
+          "expected_rate": 14.94,
+          "age_rate_sum": 14.93,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 6,
+      "start": "2025-02-03",
+      "end": "2025-02-09",
+      "label": "R7/2/3–2/9",
+      "prefecture": 10.79,
+      "regions": {
+        "新潟市": 6.71,
+        "新発田": 10.14,
+        "新津": 3.67,
+        "三条": 8.88,
+        "長岡": 13.54,
+        "魚沼": 5.0,
+        "南魚沼": 7.0,
+        "十日町": 7.0,
+        "柏崎": 17.0,
+        "糸魚川": 20.0,
+        "村上": 17.33,
+        "佐渡": 29.67,
+        "上越": 11.88
+      },
+      "age_counts": {
+        "0歳": 5.0,
+        "1～4歳": 195.0,
+        "5～9歳": 310.0,
+        "10～14歳": 217.0,
+        "15～19歳": 28.0,
+        "20～59歳": 132.0,
+        "60歳以上": 41.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.06,
+        "1～4歳": 2.27,
+        "5～9歳": 3.6,
+        "10～14歳": 2.52,
+        "15～19歳": 0.33,
+        "20～59歳": 1.53,
+        "60歳以上": 0.48
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0706.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/434690.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 928.0
+      },
+      "_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 928.0,
+          "age_count_sum": 928.0,
+          "count_difference": 0.0,
+          "expected_rate": 10.79,
+          "age_rate_sum": 10.79,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 7,
+      "start": "2025-02-10",
+      "end": "2025-02-16",
+      "label": "R7/2/10–2/16",
+      "prefecture": 6.97,
+      "regions": {
+        "新潟市": 3.79,
+        "新発田": 8.71,
+        "新津": 3.67,
+        "三条": 7.38,
+        "長岡": 9.69,
+        "魚沼": 1.33,
+        "南魚沼": 8.67,
+        "十日町": 2.0,
+        "柏崎": 13.0,
+        "糸魚川": 6.67,
+        "村上": 11.67,
+        "佐渡": 18.67,
+        "上越": 4.88
+      },
+      "age_counts": {
+        "0歳": 4.0,
+        "1～4歳": 90.0,
+        "5～9歳": 231.0,
+        "10～14歳": 144.0,
+        "15～19歳": 20.0,
+        "20～59歳": 74.0,
+        "60歳以上": 36.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 1.05,
+        "5～9歳": 2.69,
+        "10～14歳": 1.67,
+        "15～19歳": 0.23,
+        "20～59歳": 0.86,
+        "60歳以上": 0.42
+      },
+      "topic": "インフルエンザの警報を解除します。（別紙１参照）\n〇県内では定点当たりの報告数が全県で6.97と前週の10.79に比べ減少しました。国の示す終息基準（定点当たり10）を下回ったため、警報を解除します。\n〇ただし、一部保健所管内では、注意報基準（定点当たり10）を上回っており、児童福祉施設等での集団発生も報告されていることから、引き続き注意が必要です。\n〇発熱や咳などの症状がある場合は、外出を控えてください。\n〇やむを得ず外出される場合には、マスクを着用するとともに、うがいや手洗いの励行や咳エチケット等の基本的な感染対策をお願いします。",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0707.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/435745.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 6.97,
+        "prefecture_count": 599.0
+      },
+      "_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 599.0,
+          "age_count_sum": 599.0,
+          "count_difference": 0.0,
+          "expected_rate": 6.97,
+          "age_rate_sum": 6.97,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 8,
+      "start": "2025-02-17",
+      "end": "2025-02-23",
+      "label": "R7/2/17–2/23",
+      "prefecture": 6.07,
+      "regions": {
+        "新潟市": 4.0,
+        "新発田": 13.71,
+        "新津": 3.67,
+        "三条": 10.75,
+        "長岡": 8.38,
+        "魚沼": 0.33,
+        "南魚沼": 3.0,
+        "十日町": 1.33,
+        "柏崎": 8.0,
+        "糸魚川": 3.67,
+        "村上": 11.0,
+        "佐渡": 4.33,
+        "上越": 1.63
+      },
+      "age_counts": {
+        "0歳": 4.0,
+        "1～4歳": 73.0,
+        "5～9歳": 201.0,
+        "10～14歳": 152.0,
+        "15～19歳": 28.0,
+        "20～59歳": 47.0,
+        "60歳以上": 17.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 0.85,
+        "5～9歳": 2.34,
+        "10～14歳": 1.77,
+        "15～19歳": 0.33,
+        "20～59歳": 0.55,
+        "60歳以上": 0.2
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0709.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/436391.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 522.0
+      },
+      "_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 522.0,
+          "age_count_sum": 522.0,
+          "count_difference": 0.0,
+          "expected_rate": 6.07,
+          "age_rate_sum": 6.09,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 9,
+      "start": "2025-02-24",
+      "end": "2025-03-02",
+      "label": "R7/2/24–3/2",
+      "prefecture": 4.06,
+      "regions": {
+        "新潟市": 2.88,
+        "新発田": 8.86,
+        "新津": 1.0,
+        "三条": 3.13,
+        "長岡": 3.31,
+        "魚沼": 3.67,
+        "南魚沼": 1.0,
+        "十日町": 1.0,
+        "柏崎": 7.4,
+        "糸魚川": 2.33,
+        "村上": 8.0,
+        "佐渡": 4.33,
+        "上越": 6.13
+      },
+      "age_counts": {
+        "0歳": 3.0,
+        "1～4歳": 76.0,
+        "5～9歳": 107.0,
+        "10～14歳": 71.0,
+        "15～19歳": 21.0,
+        "20～59歳": 58.0,
+        "60歳以上": 13.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.03,
+        "1～4歳": 0.88,
+        "5～9歳": 1.24,
+        "10～14歳": 0.83,
+        "15～19歳": 0.24,
+        "20～59歳": 0.67,
+        "60歳以上": 0.15
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho07099.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/437444.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 349.0
+      },
+      "_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 349.0,
+          "age_count_sum": 349.0,
+          "count_difference": 0.0,
+          "expected_rate": 4.06,
+          "age_rate_sum": 4.04,
+          "rate_difference": -0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 10,
+      "start": "2025-03-03",
+      "end": "2025-03-09",
+      "label": "R7/3/3–3/9",
+      "prefecture": 4.76,
+      "regions": {
+        "新潟市": 4.25,
+        "新発田": 5.71,
+        "新津": 0.33,
+        "三条": 2.5,
+        "長岡": 5.38,
+        "魚沼": 1.33,
+        "南魚沼": 4.0,
+        "十日町": 1.67,
+        "柏崎": 4.8,
+        "糸魚川": 2.67,
+        "村上": 4.67,
+        "佐渡": 0.33,
+        "上越": 13.5
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 62.0,
+        "5～9歳": 177.0,
+        "10～14歳": 83.0,
+        "15～19歳": 33.0,
+        "20～59歳": 43.0,
+        "60歳以上": 11.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.72,
+        "5～9歳": 2.06,
+        "10～14歳": 0.97,
+        "15～19歳": 0.38,
+        "20～59歳": 0.5,
+        "60歳以上": 0.13
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0710.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/438900.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 409.0
+      },
+      "_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 409.0,
+          "age_count_sum": 409.0,
+          "count_difference": 0.0,
+          "expected_rate": 4.76,
+          "age_rate_sum": 4.76,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 11,
+      "start": "2025-03-10",
+      "end": "2025-03-16",
+      "label": "R7/3/10–3/16",
+      "prefecture": 5.86,
+      "regions": {
+        "新潟市": 6.54,
+        "新発田": 10.86,
+        "新津": 0.0,
+        "三条": 3.38,
+        "長岡": 11.31,
+        "魚沼": 0.67,
+        "南魚沼": 0.33,
+        "十日町": 2.67,
+        "柏崎": 5.0,
+        "糸魚川": 1.67,
+        "村上": 1.0,
+        "佐渡": 0.33,
+        "上越": 6.5
+      },
+      "age_counts": {
+        "0歳": 10.0,
+        "1～4歳": 86.0,
+        "5～9歳": 196.0,
+        "10～14歳": 120.0,
+        "15～19歳": 23.0,
+        "20～59歳": 56.0,
+        "60歳以上": 13.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.12,
+        "1～4歳": 1.0,
+        "5～9歳": 2.28,
+        "10～14歳": 1.4,
+        "15～19歳": 0.27,
+        "20～59歳": 0.65,
+        "60歳以上": 0.15
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0711.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/440069.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 504.0
+      },
+      "_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 504.0,
+          "age_count_sum": 504.0,
+          "count_difference": 0.0,
+          "expected_rate": 5.86,
+          "age_rate_sum": 5.87,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 12,
+      "start": "2025-03-17",
+      "end": "2025-03-23",
+      "label": "R7/3/17–3/23",
+      "prefecture": 5.02,
+      "regions": {
+        "新潟市": 3.71,
+        "新発田": 6.43,
+        "新津": 0.33,
+        "三条": 2.75,
+        "長岡": 15.23,
+        "魚沼": 3.67,
+        "南魚沼": 2.67,
+        "十日町": 1.33,
+        "柏崎": 1.8,
+        "糸魚川": 2.67,
+        "村上": 5.33,
+        "佐渡": 1.67,
+        "上越": 2.0
+      },
+      "age_counts": {
+        "0歳": 6.0,
+        "1～4歳": 54.0,
+        "5～9歳": 161.0,
+        "10～14歳": 117.0,
+        "15～19歳": 18.0,
+        "20～59歳": 56.0,
+        "60歳以上": 20.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.07,
+        "1～4歳": 0.63,
+        "5～9歳": 1.87,
+        "10～14歳": 1.36,
+        "15～19歳": 0.21,
+        "20～59歳": 0.65,
+        "60歳以上": 0.23
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0712.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/442416.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 432.0
+      },
+      "_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 432.0,
+          "age_count_sum": 432.0,
+          "count_difference": 0.0,
+          "expected_rate": 5.02,
+          "age_rate_sum": 5.02,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 13,
+      "start": "2025-03-24",
+      "end": "2025-03-30",
+      "label": "R7/3/24–3/30",
+      "prefecture": 3.43,
+      "regions": {
+        "新潟市": 1.96,
+        "新発田": 5.86,
+        "新津": 0.67,
+        "三条": 0.88,
+        "長岡": 8.38,
+        "魚沼": 5.67,
+        "南魚沼": 7.33,
+        "十日町": 2.33,
+        "柏崎": 1.4,
+        "糸魚川": 1.0,
+        "村上": 5.67,
+        "佐渡": 0.33,
+        "上越": 1.88
+      },
+      "age_counts": {
+        "0歳": 3.0,
+        "1～4歳": 39.0,
+        "5～9歳": 89.0,
+        "10～14歳": 75.0,
+        "15～19歳": 16.0,
+        "20～59歳": 56.0,
+        "60歳以上": 17.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.03,
+        "1～4歳": 0.45,
+        "5～9歳": 1.03,
+        "10～14歳": 0.87,
+        "15～19歳": 0.19,
+        "20～59歳": 0.65,
+        "60歳以上": 0.2
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho07130.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/445220.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 295.0
+      },
+      "_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 295.0,
+          "age_count_sum": 295.0,
+          "count_difference": 0.0,
+          "expected_rate": 3.43,
+          "age_rate_sum": 3.42,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 14,
+      "start": "2025-03-31",
+      "end": "2025-04-06",
+      "label": "R7/3/31–4/6",
+      "prefecture": 1.81,
+      "regions": {
+        "新潟市": 1.92,
+        "新発田": 3.71,
+        "新津": 0.33,
+        "三条": 0.63,
+        "長岡": 2.23,
+        "魚沼": 2.33,
+        "南魚沼": 4.67,
+        "十日町": 1.0,
+        "柏崎": 0.6,
+        "糸魚川": 0.0,
+        "村上": 3.33,
+        "佐渡": 0.67,
+        "上越": 1.25
+      },
+      "age_counts": {
+        "0歳": 3.0,
+        "1～4歳": 30.0,
+        "5～9歳": 45.0,
+        "10～14歳": 23.0,
+        "15～19歳": 5.0,
+        "20～59歳": 45.0,
+        "60歳以上": 5.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.03,
+        "1～4歳": 0.35,
+        "5～9歳": 0.52,
+        "10～14歳": 0.27,
+        "15～19歳": 0.06,
+        "20～59歳": 0.52,
+        "60歳以上": 0.06
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0714.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/446107.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 156.0
+      },
+      "_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 2,
+        "header_row": 3,
+        "flu_row": 4,
+        "value_row": 5,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "【入力しない】自動転記シート(公表用）",
+        "title_row": 46,
+        "header_row": 46,
+        "flu_row": 47,
+        "count_row": 47,
+        "rate_row": 48,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 156.0,
+          "age_count_sum": 156.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.81,
+          "age_rate_sum": 1.81,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 15,
+      "start": "2025-04-07",
+      "end": "2025-04-13",
+      "label": "R7/4/7–4/13",
+      "prefecture": 1.44,
+      "regions": {
+        "新潟市": 1.29,
+        "新発田": 2.5,
+        "新津": 0.0,
+        "三条": 1.6,
+        "長岡": 1.83,
+        "魚沼": 3.0,
+        "南魚沼": 4.67,
+        "十日町": 0.67,
+        "柏崎": 0.5,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 2.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 2.0,
+        "1～4歳": 28.0,
+        "5～9歳": 11.0,
+        "10～14歳": 4.0,
+        "15～19歳": 5.0,
+        "20～59歳": 20.0,
+        "60歳以上": 8.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.04,
+        "1～4歳": 0.51,
+        "5～9歳": 0.21,
+        "10～14歳": 0.07,
+        "15～19歳": 0.09,
+        "20～59歳": 0.37,
+        "60歳以上": 0.15
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0715.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/447372.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 78.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 78.0,
+          "age_count_sum": 78.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.44,
+          "age_rate_sum": 1.44,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 16,
+      "start": "2025-04-14",
+      "end": "2025-04-20",
+      "label": "R7/4/14–4/20",
+      "prefecture": 1.53,
+      "regions": {
+        "新潟市": 1.56,
+        "新発田": 0.75,
+        "新津": 0.5,
+        "三条": 3.2,
+        "長岡": 2.33,
+        "魚沼": 2.5,
+        "南魚沼": 4.67,
+        "十日町": 0.0,
+        "柏崎": 1.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.5,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 15.0,
+        "5～9歳": 21.0,
+        "10～14歳": 11.0,
+        "15～19歳": 15.0,
+        "20～59歳": 14.0,
+        "60歳以上": 8.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.27,
+        "5～9歳": 0.38,
+        "10～14歳": 0.2,
+        "15～19歳": 0.27,
+        "20～59歳": 0.24,
+        "60歳以上": 0.15
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0716.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/448226.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 84.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 84.0,
+          "age_count_sum": 84.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.53,
+          "age_rate_sum": 1.51,
+          "rate_difference": -0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 17,
+      "start": "2025-04-21",
+      "end": "2025-04-27",
+      "label": "R7/4/21–4/27",
+      "prefecture": 1.47,
+      "regions": {
+        "新潟市": 1.67,
+        "新発田": 1.75,
+        "新津": 1.5,
+        "三条": 1.6,
+        "長岡": 4.0,
+        "魚沼": 0.5,
+        "南魚沼": 1.67,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 1.0,
+        "佐渡": 0.0,
+        "上越": 0.25
+      },
+      "age_counts": {
+        "0歳": 1.0,
+        "1～4歳": 8.0,
+        "5～9歳": 20.0,
+        "10～14歳": 20.0,
+        "15～19歳": 13.0,
+        "20～59歳": 18.0,
+        "60歳以上": 1.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.14,
+        "5～9歳": 0.37,
+        "10～14歳": 0.36,
+        "15～19歳": 0.24,
+        "20～59歳": 0.33,
+        "60歳以上": 0.02
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0717.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/449174.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 81.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 81.0,
+          "age_count_sum": 81.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.47,
+          "age_rate_sum": 1.48,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 18,
+      "start": "2025-04-28",
+      "end": "2025-05-04",
+      "label": "R7/4/28–5/4",
+      "prefecture": 1.16,
+      "regions": {
+        "新潟市": 0.83,
+        "新発田": 0.0,
+        "新津": 3.0,
+        "三条": 1.6,
+        "長岡": 1.17,
+        "魚沼": 0.0,
+        "南魚沼": 0.67,
+        "十日町": 0.0,
+        "柏崎": 0.5,
+        "糸魚川": 0.0,
+        "村上": 11.5,
+        "佐渡": 0.0,
+        "上越": 0.5
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 6.0,
+        "5～9歳": 36.0,
+        "10～14歳": 11.0,
+        "15～19歳": 3.0,
+        "20～59歳": 7.0,
+        "60歳以上": 1.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.12,
+        "5～9歳": 0.65,
+        "10～14歳": 0.2,
+        "15～19歳": 0.05,
+        "20～59歳": 0.13,
+        "60歳以上": 0.02
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0718.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/449685.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 64.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 64.0,
+          "age_count_sum": 64.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.16,
+          "age_rate_sum": 1.17,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 19,
+      "start": "2025-05-05",
+      "end": "2025-05-11",
+      "label": "R7/5/5–5/11",
+      "prefecture": 0.73,
+      "regions": {
+        "新潟市": 0.89,
+        "新発田": 0.75,
+        "新津": 1.0,
+        "三条": 0.4,
+        "長岡": 0.17,
+        "魚沼": 1.5,
+        "南魚沼": 2.67,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 1.0,
+        "佐渡": 0.0,
+        "上越": 0.75
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 2.0,
+        "5～9歳": 15.0,
+        "10～14歳": 6.0,
+        "15～19歳": 5.0,
+        "20～59歳": 8.0,
+        "60歳以上": 4.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.04,
+        "5～9歳": 0.27,
+        "10～14歳": 0.11,
+        "15～19歳": 0.09,
+        "20～59歳": 0.15,
+        "60歳以上": 0.08
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0719.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/450180.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 40.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 40.0,
+          "age_count_sum": 40.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.73,
+          "age_rate_sum": 0.74,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 20,
+      "start": "2025-05-12",
+      "end": "2025-05-18",
+      "label": "R7/5/12–5/18",
+      "prefecture": 0.51,
+      "regions": {
+        "新潟市": 0.28,
+        "新発田": 0.75,
+        "新津": 0.0,
+        "三条": 0.4,
+        "長岡": 0.5,
+        "魚沼": 0.5,
+        "南魚沼": 0.67,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 3.0,
+        "佐渡": 0.0,
+        "上越": 1.5
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 3.0,
+        "5～9歳": 8.0,
+        "10～14歳": 8.0,
+        "15～19歳": 1.0,
+        "20～59歳": 7.0,
+        "60歳以上": 1.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.06,
+        "5～9歳": 0.15,
+        "10～14歳": 0.15,
+        "15～19歳": 0.02,
+        "20～59歳": 0.13,
+        "60歳以上": 0.02
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0720.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/451112.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 28.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 28.0,
+          "age_count_sum": 28.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.51,
+          "age_rate_sum": 0.53,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 21,
+      "start": "2025-05-19",
+      "end": "2025-05-25",
+      "label": "R7/5/19–5/25",
+      "prefecture": 0.45,
+      "regions": {
+        "新潟市": 0.44,
+        "新発田": 1.25,
+        "新津": 0.0,
+        "三条": 0.4,
+        "長岡": 0.67,
+        "魚沼": 0.0,
+        "南魚沼": 0.33,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 1.5,
+        "佐渡": 0.0,
+        "上越": 0.5
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 4.0,
+        "5～9歳": 9.0,
+        "10～14歳": 3.0,
+        "15～19歳": 3.0,
+        "20～59歳": 4.0,
+        "60歳以上": 2.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.07,
+        "5～9歳": 0.16,
+        "10～14歳": 0.05,
+        "15～19歳": 0.05,
+        "20～59歳": 0.08,
+        "60歳以上": 0.04
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0721.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/452012.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 25.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 25.0,
+          "age_count_sum": 25.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.45,
+          "age_rate_sum": 0.45,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 22,
+      "start": "2025-05-26",
+      "end": "2025-06-01",
+      "label": "R7/5/26–6/1",
+      "prefecture": 0.35,
+      "regions": {
+        "新潟市": 0.22,
+        "新発田": 0.25,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.67,
+        "魚沼": 1.5,
+        "南魚沼": 1.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.75
+      },
+      "age_counts": {
+        "0歳": 1.0,
+        "1～4歳": 5.0,
+        "5～9歳": 2.0,
+        "10～14歳": 3.0,
+        "15～19歳": 2.0,
+        "20～59歳": 4.0,
+        "60歳以上": 2.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.1,
+        "5～9歳": 0.04,
+        "10～14歳": 0.05,
+        "15～19歳": 0.04,
+        "20～59歳": 0.08,
+        "60歳以上": 0.04
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0722.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/453033.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 19.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 19.0,
+          "age_count_sum": 19.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.35,
+          "age_rate_sum": 0.37,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 23,
+      "start": "2025-06-02",
+      "end": "2025-06-08",
+      "label": "R7/6/2–6/8",
+      "prefecture": 0.11,
+      "regions": {
+        "新潟市": 0.0,
+        "新発田": 0.25,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.33,
+        "魚沼": 0.5,
+        "南魚沼": 0.33,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.25
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 1.0,
+        "5～9歳": 1.0,
+        "10～14歳": 0.0,
+        "15～19歳": 1.0,
+        "20～59歳": 0.0,
+        "60歳以上": 3.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.02,
+        "10～14歳": 0.0,
+        "15～19歳": 0.02,
+        "20～59歳": 0.0,
+        "60歳以上": 0.06
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0723.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/453586.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 6.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 6.0,
+          "age_count_sum": 6.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.11,
+          "age_rate_sum": 0.12,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 24,
+      "start": "2025-06-09",
+      "end": "2025-06-15",
+      "label": "R7/6/9–6/15",
+      "prefecture": 0.09,
+      "regions": {
+        "新潟市": 0.17,
+        "新発田": 0.25,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.33,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 1.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 1.0,
+        "20～59歳": 3.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.02,
+        "20～59歳": 0.06,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0724.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/454501.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 5.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 5.0,
+          "age_count_sum": 5.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.09,
+          "age_rate_sum": 0.1,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 25,
+      "start": "2025-06-16",
+      "end": "2025-06-22",
+      "label": "R7/6/16–6/22",
+      "prefecture": 0.27,
+      "regions": {
+        "新潟市": 0.17,
+        "新発田": 0.25,
+        "新津": 0.5,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.33,
+        "十日町": 1.33,
+        "柏崎": 0.0,
+        "糸魚川": 1.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.75
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 1.0,
+        "5～9歳": 3.0,
+        "10～14歳": 4.0,
+        "15～19歳": 0.0,
+        "20～59歳": 4.0,
+        "60歳以上": 3.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.06,
+        "10～14歳": 0.07,
+        "15～19歳": 0.0,
+        "20～59歳": 0.07,
+        "60歳以上": 0.06
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0725.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/455886.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 15.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 15.0,
+          "age_count_sum": 15.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.27,
+          "age_rate_sum": 0.28,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 26,
+      "start": "2025-06-23",
+      "end": "2025-06-29",
+      "label": "R7/6/23–6/29",
+      "prefecture": 0.56,
+      "regions": {
+        "新潟市": 0.06,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.33,
+        "十日町": 1.0,
+        "柏崎": 0.0,
+        "糸魚川": 9.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 1.75
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 1.0,
+        "5～9歳": 2.0,
+        "10～14歳": 19.0,
+        "15～19歳": 4.0,
+        "20～59歳": 2.0,
+        "60歳以上": 3.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.04,
+        "10～14歳": 0.35,
+        "15～19歳": 0.07,
+        "20～59歳": 0.04,
+        "60歳以上": 0.06
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0726.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/457518.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 31.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 31.0,
+          "age_count_sum": 31.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.56,
+          "age_rate_sum": 0.58,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 27,
+      "start": "2025-06-30",
+      "end": "2025-07-06",
+      "label": "R7/6/30–7/6",
+      "prefecture": 0.85,
+      "regions": {
+        "新潟市": 0.06,
+        "新発田": 0.25,
+        "新津": 0.0,
+        "三条": 0.2,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.67,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 21.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 1.0,
+        "5～9歳": 9.0,
+        "10～14歳": 26.0,
+        "15～19歳": 7.0,
+        "20～59歳": 3.0,
+        "60歳以上": 1.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.17,
+        "10～14歳": 0.47,
+        "15～19歳": 0.13,
+        "20～59歳": 0.06,
+        "60歳以上": 0.02
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0727.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/458462.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 47.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 47.0,
+          "age_count_sum": 47.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.85,
+          "age_rate_sum": 0.87,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 28,
+      "start": "2025-07-07",
+      "end": "2025-07-13",
+      "label": "R7/7/7–7/13",
+      "prefecture": 0.53,
+      "regions": {
+        "新潟市": 0.06,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 1.33,
+        "柏崎": 0.0,
+        "糸魚川": 12.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 1.0,
+        "5～9歳": 12.0,
+        "10～14歳": 9.0,
+        "15～19歳": 4.0,
+        "20～59歳": 3.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.23,
+        "10～14歳": 0.16,
+        "15～19歳": 0.07,
+        "20～59歳": 0.06,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0728.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/459293.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 29.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 29.0,
+          "age_count_sum": 29.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.53,
+          "age_rate_sum": 0.54,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 29,
+      "start": "2025-07-14",
+      "end": "2025-07-20",
+      "label": "R7/7/14–7/20",
+      "prefecture": 0.46,
+      "regions": {
+        "新潟市": 0.17,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.5,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 10.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 4.0,
+        "5～9歳": 9.0,
+        "10～14歳": 6.0,
+        "15～19歳": 2.0,
+        "20～59歳": 3.0,
+        "60歳以上": 1.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.08,
+        "5～9歳": 0.17,
+        "10～14歳": 0.11,
+        "15～19歳": 0.04,
+        "20～59歳": 0.06,
+        "60歳以上": 0.02
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0729.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/459998.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 25.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 25.0,
+          "age_count_sum": 25.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.46,
+          "age_rate_sum": 0.48,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 30,
+      "start": "2025-07-21",
+      "end": "2025-07-27",
+      "label": "R7/7/21–7/27",
+      "prefecture": 0.31,
+      "regions": {
+        "新潟市": 0.11,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 7.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 3.0,
+        "5～9歳": 6.0,
+        "10～14歳": 4.0,
+        "15～19歳": 0.0,
+        "20～59歳": 4.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.06,
+        "5～9歳": 0.12,
+        "10～14歳": 0.07,
+        "15～19歳": 0.0,
+        "20～59歳": 0.08,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0730.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/460951.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 17.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 17.0,
+          "age_count_sum": 17.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.31,
+          "age_rate_sum": 0.33,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 31,
+      "start": "2025-07-28",
+      "end": "2025-08-03",
+      "label": "R7/7/28–8/3",
+      "prefecture": 0.18,
+      "regions": {
+        "新潟市": 0.06,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.33,
+        "魚沼": 0.5,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 2.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.25
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 2.0,
+        "5～9歳": 3.0,
+        "10～14歳": 0.0,
+        "15～19歳": 2.0,
+        "20～59歳": 3.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.04,
+        "5～9歳": 0.06,
+        "10～14歳": 0.0,
+        "15～19歳": 0.04,
+        "20～59歳": 0.06,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0731.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/461523.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 10.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 10.0,
+          "age_count_sum": 10.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.18,
+          "age_rate_sum": 0.2,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 32,
+      "start": "2025-08-04",
+      "end": "2025-08-10",
+      "label": "R7/8/4–8/10",
+      "prefecture": 0.2,
+      "regions": {
+        "新潟市": 0.38,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.4,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.5,
+        "村上": 0.5,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 3.0,
+        "5～9歳": 2.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 3.0,
+        "60歳以上": 2.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.06,
+        "5～9歳": 0.04,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 0.06,
+        "60歳以上": 0.04
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0732.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/462048.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 10.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 10.0,
+          "age_count_sum": 10.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.2,
+          "age_rate_sum": 0.2,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 33,
+      "start": "2025-08-11",
+      "end": "2025-08-17",
+      "label": "R7/8/11–8/17",
+      "prefecture": 0.41,
+      "regions": {
+        "新潟市": 1.0,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.2,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.5,
+        "村上": 0.5,
+        "佐渡": 0.5,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 4.0,
+        "5～9歳": 7.0,
+        "10～14歳": 1.0,
+        "15～19歳": 1.0,
+        "20～59歳": 5.0,
+        "60歳以上": 4.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.08,
+        "5～9歳": 0.13,
+        "10～14歳": 0.02,
+        "15～19歳": 0.02,
+        "20～59歳": 0.1,
+        "60歳以上": 0.08
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0733.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/462765.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 22.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 22.0,
+          "age_count_sum": 22.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.41,
+          "age_rate_sum": 0.43,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 34,
+      "start": "2025-08-18",
+      "end": "2025-08-24",
+      "label": "R7/8/18–8/24",
+      "prefecture": 0.3,
+      "regions": {
+        "新潟市": 0.5,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.6,
+        "長岡": 0.17,
+        "魚沼": 0.0,
+        "南魚沼": 0.67,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.25
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 3.0,
+        "5～9歳": 4.0,
+        "10～14歳": 3.0,
+        "15～19歳": 0.0,
+        "20～59歳": 3.0,
+        "60歳以上": 3.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.06,
+        "5～9歳": 0.08,
+        "10～14歳": 0.06,
+        "15～19歳": 0.0,
+        "20～59歳": 0.06,
+        "60歳以上": 0.06
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0734.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/463440.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 16.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 16.0,
+          "age_count_sum": 16.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.3,
+          "age_rate_sum": 0.32,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 35,
+      "start": "2025-08-25",
+      "end": "2025-08-31",
+      "label": "R7/8/25–8/31",
+      "prefecture": 0.15,
+      "regions": {
+        "新潟市": 0.22,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.2,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 1.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 1.0,
+        "5～9歳": 1.0,
+        "10～14歳": 2.0,
+        "15～19歳": 1.0,
+        "20～59歳": 1.0,
+        "60歳以上": 2.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.02,
+        "10～14歳": 0.04,
+        "15～19歳": 0.02,
+        "20～59歳": 0.02,
+        "60歳以上": 0.04
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0735.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/464190.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 8.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 8.0,
+          "age_count_sum": 8.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.15,
+          "age_rate_sum": 0.16,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 36,
+      "start": "2025-09-01",
+      "end": "2025-09-07",
+      "label": "R7/9/1–9/7",
+      "prefecture": 0.27,
+      "regions": {
+        "新潟市": 0.61,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.2,
+        "長岡": 0.17,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.25
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 2.0,
+        "5～9歳": 3.0,
+        "10～14歳": 1.0,
+        "15～19歳": 1.0,
+        "20～59歳": 3.0,
+        "60歳以上": 5.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.04,
+        "5～9歳": 0.06,
+        "10～14歳": 0.02,
+        "15～19歳": 0.02,
+        "20～59歳": 0.06,
+        "60歳以上": 0.09
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0736.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/464788.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 15.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 15.0,
+          "age_count_sum": 15.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.27,
+          "age_rate_sum": 0.29,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 37,
+      "start": "2025-09-08",
+      "end": "2025-09-14",
+      "label": "R7/9/8–9/14",
+      "prefecture": 0.09,
+      "regions": {
+        "新潟市": 0.17,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.4,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 5.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 0.09,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0737.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/465431.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 5.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 5.0,
+          "age_count_sum": 5.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.09,
+          "age_rate_sum": 0.09,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 38,
+      "start": "2025-09-15",
+      "end": "2025-09-21",
+      "label": "R7/9/15–9/21",
+      "prefecture": 0.27,
+      "regions": {
+        "新潟市": 0.78,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.17,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 6.0,
+        "15～19歳": 1.0,
+        "20～59歳": 6.0,
+        "60歳以上": 2.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.11,
+        "15～19歳": 0.02,
+        "20～59歳": 0.11,
+        "60歳以上": 0.04
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0738.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/465984.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 15.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 15.0,
+          "age_count_sum": 15.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.27,
+          "age_rate_sum": 0.28,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 39,
+      "start": "2025-09-22",
+      "end": "2025-09-28",
+      "label": "R7/9/22–9/28",
+      "prefecture": 0.2,
+      "regions": {
+        "新潟市": 0.17,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.2,
+        "長岡": 0.17,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 1.0,
+        "糸魚川": 0.0,
+        "村上": 0.5,
+        "佐渡": 1.0,
+        "上越": 0.25
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 2.0,
+        "10～14歳": 0.0,
+        "15～19歳": 1.0,
+        "20～59歳": 7.0,
+        "60歳以上": 1.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.04,
+        "10～14歳": 0.0,
+        "15～19歳": 0.02,
+        "20～59歳": 0.13,
+        "60歳以上": 0.02
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0739.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/466758.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 11.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 11.0,
+          "age_count_sum": 11.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.2,
+          "age_rate_sum": 0.21,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 40,
+      "start": "2025-09-29",
+      "end": "2025-10-05",
+      "label": "R7/9/29–10/5",
+      "prefecture": 0.24,
+      "regions": {
+        "新潟市": 0.11,
+        "新発田": 0.75,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.83,
+        "魚沼": 0.5,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 1.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 1.0,
+        "5～9歳": 5.0,
+        "10～14歳": 1.0,
+        "15～19歳": 1.0,
+        "20～59歳": 3.0,
+        "60歳以上": 2.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.09,
+        "10～14歳": 0.02,
+        "15～19歳": 0.02,
+        "20～59歳": 0.05,
+        "60歳以上": 0.04
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0740.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/467389.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 13.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 13.0,
+          "age_count_sum": 13.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.24,
+          "age_rate_sum": 0.24,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 41,
+      "start": "2025-10-06",
+      "end": "2025-10-12",
+      "label": "R7/10/6–10/12",
+      "prefecture": 0.42,
+      "regions": {
+        "新潟市": 0.5,
+        "新発田": 0.5,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.33,
+        "魚沼": 0.0,
+        "南魚沼": 2.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.5,
+        "村上": 0.0,
+        "佐渡": 1.0,
+        "上越": 0.25
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 2.0,
+        "5～9歳": 2.0,
+        "10～14歳": 4.0,
+        "15～19歳": 2.0,
+        "20～59歳": 11.0,
+        "60歳以上": 2.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.04,
+        "5～9歳": 0.04,
+        "10～14歳": 0.07,
+        "15～19歳": 0.04,
+        "20～59歳": 0.2,
+        "60歳以上": 0.04
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0741.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/467731.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 23.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 23.0,
+          "age_count_sum": 23.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.42,
+          "age_rate_sum": 0.43,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 42,
+      "start": "2025-10-13",
+      "end": "2025-10-19",
+      "label": "R7/10/13–10/19",
+      "prefecture": 0.85,
+      "regions": {
+        "新潟市": 0.83,
+        "新発田": 1.75,
+        "新津": 2.0,
+        "三条": 0.0,
+        "長岡": 0.67,
+        "魚沼": 1.5,
+        "南魚沼": 1.67,
+        "十日町": 0.33,
+        "柏崎": 0.0,
+        "糸魚川": 3.0,
+        "村上": 0.5,
+        "佐渡": 0.0,
+        "上越": 0.25
+      },
+      "age_counts": {
+        "0歳": 1.0,
+        "1～4歳": 8.0,
+        "5～9歳": 5.0,
+        "10～14歳": 5.0,
+        "15～19歳": 7.0,
+        "20～59歳": 15.0,
+        "60歳以上": 6.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.15,
+        "5～9歳": 0.1,
+        "10～14歳": 0.09,
+        "15～19歳": 0.13,
+        "20～59歳": 0.28,
+        "60歳以上": 0.11
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0742.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/468344.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 47.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 47.0,
+          "age_count_sum": 47.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.85,
+          "age_rate_sum": 0.88,
+          "rate_difference": 0.03
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 43,
+      "start": "2025-10-20",
+      "end": "2025-10-26",
+      "label": "R7/10/20–10/26",
+      "prefecture": 2.05,
+      "regions": {
+        "新潟市": 3.0,
+        "新発田": 1.0,
+        "新津": 0.5,
+        "三条": 3.8,
+        "長岡": 1.83,
+        "魚沼": 5.0,
+        "南魚沼": 1.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 2.5,
+        "村上": 0.5,
+        "佐渡": 0.5,
+        "上越": 1.0
+      },
+      "age_counts": {
+        "0歳": 2.0,
+        "1～4歳": 33.0,
+        "5～9歳": 30.0,
+        "10～14歳": 15.0,
+        "15～19歳": 5.0,
+        "20～59歳": 17.0,
+        "60歳以上": 11.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.04,
+        "1～4歳": 0.59,
+        "5～9歳": 0.55,
+        "10～14歳": 0.27,
+        "15～19歳": 0.09,
+        "20～59歳": 0.31,
+        "60歳以上": 0.19
+      },
+      "topic": "インフルエンザの流行期に入りました。\n○県内では定点当たりの報告数が全県で2.05と流行期入りの目安（定点当たりの報告数１）を\n超えました。（前週：0.85）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染\n対策の徹底をお願いします。\n※参考 直近のシーズンにおける流行期入りの週\n2024(令和６)年第46週（11月11日～11月17日）：定点当たり1.75\n注意報の基準 定点当たりの報告数   10",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0743.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/468927.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 2.05,
+        "prefecture_count": 113.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 113.0,
+          "age_count_sum": 113.0,
+          "count_difference": 0.0,
+          "expected_rate": 2.05,
+          "age_rate_sum": 2.04,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 44,
+      "start": "2025-10-27",
+      "end": "2025-11-02",
+      "label": "R7/10/27–11/2",
+      "prefecture": 4.15,
+      "regions": {
+        "新潟市": 6.0,
+        "新発田": 1.25,
+        "新津": 2.5,
+        "三条": 11.0,
+        "長岡": 4.83,
+        "魚沼": 0.5,
+        "南魚沼": 2.33,
+        "十日町": 0.33,
+        "柏崎": 1.5,
+        "糸魚川": 2.0,
+        "村上": 0.5,
+        "佐渡": 1.0,
+        "上越": 1.75
+      },
+      "age_counts": {
+        "0歳": 3.0,
+        "1～4歳": 39.0,
+        "5～9歳": 57.0,
+        "10～14歳": 37.0,
+        "15～19歳": 31.0,
+        "20～59歳": 50.0,
+        "60歳以上": 11.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 0.71,
+        "5～9歳": 1.03,
+        "10～14歳": 0.67,
+        "15～19歳": 0.56,
+        "20～59歳": 0.92,
+        "60歳以上": 0.2
+      },
+      "topic": "インフルエンザの流行期に入っています。\n○県内では定点当たりの報告数が全県で4.15と流行期入りの目安（定点当たりの報告数1）を\n超えています。（前週：2.05、前々週：0.85）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染\n対策の徹底をお願いします。\n※参考　直近のシーズンにおける流行期入りの週\n2024（令和6）年第46週（11月11日～11月17日）：定点当たり1.75\n注意報の基準　定点当たりの報告数   10",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0744.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/469357.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 4.15,
+        "prefecture_count": 228.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 228.0,
+          "age_count_sum": 228.0,
+          "count_difference": 0.0,
+          "expected_rate": 4.15,
+          "age_rate_sum": 4.14,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 45,
+      "start": "2025-11-03",
+      "end": "2025-11-09",
+      "label": "R7/11/3–11/9",
+      "prefecture": 11.2,
+      "regions": {
+        "新潟市": 12.78,
+        "新発田": 7.0,
+        "新津": 8.5,
+        "三条": 16.8,
+        "長岡": 15.83,
+        "魚沼": 18.0,
+        "南魚沼": 7.67,
+        "十日町": 8.67,
+        "柏崎": 4.5,
+        "糸魚川": 3.5,
+        "村上": 17.5,
+        "佐渡": 4.5,
+        "上越": 4.25
+      },
+      "age_counts": {
+        "0歳": 5.0,
+        "1～4歳": 77.0,
+        "5～9歳": 160.0,
+        "10～14歳": 128.0,
+        "15～19歳": 80.0,
+        "20～59歳": 133.0,
+        "60歳以上": 33.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.09,
+        "1～4歳": 1.4,
+        "5～9歳": 2.91,
+        "10～14歳": 2.33,
+        "15～19歳": 1.45,
+        "20～59歳": 2.43,
+        "60歳以上": 0.6
+      },
+      "topic": "インフルエンザの定点当たりの報告数が国の示す注意報基準を超えたため、全県に注意報を発令します。\n○県内では定点当たりの報告数が全県で11.20と注意報基準（定点当たりの報告数10）を超えました。\n（前週：4.15、前々週：2.05）\n○昨シーズンに比べて注意報発令時期が１か月程度早くなっています。\n○学校において、学級閉鎖等が増加しています。\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策\nの徹底をお願いします。\n※【参考】過去３シーズンの注意報基準を越えた週\n・2024/2025シーズン：2024(令和６)年第50週(12月９日～12月15日)：定点当たり10.34\n・2023/2024シーズン：2023(令和５)年第43週(10月23日～10月29日)：定点当たり12.12\n・2022/2023シーズン：2023(令和５)年第10週(３月６日～３月12日)：定点当たり15.59",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0745.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/470004.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 11.2,
+        "prefecture_count": 616.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 616.0,
+          "age_count_sum": 616.0,
+          "count_difference": 0.0,
+          "expected_rate": 11.2,
+          "age_rate_sum": 11.21,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 46,
+      "start": "2025-11-10",
+      "end": "2025-11-16",
+      "label": "R7/11/10–11/16",
+      "prefecture": 24.53,
+      "regions": {
+        "新潟市": 27.22,
+        "新発田": 26.75,
+        "新津": 10.5,
+        "三条": 38.6,
+        "長岡": 29.83,
+        "魚沼": 17.0,
+        "南魚沼": 14.33,
+        "十日町": 32.33,
+        "柏崎": 8.5,
+        "糸魚川": 8.0,
+        "村上": 55.5,
+        "佐渡": 11.0,
+        "上越": 4.75
+      },
+      "age_counts": {
+        "0歳": 8.0,
+        "1～4歳": 174.0,
+        "5～9歳": 439.0,
+        "10～14歳": 307.0,
+        "15～19歳": 120.0,
+        "20～59歳": 234.0,
+        "60歳以上": 67.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.15,
+        "1～4歳": 3.17,
+        "5～9歳": 7.98,
+        "10～14歳": 5.58,
+        "15～19歳": 2.18,
+        "20～59歳": 4.26,
+        "60歳以上": 1.21
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0746.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/471496.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 1349.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1349.0,
+          "age_count_sum": 1349.0,
+          "count_difference": 0.0,
+          "expected_rate": 24.53,
+          "age_rate_sum": 24.53,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 47,
+      "start": "2025-11-17",
+      "end": "2025-11-23",
+      "label": "R7/11/17–11/23",
+      "prefecture": 51.45,
+      "regions": {
+        "新潟市": 52.72,
+        "新発田": 64.25,
+        "新津": 27.5,
+        "三条": 68.0,
+        "長岡": 40.67,
+        "魚沼": 48.0,
+        "南魚沼": 40.0,
+        "十日町": 103.33,
+        "柏崎": 39.0,
+        "糸魚川": 45.5,
+        "村上": 73.5,
+        "佐渡": 15.5,
+        "上越": 28.0
+      },
+      "age_counts": {
+        "0歳": 10.0,
+        "1～4歳": 390.0,
+        "5～9歳": 867.0,
+        "10～14歳": 646.0,
+        "15～19歳": 248.0,
+        "20～59歳": 524.0,
+        "60歳以上": 145.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.18,
+        "1～4歳": 7.09,
+        "5～9歳": 15.76,
+        "10～14歳": 11.75,
+        "15～19歳": 4.51,
+        "20～59歳": 9.52,
+        "60歳以上": 2.64
+      },
+      "topic": "インフルエンザの定点あたりの報告数が国の示す警報基準を超えたため、全県に警報を発令します。\n○県内では定点当たりの報告数が全県で51.45と警報基準（定点あたりの報告数30）を超えています\n（前週：24.53）。全国的にも警報基準を超えている都道府県が増加しています。\n○昨シーズンに比べて警報発令時期が１か月以上早い状況です。\n​○学校や児童福祉施設での集団発生が多い状況です。\n​○感染予防のため、適宜換気を行いましょう。\n○発熱や咳などの症状がある場合は、早めに医療機関を受診してください。\n○また、症状がある場合は外出を控え、やむを得ず外出される場合にはマスクを着用するとともに、\n手洗いの励行など基本的な感染対策の徹底をお願いします。\n​○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0747.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/472065.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 51.45,
+        "prefecture_count": 2830.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 2830.0,
+          "age_count_sum": 2830.0,
+          "count_difference": 0.0,
+          "expected_rate": 51.45,
+          "age_rate_sum": 51.45,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 48,
+      "start": "2025-11-24",
+      "end": "2025-11-30",
+      "label": "R7/11/24–11/30",
+      "prefecture": 57.84,
+      "regions": {
+        "新潟市": 58.61,
+        "新発田": 74.5,
+        "新津": 28.0,
+        "三条": 75.4,
+        "長岡": 43.33,
+        "魚沼": 42.0,
+        "南魚沼": 48.33,
+        "十日町": 66.33,
+        "柏崎": 33.5,
+        "糸魚川": 70.0,
+        "村上": 64.0,
+        "佐渡": 55.0,
+        "上越": 65.5
+      },
+      "age_counts": {
+        "0歳": 45.0,
+        "1～4歳": 433.0,
+        "5～9歳": 794.0,
+        "10～14歳": 744.0,
+        "15～19歳": 182.0,
+        "20～59歳": 784.0,
+        "60歳以上": 199.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.82,
+        "1～4歳": 7.88,
+        "5～9歳": 14.43,
+        "10～14歳": 13.53,
+        "15～19歳": 3.31,
+        "20～59歳": 14.25,
+        "60歳以上": 3.62
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0748.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/472764.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 3181.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 3181.0,
+          "age_count_sum": 3181.0,
+          "count_difference": 0.0,
+          "expected_rate": 57.84,
+          "age_rate_sum": 57.84,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 49,
+      "start": "2025-12-01",
+      "end": "2025-12-07",
+      "label": "R7/12/1–12/7",
+      "prefecture": 47.09,
+      "regions": {
+        "新潟市": 48.56,
+        "新発田": 61.75,
+        "新津": 20.5,
+        "三条": 60.2,
+        "長岡": 43.0,
+        "魚沼": 32.5,
+        "南魚沼": 40.0,
+        "十日町": 55.0,
+        "柏崎": 36.0,
+        "糸魚川": 35.0,
+        "村上": 50.5,
+        "佐渡": 43.0,
+        "上越": 47.5
+      },
+      "age_counts": {
+        "0歳": 25.0,
+        "1～4歳": 425.0,
+        "5～9歳": 715.0,
+        "10～14歳": 534.0,
+        "15～19歳": 156.0,
+        "20～59歳": 557.0,
+        "60歳以上": 178.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.45,
+        "1～4歳": 7.73,
+        "5～9歳": 13.0,
+        "10～14歳": 9.71,
+        "15～19歳": 2.84,
+        "20～59歳": 10.13,
+        "60歳以上": 3.24
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0749.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/473555.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 2590.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 2590.0,
+          "age_count_sum": 2590.0,
+          "count_difference": 0.0,
+          "expected_rate": 47.09,
+          "age_rate_sum": 47.1,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 50,
+      "start": "2025-12-08",
+      "end": "2025-12-14",
+      "label": "R7/12/8–12/14",
+      "prefecture": 40.2,
+      "regions": {
+        "新潟市": 44.61,
+        "新発田": 39.0,
+        "新津": 16.5,
+        "三条": 54.8,
+        "長岡": 48.33,
+        "魚沼": 32.0,
+        "南魚沼": 37.67,
+        "十日町": 30.0,
+        "柏崎": 24.0,
+        "糸魚川": 23.5,
+        "村上": 55.5,
+        "佐渡": 21.5,
+        "上越": 34.75
+      },
+      "age_counts": {
+        "0歳": 29.0,
+        "1～4歳": 328.0,
+        "5～9歳": 688.0,
+        "10～14歳": 422.0,
+        "15～19歳": 189.0,
+        "20～59歳": 428.0,
+        "60歳以上": 127.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.53,
+        "1～4歳": 5.96,
+        "5～9歳": 12.5,
+        "10～14歳": 7.67,
+        "15～19歳": 3.44,
+        "20～59歳": 7.78,
+        "60歳以上": 2.3
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0750.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/474199.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 2211.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 2211.0,
+          "age_count_sum": 2211.0,
+          "count_difference": 0.0,
+          "expected_rate": 40.2,
+          "age_rate_sum": 40.18,
+          "rate_difference": -0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 51,
+      "start": "2025-12-15",
+      "end": "2025-12-21",
+      "label": "R7/12/15–12/21",
+      "prefecture": 33.16,
+      "regions": {
+        "新潟市": 34.78,
+        "新発田": 29.75,
+        "新津": 13.5,
+        "三条": 36.6,
+        "長岡": 38.0,
+        "魚沼": 34.0,
+        "南魚沼": 23.0,
+        "十日町": 12.67,
+        "柏崎": 27.5,
+        "糸魚川": 35.0,
+        "村上": 86.5,
+        "佐渡": 18.5,
+        "上越": 32.75
+      },
+      "age_counts": {
+        "0歳": 18.0,
+        "1～4歳": 306.0,
+        "5～9歳": 507.0,
+        "10～14歳": 384.0,
+        "15～19歳": 150.0,
+        "20～59歳": 327.0,
+        "60歳以上": 132.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.33,
+        "1～4歳": 5.57,
+        "5～9歳": 9.23,
+        "10～14歳": 6.98,
+        "15～19歳": 2.73,
+        "20～59歳": 5.95,
+        "60歳以上": 2.4
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0751.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/474975.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 1824.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1824.0,
+          "age_count_sum": 1824.0,
+          "count_difference": 0.0,
+          "expected_rate": 33.16,
+          "age_rate_sum": 33.19,
+          "rate_difference": 0.03
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2025,
+      "week": 52,
+      "start": "2025-12-22",
+      "end": "2025-12-28",
+      "label": "R7/12/22–12/28",
+      "prefecture": 24.0,
+      "regions": {
+        "新潟市": 21.11,
+        "新発田": 25.0,
+        "新津": 10.5,
+        "三条": 27.8,
+        "長岡": 33.83,
+        "魚沼": 26.0,
+        "南魚沼": 17.0,
+        "十日町": 15.33,
+        "柏崎": 26.0,
+        "糸魚川": 25.5,
+        "村上": 47.0,
+        "佐渡": 14.5,
+        "上越": 25.5
+      },
+      "age_counts": {
+        "0歳": 19.0,
+        "1～4歳": 205.0,
+        "5～9歳": 334.0,
+        "10～14歳": 295.0,
+        "15～19歳": 114.0,
+        "20～59歳": 268.0,
+        "60歳以上": 85.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.34,
+        "1～4歳": 3.73,
+        "5～9歳": 6.07,
+        "10～14歳": 5.36,
+        "15～19歳": 2.07,
+        "20～59歳": 4.88,
+        "60歳以上": 1.54
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0752.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/475667.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 1320.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1320.0,
+          "age_count_sum": 1320.0,
+          "count_difference": 0.0,
+          "expected_rate": 24.0,
+          "age_rate_sum": 23.99,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 1,
+      "start": "2025-12-29",
+      "end": "2026-01-04",
+      "label": "R7/12/29–R8/1/4",
+      "prefecture": 8.65,
+      "regions": {
+        "新潟市": 4.5,
+        "新発田": 6.75,
+        "新津": 3.0,
+        "三条": 6.0,
+        "長岡": 11.5,
+        "魚沼": 21.5,
+        "南魚沼": 22.67,
+        "十日町": 3.67,
+        "柏崎": 11.0,
+        "糸魚川": 9.0,
+        "村上": 18.5,
+        "佐渡": 23.0,
+        "上越": 4.5
+      },
+      "age_counts": {
+        "0歳": 12.0,
+        "1～4歳": 58.0,
+        "5～9歳": 61.0,
+        "10～14歳": 36.0,
+        "15～19歳": 44.0,
+        "20～59歳": 203.0,
+        "60歳以上": 62.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.22,
+        "1～4歳": 1.06,
+        "5～9歳": 1.11,
+        "10～14歳": 0.65,
+        "15～19歳": 0.8,
+        "20～59歳": 3.69,
+        "60歳以上": 1.13
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0801.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/475871.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 476.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 476.0,
+          "age_count_sum": 476.0,
+          "count_difference": 0.0,
+          "expected_rate": 8.65,
+          "age_rate_sum": 8.66,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 2,
+      "start": "2026-01-05",
+      "end": "2026-01-11",
+      "label": "R8/1/5–1/11",
+      "prefecture": 7.64,
+      "regions": {
+        "新潟市": 5.28,
+        "新発田": 9.0,
+        "新津": 4.0,
+        "三条": 14.6,
+        "長岡": 5.83,
+        "魚沼": 13.5,
+        "南魚沼": 16.0,
+        "十日町": 9.0,
+        "柏崎": 10.0,
+        "糸魚川": 8.5,
+        "村上": 5.5,
+        "佐渡": 7.0,
+        "上越": 2.25
+      },
+      "age_counts": {
+        "0歳": 3.0,
+        "1～4歳": 59.0,
+        "5～9歳": 62.0,
+        "10～14歳": 48.0,
+        "15～19歳": 32.0,
+        "20～59歳": 163.0,
+        "60歳以上": 53.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 1.07,
+        "5～9歳": 1.13,
+        "10～14歳": 0.87,
+        "15～19歳": 0.58,
+        "20～59歳": 2.97,
+        "60歳以上": 0.97
+      },
+      "topic": "インフルエンザの警報を解除します。\n○県内では定点当たりの報告数が全県で7.64と前週の8.65に比べ減少しました。\n○前週に引き続き国の示す終息基準（定点当たり10）を下回ったため、警報を解除します。\n○一部保健所管内では、注意報基準（定点当たり10）を上回っており、また、学校の授業も\n再開されていることから、引き続き注意が必要です。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0802.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/476168.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 7.64,
+        "prefecture_count": 420.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 420.0,
+          "age_count_sum": 420.0,
+          "count_difference": 0.0,
+          "expected_rate": 7.64,
+          "age_rate_sum": 7.64,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 3,
+      "start": "2026-01-12",
+      "end": "2026-01-18",
+      "label": "R8/1/12–1/18",
+      "prefecture": 5.87,
+      "regions": {
+        "新潟市": 6.33,
+        "新発田": 3.0,
+        "新津": 3.5,
+        "三条": 13.2,
+        "長岡": 3.83,
+        "魚沼": 3.5,
+        "南魚沼": 7.33,
+        "十日町": 3.0,
+        "柏崎": 6.0,
+        "糸魚川": 3.0,
+        "村上": 11.5,
+        "佐渡": 2.0,
+        "上越": 4.5
+      },
+      "age_counts": {
+        "0歳": 9.0,
+        "1～4歳": 59.0,
+        "5～9歳": 72.0,
+        "10～14歳": 51.0,
+        "15～19歳": 34.0,
+        "20～59歳": 73.0,
+        "60歳以上": 25.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.17,
+        "1～4歳": 1.08,
+        "5～9歳": 1.3,
+        "10～14歳": 0.93,
+        "15～19歳": 0.62,
+        "20～59歳": 1.32,
+        "60歳以上": 0.46
+      },
+      "topic": "インフルエンザの状況は下記のとおりです。\n​○県内では定点当たりの報告数が全県で5.87と前週の7.64に比べ減少しました。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など、\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0803.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/476775.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 5.87,
+        "prefecture_count": 323.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 323.0,
+          "age_count_sum": 323.0,
+          "count_difference": 0.0,
+          "expected_rate": 5.87,
+          "age_rate_sum": 5.88,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 4,
+      "start": "2026-01-19",
+      "end": "2026-01-25",
+      "label": "R8/1/19–1/25",
+      "prefecture": 7.69,
+      "regions": {
+        "新潟市": 3.0,
+        "新発田": 6.0,
+        "新津": 7.5,
+        "三条": 32.0,
+        "長岡": 9.0,
+        "魚沼": 1.5,
+        "南魚沼": 5.67,
+        "十日町": 4.0,
+        "柏崎": 11.5,
+        "糸魚川": 3.0,
+        "村上": 18.0,
+        "佐渡": 1.0,
+        "上越": 4.25
+      },
+      "age_counts": {
+        "0歳": 1.0,
+        "1～4歳": 46.0,
+        "5～9歳": 106.0,
+        "10～14歳": 138.0,
+        "15～19歳": 44.0,
+        "20～59歳": 77.0,
+        "60歳以上": 11.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.84,
+        "5～9歳": 1.92,
+        "10～14歳": 2.51,
+        "15～19歳": 0.8,
+        "20～59歳": 1.4,
+        "60歳以上": 0.19
+      },
+      "topic": "インフルエンザ患者が増加しています。\n○県内では定点当たりの報告数が全県で7.69と前週の5.87に比べ増加しており、学校における\n学級閉鎖等が増えています。\n○県保健環境科学研究所の検査結果報告では、Ｂ型の報告も増えており、引き続き\nインフルエンザへの注意が必要です。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など、\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0804.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/477602.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 7.69,
+        "prefecture_count": 423.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 423.0,
+          "age_count_sum": 423.0,
+          "count_difference": 0.0,
+          "expected_rate": 7.69,
+          "age_rate_sum": 7.68,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 5,
+      "start": "2026-01-26",
+      "end": "2026-02-01",
+      "label": "R8/1/26–2/1",
+      "prefecture": 19.55,
+      "regions": {
+        "新潟市": 22.89,
+        "新発田": 21.25,
+        "新津": 11.0,
+        "三条": 44.8,
+        "長岡": 13.17,
+        "魚沼": 2.0,
+        "南魚沼": 11.0,
+        "十日町": 10.33,
+        "柏崎": 10.0,
+        "糸魚川": 26.0,
+        "村上": 27.0,
+        "佐渡": 4.0,
+        "上越": 12.75
+      },
+      "age_counts": {
+        "0歳": 7.0,
+        "1～4歳": 85.0,
+        "5～9歳": 318.0,
+        "10～14歳": 409.0,
+        "15～19歳": 99.0,
+        "20～59歳": 127.0,
+        "60歳以上": 30.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.13,
+        "1～4歳": 1.54,
+        "5～9歳": 5.77,
+        "10～14歳": 7.44,
+        "15～19歳": 1.8,
+        "20～59歳": 2.31,
+        "60歳以上": 0.55
+      },
+      "topic": "インフルエンザの定点当たりの報告数が国の示す注意報基準を超えたため、\n改めて全県に注意報を発令します。\n○県内の定点当たりの報告数は再び増加し、全県で19.55と注意報基準（定点あたりの報告数10）を\n超えており、インフルエンザへの注意が必要です。（前週：7.69）\n○全国的にも報告数が増加しております。全国のインフルエンザウイルスの検出報告では、\nB型の割合も増えており、本県の検出報告においても同様の傾向にあります。\n○5～14歳の割合が高くなっており、学校における学級閉鎖等も増加しています。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など、\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0805.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/478304.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 19.55,
+        "prefecture_count": 1075.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1075.0,
+          "age_count_sum": 1075.0,
+          "count_difference": 0.0,
+          "expected_rate": 19.55,
+          "age_rate_sum": 19.54,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 6,
+      "start": "2026-02-02",
+      "end": "2026-02-08",
+      "label": "R8/2/2–2/8",
+      "prefecture": 26.4,
+      "regions": {
+        "新潟市": 28.5,
+        "新発田": 43.5,
+        "新津": 25.5,
+        "三条": 54.4,
+        "長岡": 21.17,
+        "魚沼": 3.0,
+        "南魚沼": 10.67,
+        "十日町": 9.67,
+        "柏崎": 14.5,
+        "糸魚川": 36.0,
+        "村上": 30.5,
+        "佐渡": 13.5,
+        "上越": 14.75
+      },
+      "age_counts": {
+        "0歳": 3.0,
+        "1～4歳": 87.0,
+        "5～9歳": 463.0,
+        "10～14歳": 548.0,
+        "15～19歳": 160.0,
+        "20～59歳": 173.0,
+        "60歳以上": 18.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 1.59,
+        "5～9歳": 8.42,
+        "10～14歳": 9.96,
+        "15～19歳": 2.91,
+        "20～59歳": 3.14,
+        "60歳以上": 0.32
+      },
+      "topic": "インフルエンザの定点当たりの報告数が国の示す注意報基準を超えています\n○県内では定点当たりの報告数が全県で26.40と注意報基準（定点当たりの報告数10）を\n超えています。（前週：19.55）\n※警報基準：定点当たりの報告数30\n○全国的にも報告数が増加しております。全国のインフルエンザウイルスの検出報告では、\nB型の割合も増えており、本県の検出報告においても同様の傾向にあります。\n○5～14歳の割合が高くなっており、学校における学級閉鎖等も増加しています。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での換気の実施など、\n基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。やむを得ず外出が必要な場合は\nマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0806.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/479009.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 26.4,
+        "prefecture_count": 1452.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1452.0,
+          "age_count_sum": 1452.0,
+          "count_difference": 0.0,
+          "expected_rate": 26.4,
+          "age_rate_sum": 26.39,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 7,
+      "start": "2026-02-09",
+      "end": "2026-02-15",
+      "label": "R8/2/9–2/15",
+      "prefecture": 30.89,
+      "regions": {
+        "新潟市": 30.61,
+        "新発田": 39.0,
+        "新津": 34.5,
+        "三条": 46.4,
+        "長岡": 40.83,
+        "魚沼": 8.5,
+        "南魚沼": 20.33,
+        "十日町": 13.33,
+        "柏崎": 13.5,
+        "糸魚川": 32.5,
+        "村上": 40.0,
+        "佐渡": 47.0,
+        "上越": 15.5
+      },
+      "age_counts": {
+        "0歳": 8.0,
+        "1～4歳": 130.0,
+        "5～9歳": 597.0,
+        "10～14歳": 580.0,
+        "15～19歳": 146.0,
+        "20～59歳": 215.0,
+        "60歳以上": 23.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.15,
+        "1～4歳": 2.37,
+        "5～9歳": 10.85,
+        "10～14歳": 10.55,
+        "15～19歳": 2.65,
+        "20～59歳": 3.91,
+        "60歳以上": 0.42
+      },
+      "topic": "インフルエンザの定点当たりの報告数が国の示す警報基準を超えたため、\n再度全県に警報を発令します。\n○県内では定点当たりの報告数が全県で30.89と警報基準（定点当たりの報告数30）\nを超えました。（前週：26.40）\n○全国第６週では警報基準を超えている状況です。\n○県保健環境科学研究所の検査結果報告では、Ｂ型の報告が増えており、\n学校における学級閉鎖等や児童福祉施設（保育園等）における集団発生も\n増加しています。\n○感染予防のため、手洗い、マスクの着用を含む咳エチケット、室内での\n換気の実施など、基本的な感染対策の徹底をお願いします。\n○発熱や咳などの症状がある場合は外出を控えましょう。\nやむを得ず外出が必要な場合はマスクを着用するとともに、人混みを避けましょう。\n○重症化予防の観点からインフルエンザワクチン接種は有効とされています。",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0807.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/479728.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 30.89,
+        "prefecture_count": 1699.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1699.0,
+          "age_count_sum": 1699.0,
+          "count_difference": 0.0,
+          "expected_rate": 30.89,
+          "age_rate_sum": 30.9,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 8,
+      "start": "2026-02-16",
+      "end": "2026-02-22",
+      "label": "R8/2/16–2/22",
+      "prefecture": 34.75,
+      "regions": {
+        "新潟市": 30.89,
+        "新発田": 39.25,
+        "新津": 12.0,
+        "三条": 53.2,
+        "長岡": 54.33,
+        "魚沼": 35.5,
+        "南魚沼": 20.67,
+        "十日町": 19.0,
+        "柏崎": 29.0,
+        "糸魚川": 25.5,
+        "村上": 52.5,
+        "佐渡": 42.0,
+        "上越": 23.5
+      },
+      "age_counts": {
+        "0歳": 10.0,
+        "1～4歳": 176.0,
+        "5～9歳": 641.0,
+        "10～14歳": 570.0,
+        "15～19歳": 232.0,
+        "20～59歳": 261.0,
+        "60歳以上": 21.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.19,
+        "1～4歳": 3.19,
+        "5～9歳": 11.65,
+        "10～14歳": 10.36,
+        "15～19歳": 4.22,
+        "20～59歳": 4.75,
+        "60歳以上": 0.38
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0808.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/480320.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 1911.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1911.0,
+          "age_count_sum": 1911.0,
+          "count_difference": 0.0,
+          "expected_rate": 34.75,
+          "age_rate_sum": 34.74,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 9,
+      "start": "2026-02-23",
+      "end": "2026-03-01",
+      "label": "R8/2/23–3/1",
+      "prefecture": 28.67,
+      "regions": {
+        "新潟市": 23.61,
+        "新発田": 27.25,
+        "新津": 16.5,
+        "三条": 45.2,
+        "長岡": 42.5,
+        "魚沼": 33.0,
+        "南魚沼": 21.33,
+        "十日町": 31.0,
+        "柏崎": 34.5,
+        "糸魚川": 15.5,
+        "村上": 38.5,
+        "佐渡": 28.5,
+        "上越": 18.0
+      },
+      "age_counts": {
+        "0歳": 13.0,
+        "1～4歳": 140.0,
+        "5～9歳": 486.0,
+        "10～14歳": 483.0,
+        "15～19歳": 158.0,
+        "20～59歳": 284.0,
+        "60歳以上": 13.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.23,
+        "1～4歳": 2.55,
+        "5～9歳": 8.82,
+        "10～14歳": 8.78,
+        "15～19歳": 2.87,
+        "20～59歳": 5.17,
+        "60歳以上": 0.24
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0809.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/481850.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 1577.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1577.0,
+          "age_count_sum": 1577.0,
+          "count_difference": 0.0,
+          "expected_rate": 28.67,
+          "age_rate_sum": 28.66,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 10,
+      "start": "2026-03-02",
+      "end": "2026-03-08",
+      "label": "R8/3/2–3/8",
+      "prefecture": 24.22,
+      "regions": {
+        "新潟市": 15.33,
+        "新発田": 22.25,
+        "新津": 8.0,
+        "三条": 34.0,
+        "長岡": 43.33,
+        "魚沼": 19.0,
+        "南魚沼": 13.0,
+        "十日町": 38.67,
+        "柏崎": 17.5,
+        "糸魚川": 23.0,
+        "村上": 42.0,
+        "佐渡": 33.5,
+        "上越": 24.0
+      },
+      "age_counts": {
+        "0歳": 11.0,
+        "1～4歳": 149.0,
+        "5～9歳": 408.0,
+        "10～14歳": 395.0,
+        "15～19歳": 146.0,
+        "20～59歳": 200.0,
+        "60歳以上": 23.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.2,
+        "1～4歳": 2.71,
+        "5～9歳": 7.42,
+        "10～14歳": 7.18,
+        "15～19歳": 2.65,
+        "20～59歳": 3.63,
+        "60歳以上": 0.41
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0810.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/483862.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 1332.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1332.0,
+          "age_count_sum": 1332.0,
+          "count_difference": 0.0,
+          "expected_rate": 24.22,
+          "age_rate_sum": 24.2,
+          "rate_difference": -0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 11,
+      "start": "2026-03-09",
+      "end": "2026-03-15",
+      "label": "R8/3/9–3/15",
+      "prefecture": 20.69,
+      "regions": {
+        "新潟市": 12.78,
+        "新発田": 18.0,
+        "新津": 13.5,
+        "三条": 22.0,
+        "長岡": 39.17,
+        "魚沼": 21.5,
+        "南魚沼": 13.67,
+        "十日町": 40.67,
+        "柏崎": 24.5,
+        "糸魚川": 19.0,
+        "村上": 34.5,
+        "佐渡": 21.5,
+        "上越": 14.75
+      },
+      "age_counts": {
+        "0歳": 9.0,
+        "1～4歳": 121.0,
+        "5～9歳": 372.0,
+        "10～14歳": 318.0,
+        "15～19歳": 102.0,
+        "20～59歳": 206.0,
+        "60歳以上": 10.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.16,
+        "1～4歳": 2.21,
+        "5～9歳": 6.76,
+        "10～14歳": 5.78,
+        "15～19歳": 1.85,
+        "20～59歳": 3.75,
+        "60歳以上": 0.18
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0811.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/486506.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 1138.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1138.0,
+          "age_count_sum": 1138.0,
+          "count_difference": 0.0,
+          "expected_rate": 20.69,
+          "age_rate_sum": 20.69,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 12,
+      "start": "2026-03-16",
+      "end": "2026-03-22",
+      "label": "R8/3/16–3/22",
+      "prefecture": 16.71,
+      "regions": {
+        "新潟市": 10.11,
+        "新発田": 11.5,
+        "新津": 3.0,
+        "三条": 19.6,
+        "長岡": 23.33,
+        "魚沼": 15.5,
+        "南魚沼": 13.67,
+        "十日町": 40.67,
+        "柏崎": 10.5,
+        "糸魚川": 33.0,
+        "村上": 28.5,
+        "佐渡": 23.0,
+        "上越": 15.75
+      },
+      "age_counts": {
+        "0歳": 3.0,
+        "1～4歳": 113.0,
+        "5～9歳": 288.0,
+        "10～14歳": 248.0,
+        "15～19歳": 67.0,
+        "20～59歳": 184.0,
+        "60歳以上": 16.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 2.05,
+        "5～9歳": 5.24,
+        "10～14歳": 4.51,
+        "15～19歳": 1.22,
+        "20～59歳": 3.34,
+        "60歳以上": 0.29
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0812.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/487706.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 919.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 919.0,
+          "age_count_sum": 919.0,
+          "count_difference": 0.0,
+          "expected_rate": 16.71,
+          "age_rate_sum": 16.7,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 13,
+      "start": "2026-03-23",
+      "end": "2026-03-29",
+      "label": "R8/3/23–3/29",
+      "prefecture": 11.96,
+      "regions": {
+        "新潟市": 7.61,
+        "新発田": 6.25,
+        "新津": 4.5,
+        "三条": 12.0,
+        "長岡": 13.67,
+        "魚沼": 11.5,
+        "南魚沼": 17.67,
+        "十日町": 21.0,
+        "柏崎": 14.5,
+        "糸魚川": 31.0,
+        "村上": 21.0,
+        "佐渡": 17.0,
+        "上越": 9.75
+      },
+      "age_counts": {
+        "0歳": 5.0,
+        "1～4歳": 103.0,
+        "5～9歳": 190.0,
+        "10～14歳": 143.0,
+        "15～19歳": 53.0,
+        "20～59歳": 146.0,
+        "60歳以上": 18.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.09,
+        "1～4歳": 1.87,
+        "5～9歳": 3.45,
+        "10～14歳": 2.6,
+        "15～19歳": 0.96,
+        "20～59歳": 2.65,
+        "60歳以上": 0.33
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0813.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/490118.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 658.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 658.0,
+          "age_count_sum": 658.0,
+          "count_difference": 0.0,
+          "expected_rate": 11.96,
+          "age_rate_sum": 11.95,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 14,
+      "start": "2026-03-30",
+      "end": "2026-04-05",
+      "label": "R8/3/30–4/5",
+      "prefecture": 5.91,
+      "regions": {
+        "新潟市": 4.17,
+        "新発田": 2.25,
+        "新津": 2.5,
+        "三条": 4.4,
+        "長岡": 4.5,
+        "魚沼": 9.0,
+        "南魚沼": 8.0,
+        "十日町": 15.67,
+        "柏崎": 6.5,
+        "糸魚川": 20.0,
+        "村上": 5.0,
+        "佐渡": 7.0,
+        "上越": 5.25
+      },
+      "age_counts": {
+        "0歳": 5.0,
+        "1～4歳": 49.0,
+        "5～9歳": 88.0,
+        "10～14歳": 49.0,
+        "15～19歳": 22.0,
+        "20～59歳": 103.0,
+        "60歳以上": 9.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.09,
+        "1～4歳": 0.89,
+        "5～9歳": 1.59,
+        "10～14歳": 0.89,
+        "15～19歳": 0.4,
+        "20～59歳": 1.88,
+        "60歳以上": 0.16
+      },
+      "topic": "インフルエンザの警報を解除します。\n○県内で定点当たりの報告数が全県で5.91と前週の11.96に比べて減少し、国の示す終息基準（定点当たり10）を下回ったため、警報を解除します。",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0814.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/491004.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 5.91,
+        "prefecture_count": 325.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 325.0,
+          "age_count_sum": 325.0,
+          "count_difference": 0.0,
+          "expected_rate": 5.91,
+          "age_rate_sum": 5.9,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 15,
+      "start": "2026-04-06",
+      "end": "2026-04-12",
+      "label": "R8/4/6–4/12",
+      "prefecture": 2.2,
+      "regions": {
+        "新潟市": 1.89,
+        "新発田": 0.5,
+        "新津": 0.0,
+        "三条": 1.0,
+        "長岡": 1.43,
+        "魚沼": 0.5,
+        "南魚沼": 1.33,
+        "十日町": 7.0,
+        "柏崎": 3.5,
+        "糸魚川": 11.0,
+        "村上": 2.5,
+        "佐渡": 5.0,
+        "上越": 1.75
+      },
+      "age_counts": {
+        "0歳": 1.0,
+        "1～4歳": 25.0,
+        "5～9歳": 41.0,
+        "10～14歳": 16.0,
+        "15～19歳": 2.0,
+        "20～59歳": 31.0,
+        "60歳以上": 5.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.44,
+        "5～9歳": 0.75,
+        "10～14歳": 0.29,
+        "15～19歳": 0.04,
+        "20～59歳": 0.57,
+        "60歳以上": 0.09
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0815.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/491835.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 121.0
+      },
+      "_parser": {
+        "sheet": "Sheet1",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "Sheet1",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 121.0,
+          "age_count_sum": 121.0,
+          "count_difference": 0.0,
+          "expected_rate": 2.2,
+          "age_rate_sum": 2.2,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 16,
+      "start": "2026-04-13",
+      "end": "2026-04-19",
+      "label": "R8/4/13–4/19",
+      "prefecture": 1.89,
+      "regions": {
+        "新潟市": 1.44,
+        "新発田": 2.0,
+        "新津": 0.0,
+        "三条": 2.4,
+        "長岡": 2.14,
+        "魚沼": 2.0,
+        "南魚沼": 0.0,
+        "十日町": 1.5,
+        "柏崎": 2.5,
+        "糸魚川": 5.0,
+        "村上": 0.5,
+        "佐渡": 3.5,
+        "上越": 3.25
+      },
+      "age_counts": {
+        "0歳": 1.0,
+        "1～4歳": 25.0,
+        "5～9歳": 41.0,
+        "10～14歳": 10.0,
+        "15～19歳": 2.0,
+        "20～59歳": 20.0,
+        "60歳以上": 5.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.45,
+        "5～9歳": 0.75,
+        "10～14歳": 0.18,
+        "15～19歳": 0.04,
+        "20～59歳": 0.36,
+        "60歳以上": 0.09
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0816.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/493693.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 104.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 104.0,
+          "age_count_sum": 104.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.89,
+          "age_rate_sum": 1.89,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 17,
+      "start": "2026-04-20",
+      "end": "2026-04-26",
+      "label": "R8/4/20–4/26",
+      "prefecture": 1.07,
+      "regions": {
+        "新潟市": 0.72,
+        "新発田": 1.5,
+        "新津": 0.5,
+        "三条": 1.2,
+        "長岡": 1.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.33,
+        "十日町": 1.0,
+        "柏崎": 0.5,
+        "糸魚川": 3.5,
+        "村上": 0.0,
+        "佐渡": 3.5,
+        "上越": 2.0
+      },
+      "age_counts": {
+        "0歳": 2.0,
+        "1～4歳": 13.0,
+        "5～9歳": 11.0,
+        "10～14歳": 13.0,
+        "15～19歳": 3.0,
+        "20～59歳": 16.0,
+        "60歳以上": 1.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.04,
+        "1～4歳": 0.23,
+        "5～9歳": 0.19,
+        "10～14歳": 0.24,
+        "15～19歳": 0.05,
+        "20～59歳": 0.3,
+        "60歳以上": 0.02
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0817.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/495100.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 59.0
+      },
+      "_parser": {
+        "sheet": "Sheet2",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "Sheet2",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 59.0,
+          "age_count_sum": 59.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.07,
+          "age_rate_sum": 1.07,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 18,
+      "start": "2026-04-27",
+      "end": "2026-05-03",
+      "label": "R8/4/27–5/3",
+      "prefecture": 0.55,
+      "regions": {
+        "新潟市": 0.22,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 2.4,
+        "長岡": 0.57,
+        "魚沼": 0.0,
+        "南魚沼": 0.33,
+        "十日町": 1.5,
+        "柏崎": 1.0,
+        "糸魚川": 0.5,
+        "村上": 0.5,
+        "佐渡": 0.5,
+        "上越": 0.25
+      },
+      "age_counts": {
+        "0歳": 1.0,
+        "1～4歳": 4.0,
+        "5～9歳": 10.0,
+        "10～14歳": 4.0,
+        "15～19歳": 2.0,
+        "20～59歳": 8.0,
+        "60歳以上": 1.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.08,
+        "5～9歳": 0.19,
+        "10～14歳": 0.07,
+        "15～19歳": 0.04,
+        "20～59歳": 0.15,
+        "60歳以上": 0.02
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0818.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/495690.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 30.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 30.0,
+          "age_count_sum": 30.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.55,
+          "age_rate_sum": 0.57,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 19,
+      "start": "2026-05-04",
+      "end": "2026-05-10",
+      "label": "R8/5/4–5/10",
+      "prefecture": 0.29,
+      "regions": {
+        "新潟市": 0.22,
+        "新発田": 0.25,
+        "新津": 0.0,
+        "三条": 0.8,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.67,
+        "十日町": 0.5,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.5,
+        "上越": 0.75
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 3.0,
+        "5～9歳": 4.0,
+        "10～14歳": 4.0,
+        "15～19歳": 0.0,
+        "20～59歳": 3.0,
+        "60歳以上": 2.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.06,
+        "5～9歳": 0.07,
+        "10～14歳": 0.07,
+        "15～19歳": 0.0,
+        "20～59歳": 0.06,
+        "60歳以上": 0.04
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0819.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/496157.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 16.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 16.0,
+          "age_count_sum": 16.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.29,
+          "age_rate_sum": 0.3,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 20,
+      "start": "2026-05-11",
+      "end": "2026-05-17",
+      "label": "R8/5/11–5/17",
+      "prefecture": 0.11,
+      "regions": {
+        "新潟市": 0.0,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.8,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.5,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.25
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 2.0,
+        "10～14歳": 3.0,
+        "15～19歳": 0.0,
+        "20～59歳": 1.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.04,
+        "10～14歳": 0.05,
+        "15～19歳": 0.0,
+        "20～59歳": 0.02,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0820.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/496673.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 6.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 6.0,
+          "age_count_sum": 6.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.11,
+          "age_rate_sum": 0.11,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 21,
+      "start": "2026-05-18",
+      "end": "2026-05-24",
+      "label": "R8/5/18–5/24",
+      "prefecture": 0.02,
+      "regions": {
+        "新潟市": 0.06,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 1.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 0.02,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0821.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/497591.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 1.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 1.0,
+          "age_count_sum": 1.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.02,
+          "age_rate_sum": 0.02,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 22,
+      "start": "2026-05-25",
+      "end": "2026-05-31",
+      "label": "R8/5/25–5/31",
+      "prefecture": 0.0,
+      "regions": {
+        "新潟市": 0.0,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 0.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 0.0,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0822.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/498484.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 0.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 0.0,
+          "age_count_sum": 0.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.0,
+          "age_rate_sum": 0.0,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 23,
+      "start": "2026-06-01",
+      "end": "2026-06-07",
+      "label": "R8/6/1–6/7",
+      "prefecture": 0.0,
+      "regions": {
+        "新潟市": 0.0,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 0.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 0.0,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0823.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/499323.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 0.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 0.0,
+          "age_count_sum": 0.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.0,
+          "age_rate_sum": 0.0,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 24,
+      "start": "2026-06-08",
+      "end": "2026-06-14",
+      "label": "R8/6/8–6/14",
+      "prefecture": 0.04,
+      "regions": {
+        "新潟市": 0.0,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.25
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 1.0,
+        "20～59歳": 1.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.02,
+        "20～59歳": 0.02,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0824.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/500102.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 2.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 2.0,
+          "age_count_sum": 2.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.04,
+          "age_rate_sum": 0.04,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 25,
+      "start": "2026-06-15",
+      "end": "2026-06-21",
+      "label": "R8/6/15–6/21",
+      "prefecture": 0.07,
+      "regions": {
+        "新潟市": 0.0,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 1.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 1.0,
+        "5～9歳": 3.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 0.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.06,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 0.0,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0825.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/501335.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 4.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 4.0,
+          "age_count_sum": 4.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.07,
+          "age_rate_sum": 0.08,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 26,
+      "start": "2026-06-22",
+      "end": "2026-06-28",
+      "label": "R8/6/22–6/28",
+      "prefecture": 0.07,
+      "regions": {
+        "新潟市": 0.0,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.2,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.67,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.25
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 1.0,
+        "10～14歳": 1.0,
+        "15～19歳": 0.0,
+        "20～59歳": 0.0,
+        "60歳以上": 2.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.02,
+        "10～14歳": 0.02,
+        "15～19歳": 0.0,
+        "20～59歳": 0.0,
+        "60歳以上": 0.04
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0826.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/502639.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 4.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 4.0,
+          "age_count_sum": 4.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.07,
+          "age_rate_sum": 0.08,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 27,
+      "start": "2026-06-29",
+      "end": "2026-07-05",
+      "label": "R8/6/29–7/5",
+      "prefecture": 0.04,
+      "regions": {
+        "新潟市": 0.0,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.14,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.5,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 1.0,
+        "5～9歳": 0.0,
+        "10～14歳": 1.0,
+        "15～19歳": 0.0,
+        "20～59歳": 0.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.0,
+        "10～14歳": 0.02,
+        "15～19歳": 0.0,
+        "20～59歳": 0.0,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0827.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/503323.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 2.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 2.0,
+          "age_count_sum": 2.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.04,
+          "age_rate_sum": 0.04,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 28,
+      "start": "2026-07-06",
+      "end": "2026-07-12",
+      "label": "R8/7/6–7/12",
+      "prefecture": 0.07,
+      "regions": {
+        "新潟市": 0.06,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.6,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 1.0,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 3.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.0,
+        "5～9歳": 0.0,
+        "10～14歳": 0.0,
+        "15～19歳": 0.0,
+        "20～59歳": 0.06,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0828.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/504335.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 4.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 4.0,
+          "age_count_sum": 4.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.07,
+          "age_rate_sum": 0.08,
+          "rate_difference": 0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 29,
+      "start": "2026-07-13",
+      "end": "2026-07-19",
+      "label": "R8/7/13–7/19",
+      "prefecture": 0.18,
+      "regions": {
+        "新潟市": 0.22,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.0,
+        "長岡": 0.0,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.5,
+        "柏崎": 1.5,
+        "糸魚川": 0.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.5
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 1.0,
+        "5～9歳": 0.0,
+        "10～14歳": 1.0,
+        "15～19歳": 0.0,
+        "20～59歳": 6.0,
+        "60歳以上": 2.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.02,
+        "5～9歳": 0.0,
+        "10～14歳": 0.02,
+        "15～19歳": 0.0,
+        "20～59歳": 0.12,
+        "60歳以上": 0.04
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0829.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/504955.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 10.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 10.0,
+          "age_count_sum": 10.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.18,
+          "age_rate_sum": 0.2,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 30,
+      "start": "2026-07-20",
+      "end": "2026-07-26",
+      "label": "R8/7/20–7/26",
+      "prefecture": 0.22,
+      "regions": {
+        "新潟市": 0.28,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 0.2,
+        "長岡": 0.14,
+        "魚沼": 0.5,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.0,
+        "糸魚川": 2.0,
+        "村上": 0.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 4.0,
+        "5～9歳": 3.0,
+        "10～14歳": 0.0,
+        "15～19歳": 1.0,
+        "20～59歳": 4.0,
+        "60歳以上": 0.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.08,
+        "5～9歳": 0.05,
+        "10～14歳": 0.0,
+        "15～19歳": 0.02,
+        "20～59歳": 0.07,
+        "60歳以上": 0.0
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0830.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/505795.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 12.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 12.0,
+          "age_count_sum": 12.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.22,
+          "age_rate_sum": 0.22,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 31,
+      "start": "2026-07-27",
+      "end": "2026-08-02",
+      "label": "R8/7/27–8/2",
+      "prefecture": 0.8,
+      "regions": {
+        "新潟市": 0.89,
+        "新発田": 0.0,
+        "新津": 0.0,
+        "三条": 1.6,
+        "長岡": 0.43,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 0.0,
+        "柏崎": 0.5,
+        "糸魚川": 3.0,
+        "村上": 5.0,
+        "佐渡": 0.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 1.0,
+        "1～4歳": 5.0,
+        "5～9歳": 10.0,
+        "10～14歳": 4.0,
+        "15～19歳": 3.0,
+        "20～59歳": 11.0,
+        "60歳以上": 10.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.1,
+        "5～9歳": 0.18,
+        "10～14歳": 0.07,
+        "15～19歳": 0.05,
+        "20～59歳": 0.2,
+        "60歳以上": 0.18
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0831.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/506689.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 44.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 44.0,
+          "age_count_sum": 44.0,
+          "count_difference": 0.0,
+          "expected_rate": 0.8,
+          "age_rate_sum": 0.8,
+          "rate_difference": 0.0
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 32,
+      "start": "2026-08-03",
+      "end": "2026-08-09",
+      "label": "R8/8/3–8/9",
+      "prefecture": 1.64,
+      "regions": {
+        "新潟市": 1.5,
+        "新発田": 0.25,
+        "新津": 0.0,
+        "三条": 1.2,
+        "長岡": 1.14,
+        "魚沼": 0.0,
+        "南魚沼": 0.67,
+        "十日町": 7.5,
+        "柏崎": 2.0,
+        "糸魚川": 0.0,
+        "村上": 12.0,
+        "佐渡": 1.5,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 0.0,
+        "1～4歳": 23.0,
+        "5～9歳": 23.0,
+        "10～14歳": 14.0,
+        "15～19歳": 0.0,
+        "20～59歳": 17.0,
+        "60歳以上": 13.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.0,
+        "1～4歳": 0.41,
+        "5～9歳": 0.41,
+        "10～14歳": 0.25,
+        "15～19歳": 0.0,
+        "20～59歳": 0.3,
+        "60歳以上": 0.24
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0832.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/507175.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 90.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 90.0,
+          "age_count_sum": 90.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.64,
+          "age_rate_sum": 1.61,
+          "rate_difference": -0.03
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 33,
+      "start": "2026-08-10",
+      "end": "2026-08-16",
+      "label": "R8/8/10–8/16",
+      "prefecture": 1.09,
+      "regions": {
+        "新潟市": 1.78,
+        "新発田": 0.5,
+        "新津": 1.0,
+        "三条": 1.0,
+        "長岡": 0.71,
+        "魚沼": 0.0,
+        "南魚沼": 0.0,
+        "十日町": 1.0,
+        "柏崎": 0.5,
+        "糸魚川": 0.5,
+        "村上": 3.0,
+        "佐渡": 2.0,
+        "上越": 0.0
+      },
+      "age_counts": {
+        "0歳": 1.0,
+        "1～4歳": 9.0,
+        "5～9歳": 16.0,
+        "10～14歳": 8.0,
+        "15～19歳": 2.0,
+        "20～59歳": 19.0,
+        "60歳以上": 5.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.02,
+        "1～4歳": 0.17,
+        "5～9歳": 0.29,
+        "10～14歳": 0.15,
+        "15～19歳": 0.04,
+        "20～59歳": 0.34,
+        "60歳以上": 0.1
+      },
+      "topic": "",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0833.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/507805.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 60.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 60.0,
+          "age_count_sum": 60.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.09,
+          "age_rate_sum": 1.11,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 34,
+      "start": "2026-08-17",
+      "end": "2026-08-23",
+      "label": "R8/8/17–8/23",
+      "prefecture": 1.65,
+      "regions": {
+        "新潟市": 1.56,
+        "新発田": 3.25,
+        "新津": 0.0,
+        "三条": 2.2,
+        "長岡": 1.14,
+        "魚沼": 1.0,
+        "南魚沼": 1.0,
+        "十日町": 0.5,
+        "柏崎": 2.5,
+        "糸魚川": 2.5,
+        "村上": 6.5,
+        "佐渡": 0.0,
+        "上越": 0.5
+      },
+      "age_counts": {
+        "0歳": 2.0,
+        "1～4歳": 14.0,
+        "5～9歳": 24.0,
+        "10～14歳": 10.0,
+        "15～19歳": 3.0,
+        "20～59歳": 26.0,
+        "60歳以上": 12.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.04,
+        "1～4歳": 0.24,
+        "5～9歳": 0.43,
+        "10～14歳": 0.18,
+        "15～19歳": 0.05,
+        "20～59歳": 0.48,
+        "60歳以上": 0.22
+      },
+      "topic": "インフルエンザの流行期に入りました。（別紙１参照）\n○県内では定点当たりの報告数が全県で\n1.65\nと流行期入りの目安（定点当たりの報告数１）を３週連続で超えました。（前々週：1.64、前週：1.09）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策の徹底をお願いします。\n※参考　直近のシーズンにおける流行期入りの週\n2025(令和７)年第43週（10月20日～10月26日）：定点当たり2.05\n注意報の基準　　定点当たりの報告数   10",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0834.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/508336.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 1.65,
+        "prefecture_count": 91.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 91.0,
+          "age_count_sum": 91.0,
+          "count_difference": 0.0,
+          "expected_rate": 1.65,
+          "age_rate_sum": 1.64,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 35,
+      "start": "2026-08-24",
+      "end": "2026-08-30",
+      "label": "R8/8/24–8/30",
+      "prefecture": 3.58,
+      "regions": {
+        "新潟市": 4.17,
+        "新発田": 5.0,
+        "新津": 0.5,
+        "三条": 3.8,
+        "長岡": 3.0,
+        "魚沼": 0.5,
+        "南魚沼": 1.67,
+        "十日町": 4.0,
+        "柏崎": 5.5,
+        "糸魚川": 1.0,
+        "村上": 15.5,
+        "佐渡": 1.0,
+        "上越": 0.25
+      },
+      "age_counts": {
+        "0歳": 3.0,
+        "1～4歳": 49.0,
+        "5～9歳": 55.0,
+        "10～14歳": 14.0,
+        "15～19歳": 2.0,
+        "20～59歳": 50.0,
+        "60歳以上": 24.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.05,
+        "1～4歳": 0.89,
+        "5～9歳": 1.0,
+        "10～14歳": 0.25,
+        "15～19歳": 0.04,
+        "20～59歳": 0.91,
+        "60歳以上": 0.43
+      },
+      "topic": "インフルエンザの流行期に入っています。（別紙1参照）\n○県内では定点当たりの報告数が全県で\n3.58\nと流行期入りの目安（定点当たりの報告数1）を超えています。（前週：1.65、前々週：1.09）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策の徹底をお願いします。\n※参考　直近のシーズンにおける流行期入りの週\n2025(令和7)年第43週（10月20日～10月26日）：定点当たり2.05\n注意報の基準　　定点当たりの報告数   10",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0835.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/509166.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 3.58,
+        "prefecture_count": 197.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 197.0,
+          "age_count_sum": 197.0,
+          "count_difference": 0.0,
+          "expected_rate": 3.58,
+          "age_rate_sum": 3.57,
+          "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 36,
+      "start": "2026-08-31",
+      "end": "2026-09-06",
+      "label": "R8/8/31–9/6",
+      "prefecture": 6.13,
+      "regions": {
+        "新潟市": 8.56,
+        "新発田": 6.75,
+        "新津": 5.5,
+        "三条": 2.0,
+        "長岡": 5.14,
+        "魚沼": 5.5,
+        "南魚沼": 4.67,
+        "十日町": 1.0,
+        "柏崎": 7.0,
+        "糸魚川": 6.5,
+        "村上": 13.0,
+        "佐渡": 7.0,
+        "上越": 1.25
+      },
+      "age_counts": {
+        "0歳": 6.0,
+        "1～4歳": 53.0,
+        "5～9歳": 122.0,
+        "10～14歳": 52.0,
+        "15～19歳": 9.0,
+        "20～59歳": 74.0,
+        "60歳以上": 21.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.11,
+        "1～4歳": 0.97,
+        "5～9歳": 2.22,
+        "10～14歳": 0.95,
+        "15～19歳": 0.16,
+        "20～59歳": 1.35,
+        "60歳以上": 0.39
+      },
+      "topic": "インフルエンザの流行期に入っています。（別紙1参照）\n○県内では定点当たりの報告数が全県で\n6.13\nと流行期入りの目安（定点当たりの報告数1）を超えています。（前週：3.58、前々週：1.65）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策の徹底をお願いします。\n※参考　直近のシーズンにおける流行期入りの週\n2025(令和7)年第43週（10月20日～10月26日）：定点当たり2.05\n注意報の基準　　定点当たりの報告数   10",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0836.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/509796.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 6.13,
+        "prefecture_count": 337.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 337.0,
+          "age_count_sum": 337.0,
+          "count_difference": 0.0,
+          "expected_rate": 6.13,
+          "age_rate_sum": 6.15,
+          "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
     }
   ]
 }
