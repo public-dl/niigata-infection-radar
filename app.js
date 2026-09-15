@@ -319,12 +319,22 @@ function initAgeStatistics(){
   wireAgeHeatmap();
 }
 
+function formatPeriodWestern(label, year){
+  if(!label) return "";
+  const y = Number(year);
+  // 例: R8/8/31–9/6 → 2026/8/31–9/6
+  if(Number.isFinite(y) && /^R\d+\//.test(label)){
+    return label.replace(/^R\d+\//, `${y}/`);
+  }
+  return label;
+}
+
 async function main(){
  const res=await fetch(DATA_URL,{cache:"no-store"}); if(!res.ok)throw new Error("influenza_history.json を読み込めません");
  const data=await res.json(); allWeeks=(data.weeks||[]).slice().sort((a,b)=>(a.year-b.year)||(a.week-b.week)); if(!allWeeks.length)throw new Error("週データがありません");
  const updatedEl=document.querySelector("#data-updated-at"); if(updatedEl)updatedEl.textContent=formatUpdatedAt(data.meta?.updated_at);
  latestWeek=allWeeks.at(-1); const prev=allWeeks.at(-2),prev2=allWeeks.at(-3);
- document.querySelector("#latest-period").textContent=latestWeek.label; document.querySelector("#map-period").textContent=latestWeek.label;
+ document.querySelector("#latest-period").textContent=formatPeriodWestern(latestWeek.label,latestWeek.year); document.querySelector("#map-period").textContent=latestWeek.label;
  document.querySelector("#latest-value").textContent=n(latestWeek.prefecture); document.querySelector("#prev-value").textContent=n(prev?.prefecture); document.querySelector("#prev2-value").textContent=n(prev2?.prefecture);
  const sentinelValue=n(latestWeek.prefecture);
  const sentinelCurrent=document.querySelector("#sentinel-current-value");
