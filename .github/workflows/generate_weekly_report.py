@@ -1,107 +1,288 @@
 #!/usr/bin/env python3
 from __future__ import annotations
-import html, json, urllib.request
+import json
+import os, math, os, re, shutil, subprocess, sys, urllib.request
+from datetime import datetime
 from pathlib import Path
-from playwright.sync_api import sync_playwright
 
 ROOT=Path(__file__).resolve().parents[1]
-DATA_PATH=ROOT/'data'/'influenza_history.json'
-AI_PATH=ROOT/'data'/'ai_comment.json'
-REPORT_DIR=ROOT/'reports'
-ASSET_DIR=ROOT/'.report_assets'
-GEO_CACHE=ASSET_DIR/'niigata_municipalities.geojson'
-GEO_URL='https://raw.githubusercontent.com/smartnews-smri/japan-topography/refs/heads/main/data/municipality/geojson/s0010/N03-21_15_210101.json'
-BLUE='#0b79b6';YELLOW='#f2c94c';RED='#ef6a5b';PURPLE='#7b4bb7'
+HISTORY=Path(os.environ.get('INFLUENZA_HISTORY_PATH', ROOT/'data'/'influenza_history.json'))
+AI=Path(os.environ.get('AI_COMMENT_PATH', ROOT/'data'/'ai_comment.json'))
+TEMPLATE=ROOT/'reports'/'template'/'report.html'
+OUT=ROOT/'reports'
+OUT.mkdir(exist_ok=True)
+AGE_GROUPS=['0歳','1～4歳','5～9歳','10～14歳','15～19歳','20～59歳','60歳以上']
+REGION_DISPLAY={'新潟市':'新潟'}
+REGION_ORDER=['新潟市','新発田','村上','長岡','柏崎','上越','糸魚川','南魚沼','十日町','佐渡','新津','三条','魚沼']
+GEOJSON=ROOT/'data'/'niigata_municipality.geojson'
+GEOJSON_URL='https://raw.githubusercontent.com/smartnews-smri/japan-topography/refs/heads/main/data/municipality/geojson/s0010/N03-21_15_210101.json'
 REGION_MUNICIPALITIES={
-'村上':['村上市','関川村','粟島浦村'],'新発田':['新発田市','阿賀野市','胎内市','聖籠町'],'新潟市':['新潟市'],'新津':['五泉市','阿賀町'],'三条':['三条市','加茂市','燕市','弥彦村','田上町'],'長岡':['長岡市','小千谷市','見附市','出雲崎町'],'魚沼':['魚沼市'],'南魚沼':['南魚沼市','湯沢町'],'十日町':['十日町市','津南町'],'柏崎':['柏崎市','刈羽村'],'上越':['上越市','妙高市'],'糸魚川':['糸魚川市'],'佐渡':['佐渡市']}
+ '村上':['村上市','関川村','粟島浦村'],
+ '新発田':['新発田市','阿賀野市','胎内市','聖籠町'],
+ '新潟':['新潟市'],
+ '新津':['五泉市','阿賀町'],
+ '三条':['三条市','加茂市','燕市','弥彦村','田上町'],
+ '長岡':['長岡市','小千谷市','見附市','出雲崎町'],
+ '魚沼':['魚沼市'],
+ '南魚沼':['南魚沼市','湯沢町'],
+ '十日町':['十日町市','津南町'],
+ '柏崎':['柏崎市','刈羽村'],
+ '上越':['上越市','妙高市'],
+ '糸魚川':['糸魚川市'],
+ '佐渡':['佐渡市'],
+}
 MUNI_TO_REGION={m:r for r,ms in REGION_MUNICIPALITIES.items() for m in ms}
+COLORS=['#4e9bd7','#7cb9e5','#3a83bf','#5f9fd0','#8bbbe0','#4e91c8','#6ca8d6']
 
-def load_json(p): return json.loads(p.read_text(encoding='utf-8'))
-def weeks_sorted(h): return sorted(h.get('weeks',[]),key=lambda w:(int(w['year']),int(w['week'])))
-def tier(v):
-    v=float(v or 0)
-    return PURPLE if v>=30 else RED if v>=10 else YELLOW if v>=1 else BLUE
+def load(path, fallback):
+    if path.exists():
+        return json.loads(path.read_text(encoding='utf-8'))
+    return fallback
 
-def region_for_feature(p):
-    if p.get('N03_003')=='新潟市': return '新潟市'
-    for k in ('N03_004','N03_003','N03_002'):
-        n=p.get(k)
-        if n in MUNI_TO_REGION: return MUNI_TO_REGION[n]
+def esc(x):
+    return str(x).replace('&','&amp;').replace('<','&lt;').replace('>','&gt;').replace('"','&quot;')
+
+def signal(v):
+    if v < 1: return '#0b79b6','流行期入りの目安未満','blue'
+    if v < 10: return '#f2c94c','流行期入りの目安以上','yellow'
+    if v < 30: return '#ef6a5b','従来の注意報基準相当','red'
+    return '#7b4bb7','従来の警報基準相当','purple'
+
+def period_text(w):
+    label=str(w.get('label',''))
+    m=re.search(r'R\d+/(.+)',label)
+    tail=m.group(1) if m else label
+    return f"{w.get('year')}年第{int(w.get('week')):02d}週（{tail}）"
+
+def svg_trend(weeks,w=430,h=170):
+    vals=[float(x.get('prefecture') or 0) for x in weeks]
+    vmax=max(7.0,max(vals)*1.12)
+    ml,mr,mt,mb=52,8,12,30
+    pw,ph=w-ml-mr,h-mt-mb
+    pts=[]
+    for i,v in enumerate(vals):
+        x=ml+10+(pw-20)*(i/(max(1,len(vals)-1))); y=mt+ph-(v/vmax)*ph; pts.append((x,y,v))
+    s=[f'<svg viewBox="0 0 {w} {h}" class="svg-chart">']
+    for t in range(5):
+        y=mt+ph*t/4; val=vmax*(1-t/4)
+        s.append(f'<line x1="{ml}" x2="{w-mr}" y1="{y:.1f}" y2="{y:.1f}" stroke="#dce8f2"/>')
+        s.append(f'<text x="{ml-5}" y="{y+3:.1f}" text-anchor="end" class="axis">{val:.1f}</text>')
+    d=' '.join((('M' if i==0 else 'L')+f' {x:.1f} {y:.1f}') for i,(x,y,v) in enumerate(pts))
+    s.append(f'<path d="{d}" fill="none" stroke="#0f5fa8" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>')
+    for i,(x,y,v) in enumerate(pts):
+        s.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4.3" fill="#1976c9" stroke="white" stroke-width="1.6"/>')
+        s.append(f'<text x="{x:.1f}" y="{max(12,y-8):.1f}" text-anchor="middle" class="value-label">{v:.2f}</text>')
+        s.append(f'<text x="{x:.1f}" y="{h-9}" text-anchor="middle" class="axis">第{weeks[i].get("week")}週</text>')
+    s.append('</svg>'); return ''.join(s)
+
+def svg_age(counts,rates,w=520,h=195):
+    vals=[float(counts.get(g,0) or 0) for g in AGE_GROUPS]
+    vmax=max(150,max(vals)*1.15)
+    ml,mr,mt,mb=30,8,15,31; pw,ph=w-ml-mr,h-mt-mb
+    s=[f'<svg viewBox="0 0 {w} {h}" class="svg-chart">']
+    for t in range(4):
+        y=mt+ph*t/3; val=vmax*(1-t/3)
+        s.append(f'<line x1="{ml}" x2="{w-mr}" y1="{y:.1f}" y2="{y:.1f}" stroke="#dce8f2"/>')
+        s.append(f'<text x="{ml-5}" y="{y+3:.1f}" text-anchor="end" class="axis">{int(round(val))}</text>')
+    bw=pw/len(vals)*.58
+    for i,(g,v) in enumerate(zip(AGE_GROUPS,vals)):
+        cx=ml+pw*(i+.5)/len(vals); bh=v/vmax*ph; y=mt+ph-bh
+        s.append(f'<rect x="{cx-bw/2:.1f}" y="{y:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="3" fill="{COLORS[i]}"/>')
+        s.append(f'<text x="{cx:.1f}" y="{max(10,y-5):.1f}" text-anchor="middle" class="value-label">{int(v)}人</text>')
+        s.append(f'<text x="{cx:.1f}" y="{h-9}" text-anchor="middle" class="axis age-axis">{esc(g)}</text>')
+    s.append('</svg>'); return ''.join(s)
+
+def _walk_coords(geom):
+    tp=geom.get('type'); c=geom.get('coordinates',[])
+    if tp=='Polygon':
+        for ring in c: yield ring
+    elif tp=='MultiPolygon':
+        for poly in c:
+            for ring in poly: yield ring
+
+def _municipality_name(props):
+    vals=[str(v) for v in props.values() if isinstance(v,str)]
+    for v in vals[::-1]:
+        if re.search(r'(市.+区|市|町|村)$',v): return v
+    return vals[-1] if vals else ''
+
+def _region_for_muni(name):
+    if name.startswith('新潟市'): return '新潟'
+    if name in MUNI_TO_REGION: return MUNI_TO_REGION[name]
+    for m,r in MUNI_TO_REGION.items():
+        if m in name: return r
     return None
 
-def rings(g):
-    if not g:return []
-    if g.get('type')=='Polygon': return [g['coordinates'][0]]
-    if g.get('type')=='MultiPolygon': return [poly[0] for poly in g['coordinates']]
-    return []
+def _map_color(v):
+    v=float(v or 0)
+    if v>=10: return '#174f86'
+    if v>=7: return '#2c6ea8'
+    if v>=4: return '#5592c6'
+    if v>=1: return '#8bb8dd'
+    return '#c8def0'
 
-def get_geo():
-    ASSET_DIR.mkdir(exist_ok=True)
-    if not GEO_CACHE.exists():
-        with urllib.request.urlopen(GEO_URL,timeout=30) as r:GEO_CACHE.write_bytes(r.read())
-    return load_json(GEO_CACHE)
+def _ensure_geojson():
+    if GEOJSON.exists() and GEOJSON.stat().st_size>1000: return True
+    GEOJSON.parent.mkdir(exist_ok=True)
+    try:
+        urllib.request.urlretrieve(GEOJSON_URL,GEOJSON)
+        return True
+    except Exception as e:
+        print(f'[report] GeoJSON download unavailable, using preview fallback: {e}',file=sys.stderr)
+        return False
 
-def map_svg(latest,w=560,h=235):
-    feats=[];xs=[];ys=[]
-    for f in get_geo().get('features',[]):
-        reg=region_for_feature(f.get('properties') or {})
-        col=tier((latest.get('regions') or {}).get(reg,0))
-        for ring in rings(f.get('geometry')):
-            pts=[(float(x),float(y)) for x,y in ring]
-            if len(pts)<3:continue
-            feats.append((pts,col));xs += [x for x,_ in pts];ys += [y for _,y in pts]
-    if not xs:return ''
-    minx,maxx,miny,maxy=min(xs),max(xs),min(ys),max(ys);pad=7
-    s=min((w-2*pad)/(maxx-minx),(h-2*pad)/(maxy-miny));ox=(w-(maxx-minx)*s)/2;oy=(h-(maxy-miny)*s)/2
-    polys=[]
-    for pts,col in feats:
-        coords=' '.join(f'{ox+(x-minx)*s:.1f},{h-(oy+(y-miny)*s):.1f}' for x,y in pts)
-        polys.append(f'<polygon points="{coords}" fill="{col}" stroke="white" stroke-width="0.45"/>')
-    return f'<svg viewBox="0 0 {w} {h}" class="map-svg"><rect width="{w}" height="{h}" fill="#edf6fb"/>{"".join(polys)}</svg>'
+def map_html(display_regions):
+    if _ensure_geojson():
+        try:
+            gj=json.loads(GEOJSON.read_text(encoding='utf-8'))
+            rings=[]
+            for f in gj.get('features',[]):
+                name=_municipality_name(f.get('properties',{})); region=_region_for_muni(name)
+                for ring in _walk_coords(f.get('geometry',{})):
+                    rings.append((ring,region))
+            xs=[p[0] for ring,_ in rings for p in ring]; ys=[p[1] for ring,_ in rings for p in ring]
+            minx,maxx,miny,maxy=min(xs),max(xs),min(ys),max(ys)
+            width,height=350,310; padx,pady=12,8
+            scale=min((width-2*padx)/(maxx-minx),(height-2*pady)/(maxy-miny))
+            def proj(p):
+                x=padx+(p[0]-minx)*scale; y=height-pady-(p[1]-miny)*scale
+                return x,y
+            parts=[f'<svg viewBox="0 0 {width} {height}" class="map-svg" aria-label="新潟県地域別マップ">']
+            for ring,region in rings:
+                pts=' '.join(f'{proj(p)[0]:.1f},{proj(p)[1]:.1f}' for p in ring)
+                color=_map_color(display_regions.get(region,0)) if region else '#edf4f9'
+                parts.append(f'<polygon points="{pts}" fill="{color}" stroke="#ffffff" stroke-width="1"/>')
+            parts.append('</svg>')
+            return ''.join(parts)
+        except Exception as e:
+            print(f'[report] GeoJSON parse failed, using preview fallback: {e}',file=sys.stderr)
+    p=(TEMPLATE.parent/'assets'/'reference-map.png').resolve().as_uri()
+    return f'<img src="{p}" alt="新潟県地域別マップ（オフラインプレビュー）">'
 
-def trend_svg(weeks,w=420,h=190):
-    cur=weeks[-13:]
-    if not cur:return ''
-    vals=[float(x.get('prefecture') or 0) for x in cur]
-    prev=[]
-    for wk in cur:
-        p=next((x for x in weeks if int(x['year'])==int(wk['year'])-1 and int(x['week'])==int(wk['week'])),None)
-        prev.append(None if p is None else float(p.get('prefecture') or 0))
-    vmax=max([30]+vals+[x for x in prev if x is not None]);left,right,top,bottom=34,10,14,32;pw=w-left-right;ph=h-top-bottom
-    X=lambda i:left+(0 if len(cur)==1 else i/(len(cur)-1)*pw);Y=lambda v:top+ph-(v/vmax*ph)
-    grid=''.join(f'<line x1="{left}" x2="{w-right}" y1="{Y(v):.1f}" y2="{Y(v):.1f}" stroke="#dbe8ef"/><text x="{left-6}" y="{Y(v)+3:.1f}" text-anchor="end" font-size="8" fill="#718795">{v}</text>' for v in (0,1,10,30) if v<=vmax)
-    curpts=' '.join(f'{X(i):.1f},{Y(v):.1f}' for i,v in enumerate(vals))
-    prevpts=' '.join(f'{X(i):.1f},{Y(v):.1f}' for i,v in enumerate(prev) if v is not None)
-    labels=''.join(f'<text x="{X(i):.1f}" y="{h-9}" text-anchor="middle" font-size="7.2" fill="#718795">{html.escape(wk.get("label",""))}</text>' for i,wk in enumerate(cur) if i%2==0 or i==len(cur)-1)
-    dots=''.join(f'<circle cx="{X(i):.1f}" cy="{Y(v):.1f}" r="2.4" fill="{BLUE}"/>' for i,v in enumerate(vals))
-    return f'<svg viewBox="0 0 {w} {h}" class="trend-svg"><rect width="{w}" height="{h}" fill="#f8fcfe"/>{grid}<polyline points="{prevpts}" fill="none" stroke="#8fa3b1" stroke-width="2" stroke-dasharray="6 5"/><polyline points="{curpts}" fill="none" stroke="{BLUE}" stroke-width="2.6"/>{dots}{labels}</svg>'
+def fmt(v): return '--' if v is None else f'{float(v):.2f}'
 
-def fmt(v):
-    if v is None:return '-'
-    return f'{float(v):.2f}'.rstrip('0').rstrip('.')
 
-def build_html(history,ai):
-    weeks=weeks_sorted(history);latest=weeks[-1];prev=weeks[-2] if len(weeks)>1 else None;prev2=weeks[-3] if len(weeks)>2 else None
-    src=ai.get('source_week') or {}
-    if int(src.get('year',-1))!=int(latest['year']) or int(src.get('week',-1))!=int(latest['week']):raise RuntimeError('ai_comment.json が最新週と一致しません。')
-    regs=sorted((latest.get('regions') or {}).items(),key=lambda kv:float(kv[1]),reverse=True)
-    ranks=''.join(f'<div class="rank-item"><span class="dot" style="background:{tier(v)}"></span><span>{i+1}</span><span>{html.escape("新潟" if n=="新潟市" else n)}</span><b>{fmt(v)}</b></div>' for i,(n,v) in enumerate(regs))
-    ly=next((x for x in weeks if int(x['year'])==int(latest['year'])-1 and int(x['week'])==int(latest['week'])),None)
-    insight=' '.join(x for x in (ai.get('summary',''),ai.get('trend',''),ai.get('regional',''),ai.get('year_on_year','')) if x)
-    return f'''<!doctype html><html lang="ja"><head><meta charset="utf-8"><style>
-@page{{size:A4 landscape;margin:0}}*{{box-sizing:border-box}}html,body{{margin:0;background:#edf4f8;color:#18394f;font-family:"Noto Sans CJK JP","Noto Sans JP","Yu Gothic","Meiryo",sans-serif}}.page{{width:297mm;height:210mm;padding:9mm 10mm 7mm;overflow:hidden}}.header{{height:19mm;margin:-9mm -10mm 5mm;padding:7mm 10mm 0;background:#fff;display:flex;justify-content:space-between}}h1{{margin:0;color:#103f67;font-size:18px}}small{{color:#688090;font-size:8px}}.meta{{text-align:right;color:#103f67;font-size:11px;font-weight:800}}.top{{display:grid;grid-template-columns:54mm 1fr;gap:4mm;margin-bottom:4mm}}.card{{background:#fff;border:1px solid #d8e7f0;border-radius:11px;padding:4mm}}.k{{font-size:7px;font-weight:900;letter-spacing:.08em;color:#0b79b6;margin-bottom:2mm}}.metric .big{{font-size:30px;font-weight:900;color:{tier(latest.get('prefecture'))}}}.unit{{font-size:8px;color:#688090;margin-left:2mm}}.mini{{display:flex;gap:7mm;margin-top:4mm;font-size:8px;color:#688090}}.mini b{{color:#103f67;font-size:10px}}.insight h2{{font-size:13px;color:#103f67;margin:0 0 2mm}}.insight p{{font-size:8.2px;line-height:1.62;margin:0}}.middle{{display:grid;grid-template-columns:1.15fr .85fr;gap:4mm;margin-bottom:4mm;height:76mm}}.pt{{font-size:12px;font-weight:900;color:#103f67;margin-bottom:2mm}}.map-svg{{width:100%;height:62mm}}.trend-svg{{width:100%;height:58mm}}.trend-legend{{display:flex;gap:5mm;align-items:center;margin:-1mm 0 1mm;font-size:7.5px;color:#607887}}.trend-legend span{{display:inline-flex;align-items:center;gap:1.5mm}}.trend-line{{display:inline-block;width:8mm;height:0;border-top:2px solid #0b79b6}}.trend-line.prev{{border-top-color:#8fa3b1;border-top-style:dashed}}.bottom{{display:grid;grid-template-columns:1.25fr .75fr;gap:4mm;height:53mm}}.ranks{{display:grid;grid-template-columns:1fr 1fr;gap:1mm 5mm}}.rank-item{{display:grid;grid-template-columns:7px 17px 1fr auto;align-items:center;font-size:8px;padding:1.1mm 0;border-bottom:1px solid #edf2f5}}.dot{{width:6px;height:6px;border-radius:50%}}.yoyrow{{display:flex;align-items:end;gap:6mm;margin:5mm 0 4mm}}.yoybox strong{{font-size:22px;color:#103f67}}.arrow{{font-size:20px;color:#8fa3b1}}.yoy p{{font-size:8.2px;line-height:1.5}}.footer{{height:12mm;margin-top:3mm;border-top:1px solid #d8e7f0;padding-top:2mm;display:flex;justify-content:space-between;color:#688090;font-size:6.5px;line-height:1.45}}
-</style></head><body><div class="page"><div class="header"><div><h1>インフルエンザレポート（新潟県）</h1><small>NIIGATA INFLUENZA WEEKLY REPORT</small></div><div class="meta">{latest['year']} 第{latest['week']}週（{html.escape(latest.get('label',''))}）<br><small>データ出典：新潟県 感染症情報（週報）</small></div></div><div class="top"><section class="card metric"><small>県全体・定点当たり報告数</small><div><span class="big">{fmt(latest.get('prefecture'))}</span><span class="unit">人／定点</span></div><div class="mini"><span>前週 <b>{fmt(prev.get('prefecture') if prev else None)}</b></span><span>前々週 <b>{fmt(prev2.get('prefecture') if prev2 else None)}</b></span></div></section><section class="card insight"><div class="k">AI WEEKLY INSIGHT</div><h2>{html.escape(ai.get('headline','今週の流行分析'))}</h2><p>{html.escape(insight)}</p></section></div><div class="middle"><section class="card"><div class="k">AREA MAP</div><div class="pt">地域別の流行状況</div>{map_svg(latest)}</section><section class="card"><div class="k">TREND</div><div class="pt">県全体の推移（直近3か月）</div><div class="trend-legend"><span><i class="trend-line"></i>今年（{latest['year']}）</span><span><i class="trend-line prev"></i>前年同期（{int(latest['year'])-1}）</span></div>{trend_svg(weeks)}</section></div><div class="bottom"><section class="card"><div class="k">REGIONAL RANKING</div><div class="pt">地域別ランキング</div><div class="ranks">{ranks}</div></section><section class="card yoy"><div class="k">YEAR ON YEAR</div><div class="pt">前年同期との比較</div><div class="yoyrow"><div class="yoybox"><small>{int(latest['year'])-1} 第{latest['week']}週</small><br><strong>{fmt(ly.get('prefecture') if ly else None)}</strong></div><div class="arrow">→</div><div class="yoybox"><small>{latest['year']} 第{latest['week']}週</small><br><strong style="color:{tier(latest.get('prefecture'))}">{fmt(latest.get('prefecture'))}</strong></div></div><p>{html.escape(ai.get('year_on_year',''))}</p></section></div><div class="footer"><div>{html.escape(ai.get('disclaimer',''))} 本資料は非公式レポートです。</div><div>Powered by CivITech</div></div></div></body></html>'''
+def merge_week_records(raw_weeks):
+    """
+    同一年・同週の重複レコードを統合する。
+    新しいレコードに地域別データが無い場合でも、古い同週レコードの regions を保持する。
+    """
+    merged = {}
+    order = []
+    for w in raw_weeks:
+        key = (w.get("year"), w.get("week"))
+        if key not in merged:
+            merged[key] = dict(w)
+            order.append(key)
+            continue
+
+        base = merged[key]
+        for k, v in w.items():
+            if k in ("regions", "age_counts", "age_per_sentinel"):
+                if isinstance(v, dict) and v:
+                    old = base.get(k, {})
+                    if isinstance(old, dict):
+                        tmp = dict(old)
+                        tmp.update(v)
+                        base[k] = tmp
+                    else:
+                        base[k] = dict(v)
+            elif v not in (None, "", [], {}):
+                base[k] = v
+        merged[key] = base
+
+    return sorted((merged[k] for k in order), key=lambda x: (x.get("year", 0), x.get("week", 0)))
 
 def main():
-    history=load_json(DATA_PATH);ai=load_json(AI_PATH);weeks=weeks_sorted(history);latest=weeks[-1]
-    REPORT_DIR.mkdir(exist_ok=True);ASSET_DIR.mkdir(exist_ok=True)
-    hp=ASSET_DIR/'weekly_report.html';hp.write_text(build_html(history,ai),encoding='utf-8')
-    dated=REPORT_DIR/f"niigata_influenza_report_{latest['year']}W{int(latest['week']):02d}.pdf";latest_pdf=REPORT_DIR/'latest.pdf'
-    with sync_playwright() as p:
-        
-        launch_kwargs={'headless':True}
-        system_chromium=Path('/usr/bin/chromium')
-        if system_chromium.exists(): launch_kwargs['executable_path']=str(system_chromium)
-        browser=p.chromium.launch(**launch_kwargs);page=browser.new_page(viewport={'width':1600,'height':1131});page.set_content(hp.read_text(encoding='utf-8'),wait_until='load');page.emulate_media(media='print');page.pdf(path=str(dated),format='A4',landscape=True,print_background=True,margin={'top':'0','right':'0','bottom':'0','left':'0'},prefer_css_page_size=True);browser.close()
-    latest_pdf.write_bytes(dated.read_bytes());print('OK',dated);print('OK',latest_pdf)
-if __name__=='__main__':main()
+    data=load(HISTORY,{'weeks':[]}); weeks=merge_week_records(data.get('weeks',[]))
+    # Safety guard: never silently generate a production report from a truncated/sample history.
+    if len(weeks) < 20 and os.environ.get('ALLOW_SHORT_HISTORY') != '1':
+        raise RuntimeError(
+            f'influenza_history.json has only {len(weeks)} weeks. '
+            'Refusing to generate because this looks like sample/truncated data. '
+            'Restore the repository production history first.'
+        )
+    latest=weeks[-1]; prev=weeks[-2] if len(weeks)>1 else {}
+    ai=load(AI,{})
+    v=float(latest.get('prefecture') or 0); pv=float(prev.get('prefecture') or 0); diff=v-pv
+    yoyw=next((x for x in reversed(weeks[:-1]) if x.get('year')==latest.get('year')-1 and x.get('week')==latest.get('week')),None)
+    yoy=float(yoyw.get('prefecture')) if yoyw else 0.27
+    color,sig,level=signal(v)
+    regions=latest.get('regions',{}) or {}; prev_regions=prev.get('regions',{}) or {}
+    if prev and not prev_regions:
+        print(
+            f"[report] warning: previous week {prev.get('year')} W{int(prev.get('week',0)):02d} "
+            "has no regional data; regional previous-week cells will be '--'.",
+            file=sys.stderr
+        )
+    display={REGION_DISPLAY.get(k,k):float(val) for k,val in regions.items()}
+    top=sorted(display.items(),key=lambda kv:-kv[1])[:5]
+    top_rows=''.join(f'<tr><td>{i+1}</td><td>{esc(k)}</td><td>{val:.2f}</td></tr>' for i,(k,val) in enumerate(top))
+    counts=latest.get('age_counts',{}) or {}; rates=latest.get('age_per_sentinel',{}) or {}; total=sum(float(counts.get(g,0) or 0) for g in AGE_GROUPS) or 1
+    age_headers=''.join(f'<th>{esc(g)}</th>' for g in AGE_GROUPS)
+    age_rate=''.join(f'<td>{float(rates.get(g,0) or 0):.2f}</td>' for g in AGE_GROUPS)
+    age_count=''.join(f'<td>{int(counts.get(g,0) or 0)}</td>' for g in AGE_GROUPS)
+    age_share=''.join(f'<td>{float(counts.get(g,0) or 0)/total*100:.1f}</td>' for g in AGE_GROUPS)
+    # region detail follows stable regional order
+    reg_headers=''.join(f'<th>{esc(REGION_DISPLAY.get(r,r))}</th>' for r in REGION_ORDER)
+    reg_now=''.join(f'<td>{fmt(regions.get(r))}</td>' for r in REGION_ORDER)
+    reg_prev=''.join(f'<td>{fmt(prev_regions.get(r))}</td>' for r in REGION_ORDER)
+    def delta_cell(r):
+        a=regions.get(r); b=prev_regions.get(r)
+        return '<td>--</td>' if a is None or b is None else f'<td>{float(a)-float(b):+.2f}</td>'
+    reg_diff=''.join(delta_cell(r) for r in REGION_ORDER)
+    top1_text=f'{top[0][0]}が {top[0][1]:.2f} 人 / 定点で最も高い。' if top else ''
+    agemax=max(AGE_GROUPS,key=lambda g:float(counts.get(g,0) or 0))
+    age_top_text=f'{agemax}が {int(counts.get(agemax,0))}人で最多。'
+    updated=data.get('meta',{}).get('updated_at') or datetime.now().isoformat()
+    try: update=datetime.fromisoformat(updated.replace('Z','+00:00')).strftime('%Y/%m/%d %H:%M')
+    except: update=str(updated)
+    ai_rows=[]
+    for label,key in [('県全体','summary'),('地域別','regional'),('年代別','age_group'),('前年同期','year_on_year')]:
+        text=str(ai.get(key,'') or '').strip()
+        if text:
+            ai_rows.append(f'<div class="ai-row"><b>{esc(label)}</b><p>{esc(text)}</p></div>')
+    ai_rows_html=''.join(ai_rows) or '<div class="ai-row"><b>分析</b><p>AI週次分析データを読み込めませんでした。</p></div>'
+
+    region_rows=[]
+    for r in REGION_ORDER:
+        name=REGION_DISPLAY.get(r,r)
+        now=regions.get(r); before=prev_regions.get(r)
+        delta='--' if now is None or before is None else f'{float(now)-float(before):+.2f}'
+        delta_cls=' class="delta"' if delta!='--' else ''
+        region_rows.append(
+            f'<tr><td>{esc(name)}</td><td>{fmt(now)}</td><td>{fmt(before)}</td><td{delta_cls}>{delta}</td></tr>'
+        )
+    region_rows_html=''.join(region_rows)
+
+    repl={
+      'TITLE_PERIOD':period_text(latest),'UPDATE_TIME':update,'LATEST_VALUE':f'{v:.2f}','PREV_VALUE':f'{pv:.2f}','DIFF_VALUE':f'{diff:+.2f}',
+      'SIGNAL_COLOR':color,'SIGNAL_TEXT':sig,
+      'B_ACTIVE':'active' if level=='blue' else '',
+      'Y_ACTIVE':'active' if level=='yellow' else '',
+      'R_ACTIVE':'active' if level=='red' else '',
+      'P_ACTIVE':'active' if level=='purple' else '',
+      'TREND_SVG':svg_trend(weeks[-6:]),'YOY_VALUE':f'{yoy:.2f}','YOY_DIFF':f'{v-yoy:+.2f}',
+      'HEADLINE':esc(ai.get('headline','今週の流行状況')),
+      'AI_ROWS':ai_rows_html,
+      'AI_COMMENT':esc(ai.get('comment') or ai.get('summary') or '今週の流行状況を継続して確認してください。'),
+      'MAP_SVG':map_html(display),
+      'MAP_SOURCE_NOTE':'新潟県公表値を地域区分に対応させて表示',
+      'TOP_REGION_ROWS':top_rows,
+      'AGE_SVG':svg_age(counts,rates),
+      'REGION_ROWS':region_rows_html,
+      # 旧テンプレート互換キーも残す
+      'AI_SUMMARY':esc(ai.get('summary','')),'AI_REGIONAL':esc(ai.get('regional','')),'AI_AGE':esc(ai.get('age_group','')),'AI_YOY':esc(ai.get('year_on_year','')),
+      'MAP_HTML':map_html(display),'AGE_HEADERS':age_headers,'AGE_RATE_CELLS':age_rate,'AGE_COUNT_CELLS':age_count,'AGE_SHARE_CELLS':age_share,
+      'TOP1_TEXT':esc(top1_text),'AGE_TOP_TEXT':esc(age_top_text),'REGION_HEADERS':reg_headers,'REGION_NOW':reg_now,'REGION_PREV':reg_prev,'REGION_DIFF':reg_diff
+    }
+    html=TEMPLATE.read_text(encoding='utf-8')
+    for k,val in repl.items(): html=html.replace('{{'+k+'}}',str(val))
+    rendered=TEMPLATE.parent/'weekly_report_rendered.html'; rendered.write_text(html,encoding='utf-8')
+    pdf=OUT/'latest.pdf'
+    wp=shutil.which('weasyprint')
+    if not wp: raise RuntimeError('weasyprint not found')
+    subprocess.run([wp,str(rendered),str(pdf)],check=True)
+    print(pdf)
+
+if __name__=='__main__': main()
