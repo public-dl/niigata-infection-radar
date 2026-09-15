@@ -1,0 +1,22 @@
+/* v77 — スマホではヒーロー上部の紹介コピーを非表示
+   最新週・最終更新・「人 / 定点」の説明は残す */
+@media (max-width:820px){
+  .hero-copy-block .hero-kicker,
+  .hero-copy-block h1,
+  .hero-copy-block .hero-subtitle,
+  .hero-copy-block .hero-description{
+    display:none !important;
+  }
+
+  .hero-meta-row{
+    margin-top:0 !important;
+  }
+
+  .hero-stage-inner{
+    padding-top:14px !important;
+  }
+
+  .hero-status-panel{
+    margin-top:12px !important;
+  }
+}
