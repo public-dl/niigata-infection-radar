@@ -1,101 +1,25 @@
-<!doctype html>
-<html lang="ja">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<link rel="stylesheet" href="./report.css">
-</head>
-<body>
-<main class="sheet">
-  <header class="report-head">
-    <div class="head-left">
-      <div class="title-rule"></div>
-      <div>
-        <h1>新潟県 インフルエンザ週次レポート</h1>
-        <div class="period">{{TITLE_PERIOD}}</div>
-      </div>
-    </div>
-    <div class="head-right"><span>最終更新</span><strong>{{UPDATE_TIME}}</strong></div>
-    <div class="ripple r1"></div><div class="ripple r2"></div>
-  </header>
-
-  <section class="top-grid">
-    <article class="card status-card">
-      <div class="card-title invert">県全体・定点当たり報告数 <small>（人 / 定点）</small></div>
-      <div class="status-number-row"><div class="big">{{LATEST_VALUE}}</div><div class="unit">人 / 定点</div></div>
-      <div class="status-kpis">
-        <div><span>前週</span><b>{{PREV_VALUE}}</b></div>
-        <div><span>前週から</span><b class="delta-up">{{DIFF_VALUE}}</b></div>
-      </div>
-      <div class="signal-row">
-        <div class="signal-chip" style="--signal:{{SIGNAL_COLOR}}">{{SIGNAL_TEXT}}</div>
-        <div class="signal-guide"><b>流行レベルの目安</b><div class="signal-dots"><i class="blue"></i><i class="yellow {{Y_ACTIVE}}"></i><i class="red {{R_ACTIVE}}"></i><i class="purple {{P_ACTIVE}}"></i></div><div class="signal-labels"><span>低</span><span>やや注意</span><span>注意</span><span>警戒</span></div></div>
-      </div>
-    </article>
-
-    <article class="card trend-card">
-      <div class="card-title">県全体の推移 <small>（定点当たり報告数）</small></div>
-      <div class="trend-inner">
-        <div class="trend-chart">{{TREND_SVG}}</div>
-        <div class="trend-compare">
-          <div><span>2026年第36週</span><b>{{LATEST_VALUE}}</b><small>人 / 定点</small></div>
-          <div><span>前年同期</span><b>{{YOY_VALUE}}</b><small>人 / 定点</small></div>
-          <div><span>前年差</span><b class="pink">{{YOY_DIFF}}</b><small>人 / 定点</small></div>
-        </div>
-      </div>
-    </article>
-
-    <article class="card ai-card">
-      <div class="card-title icon-title"><span class="icon-circle">AI</span>AI週次分析</div>
-      <ul class="ai-bullets">
-        <li>{{AI_SUMMARY}}</li>
-        <li>{{AI_REGIONAL}}</li>
-        <li>{{AI_AGE}}</li>
-        <li>{{AI_YOY}}</li>
-      </ul>
-    </article>
-  </section>
-
-  <section class="middle-grid">
-    <article class="card map-card">
-      <div class="card-title icon-title"><span class="icon-circle">●</span>地域別の状況 <small>（定点当たり報告数）</small></div>
-      <div class="map-layout">
-        <div class="map-zone">{{MAP_HTML}}</div>
-        <div class="map-side">
-          <div class="legend-title">定点当たり報告数</div>
-          <div class="blue-legend"><i class="b1"></i><span>1未満</span><i class="b2"></i><span>1-4未満</span><i class="b3"></i><span>4-7未満</span><i class="b4"></i><span>7-10未満</span><i class="b5"></i><span>10以上</span></div>
-          <table class="rank-table"><thead><tr><th>#</th><th>地域</th><th>人/定点</th></tr></thead><tbody>{{TOP_REGION_ROWS}}</tbody></table>
-        </div>
-      </div>
-    </article>
-
-    <article class="card age-card">
-      <div class="card-title icon-title"><span class="icon-circle">人</span>年代別の状況 <small>（人 / 定点・報告数）</small></div>
-      <div class="age-chart">{{AGE_SVG}}</div>
-      <table class="age-table"><thead><tr><th>年齢区分</th>{{AGE_HEADERS}}</tr></thead><tbody><tr><th>人 / 定点</th>{{AGE_RATE_CELLS}}</tr><tr><th>報告数（件）</th>{{AGE_COUNT_CELLS}}</tr><tr><th>構成比（%）</th>{{AGE_SHARE_CELLS}}</tr></tbody></table>
-    </article>
-
-    <aside class="right-stack">
-      <article class="card mini-card">
-        <div class="card-title icon-title"><span class="icon-circle">●</span>今週の注目ポイント</div>
-        <ul class="small-bullets"><li>県全体は前週から {{DIFF_VALUE}}。</li><li>{{TOP1_TEXT}}</li><li>{{AGE_TOP_TEXT}}</li><li>前年同期は {{YOY_VALUE}} 人 / 定点。</li></ul>
-      </article>
-      <article class="card mini-card">
-        <div class="card-title icon-title"><span class="icon-circle">□</span>シグナルの見方</div>
-        <div class="signal-reading"><p><i class="blue"></i><b>青</b> 1未満</p><p><i class="yellow"></i><b>黄</b> 1以上</p><p><i class="red"></i><b>赤</b> 10以上</p><p><i class="purple"></i><b>紫</b> 30以上</p></div>
-      </article>
-    </aside>
-  </section>
-
-  <section class="bottom-grid">
-    <article class="card region-detail-card">
-      <div class="card-title icon-title"><span class="icon-circle">▦</span>地域別詳細 <small>（人 / 定点）</small></div>
-      <table class="region-wide"><thead><tr><th>地域</th>{{REGION_HEADERS}}</tr></thead><tbody><tr><th>今週</th>{{REGION_NOW}}</tr><tr><th>前週</th>{{REGION_PREV}}</tr><tr><th>前週からの増減</th>{{REGION_DIFF}}</tr></tbody></table>
-    </article>
-    <article class="card terms-card"><div class="card-title icon-title"><span class="icon-circle">i</span>用語の説明</div><p><b>定点当たり報告数</b>：県内の定点医療機関から1週間に報告された患者数の平均値です。</p><p><b>流行期入りの目安</b>：定点当たり1.00 人 / 定点を基準に表示しています。</p></article>
-  </section>
-
-  <footer><span>出典：新潟県「感染症情報（週報）」</span><span>※ シグナルは定点当たり報告数を基準とした表示で、実際の注意報・警報の発令を示すものではありません。</span></footer>
-</main>
-</body>
-</html>
+@page{size:A4 landscape;margin:0}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff;color:#0b3764;font-family:"Noto Sans CJK JP","Yu Gothic","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+.sheet{position:relative;width:297mm;height:210mm;padding:4.6mm 5.5mm 3.6mm;background:radial-gradient(circle at 78% 5%,rgba(66,153,225,.08),transparent 22%),linear-gradient(180deg,#fcfeff,#f7fbfe 82%,#fbfdff);overflow:hidden}
+.report-head{height:16mm;display:flex;align-items:center;justify-content:space-between;position:relative;border-bottom:1px solid #d8e8f5;margin-bottom:1.8mm;overflow:hidden}
+.title-wrap{display:flex;align-items:center;gap:3mm;z-index:2}.title-rule{width:2mm;height:12mm;background:linear-gradient(#0d4e84,#79b5df)}
+h1{font-size:12.5pt;line-height:1;margin:0 0 1.5mm;font-weight:800;letter-spacing:.01em}.period{font-size:8.8pt;font-weight:700;letter-spacing:.03em;color:#2e608e}
+.head-meta{z-index:2;text-align:right;display:flex;align-items:flex-end;gap:5mm}.head-meta span{font-size:5.8pt;letter-spacing:.18em;color:#6d9bc1}.head-meta strong{font-size:6.8pt}
+.ripple{position:absolute;border-radius:50%;border:1px solid rgba(59,137,198,.14)}.r1{width:31mm;height:31mm;right:28mm;top:-17mm;box-shadow:0 0 0 3mm rgba(59,137,198,.035),0 0 0 6mm rgba(59,137,198,.025),0 0 0 9mm rgba(59,137,198,.02)}.r2{width:17mm;height:17mm;left:125mm;bottom:-12mm;box-shadow:0 0 0 3mm rgba(59,137,198,.025),0 0 0 6mm rgba(59,137,198,.015)}
+.grid{display:grid;gap:2.2mm}.top-grid{grid-template-columns:1.05fr 1.18fr .82fr;height:57mm}.middle-grid{grid-template-columns:.94fr 1.56fr;height:72mm;margin-top:1.7mm}.bottom-grid{grid-template-columns:1.78fr .72fr;height:38mm;margin-top:1.7mm}
+.card{background:rgba(255,255,255,.94);border:1px solid #cfe2f1;border-radius:2.7mm;padding:2.6mm 3mm;overflow:hidden;box-shadow:0 .4mm 1.5mm rgba(34,86,128,.035)}
+.card-title{font-size:8.4pt;font-weight:800;line-height:1.2;margin-bottom:1.6mm;color:#0b3c6d;display:flex;justify-content:space-between;align-items:baseline}.card-title small{font-size:5.7pt;font-weight:600;color:#5c86aa}.card-title.invert{color:white}.card-title.invert small{color:rgba(255,255,255,.78)}
+.status-card{background:linear-gradient(135deg,#0b477c,#0d5c9a 55%,#176ba6);color:white;border-color:#1b6aa5;position:relative}.status-card:after{content:"";position:absolute;right:-12mm;bottom:-14mm;width:45mm;height:45mm;border-radius:50%;border:1px solid rgba(255,255,255,.09);box-shadow:0 0 0 5mm rgba(255,255,255,.025),0 0 0 10mm rgba(255,255,255,.018)}
+.status-main{height:22mm;display:flex;align-items:flex-end;gap:2mm;position:relative;z-index:1}.big{font-size:40pt;font-weight:800;line-height:.9;letter-spacing:-.05em}.unit{font-size:8.5pt;font-weight:700;padding-bottom:2.4mm}
+.status-sub{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5mm;margin-top:1.5mm;position:relative;z-index:1}.status-sub>div{border:1px solid rgba(255,255,255,.24);background:rgba(255,255,255,.08);border-radius:1.5mm;padding:1.2mm 1.8mm}.status-sub span{display:block;font-size:5.5pt;opacity:.8}.status-sub b{display:block;font-size:11pt;margin-top:.2mm}.status-sub .up,.trend-stats .up{color:#ff5b6d}
+.signal-chip{position:relative;z-index:1;background:var(--signal);color:#243344;font-size:7.4pt;font-weight:800;border-radius:1.5mm;padding:1.45mm 1.8mm;text-align:center;margin-top:1.6mm;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08)}
+.signal-legend{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,1fr);gap:.8mm;margin-top:1.2mm;background:rgba(255,255,255,.96);border-radius:1.5mm;padding:1.1mm 1.4mm;color:#315b7e;font-size:4.45pt;font-weight:700}.signal-legend span{display:flex;align-items:center;justify-content:center;gap:.65mm;white-space:nowrap}.signal-legend i{width:4mm;height:2.5mm;border-radius:2mm;display:inline-block}.signal-legend .blue{background:#0b79b6}.signal-legend .yellow{background:#f2c94c}.signal-legend .red{background:#ef6a5b}.signal-legend .purple{background:#7b4bb7}
+.trend-layout{display:grid;grid-template-columns:1fr 29mm;gap:2mm;height:44mm}.trend-layout .chart-box{height:44mm}.trend-stats{display:grid;grid-template-rows:repeat(3,1fr);gap:1.2mm}.trend-stats>div{background:#f0f7fc;border:1px solid #d6e8f5;border-radius:1.6mm;padding:1.3mm 1.5mm;display:flex;flex-wrap:wrap;align-content:center}.trend-stats span{width:100%;font-size:5.2pt;color:#5d83a4;font-weight:700}.trend-stats b{font-size:12pt;color:#0d4f86;line-height:1}.trend-stats small{font-size:4.4pt;margin-left:.8mm;align-self:flex-end;color:#52799d}
+.chart-box{height:44mm}.svg-chart{width:100%;height:100%;overflow:visible}.axis{font-size:8px;fill:#52799d}.age-axis{font-size:4.6px}.value-label{font-size:9px;font-weight:800;fill:#0c3e6e}.rate-label{font-size:8px;font-weight:700;fill:#2e689b}.micro-note{font-size:4.5pt;color:#7596b2;margin-top:.2mm}
+.ai-card{padding:2.5mm}.ai-headline{font-size:6.3pt;font-weight:800;color:#1b5f96;background:#eef7fc;border-radius:1.4mm;padding:1.25mm 1.6mm;margin-bottom:1.15mm}.ai-list{display:grid;gap:.75mm}.ai-row{display:grid;grid-template-columns:13mm 1fr;border-top:1px solid #e3eef6;padding-top:.7mm}.ai-row:first-child{border-top:0}.ai-row b{font-size:5.55pt;color:#2371ab}.ai-row p{font-size:4.85pt;line-height:1.38;margin:0;color:#315a7d}
+.map-layout{display:grid;grid-template-columns:1fr 39mm;gap:2mm;height:57.5mm}.map-wrap{display:flex;align-items:center;justify-content:center;background:linear-gradient(#f7fbfe,#edf6fc);border-radius:1.5mm}.map-wrap img{max-width:100%;max-height:100%;object-fit:contain}.map-svg{width:100%;height:100%}.blue-legend{display:grid;grid-template-columns:4mm 1fr;gap:.7mm 1mm;align-items:center;font-size:4.7pt;margin-bottom:1.2mm}.blue-legend i{height:3.2mm;border-radius:.6mm}.b1{background:#c8def0}.b2{background:#8bb8dd}.b3{background:#5592c6}.b4{background:#2c6ea8}.b5{background:#174f86}.rank-title{font-size:5.2pt;font-weight:800;color:#1d5e92;margin:.7mm 0}.rank{width:100%;border-collapse:collapse}.rank th,.rank td{font-size:4.55pt;border-bottom:1px solid #e0edf6;padding:.58mm .7mm;text-align:right}.rank th:nth-child(2),.rank td:nth-child(2){text-align:left}.rank thead th{color:#668eae}
+.age-box{height:48mm}.age-table{width:100%;border-collapse:collapse;table-layout:fixed;margin-top:.8mm}.age-table th,.age-table td{font-size:4.2pt;border:1px solid #dceaf4;padding:.42mm .45mm;text-align:center;white-space:nowrap}.age-table thead th{background:#eef6fb;color:#3b6d96;font-weight:700}.age-table th:first-child{width:17mm;text-align:left;padding-left:1mm}.age-table tbody th{background:#f8fbfd;color:#315b7e;font-weight:700}
+.region-table-card{padding:2.4mm 3mm}.region-wide-table{width:100%;border-collapse:collapse;table-layout:fixed}.region-wide-table th,.region-wide-table td{font-size:4.05pt;border:1px solid #dceaf4;padding:.43mm .35mm;text-align:center;white-space:nowrap}.region-wide-table th:first-child{width:13mm;text-align:left;padding-left:1mm}.region-wide-table thead th{background:#eef6fb;color:#3b6d96}.region-wide-table tbody th{background:#f8fbfd;color:#315b7e}.region-wide-table .delta-row td{color:#cc4260;font-weight:700}
+.comment-card p{font-size:5.05pt;line-height:1.55;margin:0;color:#315b7e}
+footer{position:absolute;left:5.5mm;right:5.5mm;bottom:1.4mm;height:4.2mm;border-top:1px solid #d5e6f3;display:flex;align-items:center;justify-content:space-between;font-size:4.0pt;color:#587b98;gap:5mm;background:rgba(250,253,255,.96)}footer span:first-child{white-space:nowrap}footer span:last-child{text-align:right}
