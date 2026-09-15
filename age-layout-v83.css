@@ -1,0 +1,33 @@
+/* v83 — 年代別セクション
+   「最新週の年代別比較」と「年代別の時系列推移」を上下二段にする */
+.age-section .age-grid{
+  grid-template-columns:minmax(0,1fr) !important;
+  gap:18px !important;
+}
+
+.age-section .age-latest-card,
+.age-section .age-series-card{
+  width:100% !important;
+  min-width:0 !important;
+}
+
+.age-section .age-latest-card{
+  grid-column:1 / -1 !important;
+  grid-row:1 !important;
+}
+
+.age-section .age-series-card{
+  grid-column:1 / -1 !important;
+  grid-row:2 !important;
+}
+
+/* 横幅が広がるため、グラフも少し高さを確保 */
+@media (min-width:821px){
+  .age-section .age-latest-chart-wrap{
+    min-height:360px !important;
+  }
+
+  .age-section .age-series-card .age-chart-wrap{
+    min-height:390px !important;
+  }
+}
