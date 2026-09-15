@@ -161,8 +161,40 @@ def map_html(display_regions):
 
 def fmt(v): return '--' if v is None else f'{float(v):.2f}'
 
+
+def merge_week_records(raw_weeks):
+    """
+    同一年・同週の重複レコードを統合する。
+    新しいレコードに地域別データが無い場合でも、古い同週レコードの regions を保持する。
+    """
+    merged = {}
+    order = []
+    for w in raw_weeks:
+        key = (w.get("year"), w.get("week"))
+        if key not in merged:
+            merged[key] = dict(w)
+            order.append(key)
+            continue
+
+        base = merged[key]
+        for k, v in w.items():
+            if k in ("regions", "age_counts", "age_per_sentinel"):
+                if isinstance(v, dict) and v:
+                    old = base.get(k, {})
+                    if isinstance(old, dict):
+                        tmp = dict(old)
+                        tmp.update(v)
+                        base[k] = tmp
+                    else:
+                        base[k] = dict(v)
+            elif v not in (None, "", [], {}):
+                base[k] = v
+        merged[key] = base
+
+    return sorted((merged[k] for k in order), key=lambda x: (x.get("year", 0), x.get("week", 0)))
+
 def main():
-    data=load(HISTORY,{'weeks':[]}); weeks=sorted(data['weeks'],key=lambda x:(x.get('year',0),x.get('week',0)))
+    data=load(HISTORY,{'weeks':[]}); weeks=merge_week_records(data.get('weeks',[]))
     # Safety guard: never silently generate a production report from a truncated/sample history.
     if len(weeks) < 20 and os.environ.get('ALLOW_SHORT_HISTORY') != '1':
         raise RuntimeError(
@@ -177,6 +209,12 @@ def main():
     yoy=float(yoyw.get('prefecture')) if yoyw else 0.27
     color,sig,level=signal(v)
     regions=latest.get('regions',{}) or {}; prev_regions=prev.get('regions',{}) or {}
+    if prev and not prev_regions:
+        print(
+            f"[report] warning: previous week {prev.get('year')} W{int(prev.get('week',0)):02d} "
+            "has no regional data; regional previous-week cells will be '--'.",
+            file=sys.stderr
+        )
     display={REGION_DISPLAY.get(k,k):float(val) for k,val in regions.items()}
     top=sorted(display.items(),key=lambda kv:-kv[1])[:5]
     top_rows=''.join(f'<tr><td>{i+1}</td><td>{esc(k)}</td><td>{val:.2f}</td></tr>' for i,(k,val) in enumerate(top))
