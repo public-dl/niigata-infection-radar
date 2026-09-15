@@ -1,0 +1,13 @@
+/* v81
+   - 「前々週」を削除した2列表示を維持
+   - シグナルのアクティブ点は点滅を維持
+   - 「流行期入りの目安 以上」などのレベルバッジ自体は点滅させない
+*/
+
+.hero-status-panel .mini-grid{
+  grid-template-columns:repeat(2,minmax(0,1fr)) !important;
+}
+
+.hero-status-panel .level-badge{
+  animation:none !important;
+}

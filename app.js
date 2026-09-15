@@ -18,7 +18,7 @@ const REGION_MUNICIPALITIES={
 "佐渡":["佐渡市"]
 };
 const DISPLAY_REGION={"新潟市":"新潟"};
-let allWeeks=[],trendChart=null,latestWeek=null,geoDataPromise=null,mapInstance=null,mapGeoLayer=null,currentMapWeek=null,mapPlayTimer=null,mapRangeStartIndex=0,mapRangeWeeks=52;
+let allWeeks=[],trendChart=null,latestWeek=null,geoDataPromise=null,mapInstance=null,mapGeoLayer=null,currentMapWeek=null,mapPlayTimer=null,mapRangeStartIndex=0,mapRangeWeeks=13;
 let ageLatestChart=null,ageSeriesChart=null,ageHeatmapTimer=null,ageHeatmapRange=13,ageHeatmapEndIndex=0,ageSeriesWeeks=13;
 const AGE_GROUPS=["0歳","1～4歳","5～9歳","10～14歳","15～19歳","20～59歳","60歳以上"];
 const AGE_COLORS={
@@ -335,7 +335,7 @@ async function main(){
  const updatedEl=document.querySelector("#data-updated-at"); if(updatedEl)updatedEl.textContent=formatUpdatedAt(data.meta?.updated_at);
  latestWeek=allWeeks.at(-1); const prev=allWeeks.at(-2),prev2=allWeeks.at(-3);
  document.querySelector("#latest-period").textContent=formatPeriodWestern(latestWeek.label,latestWeek.year); document.querySelector("#map-period").textContent=latestWeek.label;
- document.querySelector("#latest-value").textContent=n(latestWeek.prefecture); document.querySelector("#prev-value").textContent=n(prev?.prefecture); document.querySelector("#prev2-value").textContent=n(prev2?.prefecture);
+ document.querySelector("#latest-value").textContent=n(latestWeek.prefecture); document.querySelector("#prev-value").textContent=n(prev?.prefecture);
  const sentinelValue=n(latestWeek.prefecture);
  const sentinelCurrent=document.querySelector("#sentinel-current-value");
  const sentinelInline=document.querySelector("#sentinel-current-value-inline");
@@ -856,7 +856,7 @@ function wireMapTimeline(){
  const rangeButtons=[...document.querySelectorAll(".map-range-button")];
  if(!slider||!play||!prev||!next||!latest||!allWeeks.length) return;
 
- applyMapRange(52);
+ applyMapRange(13);
 
  slider.addEventListener("input",()=>setMapWeekIndex(Number(slider.value)));
 

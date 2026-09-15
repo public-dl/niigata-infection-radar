@@ -40,6 +40,7 @@
   <link rel="stylesheet" href="./hero-v69.css?v=69" />
   <link rel="stylesheet" href="./sentinel-v75.css?v=75" />
   <link rel="stylesheet" href="./mobile-v77.css?v=77" />
+  <link rel="stylesheet" href="./status-v81.css?v=81" />
 </head>
 <body>
 <header class="hero hero-photo hero-sample">
@@ -119,7 +120,6 @@
           </div>
           <div class="mini-grid">
             <div><span>前週</span><strong id="prev-value">--</strong></div>
-            <div><span>前々週</span><strong id="prev2-value">--</strong></div>
             <div><span>前週から</span><strong id="wow-value">--</strong></div>
           </div>
           <div class="signal-guide" aria-label="流行水準の凡例">
@@ -195,9 +195,9 @@
       </div>
       <div class="map-timeline-tools">
         <div class="map-range-buttons" role="group" aria-label="地図の表示期間">
-          <button class="map-range-button" type="button" data-map-range="13">3か月</button>
+          <button class="map-range-button is-active" type="button" data-map-range="13">3か月</button>
           <button class="map-range-button" type="button" data-map-range="26">半年</button>
-          <button class="map-range-button is-active" type="button" data-map-range="52">1年</button>
+          <button class="map-range-button" type="button" data-map-range="52">1年</button>
           <button class="map-range-button" type="button" data-map-range="all">すべて</button>
         </div>
         <div class="map-timeline-controls">
@@ -377,6 +377,6 @@
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="./app.js?v=78"></script>
+<script src="./app.js?v=80"></script>
 </body>
 </html>
