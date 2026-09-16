@@ -39,3 +39,10 @@ h1{margin:0;font-size:17.2pt;line-height:1.02;font-weight:850;color:#0b4c9c;whit
 .region-table-card{padding:2.0mm 2.2mm}.region-table-card .card-title{margin-bottom:1mm}.region-wide-table{width:100%;border-collapse:collapse;table-layout:fixed}.region-wide-table th,.region-wide-table td{border:.25mm solid #d6e6f3;text-align:center;padding:1.05mm .25mm;font-size:9pt;line-height:1.03;white-space:nowrap}.region-wide-table thead th{background:#edf6fb;font-weight:850}.region-wide-table tbody th{background:#f8fbfd;text-align:left;padding-left:1mm;font-weight:800;width:26mm}.region-wide-table .delta-row td{color:#ef4456;font-weight:800}.region-wide-table td.prefecture{background:#eaf5ff;font-weight:850;color:#0d4ea7}
 
 footer{position:absolute;left:5mm;right:5mm;top:196.2mm;height:10.3mm;border-top:.3mm solid #d7e8f5;padding-top:1.4mm;font-size:9pt;line-height:1.35;color:#54779d}
+
+
+/* Map vertical position adjustment */
+.map-wrap img,
+.map-svg{
+  transform:translateY(-3mm);
+}
