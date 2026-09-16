@@ -12,18 +12,44 @@ permissions:
 jobs:
   update:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - run: pip install -r requirements.txt
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install --upgrade openai
+
       - name: Update latest weekly data
         run: python scripts/update.py
+
+      - name: Generate AI weekly insight after data update
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-5.6-luna
+        run: python scripts/generate_ai_comment.py
+
       - name: Commit when changed
         run: |
           git config user.name "niigata-infection-radar-bot"
           git config user.email "actions@users.noreply.github.com"
-          git add data/influenza_history.json
-          git diff --cached --quiet || git commit -m "Update influenza weekly data"
+
+          git add data/influenza_history.json data/ai_comment.json
+
+          if git diff --cached --quiet; then
+            echo "No data or AI comment changes."
+            exit 0
+          fi
+
+          git commit -m "Update influenza weekly data and AI insight"
           git push
