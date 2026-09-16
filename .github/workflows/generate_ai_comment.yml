@@ -1,17 +1,8 @@
 name: Generate AI weekly insight
 
 on:
+  # Keep manual execution available for recovery/testing.
   workflow_dispatch:
-    inputs:
-      force:
-        description: "同じ週でもAIコメントを再生成する"
-        required: false
-        default: false
-        type: boolean
-  schedule:
-    # 毎日 10:00 UTC = 日本時間 19:00
-    # 最新週が変わっていなければAPIは呼ばずに終了します。
-    - cron: "0 10 * * *"
 
 permissions:
   contents: write
@@ -19,6 +10,7 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -37,10 +29,7 @@ jobs:
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-5.6-luna
-          FORCE_AI_COMMENT: ${{ github.event_name == 'workflow_dispatch' && inputs.force && 'true' || 'false' }}
-        run: |
-          echo "FORCE_AI_COMMENT=$FORCE_AI_COMMENT"
-          python scripts/generate_ai_comment.py
+        run: python scripts/generate_ai_comment.py
 
       - name: Commit generated comment
         run: |
