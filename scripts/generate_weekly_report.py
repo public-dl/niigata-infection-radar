@@ -173,6 +173,14 @@ def map_html(display_regions):
 
 def fmt(v): return '--' if v is None else f'{float(v):.2f}'
 
+def delta_class(value):
+    value=float(value)
+    if value > 0:
+        return 'delta-plus'
+    if value < 0:
+        return 'delta-minus'
+    return 'delta-zero'
+
 
 def merge_week_records(raw_weeks):
     """
@@ -241,8 +249,11 @@ def main():
     reg_prev=f'<td class="prefecture">{pv:.2f}</td>'+''.join(f'<td>{fmt(prev_regions.get(r))}</td>' for r in REGION_ORDER)
     def delta_cell(r):
         a=regions.get(r); b=prev_regions.get(r)
-        return '<td>--</td>' if a is None or b is None else f'<td>{float(a)-float(b):+.2f}</td>'
-    reg_diff=f'<td class="prefecture">{diff:+.2f}</td>'+''.join(delta_cell(r) for r in REGION_ORDER)
+        if a is None or b is None:
+            return '<td>--</td>'
+        d=float(a)-float(b)
+        return f'<td class="{delta_class(d)}">{d:+.2f}</td>'
+    reg_diff=f'<td class="prefecture {delta_class(diff)}">{diff:+.2f}</td>'+''.join(delta_cell(r) for r in REGION_ORDER)
     top1_text=f'{top[0][0]}が {top[0][1]:.2f} 人 / 定点で最も高い。' if top else ''
     agemax=max(AGE_GROUPS,key=lambda g:float(counts.get(g,0) or 0))
     age_top_text=f'{agemax}が {int(counts.get(agemax,0))}人で最多。'
@@ -271,15 +282,20 @@ def main():
     for r in REGION_ORDER:
         name=REGION_DISPLAY.get(r,r)
         now=regions.get(r); before=prev_regions.get(r)
-        delta='--' if now is None or before is None else f'{float(now)-float(before):+.2f}'
-        delta_cls=' class="delta"' if delta!='--' else ''
+        if now is None or before is None:
+            delta='--'
+            delta_cls=''
+        else:
+            delta_value=float(now)-float(before)
+            delta=f'{delta_value:+.2f}'
+            delta_cls=f' class="{delta_class(delta_value)}"'
         region_rows.append(
             f'<tr><td>{esc(name)}</td><td>{fmt(now)}</td><td>{fmt(before)}</td><td{delta_cls}>{delta}</td></tr>'
         )
     region_rows_html=''.join(region_rows)
 
     repl={
-      'TITLE_PERIOD':period_text(latest),'UPDATE_TIME':update,'LATEST_VALUE':f'{v:.2f}','PREV_VALUE':f'{pv:.2f}','DIFF_VALUE':f'{diff:+.2f}',
+      'TITLE_PERIOD':period_text(latest),'UPDATE_TIME':update,'LATEST_VALUE':f'{v:.2f}','PREV_VALUE':f'{pv:.2f}','DIFF_VALUE':f'{diff:+.2f}','DIFF_CLASS':delta_class(diff),
       'SIGNAL_COLOR':color,'SIGNAL_TEXT':sig,
       'B_ACTIVE':'active' if level=='blue' else '',
       'Y_ACTIVE':'active' if level=='yellow' else '',
