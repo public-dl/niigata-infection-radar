@@ -13,7 +13,8 @@ OUT=ROOT/'reports'
 OUT.mkdir(exist_ok=True)
 AGE_GROUPS=['0歳','1～4歳','5～9歳','10～14歳','15～19歳','20～59歳','60歳以上']
 REGION_DISPLAY={'新潟市':'新潟'}
-REGION_ORDER=['新潟市','新発田','村上','長岡','柏崎','上越','糸魚川','南魚沼','十日町','佐渡','新津','三条','魚沼']
+REGION_ORDER=['新潟市','新発田','新津','三条','長岡','魚沼','南魚沼','十日町','柏崎','糸魚川','村上','佐渡','上越']
+REGION_DETAIL_LABELS={'新潟市':'新潟市','新発田':'新発田','新津':'新津※','三条':'三条','長岡':'長岡','魚沼':'魚沼','南魚沼':'南魚沼','十日町':'十日町','柏崎':'柏崎','糸魚川':'糸魚川','村上':'村上','佐渡':'佐渡','上越':'上越'}
 GEOJSON=ROOT/'data'/'niigata_municipality.geojson'
 GEOJSON_URL='https://raw.githubusercontent.com/smartnews-smri/japan-topography/refs/heads/main/data/municipality/geojson/s0010/N03-21_15_210101.json'
 REGION_MUNICIPALITIES={
@@ -54,43 +55,54 @@ def period_text(w):
     tail=m.group(1) if m else label
     return f"{w.get('year')}年第{int(w.get('week')):02d}週（{tail}）"
 
-def svg_trend(weeks,w=430,h=170):
+def _week_date_label(w):
+    label=str(w.get('label',''))
+    m=re.search(r'R\d+/(.+)', label)
+    return m.group(1) if m else ''
+
+def svg_trend(weeks,w=720,h=292):
     vals=[float(x.get('prefecture') or 0) for x in weeks]
     vmax=max(7.0,max(vals)*1.12)
-    ml,mr,mt,mb=58,8,14,34
+    ml,mr,mt,mb=58,18,18,66
     pw,ph=w-ml-mr,h-mt-mb
     pts=[]
     for i,v in enumerate(vals):
-        x=ml+10+(pw-20)*(i/(max(1,len(vals)-1))); y=mt+ph-(v/vmax)*ph; pts.append((x,y,v))
-    s=[f'<svg viewBox="0 0 {w} {h}" class="svg-chart">']
+        x=ml+18+(pw-36)*(i/(max(1,len(vals)-1))); y=mt+ph-(v/vmax)*ph; pts.append((x,y,v))
+    ss=[f'<svg viewBox="0 0 {w} {h}" class="svg-chart">']
     for t in range(5):
         y=mt+ph*t/4; val=vmax*(1-t/4)
-        s.append(f'<line x1="{ml}" x2="{w-mr}" y1="{y:.1f}" y2="{y:.1f}" stroke="#dce8f2"/>')
-        s.append(f'<text x="{ml-5}" y="{y+3:.1f}" text-anchor="end" class="axis">{val:.1f}</text>')
+        ss.append(f'<line x1="{ml}" x2="{w-mr}" y1="{y:.1f}" y2="{y:.1f}" stroke="#dce8f2"/>')
+        ss.append(f'<text x="{ml-10}" y="{y+4:.1f}" text-anchor="end" font-size="9pt" fill="#52799d">{val:.1f}</text>')
     d=' '.join((('M' if i==0 else 'L')+f' {x:.1f} {y:.1f}') for i,(x,y,v) in enumerate(pts))
-    s.append(f'<path d="{d}" fill="none" stroke="#0f5fa8" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>')
+    ss.append(f'<path d="{d}" fill="none" stroke="#1780ef" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>')
     for i,(x,y,v) in enumerate(pts):
-        s.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="4.3" fill="#1976c9" stroke="white" stroke-width="1.6"/>')
-        s.append(f'<text x="{x:.1f}" y="{max(12,y-8):.1f}" text-anchor="middle" class="value-label">{v:.2f}</text>')
-        s.append(f'<text x="{x:.1f}" y="{h-9}" text-anchor="middle" class="axis">第{weeks[i].get("week")}週</text>')
-    s.append('</svg>'); return ''.join(s)
+        ss.append(f'<circle cx="{x:.1f}" cy="{y:.1f}" r="5" fill="#1780ef" stroke="white" stroke-width="2"/>')
+        ss.append(f'<text x="{x:.1f}" y="{max(15,y-11):.1f}" text-anchor="middle" font-size="10pt" font-weight="800" fill="#0c3e6e">{v:.2f}</text>')
+        ss.append(f'<text x="{x:.1f}" y="{h-33}" text-anchor="middle" font-size="9pt" font-weight="700" fill="#52799d">第{weeks[i].get("week")}週</text>')
+        dl=_week_date_label(weeks[i])
+        if dl:
+            ss.append(f'<text x="{x:.1f}" y="{h-11}" text-anchor="middle" font-size="9pt" fill="#52799d">{esc(dl)}</text>')
+    ss.append('</svg>'); return ''.join(ss)
 
-def svg_age(counts,rates,w=520,h=195):
+def svg_age(counts,rates,w=500,h=225):
     vals=[float(counts.get(g,0) or 0) for g in AGE_GROUPS]
-    vmax=max(150,max(vals)*1.15)
-    ml,mr,mt,mb=42,8,17,38; pw,ph=w-ml-mr,h-mt-mb
-    s=[f'<svg viewBox="0 0 {w} {h}" class="svg-chart">']
+    vmax=max(150,max(vals)*1.12)
+    ml,mr,mt,mb=82,36,8,23
+    pw,ph=w-ml-mr,h-mt-mb
+    row_h=ph/len(vals); bar_h=row_h*.58
+    ss=[f'<svg viewBox="0 0 {w} {h}" class="svg-chart">']
     for t in range(4):
-        y=mt+ph*t/3; val=vmax*(1-t/3)
-        s.append(f'<line x1="{ml}" x2="{w-mr}" y1="{y:.1f}" y2="{y:.1f}" stroke="#dce8f2"/>')
-        s.append(f'<text x="{ml-5}" y="{y+3:.1f}" text-anchor="end" class="axis">{int(round(val))}</text>')
-    bw=pw/len(vals)*.58
+        val=vmax*t/3; x=ml+pw*t/3
+        ss.append(f'<line x1="{x:.1f}" x2="{x:.1f}" y1="{mt}" y2="{h-mb}" stroke="#dce8f2"/>')
+        ss.append(f'<text x="{x:.1f}" y="{h-5}" text-anchor="middle" font-size="9pt" fill="#52799d">{int(round(val))}</text>')
     for i,(g,v) in enumerate(zip(AGE_GROUPS,vals)):
-        cx=ml+pw*(i+.5)/len(vals); bh=v/vmax*ph; y=mt+ph-bh
-        s.append(f'<rect x="{cx-bw/2:.1f}" y="{y:.1f}" width="{bw:.1f}" height="{bh:.1f}" rx="3" fill="{COLORS[i]}"/>')
-        s.append(f'<text x="{cx:.1f}" y="{max(10,y-5):.1f}" text-anchor="middle" class="value-label">{int(v)}人</text>')
-        s.append(f'<text x="{cx:.1f}" y="{h-9}" text-anchor="middle" font-size="10.5pt" font-weight="600" fill="#52799d">{esc(g)}</text>')
-    s.append('</svg>'); return ''.join(s)
+        cy=mt+row_h*(i+.5); bw=(v/vmax)*pw; y=cy-bar_h/2
+        ss.append(f'<text x="{ml-8}" y="{cy+4:.1f}" text-anchor="end" font-size="9pt" font-weight="700" fill="#315b7e">{esc(g)}</text>')
+        ss.append(f'<rect x="{ml}" y="{y:.1f}" width="{bw:.1f}" height="{bar_h:.1f}" rx="3" fill="#62adeb"/>')
+        lx=min(w-mr-1, ml+bw+7); anchor='start'
+        if bw>pw*.83: lx=ml+bw-5; anchor='end'
+        ss.append(f'<text x="{lx:.1f}" y="{cy+4:.1f}" text-anchor="{anchor}" font-size="10pt" font-weight="800" fill="#0c3e6e">{int(v)}人</text>')
+    ss.append('</svg>'); return ''.join(ss)
 
 def _walk_coords(geom):
     tp=geom.get('type'); c=geom.get('coordinates',[])
@@ -223,14 +235,14 @@ def main():
     age_rate=''.join(f'<td>{float(rates.get(g,0) or 0):.2f}</td>' for g in AGE_GROUPS)
     age_count=''.join(f'<td>{int(counts.get(g,0) or 0)}</td>' for g in AGE_GROUPS)
     age_share=''.join(f'<td>{float(counts.get(g,0) or 0)/total*100:.1f}</td>' for g in AGE_GROUPS)
-    # region detail follows stable regional order
-    reg_headers=''.join(f'<th>{esc(REGION_DISPLAY.get(r,r))}</th>' for r in REGION_ORDER)
-    reg_now=''.join(f'<td>{fmt(regions.get(r))}</td>' for r in REGION_ORDER)
-    reg_prev=''.join(f'<td>{fmt(prev_regions.get(r))}</td>' for r in REGION_ORDER)
+    # 地域別詳細は指定順：県計 → 新潟市 → 新発田 → 新津※ → 三条 → 長岡 → 魚沼 → 南魚沼 → 十日町 → 柏崎 → 糸魚川 → 村上 → 佐渡 → 上越
+    reg_headers='<th>県計</th>'+''.join(f'<th>{esc(REGION_DETAIL_LABELS.get(r,r))}</th>' for r in REGION_ORDER)
+    reg_now=f'<td class="prefecture">{v:.2f}</td>'+''.join(f'<td>{fmt(regions.get(r))}</td>' for r in REGION_ORDER)
+    reg_prev=f'<td class="prefecture">{pv:.2f}</td>'+''.join(f'<td>{fmt(prev_regions.get(r))}</td>' for r in REGION_ORDER)
     def delta_cell(r):
         a=regions.get(r); b=prev_regions.get(r)
         return '<td>--</td>' if a is None or b is None else f'<td>{float(a)-float(b):+.2f}</td>'
-    reg_diff=''.join(delta_cell(r) for r in REGION_ORDER)
+    reg_diff=f'<td class="prefecture">{diff:+.2f}</td>'+''.join(delta_cell(r) for r in REGION_ORDER)
     top1_text=f'{top[0][0]}が {top[0][1]:.2f} 人 / 定点で最も高い。' if top else ''
     agemax=max(AGE_GROUPS,key=lambda g:float(counts.get(g,0) or 0))
     age_top_text=f'{agemax}が {int(counts.get(agemax,0))}人で最多。'
@@ -238,11 +250,22 @@ def main():
     try: update=datetime.fromisoformat(updated.replace('Z','+00:00')).strftime('%Y/%m/%d %H:%M')
     except: update=str(updated)
     ai_rows=[]
-    for label,key in [('県全体','summary'),('地域別','regional'),('年代別','age_group'),('前年同期','year_on_year')]:
+    for label,key in [('県全体の状況','summary'),('地域別の状況','regional'),('年代別の状況','age_group'),('前年同期との比較','year_on_year')]:
         text=str(ai.get(key,'') or '').strip()
         if text:
             ai_rows.append(f'<div class="ai-row"><b>{esc(label)}</b><p>{esc(text)}</p></div>')
     ai_rows_html=''.join(ai_rows) or '<div class="ai-row"><b>分析</b><p>AI週次分析データを読み込めませんでした。</p></div>'
+
+    # AI本文は文章量に応じて9.0-10.5ptの範囲で自動調整する。
+    ai_char_count = sum(len(str(ai.get(k,'') or '')) for k in ('headline','summary','regional','age_group','year_on_year'))
+    if ai_char_count <= 220:
+        ai_size_class = 'ai-size-10_5'
+    elif ai_char_count <= 285:
+        ai_size_class = 'ai-size-10'
+    elif ai_char_count <= 350:
+        ai_size_class = 'ai-size-9_5'
+    else:
+        ai_size_class = 'ai-size-9'
 
     region_rows=[]
     for r in REGION_ORDER:
@@ -264,7 +287,7 @@ def main():
       'P_ACTIVE':'active' if level=='purple' else '',
       'TREND_SVG':svg_trend(weeks[-6:]),'YOY_VALUE':f'{yoy:.2f}','YOY_DIFF':f'{v-yoy:+.2f}',
       'HEADLINE':esc(ai.get('headline','今週の流行状況')),
-      'AI_ROWS':ai_rows_html,
+      'AI_ROWS':ai_rows_html,'AI_SIZE_CLASS':ai_size_class,
       'AI_COMMENT':esc(ai.get('comment') or ai.get('summary') or '今週の流行状況を継続して確認してください。'),
       'MAP_SVG':map_html(display),
       'MAP_SOURCE_NOTE':'新潟県公表値を地域区分に対応させて表示',
