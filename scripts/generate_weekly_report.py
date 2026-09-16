@@ -290,7 +290,7 @@ def main():
       'AI_ROWS':ai_rows_html,'AI_SIZE_CLASS':ai_size_class,
       'AI_COMMENT':esc(ai.get('comment') or ai.get('summary') or '今週の流行状況を継続して確認してください。'),
       'MAP_SVG':map_html(display),
-      'MAP_SOURCE_NOTE':'新潟県公表値を地域区分に対応させて表示',
+      'MAP_SOURCE_NOTE':'',
       'TOP_REGION_ROWS':top_rows,
       'AGE_SVG':svg_age(counts,rates),
       'REGION_ROWS':region_rows_html,
