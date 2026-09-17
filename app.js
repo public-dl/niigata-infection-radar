@@ -502,13 +502,21 @@ function renderWeeklyInsightAudience(){
  const ai=weeklyAIData;
  const kids=weeklyAIAudience==="kids";
  const prefix=kids?"kids_":"";
- const fields=[
-   ["概況",ai[prefix+"summary"]],
-   ["推移",ai[prefix+"trend"]],
-   ["地域",ai[prefix+"regional"]],
-   ["年代",ai[prefix+"age_group"]],
-   ["前年同期",ai[prefix+"year_on_year"]]
- ];
+ const fields=kids
+   ? [
+       ["📈 いまのようす",ai.kids_summary],
+       ["⬆️ 増えているの？",ai.kids_trend],
+       ["🗺️ どこで多い？",ai.kids_regional],
+       ["👦👧 どの年代で多い？",ai.kids_age_group],
+       ["📅 去年とくらべると？",ai.kids_year_on_year]
+     ]
+   : [
+       ["概況",ai.summary],
+       ["推移",ai.trend],
+       ["地域",ai.regional],
+       ["年代",ai.age_group],
+       ["前年同期",ai.year_on_year]
+     ];
  const headline=ai[prefix+"headline"];
 
  box.innerHTML="";
@@ -539,6 +547,17 @@ function renderWeeklyInsightAudience(){
    p.append(tag,body);
    box.appendChild(p);
  });
+ if(kids){
+   const p=document.createElement("p");
+   p.className="ai-insight-paragraph";
+   const tag=document.createElement("span");
+   tag.className="ai-insight-label";
+   tag.textContent="😷 じぶんでできること";
+   const body=document.createElement("span");
+   body.textContent="マスクや手洗（てあら）いをして、インフルエンザに気をつけよう。具合（ぐあい）が悪いときは、まず体温（たいおん）を測（はか）ってみよう。熱（ねつ）があるときは、お母さんやお父さんと相談（そうだん）しよう。";
+   p.append(tag,body);
+   box.appendChild(p);
+ }
  if(note){
    note.textContent=kids
      ?"新潟県公表データをもとにAIが、こどもにも読みやすい表現で自動生成したコメントです。"
