@@ -3,8 +3,10 @@ name: Update influenza data
 on:
   workflow_dispatch:
   schedule:
-    # Thursday 19:30 JST = 10:30 UTC
-    - cron: "30 10 * * 4"
+    # 今夜の実地テスト用:
+    # Thursday 21:00 / 22:00 / 23:00 JST = 12:00 / 13:00 / 14:00 UTC
+    # テスト後、安定した時刻に整理してOK。
+    - cron: "0 12,13,14 * * 4"
 
 permissions:
   contents: write
@@ -42,16 +44,67 @@ jobs:
           pip install -r requirements.txt
           pip install --upgrade openai weasyprint
 
+      - name: Diagnose latest published week
+        run: |
+          python - <<'PY'
+          import sys, json
+          from pathlib import Path
+          sys.path.insert(0, "scripts")
+          from common import discover_week_pages
+
+          pages = discover_week_pages(2025)
+          latest = max(pages, key=lambda p: (p.year, p.week))
+          print("Prefecture latest:", latest.year, latest.week, latest.url)
+
+          p = Path("data/influenza_history.json")
+          data = json.loads(p.read_text(encoding="utf-8"))
+          weeks = data.get("weeks", [])
+          stored = max(
+              weeks,
+              key=lambda w: (int(w.get("year",0)), int(w.get("week",0)))
+          )
+          print(
+              "Stored latest:",
+              stored.get("year"),
+              stored.get("week"),
+              stored.get("prefecture")
+          )
+          PY
+
       - name: Update latest weekly data
-        run: python scripts/update.py
+        id: update_data
+        run: |
+          python scripts/update.py
+
+          if git diff --quiet -- data/influenza_history.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No influenza data changes."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Influenza data changed."
+          fi
+
+      # データはAI/PDFより先に確定・pushする。
+      # 後段が失敗しても最新の流行データだけはサイトへ反映される。
+      - name: Commit and push data first
+        if: steps.update_data.outputs.changed == 'true'
+        run: |
+          git config user.name "niigata-infection-radar-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          git add data/influenza_history.json
+          git commit -m "Update influenza weekly data"
+          git push
 
       - name: Generate AI weekly insight
+        if: steps.update_data.outputs.changed == 'true'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-5.6-luna
         run: python scripts/generate_ai_comment.py
 
       - name: Check production history
+        if: steps.update_data.outputs.changed == 'true'
         run: |
           python - <<'PY'
           import json
@@ -63,7 +116,6 @@ jobs:
 
           data = json.loads(p.read_text(encoding="utf-8"))
           weeks = data.get("weeks", [])
-
           print(f"history weeks: {len(weeks)}")
 
           if len(weeks) < 20:
@@ -75,7 +127,6 @@ jobs:
               weeks,
               key=lambda w: (int(w.get("year", 0)), int(w.get("week", 0)))
           )
-
           print(
               "latest:",
               latest.get("year"),
@@ -85,27 +136,27 @@ jobs:
           PY
 
       - name: Generate weekly PDF
+        if: steps.update_data.outputs.changed == 'true'
         run: python scripts/generate_weekly_report.py
 
       - name: Verify PDF
+        if: steps.update_data.outputs.changed == 'true'
         run: |
           test -s reports/latest.pdf
           ls -lh reports/latest.pdf
 
-      - name: Commit all weekly updates
+      - name: Commit AI and PDF
+        if: steps.update_data.outputs.changed == 'true'
         run: |
           git config user.name "niigata-infection-radar-bot"
           git config user.email "actions@users.noreply.github.com"
 
-          git add \
-            data/influenza_history.json \
-            data/ai_comment.json \
-            reports/latest.pdf
+          git add data/ai_comment.json reports/latest.pdf
 
           if git diff --cached --quiet; then
-            echo "No weekly changes."
+            echo "No AI/PDF changes."
             exit 0
           fi
 
-          git commit -m "Update influenza data, AI insight and weekly PDF"
+          git commit -m "Update influenza AI insight and weekly PDF"
           git push
