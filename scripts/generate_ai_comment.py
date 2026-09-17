@@ -17,7 +17,7 @@ OUTPUT_PATH = ROOT / "data" / "ai_comment.json"
 MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6-luna")
 FORCE = os.getenv("FORCE_AI_COMMENT", "").lower() in {"1", "true", "yes"}
 
-SCHEMA_VERSION = 3
+SCHEMA_VERSION = 4
 
 REGION_DISPLAY_NAMES = {"新潟市": "新潟"}
 
@@ -28,6 +28,12 @@ REQUIRED_FIELDS = [
     "regional",
     "age_group",
     "year_on_year",
+    "kids_headline",
+    "kids_summary",
+    "kids_trend",
+    "kids_regional",
+    "kids_age_group",
+    "kids_year_on_year",
 ]
 
 
@@ -40,6 +46,12 @@ AI_COMMENT_SCHEMA = {
         "regional": {"type": "string"},
         "age_group": {"type": "string"},
         "year_on_year": {"type": "string"},
+        "kids_headline": {"type": "string"},
+        "kids_summary": {"type": "string"},
+        "kids_trend": {"type": "string"},
+        "kids_regional": {"type": "string"},
+        "kids_age_group": {"type": "string"},
+        "kids_year_on_year": {"type": "string"},
     },
     "required": REQUIRED_FIELDS,
     "additionalProperties": False,
@@ -69,6 +81,12 @@ SYSTEM_INSTRUCTIONS = """
 - 時間差が見えても「先行して増加する傾向がみられる」「今後の推移を注視」といった慎重な表現にする。
 - 過剰に不安をあおらない。
 - 文章はニュース・行政資料のように簡潔で落ち着いた文体にする。
+- 一般向け6項目に加えて、同じ内容を「こども向け」に言い換えた6項目も作る。
+- こども向けは小学校中〜高学年程度を想定し、一文を短くする。
+- こども向けでは難しい専門用語を避ける。
+- こども向けでも数値や地域名の事実関係を一般向けから変えない。
+- こども向けに新しい医学知識、予防法、行動助言を付け足さない。
+- 怖がらせる表現を使わない。
 - 出力はJSONオブジェクトのみ。Markdownやコードフェンスは禁止。
 
 出力JSON:
@@ -78,7 +96,13 @@ SYSTEM_INSTRUCTIONS = """
   "trend": "直近の推移を1〜2文",
   "regional": "地域別の特徴を1〜2文",
   "age_group": "年代別の特徴を1〜2文。年代別データがある場合は必ず具体的な年代と人/定点を含める",
-  "year_on_year": "前年同週との比較を1〜2文。比較不能ならその旨を簡潔に"
+  "year_on_year": "前年同週との比較を1〜2文。比較不能ならその旨を簡潔に",
+  "kids_headline": "こども向けの短い見出し",
+  "kids_summary": "全県のようすを、こどもにも分かる短い1〜2文",
+  "kids_trend": "最近の増え方・減り方を、こどもにも分かる短い1〜2文",
+  "kids_regional": "地域ごとの違いを、こどもにも分かる短い1〜2文",
+  "kids_age_group": "年代ごとの特徴を、こどもにも分かる短い1〜2文",
+  "kids_year_on_year": "去年の同じころとの違いを、こどもにも分かる短い1〜2文"
 }
 """.strip()
 
