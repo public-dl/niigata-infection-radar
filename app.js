@@ -965,6 +965,33 @@ function formatRegionWeekValue(week,region){
  const countText=count===null?"--":String(Math.round(count));
  return `${fixed2(rate)} 人/定点（${countText}）`;
 }
+function signedFixed2(value){
+ const v=Number(value);
+ if(!Number.isFinite(v)) return "--";
+ if(v>0) return `+${v.toFixed(2)}`;
+ if(v<0) return `-${Math.abs(v).toFixed(2)}`;
+ return "0.00";
+}
+function signedInteger(value){
+ const v=Number(value);
+ if(!Number.isFinite(v)) return "--";
+ const n=Math.round(v);
+ if(n>0) return `+${n}`;
+ return String(n);
+}
+function formatRegionDelta(current,previous,region){
+ const currRate=regionRate(current,region);
+ const prevRate=regionRate(previous,region);
+ if(currRate===null||prevRate===null) return {text:"--",className:"delta-flat"};
+ const rateDiff=currRate-prevRate;
+ const currCount=regionActualCount(current,region);
+ const prevCount=regionActualCount(previous,region);
+ const countText=(currCount===null||prevCount===null)?"--":signedInteger(currCount-prevCount);
+ return {
+   text:`${signedFixed2(rateDiff)}（${countText}）`,
+   className:rateDiff>0?"delta-up":rateDiff<0?"delta-down":"delta-flat"
+ };
+}
 function renderRanking(weekData){
  const box=document.querySelector("#ranking");
  if(!box) return;
@@ -975,34 +1002,54 @@ function renderRanking(weekData){
  const latestIndex=allWeeks.findIndex(w=>Number(w.year)===Number(weekData.year)&&Number(w.week)===Number(weekData.week));
  const latest=weekData;
  const prev=latestIndex>0?allWeeks[latestIndex-1]:null;
- const prev2=latestIndex>1?allWeeks[latestIndex-2]:null;
 
  const wrap=document.createElement("div");
  wrap.className="region-week-table-wrap";
  const table=document.createElement("table");
  table.className="region-week-table";
  table.innerHTML=`
+   <colgroup>
+     <col class="region-col-name">
+     <col class="region-col-value">
+     <col class="region-col-value">
+     <col class="region-col-delta">
+   </colgroup>
    <thead>
      <tr>
        <th scope="col">地域</th>
        <th scope="col">最新</th>
        <th scope="col">前週</th>
-       <th scope="col">前々週</th>
+       <th scope="col">増減</th>
      </tr>
    </thead>`;
  const tbody=document.createElement("tbody");
 
  REGION_ORDER.forEach(region=>{
+   const latestRate=regionRate(latest,region);
+   const tier=latestRate===null?"blue":tierKey(latestRate);
    const tr=document.createElement("tr");
+   tr.className=`region-signal-row tier-bg-${tier}`;
+
    const th=document.createElement("th");
    th.scope="row";
-   th.textContent=region;
+   th.innerHTML=`<span class="region-signal-dot" aria-hidden="true"></span><span>${region}</span>`;
    tr.appendChild(th);
-   [latest,prev,prev2].forEach(w=>{
-     const td=document.createElement("td");
-     td.textContent=formatRegionWeekValue(w,region);
-     tr.appendChild(td);
-   });
+
+   const latestTd=document.createElement("td");
+   latestTd.className="region-current-value";
+   latestTd.textContent=formatRegionWeekValue(latest,region);
+   tr.appendChild(latestTd);
+
+   const prevTd=document.createElement("td");
+   prevTd.textContent=formatRegionWeekValue(prev,region);
+   tr.appendChild(prevTd);
+
+   const deltaTd=document.createElement("td");
+   const delta=formatRegionDelta(latest,prev,region);
+   deltaTd.className=`region-delta ${delta.className}`;
+   deltaTd.textContent=delta.text;
+   tr.appendChild(deltaTd);
+
    tbody.appendChild(tr);
  });
  table.appendChild(tbody);
@@ -1011,7 +1058,7 @@ function renderRanking(weekData){
 
  const note=document.createElement("p");
  note.className="region-week-table-note";
- note.textContent="※（ ）内は実数";
+ note.textContent="※（ ）内は実数。増減は最新－前週。";
  box.appendChild(note);
 }
 function renderRegionDefinitions(){
