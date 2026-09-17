@@ -18,6 +18,8 @@ const REGION_MUNICIPALITIES={
 "佐渡":["佐渡市"]
 };
 const DISPLAY_REGION={"新潟市":"新潟"};
+const REGION_ORDER=["新潟市","新発田","新津","三条","長岡","魚沼","南魚沼","十日町","柏崎","糸魚川","村上","佐渡","上越"];
+const REGION_TITLE_SUFFIX=new Set(["新発田","新津","三条","長岡","魚沼","南魚沼","十日町","柏崎","糸魚川","村上","佐渡","上越"]);
 let allWeeks=[],trendChart=null,latestWeek=null,geoDataPromise=null,mapInstance=null,mapGeoLayer=null,currentMapWeek=null,mapPlayTimer=null,mapRangeStartIndex=0,mapRangeWeeks=13;
 let trendWeeks=13,trendRegion="prefecture",trendComparePrefecture=true,weeklyAIData=null,weeklyAIAudience="general";
 let ageLatestChart=null,ageLatestWeekIndex=0,ageSeriesChart=null,ageHeatmapTimer=null,ageHeatmapRange=13,ageHeatmapEndIndex=0,ageSeriesWeeks=13;
@@ -502,21 +504,13 @@ function renderWeeklyInsightAudience(){
  const ai=weeklyAIData;
  const kids=weeklyAIAudience==="kids";
  const prefix=kids?"kids_":"";
- const fields=kids
-   ? [
-       ["📈 いまのようす",ai.kids_summary],
-       ["⬆️ 増えているの？",ai.kids_trend],
-       ["🗺️ どこで多い？",ai.kids_regional],
-       ["👦👧 どの年代で多い？",ai.kids_age_group],
-       ["📅 去年とくらべると？",ai.kids_year_on_year]
-     ]
-   : [
-       ["概況",ai.summary],
-       ["推移",ai.trend],
-       ["地域",ai.regional],
-       ["年代",ai.age_group],
-       ["前年同期",ai.year_on_year]
-     ];
+ const fields=[
+   ["概況",ai[prefix+"summary"]],
+   ["推移",ai[prefix+"trend"]],
+   ["地域",ai[prefix+"regional"]],
+   ["年代",ai[prefix+"age_group"]],
+   ["前年同期",ai[prefix+"year_on_year"]]
+ ];
  const headline=ai[prefix+"headline"];
 
  box.innerHTML="";
@@ -547,17 +541,6 @@ function renderWeeklyInsightAudience(){
    p.append(tag,body);
    box.appendChild(p);
  });
- if(kids){
-   const p=document.createElement("p");
-   p.className="ai-insight-paragraph";
-   const tag=document.createElement("span");
-   tag.className="ai-insight-label";
-   tag.textContent="😷 じぶんでできること";
-   const body=document.createElement("span");
-   body.textContent="マスクや手洗（てあら）いをして、インフルエンザに気をつけよう。具合（ぐあい）が悪いときは、まず体温（たいおん）を測（はか）ってみよう。熱（ねつ）があるときは、お母さんやお父さんと相談（そうだん）しよう。";
-   p.append(tag,body);
-   box.appendChild(p);
- }
  if(note){
    note.textContent=kids
      ?"新潟県公表データをもとにAIが、こどもにも読みやすい表現で自動生成したコメントです。"
@@ -584,7 +567,9 @@ function trendValue(week,region){
  return week?.regions?.[region] ?? null;
 }
 function trendRegionLabel(region){
- return region==="prefecture" ? "県全体" : region;
+ if(region==="prefecture") return "県全体";
+ if(region==="新潟市") return "新潟市";
+ return REGION_TITLE_SUFFIX.has(region) ? `${region}地域` : region;
 }
 function renderTrend(weeksCount=trendWeeks){
  trendWeeks=Number(weeksCount)||13;
@@ -762,6 +747,7 @@ async function copyGraphCard(button){
  if(!root) return;
 
  const isMap=root.id==="area-map";
+ const isAgeCard=Boolean(root.closest("#age-stats"));
  const originalText=button.textContent;
  const originalVisibility=button.style.visibility;
  let restoreLeaflet=()=>{};
@@ -796,10 +782,14 @@ async function copyGraphCard(button){
      await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
    }
 
-   const width=Math.max(root.scrollWidth,root.offsetWidth);
+   // 年代別カードは横スクロール要素の scrollWidth をそのまま使うと、
+   // 非常に大きな画像になってブラウザのClipboard処理が失敗することがある。
+   // 表示中のカード幅で確実にキャプチャする。
+   const visibleWidth=Math.ceil(root.getBoundingClientRect().width)||root.offsetWidth;
+   const width=isAgeCard?visibleWidth:Math.max(root.scrollWidth,root.offsetWidth);
    const canvas=await html2canvas(root,{
      backgroundColor:"#ffffff",
-     scale:Math.min(2,window.devicePixelRatio||1.5),
+     scale:isAgeCard?1.5:Math.min(2,window.devicePixelRatio||1.5),
      useCORS:true,
      logging:false,
      width,
@@ -827,7 +817,38 @@ async function copyGraphCard(button){
    }
  }catch(err){
    console.error(err);
-   button.textContent="コピーできませんでした";
+
+   // 年代別のChart.jsグラフは、カード全体のキャプチャに失敗した場合でも
+   // グラフ本体だけは直接PNG化してコピーできるようにする。
+   if(isAgeCard){
+     try{
+       const fallbackCanvas=root.querySelector("canvas");
+       if(fallbackCanvas){
+         const blob=await canvasToBlob(fallbackCanvas);
+         let copied=false;
+         if(navigator.clipboard && window.ClipboardItem){
+           try{
+             await navigator.clipboard.write([new ClipboardItem({"image/png":blob})]);
+             copied=true;
+           }catch(_){}
+         }
+         if(copied){
+           button.textContent="✓ グラフをコピーしました";
+         }else{
+           const title=(root.querySelector("h2,h3")?.textContent||"age-graph").replace(/[\\/:*?"<>|]/g,"-");
+           downloadBlob(blob,`${title}.png`);
+           button.textContent="PNGを保存しました";
+         }
+       }else{
+         button.textContent="コピーできませんでした";
+       }
+     }catch(fallbackErr){
+       console.error(fallbackErr);
+       button.textContent="コピーできませんでした";
+     }
+   }else{
+     button.textContent="コピーできませんでした";
+   }
  }finally{
    try{ restoreLeaflet(); }catch(_){}
    if(isMap){
@@ -924,20 +945,74 @@ function renderComparison(weeks,latest){
    note.textContent="最新週の前年同週データはまだ蓄積されていません。";
  }
 }
+function fixed2(v){
+ const x=Number(v);
+ return Number.isFinite(x)?x.toFixed(2):"--";
+}
+function regionRate(week,region){
+ const v=week?.regions?.[region];
+ return Number.isFinite(Number(v))?Number(v):null;
+}
+function regionActualCount(week,region){
+ const v=week?.region_counts?.[region];
+ return Number.isFinite(Number(v))?Number(v):null;
+}
+function formatRegionWeekValue(week,region){
+ if(!week) return "--";
+ const rate=regionRate(week,region);
+ if(rate===null) return "--";
+ const count=regionActualCount(week,region);
+ const countText=count===null?"--":String(Math.round(count));
+ return `${fixed2(rate)} 人/定点（${countText}）`;
+}
 function renderRanking(weekData){
- const entries=Object.entries(weekData.regions||{}).sort((a,b)=>b[1]-a[1]);
  const box=document.querySelector("#ranking");
+ if(!box) return;
  box.innerHTML="";
  const period=document.querySelector("#ranking-period");
  if(period) period.textContent=weekData.label||`${weekData.year} 第${weekData.week}週`;
 
- entries.forEach(([name,value],i)=>{
-   const row=document.createElement("div");
-   const tier=tierKey(Number(value));
-   row.className=`rank-row tier-bg-${tier}`;
-   row.innerHTML=`<span class="rank-no">${i+1}</span><span class="rank-name">${displayRegionName(name)}</span><span class="rank-value">${n(value)}</span>`;
-   box.appendChild(row);
+ const latestIndex=allWeeks.findIndex(w=>Number(w.year)===Number(weekData.year)&&Number(w.week)===Number(weekData.week));
+ const latest=weekData;
+ const prev=latestIndex>0?allWeeks[latestIndex-1]:null;
+ const prev2=latestIndex>1?allWeeks[latestIndex-2]:null;
+
+ const wrap=document.createElement("div");
+ wrap.className="region-week-table-wrap";
+ const table=document.createElement("table");
+ table.className="region-week-table";
+ table.innerHTML=`
+   <thead>
+     <tr>
+       <th scope="col">地域</th>
+       <th scope="col">最新</th>
+       <th scope="col">前週</th>
+       <th scope="col">前々週</th>
+     </tr>
+   </thead>`;
+ const tbody=document.createElement("tbody");
+
+ REGION_ORDER.forEach(region=>{
+   const tr=document.createElement("tr");
+   const th=document.createElement("th");
+   th.scope="row";
+   th.textContent=region;
+   tr.appendChild(th);
+   [latest,prev,prev2].forEach(w=>{
+     const td=document.createElement("td");
+     td.textContent=formatRegionWeekValue(w,region);
+     tr.appendChild(td);
+   });
+   tbody.appendChild(tr);
  });
+ table.appendChild(tbody);
+ wrap.appendChild(table);
+ box.appendChild(wrap);
+
+ const note=document.createElement("p");
+ note.className="region-week-table-note";
+ note.textContent="※（ ）内は実数";
+ box.appendChild(note);
 }
 function renderRegionDefinitions(){
  const box=document.querySelector("#region-definition-list");box.innerHTML="";
@@ -1074,23 +1149,21 @@ async function renderMap(latest,geo){
 
  try{
    const bounds=mapGeoLayer.getBounds();
-   // GeoJSONの外接範囲そのものではなく、少し広げた範囲を表示する。
-   // Leafletの丸めやCSS確定後の再計算で北端・島部が欠けるのを防ぐ。
-   const safeBounds=bounds.pad(0.12);
-
    mapInstance.invalidateSize(false);
-   mapInstance.fitBounds(safeBounds,{
-     padding:[18,18],
-     animate:false
+   // 全域が必ず収まるよう、上下左右に余白を確保する。
+   // fitBounds 後の追加ズームは、村上側・粟島側がわずかに欠ける原因になるため行わない。
+   mapInstance.fitBounds(bounds,{
+     paddingTopLeft:[28,32],
+     paddingBottomRight:[28,28]
    });
 
-   // CSSレイアウト確定後にも同じ安全域で再計算
+   // CSSレイアウト確定後にも再計算し、初回表示時の切れを防ぐ
    setTimeout(()=>{
      try{
        mapInstance.invalidateSize(false);
-       mapInstance.fitBounds(safeBounds,{
-         padding:[18,18],
-         animate:false
+       mapInstance.fitBounds(bounds,{
+         paddingTopLeft:[28,32],
+         paddingBottomRight:[28,28]
        });
      }catch(_){}
    },120);

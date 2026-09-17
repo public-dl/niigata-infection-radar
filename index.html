@@ -47,7 +47,7 @@
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://unpkg.com" crossorigin>
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
-  <link rel="stylesheet" href="./styles.css?v=51" />
+  <link rel="stylesheet" href="./styles.css?v=52" />
   <link rel="stylesheet" href="./home-v72.css?v=72" />
   <script defer src="./analytics.js?v=55"></script>
   <link rel="stylesheet" href="./mobile-v68.css?v=68" />
@@ -194,7 +194,7 @@
   </article>
 </section>
 
-<section class="card map-card map-feature" id="area-map" data-copy-root>
+<section class="card map-card map-feature" id="area-map">
   <div class="section-title-row map-head">
     <div>
       <div class="card-kicker">AREA MAP</div>
@@ -204,7 +204,6 @@
     <div class="map-actions">
       <button class="ghost-button region-info-button" type="button">地域区分を見る</button>
       <span id="map-period" class="source-chip">--</span>
-      <button class="ghost-button graph-copy-button map-copy-button" type="button" data-copy-graph>📋 地図をコピー</button>
     </div>
   </div>
   
@@ -254,7 +253,6 @@
       </div>
     </aside>
   </div>
-  <div class="graph-export-source">出典：新潟県「感染症情報（週報）」</div>
 </section>
 
 <section class="card trend-card" id="trend" data-copy-root>
@@ -268,17 +266,17 @@
           <option value="prefecture">県全体</option>
           <option value="新潟市">新潟市</option>
           <option value="新発田">新発田</option>
-          <option value="村上">村上</option>
-          <option value="長岡">長岡</option>
-          <option value="柏崎">柏崎</option>
-          <option value="上越">上越</option>
-          <option value="糸魚川">糸魚川</option>
-          <option value="南魚沼">南魚沼</option>
-          <option value="十日町">十日町</option>
-          <option value="佐渡">佐渡</option>
           <option value="新津">新津</option>
           <option value="三条">三条</option>
+          <option value="長岡">長岡</option>
           <option value="魚沼">魚沼</option>
+          <option value="南魚沼">南魚沼</option>
+          <option value="十日町">十日町</option>
+          <option value="柏崎">柏崎</option>
+          <option value="糸魚川">糸魚川</option>
+          <option value="村上">村上</option>
+          <option value="佐渡">佐渡</option>
+          <option value="上越">上越</option>
         </select>
       </label>
       <label class="trend-compare-toggle">
@@ -314,7 +312,7 @@
 
   <article class="card">
     <div class="section-title-row">
-      <div><div class="card-kicker">RANKING</div><h2>地域別ランキング</h2></div>
+      <div><div class="card-kicker">AREA DATA</div><h2>地域別の報告状況</h2></div>
       <div class="ranking-actions">
         <span id="ranking-period" class="source-chip">--</span>
         <button class="ghost-button region-info-button" type="button">地域区分を見る</button>
@@ -444,6 +442,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="./app.js?v=88"></script>
+<script src="./app.js?v=93"></script>
 </body>
 </html>
