@@ -39,10 +39,10 @@ def main():
         print("保存済み最新週: なし")
 
     # 新週だけでなく、年代別データが無い週も再取得する。
-    # 今回追加した地域別実数は、表示に必要な「最新・前週・前々週」の3週だけ
+    # 今回追加した地域別実数は、表示に必要な「最新・前週」の2週だけ
     # 初回に補完する。以後の新週は scrape_week() で自動保存される。
     pages_sorted=sorted(pages,key=lambda p:(p.year,p.week))
-    recent_region_keys={(p.year,p.week) for p in pages_sorted[-3:]}
+    recent_region_keys={(p.year,p.week) for p in pages_sorted[-2:]}
 
     pending=[]
     new_keys=set()
@@ -67,7 +67,7 @@ def main():
             write_json(OUT,data)
             print(f"更新日時を初期化しました: {meta['updated_at']}")
         else:
-            print("新しい週・年代別未取得週はありません。")
+            print("新しい週・年代別未取得週・地域別実数未取得週はありません。")
         return
 
     refreshed=[]
