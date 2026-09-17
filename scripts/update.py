@@ -18,11 +18,35 @@ def main():
     existing={(x["year"],x["week"]):x for x in weeks}
     pages=discover_week_pages(2025)
 
+    latest_page=max(pages,key=lambda p:(p.year,p.week))
+    stored_latest=max(
+        weeks,
+        key=lambda w:(int(w.get("year",0)),int(w.get("week",0))),
+        default=None
+    )
+
+    print(
+        f"県一覧の最新週: {latest_page.year} W{latest_page.week:02d} "
+        f"{latest_page.url}"
+    )
+    if stored_latest:
+        print(
+            f"保存済み最新週: {stored_latest.get('year')} "
+            f"W{int(stored_latest.get('week',0)):02d} "
+            f"/ {stored_latest.get('prefecture')}"
+        )
+    else:
+        print("保存済み最新週: なし")
+
     # 新週だけでなく、
     # age_counts / age_per_sentinel のどちらかが無い既存週も再取得する。
     pending=[]
+    new_keys=set()
     for p in pages:
-        old=existing.get((p.year,p.week))
+        key=(p.year,p.week)
+        old=existing.get(key)
+        if old is None:
+            new_keys.add(key)
         if (
             old is None
             or not old.get("age_counts")
@@ -42,7 +66,10 @@ def main():
         return
 
     refreshed=[]
+    failures=[]
+
     for p in pending:
+        key=(p.year,p.week)
         try:
             w=scrape_week(p)
             refreshed.append(w)
@@ -53,10 +80,34 @@ def main():
                 f"age_per_sentinel={len(w.get('age_per_sentinel',{}))}"
             )
         except Exception as e:
-            print(f"skip {p.year} W{p.week:02d}: {e}")
+            failures.append((p.year,p.week,str(e),key in new_keys))
+            print(f"ERROR {p.year} W{p.week:02d}: {e}")
         time.sleep(.45)
 
+    # 重要:
+    # 新しく県一覧に登場した週の取得失敗を「成功扱い」にしない。
+    # 旧週の年代別補完失敗だけなら継続可能だが、新週失敗はActionを赤にして知らせる。
+    fatal=[x for x in failures if x[3]]
+    if fatal:
+        details="; ".join(
+            f"{y} W{w:02d}: {err}" for y,w,err,_ in fatal
+        )
+        raise RuntimeError(
+            "新しく公開された週の取得に失敗しました。"
+            "古いデータのまま正常終了することを防止します。 "
+            + details
+        )
+
     data["weeks"]=dedupe(weeks+refreshed)
+
+    # 県一覧の最新週が保存データに入ったことを必ず確認する。
+    final_keys={(int(w["year"]),int(w["week"])) for w in data["weeks"]}
+    latest_key=(latest_page.year,latest_page.week)
+    if latest_key not in final_keys:
+        raise RuntimeError(
+            f"県一覧の最新週 {latest_page.year} W{latest_page.week:02d} "
+            "が influenza_history.json に入りませんでした。"
+        )
 
     meta=data.setdefault("meta",{})
     meta["weeks_ok"]=len(data["weeks"])
@@ -76,7 +127,16 @@ def main():
         meta["updated_by"]="scripts/update.py"
 
     write_json(OUT,data)
-    print(f"updated {OUT} (+/refresh {len(refreshed)})")
+
+    newest=max(
+        data["weeks"],
+        key=lambda w:(int(w.get("year",0)),int(w.get("week",0)))
+    )
+    print(
+        f"updated {OUT} (+/refresh {len(refreshed)}) / "
+        f"latest={newest.get('year')} W{int(newest.get('week',0)):02d} "
+        f"/ {newest.get('prefecture')}"
+    )
 
 if __name__=="__main__":
     main()
