@@ -37,7 +37,6 @@ export default async () => {
 };
 
 export const config = {
-  // テスト用：2026/9/18 00:05 JST
-  // UTCでは 2026/9/17 15:05
-  schedule: "5 15 17 9 *"
+  // 毎週木曜日 16:15 / 17:15 / 18:15 日本時間
+  schedule: "15 7,8,9 * * 4"
 };
