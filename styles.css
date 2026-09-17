@@ -2581,3 +2581,85 @@ main{max-width:1180px;margin:-28px auto 0;padding:0 22px 48px;position:relative;
   .trend-compare-toggle{justify-content:center}
   .graph-head-actions,.ai-audience-tools{width:100%;justify-content:flex-start}
 }
+
+
+/* =========================================================
+   v89 — 地図枠拡大 + 地図コピー
+   ========================================================= */
+
+/* PCでは地図本体を優先して、右操作カラムを少し細くする */
+@media (min-width:821px){
+  .map-layout-horizontal{
+    grid-template-columns:minmax(0,1fr) 225px !important;
+    gap:14px !important;
+  }
+
+  .map-layout-horizontal .map,
+  #map.map{
+    width:100% !important;
+    height:500px !important;
+    min-height:500px !important;
+    max-height:none !important;
+  }
+
+  .map-control-column{
+    gap:10px !important;
+  }
+
+  .map-control-column .map-timeline,
+  .map-control-column .map-side{
+    padding:11px !important;
+  }
+}
+
+/* 13〜14インチ級でも従来より地図を大きく保つ */
+@media (max-width:1366px) and (min-width:821px){
+  .map-layout-horizontal{
+    grid-template-columns:minmax(0,1fr) 220px !important;
+    gap:12px !important;
+  }
+
+  .map-layout-horizontal .map,
+  #map.map{
+    height:480px !important;
+    min-height:480px !important;
+    max-height:none !important;
+  }
+}
+
+/* 縦が狭いノートPCでも小さくしすぎない */
+@media (max-height:800px) and (min-width:821px){
+  .map-layout-horizontal .map,
+  #map.map{
+    height:460px !important;
+    min-height:460px !important;
+    max-height:none !important;
+  }
+}
+
+.map-copy-button{
+  white-space:nowrap;
+}
+
+/* コピー画像では操作UIを減らし、地図・表示週・凡例を中心に残す */
+.map-card.is-graph-exporting .region-info-button,
+.map-card.is-graph-exporting .map-range-buttons,
+.map-card.is-graph-exporting .map-timeline-controls,
+.map-card.is-graph-exporting .map-week-slider,
+.map-card.is-graph-exporting .map-timeline-scale{
+  display:none !important;
+}
+
+.map-card.is-graph-exporting .map-timeline{
+  padding:11px 12px !important;
+}
+
+.map-card.is-graph-exporting .map-timeline-period{
+  margin-bottom:0 !important;
+}
+
+@media (max-width:820px){
+  .map-copy-button{
+    width:100%;
+  }
+}

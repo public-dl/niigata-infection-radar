@@ -953,8 +953,19 @@ async function renderMap(latest,geo){
  updateMapLayerContent(latest);
 
  try{
-   mapInstance.fitBounds(mapGeoLayer.getBounds(),{padding:[4,4]});
-   mapInstance.setZoom(mapInstance.getZoom()+0.5,{animate:false});
+   const bounds=mapGeoLayer.getBounds();
+   mapInstance.invalidateSize(false);
+   mapInstance.fitBounds(bounds,{padding:[10,10]});
+   mapInstance.setZoom(mapInstance.getZoom()+0.25,{animate:false});
+
+   // CSSレイアウト確定後にも再計算し、初回表示時の切れを防ぐ
+   setTimeout(()=>{
+     try{
+       mapInstance.invalidateSize(false);
+       mapInstance.fitBounds(bounds,{padding:[10,10]});
+       mapInstance.setZoom(mapInstance.getZoom()+0.25,{animate:false});
+     }catch(_){}
+   },120);
  }catch(e){}
 }
 
