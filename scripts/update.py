@@ -38,8 +38,12 @@ def main():
     else:
         print("保存済み最新週: なし")
 
-    # 新週だけでなく、
-    # age_counts / age_per_sentinel のどちらかが無い既存週も再取得する。
+    # 新週だけでなく、年代別データが無い週も再取得する。
+    # 今回追加した地域別実数は、表示に必要な「最新・前週・前々週」の3週だけ
+    # 初回に補完する。以後の新週は scrape_week() で自動保存される。
+    pages_sorted=sorted(pages,key=lambda p:(p.year,p.week))
+    recent_region_keys={(p.year,p.week) for p in pages_sorted[-3:]}
+
     pending=[]
     new_keys=set()
     for p in pages:
@@ -51,6 +55,7 @@ def main():
             old is None
             or not old.get("age_counts")
             or not old.get("age_per_sentinel")
+            or (key in recent_region_keys and not old.get("region_counts"))
         ):
             pending.append(p)
 
@@ -77,7 +82,8 @@ def main():
                 f"updated {p.year} W{p.week:02d}: "
                 f"{w['prefecture']} / "
                 f"age_counts={len(w.get('age_counts',{}))} / "
-                f"age_per_sentinel={len(w.get('age_per_sentinel',{}))}"
+                f"age_per_sentinel={len(w.get('age_per_sentinel',{}))} / "
+                f"region_counts={len(w.get('region_counts',{}))}"
             )
         except Exception as e:
             failures.append((p.year,p.week,str(e),key in new_keys))
@@ -117,6 +123,9 @@ def main():
     meta["weeks_with_age_data"]=sum(
         1 for w in data["weeks"]
         if w.get("age_counts") and w.get("age_per_sentinel")
+    )
+    meta["weeks_with_region_counts"]=sum(
+        1 for w in data["weeks"] if w.get("region_counts")
     )
 
     # 旧キーは今後使わないので meta から除去

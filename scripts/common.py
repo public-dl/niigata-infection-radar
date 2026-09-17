@@ -369,6 +369,9 @@ def parse_age_groups(wb, expected_count=None, expected_rate=None):
         if expected_count is not None and abs(count_sum-float(expected_count)) > 0.01:
             diagnostics.append(f"{ws.title}: 年代別実数合計不一致 {count_sum} != {expected_count}")
             continue
+        if expected_rate is not None and abs(rate_sum-float(expected_rate)) > 0.15:
+            diagnostics.append(f"{ws.title}: 年代別定点値合計差が大きい {rate_sum} vs {expected_rate}")
+            continue
 
         return {
             "age_counts":counts,
@@ -420,6 +423,15 @@ def parse_influenza_excel(data):
         if "県計" in info["cols"]:
             prefecture_count=as_number(ws.cell(info["flu_row"],info["cols"]["県計"]).value)
 
+        # 地域別の実数（患者報告数）も主表のインフルエンザ行から取得する。
+        # value_row は「人/定点」、flu_row は実数の行。
+        region_counts={}
+        for key,c in info["cols"].items():
+            if key not in REGIONS:
+                continue
+            raw_count=as_number(ws.cell(info["flu_row"],c).value)
+            region_counts[key]=0.0 if raw_count is None else round(float(raw_count),4)
+
         if "県計" not in vals:
             actual_values=[]
             for key,c in info["cols"].items():
@@ -442,6 +454,7 @@ def parse_influenza_excel(data):
             "prefecture":round(float(vals["県計"]),4),
             "prefecture_count":None if prefecture_count is None else round(float(prefecture_count),4),
             "regions":{k:round(float(vals.get(k,0.0)),4) for k in REGIONS if k in info["cols"]},
+            "region_counts":{k:region_counts.get(k,0.0) for k in REGIONS if k in info["cols"]},
             "_parser":{
                 "sheet":ws.title,
                 "title_row":info["title_row"],
@@ -494,6 +507,7 @@ def scrape_week(wp):
         "label":reiwa_label(d1,d2) if d1 and d2 else f"{wp.year}-W{wp.week:02d}",
         "prefecture":parsed["prefecture"],
         "regions":parsed["regions"],
+        "region_counts":parsed.get("region_counts",{}),
         "age_counts":parsed.get("age_counts",{}),
         "age_per_sentinel":parsed.get("age_per_sentinel",{}),
         "topic":extract_topic(soup),
