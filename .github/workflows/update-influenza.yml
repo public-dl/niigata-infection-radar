@@ -2,11 +2,18 @@ name: Update influenza data
 
 on:
   workflow_dispatch:
-  schedule:
-    # 今夜22:00～22:55 JSTに5分おきでテスト
-    # UTCでは木曜13時台
-    - cron: "*/5 13 * * 4"
 
+  # 設定ファイルを更新したら即実行する
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/update-influenza.yml"
+      - "scripts/update.py"
+
+  # 自動実行テスト
+  schedule:
+    - cron: "*/5 * * * *"
 permissions:
   contents: write
 
