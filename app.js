@@ -1056,15 +1056,21 @@ async function renderMap(latest,geo){
  try{
    const bounds=mapGeoLayer.getBounds();
    mapInstance.invalidateSize(false);
-   mapInstance.fitBounds(bounds,{padding:[10,10]});
-   mapInstance.setZoom(mapInstance.getZoom()+0.25,{animate:false});
+   // 全域が必ず収まるよう、上下左右に余白を確保する。
+   // fitBounds 後の追加ズームは、村上側・粟島側がわずかに欠ける原因になるため行わない。
+   mapInstance.fitBounds(bounds,{
+     paddingTopLeft:[28,32],
+     paddingBottomRight:[28,28]
+   });
 
    // CSSレイアウト確定後にも再計算し、初回表示時の切れを防ぐ
    setTimeout(()=>{
      try{
        mapInstance.invalidateSize(false);
-       mapInstance.fitBounds(bounds,{padding:[10,10]});
-       mapInstance.setZoom(mapInstance.getZoom()+0.25,{animate:false});
+       mapInstance.fitBounds(bounds,{
+         paddingTopLeft:[28,32],
+         paddingBottomRight:[28,28]
+       });
      }catch(_){}
    },120);
  }catch(e){}
