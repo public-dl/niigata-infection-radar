@@ -681,16 +681,102 @@ function downloadBlob(blob,filename){
  document.body.appendChild(a);a.click();a.remove();
  setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
+
+function flattenLeafletTransformsForCapture(mapEl){
+ const targets=[...mapEl.querySelectorAll(".leaflet-map-pane, .leaflet-zoom-animated")];
+ const saved=[];
+
+ const matrixFromTransform=(value)=>{
+   if(!value||value==="none") return null;
+   try{
+     if(window.DOMMatrixReadOnly) return new DOMMatrixReadOnly(value);
+     if(window.WebKitCSSMatrix) return new WebKitCSSMatrix(value);
+   }catch(_){}
+   const m=value.match(/^matrix\(([^)]+)\)$/);
+   if(m){
+     const v=m[1].split(",").map(Number);
+     if(v.length===6) return {a:v[0],b:v[1],c:v[2],d:v[3],e:v[4],f:v[5]};
+   }
+   const m3=value.match(/^matrix3d\(([^)]+)\)$/);
+   if(m3){
+     const v=m3[1].split(",").map(Number);
+     if(v.length===16) return {a:v[0],b:v[1],c:v[4],d:v[5],e:v[12],f:v[13]};
+   }
+   return null;
+ };
+
+ targets.forEach(el=>{
+   const cs=getComputedStyle(el);
+   const m=matrixFromTransform(cs.transform);
+   if(!m) return;
+
+   // Leafletの安定時は基本的に平行移動のみ。拡大縮小中は触らない。
+   const pureTranslate=
+     Math.abs(Number(m.a)-1)<0.001 &&
+     Math.abs(Number(m.d)-1)<0.001 &&
+     Math.abs(Number(m.b))<0.001 &&
+     Math.abs(Number(m.c))<0.001;
+   if(!pureTranslate) return;
+
+   saved.push({
+     el,
+     style:el.getAttribute("style")
+   });
+
+   const left=Number.parseFloat(cs.left);
+   const top=Number.parseFloat(cs.top);
+   el.style.transform="none";
+   el.style.left=`${(Number.isFinite(left)?left:0)+Number(m.e||0)}px`;
+   el.style.top=`${(Number.isFinite(top)?top:0)+Number(m.f||0)}px`;
+ });
+
+ return ()=>{
+   saved.forEach(({el,style})=>{
+     if(style===null) el.removeAttribute("style");
+     else el.setAttribute("style",style);
+   });
+ };
+}
+
 async function copyGraphCard(button){
  const root=button.closest("[data-copy-root]");
  if(!root) return;
+
+ const isMap=root.id==="area-map";
  const originalText=button.textContent;
+ const originalVisibility=button.style.visibility;
+ let restoreLeaflet=()=>{};
+
  button.disabled=true;
  button.textContent="作成中…";
- root.classList.add("is-graph-exporting");
+
+ // 通常グラフは従来どおり「コピー用表示」にする。
+ // Leaflet地図だけは、レイアウトを変えると内部座標がずれるため
+ // 画面の配置を一切変えずにキャプチャする。
+ if(isMap){
+   button.style.visibility="hidden";
+ }else{
+   root.classList.add("is-graph-exporting");
+ }
+
  try{
    if(typeof html2canvas!=="function") throw new Error("画像コピー機能を読み込めませんでした");
-   await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+
+   if(isMap && mapInstance){
+     // 描画・ズームアニメーションを止め、現在の枠寸法でLeafletを確定。
+     try{ mapInstance.stop(); }catch(_){}
+     try{ mapInstance.invalidateSize(false); }catch(_){}
+     await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+     await new Promise(r=>setTimeout(r,80));
+
+     // html2canvas と Leaflet の translate3d の相性で位置ずれが起こるため、
+     // キャプチャ中だけ translate を left/top に焼き込む。
+     const mapEl=root.querySelector("#map");
+     if(mapEl) restoreLeaflet=flattenLeafletTransformsForCapture(mapEl);
+   }else{
+     await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+   }
+
    const width=Math.max(root.scrollWidth,root.offsetWidth);
    const canvas=await html2canvas(root,{
      backgroundColor:"#ffffff",
@@ -698,16 +784,21 @@ async function copyGraphCard(button){
      useCORS:true,
      logging:false,
      width,
-     windowWidth:Math.max(document.documentElement.clientWidth,width)
+     windowWidth:Math.max(document.documentElement.clientWidth,width),
+     scrollX:0,
+     scrollY:-window.scrollY
    });
+
    const blob=await canvasToBlob(canvas);
    let copied=false;
+
    if(navigator.clipboard && window.ClipboardItem){
      try{
        await navigator.clipboard.write([new ClipboardItem({"image/png":blob})]);
        copied=true;
      }catch(_){}
    }
+
    if(copied){
      button.textContent="✓ コピーしました";
    }else{
@@ -719,10 +810,20 @@ async function copyGraphCard(button){
    console.error(err);
    button.textContent="コピーできませんでした";
  }finally{
-   root.classList.remove("is-graph-exporting");
-   setTimeout(()=>{button.disabled=false;button.textContent=originalText;},1800);
+   try{ restoreLeaflet(); }catch(_){}
+   if(isMap){
+     button.style.visibility=originalVisibility;
+     try{ mapInstance?.invalidateSize(false); }catch(_){}
+   }else{
+     root.classList.remove("is-graph-exporting");
+   }
+   setTimeout(()=>{
+     button.disabled=false;
+     button.textContent=originalText;
+   },1800);
  }
 }
+
 function wireGraphCopyButtons(){
  document.querySelectorAll("[data-copy-graph]").forEach(btn=>btn.addEventListener("click",()=>copyGraphCard(btn)));
 }
