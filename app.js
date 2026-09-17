@@ -1055,21 +1055,23 @@ async function renderMap(latest,geo){
 
  try{
    const bounds=mapGeoLayer.getBounds();
+   // GeoJSONの外接範囲そのものではなく、少し広げた範囲を表示する。
+   // Leafletの丸めやCSS確定後の再計算で北端・島部が欠けるのを防ぐ。
+   const safeBounds=bounds.pad(0.12);
+
    mapInstance.invalidateSize(false);
-   // 全域が必ず収まるよう、上下左右に余白を確保する。
-   // fitBounds 後の追加ズームは、村上側・粟島側がわずかに欠ける原因になるため行わない。
-   mapInstance.fitBounds(bounds,{
-     paddingTopLeft:[28,32],
-     paddingBottomRight:[28,28]
+   mapInstance.fitBounds(safeBounds,{
+     padding:[18,18],
+     animate:false
    });
 
-   // CSSレイアウト確定後にも再計算し、初回表示時の切れを防ぐ
+   // CSSレイアウト確定後にも同じ安全域で再計算
    setTimeout(()=>{
      try{
        mapInstance.invalidateSize(false);
-       mapInstance.fitBounds(bounds,{
-         paddingTopLeft:[28,32],
-         paddingBottomRight:[28,28]
+       mapInstance.fitBounds(safeBounds,{
+         padding:[18,18],
+         animate:false
        });
      }catch(_){}
    },120);
