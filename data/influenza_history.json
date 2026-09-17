@@ -17,10 +17,10 @@
     ],
     "generated_by": "scripts/backfill.py",
     "weeks_discovered": 88,
-    "weeks_ok": 88,
-    "weeks_with_age_data": 88,
+    "weeks_ok": 89,
+    "weeks_with_age_data": 89,
     "weeks_failed": 0,
-    "updated_at": "2026-09-14T15:22:54+09:00",
+    "updated_at": "2026-09-17T22:13:43+09:00",
     "updated_by": "scripts/update.py"
   },
   "weeks": [
@@ -6708,6 +6708,82 @@
           "expected_rate": 6.13,
           "age_rate_sum": 6.15,
           "rate_difference": 0.02
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 37,
+      "start": "2026-09-07",
+      "end": "2026-09-13",
+      "label": "R8/9/7–9/13",
+      "prefecture": 9.44,
+      "regions": {
+        "新潟市": 13.06,
+        "新発田": 8.75,
+        "新津": 1.0,
+        "三条": 10.2,
+        "長岡": 4.0,
+        "魚沼": 8.5,
+        "南魚沼": 6.33,
+        "十日町": 1.0,
+        "柏崎": 10.0,
+        "糸魚川": 21.5,
+        "村上": 15.5,
+        "佐渡": 9.0,
+        "上越": 4.5
+      },
+      "age_counts": {
+        "0歳": 4.0,
+        "1～4歳": 86.0,
+        "5～9歳": 178.0,
+        "10～14歳": 127.0,
+        "15～19歳": 12.0,
+        "20～59歳": 83.0,
+        "60歳以上": 29.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.07,
+        "1～4歳": 1.57,
+        "5～9歳": 3.24,
+        "10～14歳": 2.31,
+        "15～19歳": 0.22,
+        "20～59歳": 1.51,
+        "60歳以上": 0.53
+      },
+      "topic": "インフルエンザの流行期に入っています。（別紙1参照）\n○県内では定点当たりの報告数が全県で\n9.44\nと注意報開始基準（定点当たりの報告数10）に迫っています。（前週：6.13、前々週：3.58）\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策の徹底をお願いします。\n※参考　直近のシーズンにおける流行期入りの週\n2025(令和7)年第43週（10月20日～10月26日）：定点当たり2.05\n注意報の基準　　定点当たりの報告数   10",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0837.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/510428.xlsx",
+      "verification": {
+        "method": "niigata_main_table+topic",
+        "niigata_topic_value": 9.44,
+        "prefecture_count": 519.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 519.0,
+          "age_count_sum": 519.0,
+          "count_difference": 0.0,
+          "expected_rate": 9.44,
+          "age_rate_sum": 9.45,
+          "rate_difference": 0.01
         },
         "strategy": "age_counts_and_per_sentinel"
       }
