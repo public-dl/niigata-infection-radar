@@ -37,7 +37,7 @@ export default async () => {
 };
 
 export const config = {
-  // 毎週木曜日 20:15 / 21:15 / 22:15 日本時間
-  // NetlifyのcronはUTC基準
-  schedule: "15 11,12,13 * * 4"
+  // テスト用：2026/9/18 00:05 JST
+  // UTCでは 2026/9/17 15:05
+  schedule: "5 15 17 9 *"
 };
