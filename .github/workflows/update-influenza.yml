@@ -3,10 +3,11 @@ name: Update influenza data
 on:
   workflow_dispatch:
   schedule:
-    # 今夜の実地テスト用:
-    # Thursday 21:00 / 22:00 / 23:00 JST = 12:00 / 13:00 / 14:00 UTC
-    # テスト後、安定した時刻に整理してOK。
-    - cron: "0 12,13,14 * * 4"
+    # 今夜の実地テスト用（毎時00分を避ける）
+    # Thursday 21:27 / 21:47 / 22:17 / 22:37 JST
+    # = 12:27 / 12:47 / 13:17 / 13:37 UTC
+    - cron: "27,47 12 * * 4"
+    - cron: "17,37 13 * * 4"
 
 permissions:
   contents: write
