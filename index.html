@@ -15,10 +15,18 @@
   <meta property="og:title" content="新潟県のインフルエンザ流行状況・インフル情報 | 新潟インフルエンザレーダー" />
   <meta property="og:description" content="新潟県のインフルエンザ（インフル）の流行状況を、県全体・地域別・年代別・時系列でわかりやすく可視化しています。" />
   <meta property="og:url" content="https://niigata-infection-radar.netlify.app/" />
+  <meta property="og:image" content="https://niigata-infection-radar.netlify.app/ogp.png" />
+  <meta property="og:image:secure_url" content="https://niigata-infection-radar.netlify.app/ogp.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="新潟インフルエンザレーダー。新潟県13地域の流行状況を地図・グラフ・年代別データで確認できるサイト。" />
 
-  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="新潟県のインフルエンザ流行状況・インフル情報 | 新潟インフルエンザレーダー" />
-  <meta name="twitter:description" content="新潟県のインフルエンザ（インフル）の流行状況を、地域別・年代別・時系列で確認できます。" />
+  <meta name="twitter:description" content="新潟県13地域のインフルエンザ流行状況を、地域別・年代別・時系列で確認できます。" />
+  <meta name="twitter:image" content="https://niigata-infection-radar.netlify.app/ogp.png" />
+  <meta name="twitter:image:alt" content="新潟インフルエンザレーダー。新潟県13地域の流行状況をわかりやすく可視化。" />
 
   <script type="application/ld+json">
   {
@@ -173,7 +181,13 @@
   <article class="card point-card">
     <div class="section-title-row">
       <div><div class="card-kicker">AI WEEKLY INSIGHT</div><h2>今週の流行分析</h2></div>
-      <span id="weekly-source" class="source-chip">AI自動生成</span>
+      <div class="ai-audience-tools">
+        <div class="ai-audience-switch" role="group" aria-label="AIコメントの対象">
+          <button type="button" class="ai-audience-button is-active" data-ai-audience="general" aria-pressed="true">一般向け</button>
+          <button type="button" class="ai-audience-button" data-ai-audience="kids" aria-pressed="false">こども向け</button>
+        </div>
+        <span id="weekly-source" class="source-chip">AI自動生成</span>
+      </div>
     </div>
     <div id="weekly-topic" class="topic-text">データを読み込んでいます。</div>
     <p id="ai-topic-note" class="ai-topic-note">新潟県公表データをもとにAIが自動生成した分析コメントです。</p>
@@ -241,11 +255,34 @@
   </div>
 </section>
 
-<section class="card trend-card" id="trend">
+<section class="card trend-card" id="trend" data-copy-root>
   <div id="trend-niigata-watermark" class="trend-niigata-watermark" aria-hidden="true"></div>
   <div class="section-title-row trend-content-layer">
-    <div><div class="card-kicker">TREND</div><h2>県全体の推移</h2></div>
+    <div><div class="card-kicker">TREND</div><h2 id="trend-title">県全体の推移</h2></div>
     <div class="trend-actions">
+      <label class="trend-region-select-wrap">
+        <span class="sr-only">地域を選択</span>
+        <select id="trend-region-select" class="trend-region-select" aria-label="推移グラフの地域">
+          <option value="prefecture">県全体</option>
+          <option value="新潟市">新潟市</option>
+          <option value="新発田">新発田</option>
+          <option value="村上">村上</option>
+          <option value="長岡">長岡</option>
+          <option value="柏崎">柏崎</option>
+          <option value="上越">上越</option>
+          <option value="糸魚川">糸魚川</option>
+          <option value="南魚沼">南魚沼</option>
+          <option value="十日町">十日町</option>
+          <option value="佐渡">佐渡</option>
+          <option value="新津">新津</option>
+          <option value="三条">三条</option>
+          <option value="魚沼">魚沼</option>
+        </select>
+      </label>
+      <label class="trend-compare-toggle">
+        <input id="trend-compare-prefecture" type="checkbox" checked>
+        <span>県計と比較</span>
+      </label>
       <div class="range-switch" role="group" aria-label="表示期間">
         <button type="button" class="range-button active" data-weeks="13">3か月</button>
         <button type="button" class="range-button" data-weeks="26">半年</button>
@@ -253,6 +290,7 @@
         <button type="button" class="range-button" data-weeks="104">2年</button>
       </div>
       <button id="to-latest" class="ghost-button" type="button">最新へ</button>
+      <button class="ghost-button graph-copy-button" type="button" data-copy-graph>📋 グラフをコピー</button>
     </div>
   </div>
   <div class="threshold-note trend-content-layer">
@@ -262,6 +300,7 @@
     <span class="prevyear-note">3か月・半年・1年では前年同期を破線で表示</span>
   </div>
   <div id="chart-scroll" class="chart-scroll trend-content-layer"><div class="chart-inner"><canvas id="trend-chart"></canvas></div></div>
+  <div class="graph-export-source">出典：新潟県「感染症情報（週報）」</div>
 </section>
 
 <section class="compare-grid">
@@ -296,43 +335,54 @@
   </div>
 
   <div class="age-grid">
-    <article class="card age-latest-card">
+    <article class="card age-latest-card" data-copy-root>
       <div class="section-title-row age-card-head">
         <div><div class="card-kicker">LATEST WEEK</div><h3>最新週の年代別比較</h3></div>
-        <span id="age-latest-period" class="source-chip">--</span>
+        <div class="graph-head-actions">
+          <span id="age-latest-period" class="source-chip">--</span>
+          <button class="ghost-button graph-copy-button" type="button" data-copy-graph>📋 グラフをコピー</button>
+        </div>
       </div>
       <div class="age-chart-wrap age-latest-chart-wrap"><canvas id="age-latest-chart"></canvas></div>
       <div id="age-latest-values" class="age-latest-values" aria-label="最新週の年代別数値一覧"></div>
       <p class="muted small">棒グラフは報告数（人）。棒の上に人数を表示し、下の表で各年代の人/定点を確認できます。</p>
+      <div class="graph-export-source">出典：新潟県「感染症情報（週報）」</div>
     </article>
 
-    <article class="card age-series-card">
+    <article class="card age-series-card" data-copy-root>
       <div class="section-title-row age-card-head">
         <div><div class="card-kicker">TIME SERIES</div><h3>年代別の時系列推移</h3></div>
-        <div class="age-series-range range-switch" role="group" aria-label="年代別時系列の表示期間">
+        <div class="graph-head-actions">
+          <div class="age-series-range range-switch" role="group" aria-label="年代別時系列の表示期間">
           <button type="button" class="age-series-range-button active" data-age-series-weeks="13">3か月</button>
           <button type="button" class="age-series-range-button" data-age-series-weeks="26">半年</button>
           <button type="button" class="age-series-range-button" data-age-series-weeks="52">1年</button>
           <button type="button" class="age-series-range-button" data-age-series-weeks="104">2年</button>
+          </div>
+          <button class="ghost-button graph-copy-button" type="button" data-copy-graph>📋 グラフをコピー</button>
         </div>
       </div>
       <div id="age-series-toggles" class="age-series-toggles" aria-label="表示する年代"></div>
       <div class="age-series-scroll" id="age-series-scroll">
         <div class="age-series-inner"><canvas id="age-series-chart"></canvas></div>
       </div>
+      <div class="graph-export-source">出典：新潟県「感染症情報（週報）」</div>
     </article>
   </div>
 
-  <article class="card age-heatmap-card">
+  <article class="card age-heatmap-card" data-copy-root>
     <div class="section-title-row age-card-head">
       <div>
         <div class="card-kicker">AGE HEATMAP</div>
         <h3>年代別 流行ヒートマップ</h3>
         <p class="muted small">各年代の過去最大値を100%として、流行の強弱を色で表示します。セルに触れると「人/定点」と実数を確認できます。</p>
       </div>
-      <div class="age-current-week">
-        <span>表示週</span>
-        <strong id="age-heatmap-period">--</strong>
+      <div class="graph-head-actions">
+        <div class="age-current-week">
+          <span>表示週</span>
+          <strong id="age-heatmap-period">--</strong>
+        </div>
+        <button class="ghost-button graph-copy-button" type="button" data-copy-graph>📋 グラフをコピー</button>
       </div>
     </div>
 
@@ -365,6 +415,7 @@
       <span>低い</span><div class="age-legend-gradient"></div><span>高い</span>
       <span class="age-legend-note">※ 色は各年代内での相対的な強さ</span>
     </div>
+    <div class="graph-export-source">出典：新潟県「感染症情報（週報）」</div>
   </article>
 
 
@@ -389,7 +440,8 @@
 </dialog>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="./app.js?v=87"></script>
+<script src="./app.js?v=88"></script>
 </body>
 </html>

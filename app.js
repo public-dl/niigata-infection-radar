@@ -19,6 +19,7 @@ const REGION_MUNICIPALITIES={
 };
 const DISPLAY_REGION={"新潟市":"新潟"};
 let allWeeks=[],trendChart=null,latestWeek=null,geoDataPromise=null,mapInstance=null,mapGeoLayer=null,currentMapWeek=null,mapPlayTimer=null,mapRangeStartIndex=0,mapRangeWeeks=13;
+let trendWeeks=13,trendRegion="prefecture",trendComparePrefecture=true,weeklyAIData=null,weeklyAIAudience="general";
 let ageLatestChart=null,ageLatestWeekIndex=0,ageSeriesChart=null,ageHeatmapTimer=null,ageHeatmapRange=13,ageHeatmapEndIndex=0,ageSeriesWeeks=13;
 const AGE_GROUPS=["0歳","1～4歳","5～9歳","10～14歳","15～19歳","20～59歳","60歳以上"];
 const AGE_COLORS={
@@ -458,7 +459,7 @@ async function main(){
  const geo=await fetchGeoData();
  buildHeroSilhouette(geo);
  buildTrendSilhouette(geo);
- renderTrend(13); wireRangeButtons(); renderComparison(allWeeks,latestWeek); renderRanking(latestWeek); renderMap(latestWeek,geo); wireMapTimeline(); renderRegionDefinitions(); wireRegionDialog(); initAgeStatistics();
+ renderTrend(13); wireRangeButtons(); wireTrendRegionControls(); wireGraphCopyButtons(); renderComparison(allWeeks,latestWeek); renderRanking(latestWeek); renderMap(latestWeek,geo); wireMapTimeline(); renderRegionDefinitions(); wireRegionDialog(); initAgeStatistics();
 }
 
 async function renderWeeklyInsight(latest){
@@ -471,41 +472,14 @@ async function renderWeeklyInsight(latest){
    const res=await fetch(AI_COMMENT_URL,{cache:"no-store"});
    if(!res.ok) throw new Error("AIコメント未生成");
    const ai=await res.json();
-
    const src=ai.source_week||{};
    const sameWeek=Number(src.year)===Number(latest.year) && Number(src.week)===Number(latest.week);
    if(!sameWeek) throw new Error("AIコメントが最新週ではありません");
 
-   box.innerHTML="";
-
-   if(ai.headline){
-     const lead=document.createElement("p");
-     lead.className="ai-insight-headline";
-     lead.textContent=ai.headline;
-     box.appendChild(lead);
-   }
-
-   [
-     ["概況",ai.summary],
-     ["推移",ai.trend],
-     ["地域",ai.regional],
-     ["年代",ai.age_group],
-     ["前年同期",ai.year_on_year]
-   ].forEach(([label,text])=>{
-     if(!text) return;
-     const p=document.createElement("p");
-     p.className="ai-insight-paragraph";
-
-     const tag=document.createElement("span");
-     tag.className="ai-insight-label";
-     tag.textContent=label;
-
-     const body=document.createElement("span");
-     body.textContent=text;
-
-     p.append(tag,body);
-     box.appendChild(p);
-   });
+   weeklyAIData=ai;
+   weeklyAIAudience="general";
+   renderWeeklyInsightAudience();
+   wireAIAudienceSwitch();
 
    if(source) source.textContent="AI自動生成";
    if(note){
@@ -513,56 +487,140 @@ async function renderWeeklyInsight(latest){
      note.hidden=false;
    }
  }catch(err){
-   // API生成前・通信失敗時は従来の県週報トピックに自動フォールバック
+   weeklyAIData=null;
    box.textContent=cleanTopic(latest.topic);
    if(source) source.textContent="新潟県週報";
    if(note) note.hidden=true;
+   document.querySelectorAll(".ai-audience-button").forEach(btn=>btn.disabled=true);
  }
 }
 
-function renderTrend(weeksCount){
- const visible=allWeeks.slice(-Math.min(weeksCount,allWeeks.length));
- const labels=visible.map(w=>w.label);
- const values=visible.map(w=>w.prefecture);
+function renderWeeklyInsightAudience(){
+ const box=document.querySelector("#weekly-topic");
+ const note=document.querySelector("#ai-topic-note");
+ if(!box||!weeklyAIData) return;
+ const ai=weeklyAIData;
+ const kids=weeklyAIAudience==="kids";
+ const prefix=kids?"kids_":"";
+ const fields=[
+   ["概況",ai[prefix+"summary"]],
+   ["推移",ai[prefix+"trend"]],
+   ["地域",ai[prefix+"regional"]],
+   ["年代",ai[prefix+"age_group"]],
+   ["前年同期",ai[prefix+"year_on_year"]]
+ ];
+ const headline=ai[prefix+"headline"];
 
- // 3か月・半年・1年では、各週と同じ「前年の週番号」を重ねて比較する
- const showPreviousYear=[13,26,52].includes(weeksCount);
+ box.innerHTML="";
+ if(headline){
+   const lead=document.createElement("p");
+   lead.className="ai-insight-headline";
+   lead.textContent=headline;
+   box.appendChild(lead);
+ }
+ const hasContent=Boolean(headline||fields.some(([,text])=>text));
+ if(kids&&!hasContent){
+   const p=document.createElement("p");
+   p.className="ai-insight-paragraph";
+   p.textContent="こども向けコメントは、次回のAI週次更新後から表示できます。";
+   box.appendChild(p);
+   if(note) note.textContent="一般向けコメントは上の「一般向け」ボタンで確認できます。";
+   return;
+ }
+ fields.forEach(([label,text])=>{
+   if(!text) return;
+   const p=document.createElement("p");
+   p.className="ai-insight-paragraph";
+   const tag=document.createElement("span");
+   tag.className="ai-insight-label";
+   tag.textContent=label;
+   const body=document.createElement("span");
+   body.textContent=text;
+   p.append(tag,body);
+   box.appendChild(p);
+ });
+ if(note){
+   note.textContent=kids
+     ?"新潟県公表データをもとにAIが、こどもにも読みやすい表現で自動生成したコメントです。"
+     :(ai.disclaimer||"新潟県公表データをもとにAIが自動生成した分析コメントです。");
+ }
+}
+function wireAIAudienceSwitch(){
+ document.querySelectorAll(".ai-audience-button").forEach(btn=>{
+   btn.disabled=false;
+   btn.addEventListener("click",()=>{
+     weeklyAIAudience=btn.dataset.aiAudience==="kids"?"kids":"general";
+     document.querySelectorAll(".ai-audience-button").forEach(b=>{
+       const active=b.dataset.aiAudience===weeklyAIAudience;
+       b.classList.toggle("is-active",active);
+       b.setAttribute("aria-pressed",active?"true":"false");
+     });
+     renderWeeklyInsightAudience();
+   });
+ });
+}
+
+function trendValue(week,region){
+ if(region==="prefecture") return week?.prefecture;
+ return week?.regions?.[region] ?? null;
+}
+function trendRegionLabel(region){
+ return region==="prefecture" ? "県全体" : region;
+}
+function renderTrend(weeksCount=trendWeeks){
+ trendWeeks=Number(weeksCount)||13;
+ const visible=allWeeks.slice(-Math.min(trendWeeks,allWeeks.length));
+ const labels=visible.map(w=>w.label);
+ const values=visible.map(w=>trendValue(w,trendRegion));
+ const selectedLabel=trendRegionLabel(trendRegion);
+
+ const title=document.querySelector("#trend-title");
+ if(title) title.textContent=trendRegion==="prefecture" ? "県全体の推移" : `${selectedLabel}の推移`;
+
+ const compare=document.querySelector("#trend-compare-prefecture");
+ if(compare){
+   compare.disabled=trendRegion==="prefecture";
+   compare.checked=trendRegion==="prefecture"?false:trendComparePrefecture;
+ }
+ const compareWrap=document.querySelector(".trend-compare-toggle");
+ if(compareWrap) compareWrap.classList.toggle("is-disabled",trendRegion==="prefecture");
+
+ const showPreviousYear=[13,26,52].includes(trendWeeks);
  const previousValues=showPreviousYear
    ? visible.map(w=>{
        const prev=allWeeks.find(x=>x.year===w.year-1&&x.week===w.week);
-       return prev ? prev.prefecture : null;
+       return prev ? trendValue(prev,trendRegion) : null;
      })
    : [];
 
- if(trendChart)trendChart.destroy();
+ if(trendChart) trendChart.destroy();
 
- const datasets=[
-   {
-     label:`今年（${latestWeek.year}）`,
-     data:values,
-     borderColor:"#0b79b6",
-     backgroundColor:"rgba(11,121,182,.10)",
-     pointRadius:3,
-     pointHoverRadius:5,
-     borderWidth:2.8,
-     tension:.22,
-     fill:true
-   }
- ];
+ const datasets=[{
+   label:trendRegion==="prefecture"?`県全体（${latestWeek.year}）`:`${selectedLabel}（${latestWeek.year}）`,
+   data:values,
+   borderColor:"#0b79b6",
+   backgroundColor:"rgba(11,121,182,.10)",
+   pointRadius:3,pointHoverRadius:5,borderWidth:2.8,tension:.22,fill:true
+ }];
+
+ if(trendRegion!=="prefecture" && trendComparePrefecture){
+   datasets.push({
+     label:"県計",
+     data:visible.map(w=>w.prefecture),
+     borderColor:"#5b6f7d",
+     backgroundColor:"transparent",
+     pointRadius:2.2,pointHoverRadius:4,borderWidth:2.1,tension:.22,fill:false
+   });
+ }
 
  if(showPreviousYear){
    datasets.push({
-     label:"前年同期",
+     label:`${trendRegion==="prefecture"?"県全体":selectedLabel}・前年同期`,
      data:previousValues,
      borderColor:"#8fa3b1",
      backgroundColor:"transparent",
-     pointRadius:2.4,
-     pointHoverRadius:4,
-     borderWidth:2.2,
-     borderDash:[7,5],
-     tension:.22,
-     fill:false,
-     spanGaps:false
+     pointRadius:2.2,pointHoverRadius:4,borderWidth:2.1,borderDash:[7,5],
+     tension:.22,fill:false,spanGaps:false
    });
  }
 
@@ -570,58 +628,105 @@ function renderTrend(weeksCount){
    type:"line",
    data:{labels,datasets},
    options:{
-     responsive:true,
-     maintainAspectRatio:false,
-     interaction:{mode:"index",intersect:false},
+     responsive:true,maintainAspectRatio:false,interaction:{mode:"index",intersect:false},
      plugins:{
-       legend:{
-         display:showPreviousYear,
-         position:"top",
-         align:"end",
-         labels:{
-           usePointStyle:true,
-           boxWidth:8,
-           boxHeight:8,
-           padding:16,
-           font:{size:11,weight:"700"}
-         }
-       },
-       tooltip:{
-         callbacks:{
-           label:c=>` ${c.dataset.label}：定点当たり ${n(c.raw)}`
-         }
-       }
+       legend:{display:datasets.length>1,position:"top",align:"end",labels:{usePointStyle:true,boxWidth:8,boxHeight:8,padding:16,font:{size:11,weight:"700"}}},
+       tooltip:{callbacks:{label:c=>` ${c.dataset.label}：定点当たり ${n(c.raw)}`}}
      },
      scales:{
-       x:{
-         grid:{display:false},
-         ticks:{
-           maxRotation:0,
-           autoSkip:true,
-           maxTicksLimit:weeksCount<=13?13:weeksCount<=26?13:16,
-           font:{size:10}
-         }
-       },
-       y:{
-         beginAtZero:true,
-         grid:{color:"rgba(90,130,150,.12)"},
-         title:{display:true,text:"定点当たり報告数"}
-       }
+       x:{grid:{display:false},ticks:{maxRotation:0,autoSkip:true,maxTicksLimit:trendWeeks<=13?13:trendWeeks<=26?13:16,font:{size:10}}},
+       y:{beginAtZero:true,grid:{color:"rgba(90,130,150,.12)"},title:{display:true,text:"定点当たり報告数"}}
      }
    }
  });
-
  const inner=document.querySelector(".chart-inner");
- inner.style.minWidth=weeksCount<=26?"100%":weeksCount<=52?"1250px":"1800px";
- requestAnimationFrame(()=>{
-   const s=document.querySelector("#chart-scroll");
-   s.scrollLeft=s.scrollWidth;
- });
+ if(inner) inner.style.minWidth=trendWeeks<=26?"100%":trendWeeks<=52?"1250px":"1800px";
+ requestAnimationFrame(()=>{const sc=document.querySelector("#chart-scroll");if(sc)sc.scrollLeft=sc.scrollWidth;});
 }
 function wireRangeButtons(){
- document.querySelectorAll(".range-button").forEach(btn=>btn.addEventListener("click",()=>{document.querySelectorAll(".range-button").forEach(b=>b.classList.remove("active"));btn.classList.add("active");renderTrend(Number(btn.dataset.weeks))}));
- document.querySelector("#to-latest").addEventListener("click",()=>{const s=document.querySelector("#chart-scroll");s.scrollTo({left:s.scrollWidth,behavior:"smooth"})});
+ document.querySelectorAll(".range-button").forEach(btn=>btn.addEventListener("click",()=>{
+   document.querySelectorAll(".range-button").forEach(b=>b.classList.remove("active"));
+   btn.classList.add("active");
+   renderTrend(Number(btn.dataset.weeks));
+ }));
+ const latest=document.querySelector("#to-latest");
+ if(latest) latest.addEventListener("click",()=>{const sc=document.querySelector("#chart-scroll");if(sc)sc.scrollTo({left:sc.scrollWidth,behavior:"smooth"})});
 }
+function wireTrendRegionControls(){
+ const select=document.querySelector("#trend-region-select");
+ const compare=document.querySelector("#trend-compare-prefecture");
+ if(select){
+   select.value=trendRegion;
+   select.addEventListener("change",()=>{
+     trendRegion=select.value||"prefecture";
+     renderTrend(trendWeeks);
+   });
+ }
+ if(compare){
+   compare.addEventListener("change",()=>{
+     trendComparePrefecture=compare.checked;
+     renderTrend(trendWeeks);
+   });
+ }
+}
+async function canvasToBlob(canvas){
+ return await new Promise((resolve,reject)=>{
+   canvas.toBlob(blob=>blob?resolve(blob):reject(new Error("PNG変換に失敗しました")),"image/png");
+ });
+}
+function downloadBlob(blob,filename){
+ const url=URL.createObjectURL(blob);
+ const a=document.createElement("a");
+ a.href=url;a.download=filename;
+ document.body.appendChild(a);a.click();a.remove();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+async function copyGraphCard(button){
+ const root=button.closest("[data-copy-root]");
+ if(!root) return;
+ const originalText=button.textContent;
+ button.disabled=true;
+ button.textContent="作成中…";
+ root.classList.add("is-graph-exporting");
+ try{
+   if(typeof html2canvas!=="function") throw new Error("画像コピー機能を読み込めませんでした");
+   await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+   const width=Math.max(root.scrollWidth,root.offsetWidth);
+   const canvas=await html2canvas(root,{
+     backgroundColor:"#ffffff",
+     scale:Math.min(2,window.devicePixelRatio||1.5),
+     useCORS:true,
+     logging:false,
+     width,
+     windowWidth:Math.max(document.documentElement.clientWidth,width)
+   });
+   const blob=await canvasToBlob(canvas);
+   let copied=false;
+   if(navigator.clipboard && window.ClipboardItem){
+     try{
+       await navigator.clipboard.write([new ClipboardItem({"image/png":blob})]);
+       copied=true;
+     }catch(_){}
+   }
+   if(copied){
+     button.textContent="✓ コピーしました";
+   }else{
+     const title=(root.querySelector("h2,h3")?.textContent||"influenza-graph").replace(/[\\/:*?"<>|]/g,"-");
+     downloadBlob(blob,`${title}.png`);
+     button.textContent="PNGを保存しました";
+   }
+ }catch(err){
+   console.error(err);
+   button.textContent="コピーできませんでした";
+ }finally{
+   root.classList.remove("is-graph-exporting");
+   setTimeout(()=>{button.disabled=false;button.textContent=originalText;},1800);
+ }
+}
+function wireGraphCopyButtons(){
+ document.querySelectorAll("[data-copy-graph]").forEach(btn=>btn.addEventListener("click",()=>copyGraphCard(btn)));
+}
+
 function renderComparison(weeks,latest){
  const list=document.querySelector("#comparison-list");
  const note=document.querySelector("#year-compare-note");
