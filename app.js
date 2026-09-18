@@ -740,7 +740,9 @@ function renderTrend(weeksCount=trendWeeks){
    });
  }
 
- trendChart=new Chart(document.querySelector("#trend-chart"),{
+ const trendCanvas=document.querySelector("#trend-chart");
+ if(!trendCanvas) return;
+ trendChart=new Chart(trendCanvas,{
    type:"line",
    data:{labels,datasets},
    options:{
@@ -757,7 +759,24 @@ function renderTrend(weeksCount=trendWeeks){
  });
  const inner=document.querySelector(".chart-inner");
  if(inner) inner.style.minWidth=trendWeeks<=26?"100%":trendWeeks<=52?"1250px":"1800px";
- requestAnimationFrame(()=>{const sc=document.querySelector("#chart-scroll");if(sc)sc.scrollLeft=sc.scrollWidth;});
+
+ // Smartphone browsers can calculate the responsive canvas before the
+ // flex/stacked layout has settled. Resize once immediately and once after
+ // layout completion so the chart never remains at 0px height/width.
+ const resizeTrendChart=()=>{
+   if(!trendChart) return;
+   const host=trendCanvas.parentElement;
+   if(window.matchMedia("(max-width: 820px)").matches && host){
+     if(host.getBoundingClientRect().height < 240) host.style.height="330px";
+   }
+   trendChart.resize();
+ };
+ requestAnimationFrame(()=>{
+   resizeTrendChart();
+   const sc=document.querySelector("#chart-scroll");
+   if(sc) sc.scrollLeft=sc.scrollWidth;
+   setTimeout(resizeTrendChart,120);
+ });
 }
 function wireRangeButtons(){
  document.querySelectorAll(".range-button").forEach(btn=>btn.addEventListener("click",()=>{
@@ -1637,4 +1656,20 @@ function wireMapTimeline(){
    },700);
  });
 }
+let trendViewportResizeTimer=null;
+function refreshTrendChartForViewport(){
+ clearTimeout(trendViewportResizeTimer);
+ trendViewportResizeTimer=setTimeout(()=>{
+   if(trendChart){
+     const inner=document.querySelector(".chart-inner");
+     if(inner && window.matchMedia("(max-width: 820px)").matches && inner.getBoundingClientRect().height < 240){
+       inner.style.height="330px";
+     }
+     trendChart.resize();
+   }
+ },120);
+}
+window.addEventListener("resize",refreshTrendChartForViewport,{passive:true});
+window.addEventListener("orientationchange",refreshTrendChartForViewport,{passive:true});
+
 main().catch(err=>{console.error(err);document.querySelector("#weekly-topic").textContent="データの読み込みに失敗しました。data/influenza_history.json の配置を確認してください。"});
