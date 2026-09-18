@@ -802,9 +802,149 @@ async function captureGraphRoot(root,{isAgeCard=false}={}){
  }
 }
 
+
+function roundedRectPath(ctx,x,y,w,h,r){
+ const rr=Math.max(0,Math.min(r,Math.min(w,h)/2));
+ ctx.beginPath();
+ ctx.moveTo(x+rr,y);
+ ctx.arcTo(x+w,y,x+w,y+h,rr);
+ ctx.arcTo(x+w,y+h,x,y+h,rr);
+ ctx.arcTo(x,y+h,x,y,rr);
+ ctx.arcTo(x,y,x+w,y,rr);
+ ctx.closePath();
+}
+
+function buildAgeLatestExportCanvas(){
+ const source=document.querySelector("#age-latest-chart");
+ const week=allWeeks[ageLatestWeekIndex]||latestWeek||allWeeks.at(-1);
+ if(!source||!week) throw new Error("年代別グラフを取得できません");
+
+ // 年代別の最新週グラフだけは html2canvas に頼らず、
+ // Chart.js の描画結果と見出し・数値表・出典を1枚に直接合成する。
+ // これによりブラウザ差で「グラフだけ」「黒背景」「コピー失敗」になるのを防ぐ。
+ const W=1200,H=790,dpr=1.5;
+ const out=document.createElement("canvas");
+ out.width=Math.round(W*dpr);
+ out.height=Math.round(H*dpr);
+ const ctx=out.getContext("2d");
+ ctx.scale(dpr,dpr);
+
+ ctx.fillStyle="#ffffff";
+ ctx.fillRect(0,0,W,H);
+ roundedRectPath(ctx,1,1,W-2,H-2,28);
+ ctx.strokeStyle="#d8e7ef";
+ ctx.lineWidth=2;
+ ctx.stroke();
+
+ const font='system-ui,-apple-system,"Segoe UI","Yu Gothic UI","Hiragino Kaku Gothic ProN",sans-serif';
+ ctx.textBaseline="alphabetic";
+
+ ctx.fillStyle="#536b7a";
+ ctx.font=`800 15px ${font}`;
+ ctx.letterSpacing="2px";
+ ctx.fillText("LATEST WEEK",48,55);
+ ctx.letterSpacing="0px";
+
+ ctx.fillStyle="#092f4f";
+ ctx.font=`800 30px ${font}`;
+ ctx.fillText("最新週の年代別比較",48,96);
+
+ const period=compareHeading(week);
+ ctx.font=`700 16px ${font}`;
+ const pW=Math.ceil(ctx.measureText(period).width)+32;
+ roundedRectPath(ctx,W-48-pW,48,pW,42,21);
+ ctx.fillStyle="#eef7fb"; ctx.fill();
+ ctx.fillStyle="#2b6686";
+ ctx.textAlign="center";
+ ctx.fillText(period,W-48-pW/2,75);
+ ctx.textAlign="left";
+
+ // Chart.js のCanvasを白背景の上へ描画。
+ const chartX=48, chartY=130, chartW=W-96, chartH=390;
+ ctx.save();
+ roundedRectPath(ctx,chartX,chartY,chartW,chartH,16);
+ ctx.clip();
+ ctx.fillStyle="#ffffff"; ctx.fillRect(chartX,chartY,chartW,chartH);
+ ctx.drawImage(source,0,0,source.width,source.height,chartX,chartY,chartW,chartH);
+ ctx.restore();
+
+ // 数値表
+ const values=AGE_GROUPS.map(g=>ageRate(week,g));
+ const left=48, top=548, labelW=105, cellW=(W-96-labelW)/AGE_GROUPS.length;
+ const rowH=48;
+ roundedRectPath(ctx,left,top,W-96,rowH*2,10);
+ ctx.fillStyle="#f8fbfd"; ctx.fill();
+ ctx.strokeStyle="#dce9f0"; ctx.lineWidth=1; ctx.stroke();
+ ctx.font=`700 15px ${font}`;
+ ctx.textAlign="center"; ctx.textBaseline="middle";
+ ctx.fillStyle="#4d6878";
+ ctx.fillText("年齢",left+labelW/2,top+rowH/2);
+ ctx.fillText("人/定点",left+labelW/2,top+rowH+rowH/2);
+ AGE_GROUPS.forEach((g,i)=>{
+   const x=left+labelW+i*cellW;
+   if(i>0){ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,top+rowH*2);ctx.stroke();}
+   ctx.fillStyle="#234a64";
+   ctx.font=`700 14px ${font}`;
+   ctx.fillText(g,x+cellW/2,top+rowH/2);
+   ctx.fillStyle="#0c6596";
+   ctx.font=`800 16px ${font}`;
+   ctx.fillText(values[i]===null?"--":n(values[i]),x+cellW/2,top+rowH+rowH/2);
+ });
+ ctx.beginPath();ctx.moveTo(left,top+rowH);ctx.lineTo(W-48,top+rowH);ctx.stroke();
+
+ ctx.textAlign="left"; ctx.textBaseline="alphabetic";
+ ctx.fillStyle="#6b7f8d";
+ ctx.font=`600 14px ${font}`;
+ ctx.fillText("棒グラフは報告数（人）。棒の上に人数を表示し、下の表で各年代の人/定点を確認できます。",48,682);
+
+ ctx.beginPath();ctx.moveTo(48,710);ctx.lineTo(W-48,710);
+ ctx.strokeStyle="#e6eef3";ctx.stroke();
+ ctx.fillStyle="#71838f";
+ ctx.font=`500 13px ${font}`;
+ ctx.fillText('出典：新潟県「感染症情報（週報）」',48,742);
+
+ return out;
+}
+
+async function copyAgeLatestCard(button){
+ const originalText=button.textContent;
+ button.disabled=true;
+ button.textContent="作成中…";
+ try{
+   const canvas=buildAgeLatestExportCanvas();
+   const blob=await canvasToBlob(canvas);
+   let copied=false;
+   if(navigator.clipboard && window.ClipboardItem){
+     try{
+       await navigator.clipboard.write([new ClipboardItem({"image/png":blob})]);
+       copied=true;
+     }catch(err){
+       console.warn("clipboard image write failed",err);
+     }
+   }
+   if(copied){
+     button.textContent="✓ コピーしました";
+   }else{
+     downloadBlob(blob,"最新週の年代別比較.png");
+     button.textContent="PNGを保存しました";
+   }
+ }catch(err){
+   console.error(err);
+   button.textContent="コピーできませんでした";
+ }finally{
+   setTimeout(()=>{button.disabled=false;button.textContent=originalText;},1800);
+ }
+}
+
 async function copyGraphCard(button){
  const root=button.closest("[data-copy-root]");
  if(!root) return;
+
+ // 最新週の年代別比較は専用の合成Canvasでコピーする。
+ if(root.classList.contains("age-latest-card")){
+   await copyAgeLatestCard(button);
+   return;
+ }
 
  const isMap=root.id==="area-map";
  const isAgeCard=Boolean(root.closest("#age-stats"));
