@@ -1294,7 +1294,9 @@ function renderRanking(weekData){
 
    const th=document.createElement("th");
    th.scope="row";
-   th.innerHTML=`<span class="region-signal-dot" aria-hidden="true"></span><span>${region}</span>`;
+   const municipalities=(REGION_MUNICIPALITIES[region]||[]).join("・");
+   const municipalityLine=region==="新潟市" ? "" : `<span class="region-municipalities">${municipalities}</span>`;
+   th.innerHTML=`<span class="region-signal-dot" aria-hidden="true"></span><span class="region-name-stack"><span class="region-name-main">${region}</span>${municipalityLine}</span>`;
    tr.appendChild(th);
 
    const latestTd=document.createElement("td");

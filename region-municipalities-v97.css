@@ -1,0 +1,40 @@
+/* 地域別の報告状況：デスクトップのみ、地域名の下に構成市町村を表示 */
+.region-name-stack{
+  display:inline-flex;
+  flex-direction:column;
+  align-items:flex-start;
+  min-width:0;
+  vertical-align:middle;
+}
+.region-name-main{
+  display:block;
+}
+.region-municipalities{
+  display:none;
+}
+
+@media (min-width: 769px){
+  .region-week-table tbody th{
+    vertical-align:middle;
+  }
+  .region-name-stack{
+    gap:3px;
+  }
+  .region-municipalities{
+    display:block;
+    max-width:190px;
+    font-size:.66rem;
+    line-height:1.35;
+    font-weight:500;
+    letter-spacing:0;
+    color:#6b7f8c;
+    white-space:normal;
+    overflow-wrap:anywhere;
+  }
+}
+
+@media (max-width: 768px){
+  .region-municipalities{
+    display:none !important;
+  }
+}
