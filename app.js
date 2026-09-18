@@ -1362,6 +1362,26 @@ function regionActualCount(week,region){
  const v=week?.region_counts?.[region];
  return Number.isFinite(Number(v))?Number(v):null;
 }
+function prefectureRate(week){
+ const v=week?.prefecture;
+ return Number.isFinite(Number(v))?Number(v):null;
+}
+function prefectureActualCount(week){
+ const direct=week?.prefecture_count;
+ if(Number.isFinite(Number(direct))) return Number(direct);
+ const verified=week?.verification?.prefecture_count;
+ if(Number.isFinite(Number(verified))) return Number(verified);
+ const counts=REGION_ORDER.map(region=>regionActualCount(week,region));
+ if(counts.length && counts.every(v=>v!==null)) return counts.reduce((sum,v)=>sum+Number(v),0);
+ return null;
+}
+function prefectureValueHTML(week){
+ if(!week) return '<span class="region-rate">--</span><span class="region-count-wrap">（<span class="region-actual-count">--</span>）</span>';
+ const rate=prefectureRate(week);
+ if(rate===null) return '<span class="region-rate">--</span><span class="region-count-wrap">（<span class="region-actual-count">--</span>）</span>';
+ const count=prefectureActualCount(week);
+ return `<span class="region-rate">${fixed2(rate)}</span><span class="region-count-wrap">（<span class="region-actual-count">${regionCountText(count)}</span>）</span>`;
+}
 function regionCountText(value,{signed=false}={}){
  if(value===null||value===undefined||!Number.isFinite(Number(value))) return "--";
  const n=Math.round(Number(value));
@@ -1400,6 +1420,24 @@ function formatRegionDelta(current,previous,region){
    className:rateDiff>0?"delta-up":rateDiff<0?"delta-down":"delta-flat"
  };
 }
+function formatPrefectureDelta(current,previous){
+ const currRate=prefectureRate(current);
+ const prevRate=prefectureRate(previous);
+ if(currRate===null||prevRate===null){
+   return {
+     html:'<span class="region-rate">--</span><span class="region-count-wrap">（<span class="region-actual-count">--</span>）</span>',
+     className:"delta-flat"
+   };
+ }
+ const rateDiff=currRate-prevRate;
+ const currCount=prefectureActualCount(current);
+ const prevCount=prefectureActualCount(previous);
+ const countDiff=(currCount===null||prevCount===null)?null:currCount-prevCount;
+ return {
+   html:`<span class="region-rate">${signedFixed2(rateDiff)}</span><span class="region-count-wrap">（<span class="region-actual-count">${regionCountText(countDiff,{signed:true})}</span>）</span>`,
+   className:rateDiff>0?"delta-up":rateDiff<0?"delta-down":"delta-flat"
+ };
+}
 function renderRanking(weekData){
  const box=document.querySelector("#ranking");
  if(!box) return;
@@ -1431,6 +1469,37 @@ function renderRanking(weekData){
      </tr>
    </thead>`;
  const tbody=document.createElement("tbody");
+
+ // 県計は地域別データの基準値として最上段に固定表示する。
+ // 新潟市との境界はCSSで二重線にして、地域行とは視覚的に区切る。
+ {
+   const latestRate=prefectureRate(latest);
+   const tier=latestRate===null?"blue":tierKey(latestRate);
+   const tr=document.createElement("tr");
+   tr.className=`region-signal-row prefecture-total-row tier-bg-${tier}`;
+
+   const th=document.createElement("th");
+   th.scope="row";
+   th.innerHTML='<span class="region-signal-dot" aria-hidden="true"></span><span class="region-name-stack"><span class="region-name-main">県計</span></span>';
+   tr.appendChild(th);
+
+   const latestTd=document.createElement("td");
+   latestTd.className="region-current-value";
+   latestTd.innerHTML=prefectureValueHTML(latest);
+   tr.appendChild(latestTd);
+
+   const prevTd=document.createElement("td");
+   prevTd.innerHTML=prefectureValueHTML(prev);
+   tr.appendChild(prevTd);
+
+   const deltaTd=document.createElement("td");
+   const delta=formatPrefectureDelta(latest,prev);
+   deltaTd.className=`region-delta ${delta.className}`;
+   deltaTd.innerHTML=delta.html;
+   tr.appendChild(deltaTd);
+
+   tbody.appendChild(tr);
+ }
 
  REGION_ORDER.forEach(region=>{
    const latestRate=regionRate(latest,region);

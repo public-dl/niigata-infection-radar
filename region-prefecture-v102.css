@@ -1,0 +1,24 @@
+/* v102 — 地域別の報告状況に県計を追加
+   県計と新潟市の間は二重線で明確に区切る */
+.region-week-table tbody .prefecture-total-row > th,
+.region-week-table tbody .prefecture-total-row > td{
+  border-bottom:4px double #9fb9c8 !important;
+}
+
+.region-week-table tbody .prefecture-total-row th{
+  font-weight:950;
+}
+
+/* 二重線が詰まって見えないよう、県計の行だけごくわずかに余白を確保 */
+.region-week-table tbody .prefecture-total-row > th,
+.region-week-table tbody .prefecture-total-row > td{
+  padding-bottom:14px;
+}
+
+@media (max-width:820px){
+  .region-week-table tbody .prefecture-total-row > th,
+  .region-week-table tbody .prefecture-total-row > td{
+    border-bottom-width:4px !important;
+    padding-bottom:10px;
+  }
+}
