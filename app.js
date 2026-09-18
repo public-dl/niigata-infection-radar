@@ -957,13 +957,18 @@ function regionActualCount(week,region){
  const v=week?.region_counts?.[region];
  return Number.isFinite(Number(v))?Number(v):null;
 }
-function formatRegionWeekValue(week,region){
- if(!week) return "--";
+function regionCountText(value,{signed=false}={}){
+ if(value===null||value===undefined||!Number.isFinite(Number(value))) return "--";
+ const n=Math.round(Number(value));
+ if(signed && n>0) return `+${n}`;
+ return String(n);
+}
+function regionValueHTML(week,region){
+ if(!week) return '<span class="region-rate">--</span><span class="region-count-wrap">（<span class="region-actual-count">--</span>）</span>';
  const rate=regionRate(week,region);
- if(rate===null) return "--";
+ if(rate===null) return '<span class="region-rate">--</span><span class="region-count-wrap">（<span class="region-actual-count">--</span>）</span>';
  const count=regionActualCount(week,region);
- const countText=count===null?"--":String(Math.round(count));
- return `${fixed2(rate)} 人/定点（${countText}）`;
+ return `<span class="region-rate">${fixed2(rate)}</span><span class="region-count-wrap">（<span class="region-actual-count">${regionCountText(count)}</span>）</span>`;
 }
 function signedFixed2(value){
  const v=Number(value);
@@ -972,23 +977,21 @@ function signedFixed2(value){
  if(v<0) return `-${Math.abs(v).toFixed(2)}`;
  return "0.00";
 }
-function signedInteger(value){
- const v=Number(value);
- if(!Number.isFinite(v)) return "--";
- const n=Math.round(v);
- if(n>0) return `+${n}`;
- return String(n);
-}
 function formatRegionDelta(current,previous,region){
  const currRate=regionRate(current,region);
  const prevRate=regionRate(previous,region);
- if(currRate===null||prevRate===null) return {text:"--",className:"delta-flat"};
+ if(currRate===null||prevRate===null){
+   return {
+     html:'<span class="region-rate">--</span><span class="region-count-wrap">（<span class="region-actual-count">--</span>）</span>',
+     className:"delta-flat"
+   };
+ }
  const rateDiff=currRate-prevRate;
  const currCount=regionActualCount(current,region);
  const prevCount=regionActualCount(previous,region);
- const countText=(currCount===null||prevCount===null)?"--":signedInteger(currCount-prevCount);
+ const countDiff=(currCount===null||prevCount===null)?null:currCount-prevCount;
  return {
-   text:`${signedFixed2(rateDiff)}（${countText}）`,
+   html:`<span class="region-rate">${signedFixed2(rateDiff)}</span><span class="region-count-wrap">（<span class="region-actual-count">${regionCountText(countDiff,{signed:true})}</span>）</span>`,
    className:rateDiff>0?"delta-up":rateDiff<0?"delta-down":"delta-flat"
  };
 }
@@ -1037,17 +1040,17 @@ function renderRanking(weekData){
 
    const latestTd=document.createElement("td");
    latestTd.className="region-current-value";
-   latestTd.textContent=formatRegionWeekValue(latest,region);
+   latestTd.innerHTML=regionValueHTML(latest,region);
    tr.appendChild(latestTd);
 
    const prevTd=document.createElement("td");
-   prevTd.textContent=formatRegionWeekValue(prev,region);
+   prevTd.innerHTML=regionValueHTML(prev,region);
    tr.appendChild(prevTd);
 
    const deltaTd=document.createElement("td");
    const delta=formatRegionDelta(latest,prev,region);
    deltaTd.className=`region-delta ${delta.className}`;
-   deltaTd.textContent=delta.text;
+   deltaTd.innerHTML=delta.html;
    tr.appendChild(deltaTd);
 
    tbody.appendChild(tr);
@@ -1056,10 +1059,12 @@ function renderRanking(weekData){
  wrap.appendChild(table);
  box.appendChild(wrap);
 
- const note=document.createElement("p");
- note.className="region-week-table-note";
- note.textContent="※（ ）内は実数。増減は最新－前週。";
- box.appendChild(note);
+ const legend=document.createElement("div");
+ legend.className="region-week-table-legend";
+ legend.innerHTML=`
+   <p><strong>数値：</strong>定点当たり報告数（人/定点） <span class="legend-sep">｜</span> <strong>（ ）内：</strong>実数（人） <span class="legend-sep">｜</span> <strong>増減：</strong>最新週 − 前週</p>
+   <p class="region-signal-legend"><strong>流行水準：</strong><span><i class="legend-signal legend-blue"></i>1.00未満</span><span><i class="legend-signal legend-yellow"></i>1.00以上10.00未満</span><span><i class="legend-signal legend-red"></i>10.00以上30.00未満</span><span><i class="legend-signal legend-purple"></i>30.00以上</span></p>`;
+ box.appendChild(legend);
 }
 function renderRegionDefinitions(){
  const box=document.querySelector("#region-definition-list");box.innerHTML="";
