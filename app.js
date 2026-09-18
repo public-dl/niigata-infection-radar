@@ -742,6 +742,66 @@ function flattenLeafletTransformsForCapture(mapEl){
  };
 }
 
+function freezeCanvasRenderingForCapture(root){
+ const saved=[];
+ root.querySelectorAll("canvas").forEach(canvas=>{
+   try{
+     const rect=canvas.getBoundingClientRect();
+     if(!rect.width||!rect.height) return;
+
+     const img=document.createElement("img");
+     img.src=canvas.toDataURL("image/png");
+     img.alt="";
+     img.setAttribute("aria-hidden","true");
+     img.style.display="block";
+     img.style.width=`${Math.ceil(rect.width)}px`;
+     img.style.height=`${Math.ceil(rect.height)}px`;
+     img.style.maxWidth="100%";
+     img.style.objectFit="fill";
+
+     const oldDisplay=canvas.style.display;
+     canvas.parentNode.insertBefore(img,canvas);
+     canvas.style.display="none";
+     saved.push({canvas,img,oldDisplay});
+   }catch(err){
+     console.warn("canvas freeze skipped",err);
+   }
+ });
+
+ return ()=>{
+   saved.forEach(({canvas,img,oldDisplay})=>{
+     try{ img.remove(); }catch(_){}
+     canvas.style.display=oldDisplay;
+   });
+ };
+}
+
+async function captureGraphRoot(root,{isAgeCard=false}={}){
+ const visibleWidth=Math.ceil(root.getBoundingClientRect().width)||root.offsetWidth;
+ const width=isAgeCard?visibleWidth:Math.max(root.scrollWidth,root.offsetWidth);
+ const options={
+   backgroundColor:"#ffffff",
+   scale:isAgeCard?1.5:Math.min(2,window.devicePixelRatio||1.5),
+   useCORS:true,
+   allowTaint:false,
+   logging:false,
+   width,
+   windowWidth:Math.max(document.documentElement.clientWidth,width),
+   scrollX:0,
+   scrollY:-window.scrollY
+ };
+
+ try{
+   return await html2canvas(root,options);
+ }catch(firstError){
+   // 高解像度で失敗するブラウザ向けに、カード全体の体裁を保ったまま
+   // 低解像度で1回だけ再試行する。canvas単体コピーには切り替えない。
+   console.warn("graph capture retry",firstError);
+   await new Promise(r=>setTimeout(r,60));
+   return await html2canvas(root,{...options,scale:1});
+ }
+}
+
 async function copyGraphCard(button){
  const root=button.closest("[data-copy-root]");
  if(!root) return;
@@ -751,13 +811,14 @@ async function copyGraphCard(button){
  const originalText=button.textContent;
  const originalVisibility=button.style.visibility;
  let restoreLeaflet=()=>{};
+ let restoreCanvases=()=>{};
 
  button.disabled=true;
  button.textContent="作成中…";
 
- // 通常グラフは従来どおり「コピー用表示」にする。
+ // 通常グラフは「カード全体」をコピーする。
  // Leaflet地図だけは、レイアウトを変えると内部座標がずれるため
- // 画面の配置を一切変えずにキャプチャする。
+ // 画面の配置を変えずにキャプチャする。
  if(isMap){
    button.style.visibility="hidden";
  }else{
@@ -768,36 +829,28 @@ async function copyGraphCard(button){
    if(typeof html2canvas!=="function") throw new Error("画像コピー機能を読み込めませんでした");
 
    if(isMap && mapInstance){
-     // 描画・ズームアニメーションを止め、現在の枠寸法でLeafletを確定。
      try{ mapInstance.stop(); }catch(_){}
      try{ mapInstance.invalidateSize(false); }catch(_){}
      await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
      await new Promise(r=>setTimeout(r,80));
 
-     // html2canvas と Leaflet の translate3d の相性で位置ずれが起こるため、
-     // キャプチャ中だけ translate を left/top に焼き込む。
      const mapEl=root.querySelector("#map");
      if(mapEl) restoreLeaflet=flattenLeafletTransformsForCapture(mapEl);
    }else{
+     // export用CSS（ボタン非表示・出典表示）が反映されるのを待つ。
      await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+
+     // 年代別グラフはChart.jsのcanvasをそのままhtml2canvasへ渡すと、
+     // ブラウザによってカード全体の取得に失敗することがある。
+     // コピー中だけcanvasを同じ見た目のPNG画像に置き換えてから
+     // カード全体を取得することで、他のグラフと同じ体裁にそろえる。
+     if(isAgeCard){
+       restoreCanvases=freezeCanvasRenderingForCapture(root);
+       await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
+     }
    }
 
-   // 年代別カードは横スクロール要素の scrollWidth をそのまま使うと、
-   // 非常に大きな画像になってブラウザのClipboard処理が失敗することがある。
-   // 表示中のカード幅で確実にキャプチャする。
-   const visibleWidth=Math.ceil(root.getBoundingClientRect().width)||root.offsetWidth;
-   const width=isAgeCard?visibleWidth:Math.max(root.scrollWidth,root.offsetWidth);
-   const canvas=await html2canvas(root,{
-     backgroundColor:"#ffffff",
-     scale:isAgeCard?1.5:Math.min(2,window.devicePixelRatio||1.5),
-     useCORS:true,
-     logging:false,
-     width,
-     windowWidth:Math.max(document.documentElement.clientWidth,width),
-     scrollX:0,
-     scrollY:-window.scrollY
-   });
-
+   const canvas=await captureGraphRoot(root,{isAgeCard});
    const blob=await canvasToBlob(canvas);
    let copied=false;
 
@@ -817,39 +870,9 @@ async function copyGraphCard(button){
    }
  }catch(err){
    console.error(err);
-
-   // 年代別のChart.jsグラフは、カード全体のキャプチャに失敗した場合でも
-   // グラフ本体だけは直接PNG化してコピーできるようにする。
-   if(isAgeCard){
-     try{
-       const fallbackCanvas=root.querySelector("canvas");
-       if(fallbackCanvas){
-         const blob=await canvasToBlob(fallbackCanvas);
-         let copied=false;
-         if(navigator.clipboard && window.ClipboardItem){
-           try{
-             await navigator.clipboard.write([new ClipboardItem({"image/png":blob})]);
-             copied=true;
-           }catch(_){}
-         }
-         if(copied){
-           button.textContent="✓ グラフをコピーしました";
-         }else{
-           const title=(root.querySelector("h2,h3")?.textContent||"age-graph").replace(/[\\/:*?"<>|]/g,"-");
-           downloadBlob(blob,`${title}.png`);
-           button.textContent="PNGを保存しました";
-         }
-       }else{
-         button.textContent="コピーできませんでした";
-       }
-     }catch(fallbackErr){
-       console.error(fallbackErr);
-       button.textContent="コピーできませんでした";
-     }
-   }else{
-     button.textContent="コピーできませんでした";
-   }
+   button.textContent="コピーできませんでした";
  }finally{
+   try{ restoreCanvases(); }catch(_){}
    try{ restoreLeaflet(); }catch(_){}
    if(isMap){
      button.style.visibility=originalVisibility;
