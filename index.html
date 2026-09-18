@@ -65,6 +65,7 @@
   <link rel="stylesheet" href="./age-latest-v86.css?v=86" />
   <link rel="stylesheet" href="./age-latest-v87.css?v=87" />
   <link rel="stylesheet" href="./trend-mobile-v99.css?v=99" />
+  <link rel="stylesheet" href="./trend-mobile-svg-v100.css?v=100" />
 </head>
 <body>
 <header class="hero hero-photo hero-sample">
@@ -302,7 +303,7 @@
     <span><i class="line-dot"></i>警報の目安 30</span>
     <span class="prevyear-note">3か月・半年・1年では前年同期を破線で表示</span>
   </div>
-  <div id="chart-scroll" class="chart-scroll trend-content-layer"><div class="chart-inner"><canvas id="trend-chart"></canvas></div></div>
+  <div id="chart-scroll" class="chart-scroll trend-content-layer"><div class="chart-inner"><canvas id="trend-chart"></canvas><div id="trend-mobile-chart" class="trend-mobile-chart" hidden></div></div></div>
   <div class="graph-export-source">出典：新潟県「感染症情報（週報）」</div>
 </section>
 
@@ -445,6 +446,6 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="./app.js?v=99"></script>
+<script src="./app.js?v=100"></script>
 </body>
 </html>

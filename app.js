@@ -667,6 +667,110 @@ function trendRegionLabel(region){
  if(region==="新潟市") return "新潟市";
  return REGION_TITLE_SUFFIX.has(region) ? `${region}地域` : region;
 }
+
+function renderTrendMobileSVG(visible,datasets){
+ const host=document.querySelector("#trend-mobile-chart");
+ if(!host) return;
+ host.replaceChildren();
+
+ const isMobile=window.matchMedia("(max-width: 820px)").matches;
+ if(!isMobile){
+   host.hidden=true;
+   return;
+ }
+ host.hidden=false;
+
+ const ns="http://www.w3.org/2000/svg";
+ const count=visible.length;
+ const width=count<=13?760:count<=26?980:count<=52?1320:1880;
+ const height=330;
+ const pad={left:46,right:18,top:42,bottom:54};
+ const plotW=width-pad.left-pad.right;
+ const plotH=height-pad.top-pad.bottom;
+
+ const all=[];
+ datasets.forEach(ds=>(ds.data||[]).forEach(v=>{if(v===null||v===undefined||v==="")return;const n=Number(v);if(Number.isFinite(n))all.push(n)}));
+ let max=Math.max(10,...all);
+ if(max<=10) max=10;
+ else if(max<=20) max=20;
+ else if(max<=30) max=30;
+ else max=Math.ceil(max/10)*10;
+
+ const svg=document.createElementNS(ns,"svg");
+ svg.setAttribute("viewBox",`0 0 ${width} ${height}`);
+ svg.setAttribute("width",String(width));
+ svg.setAttribute("height",String(height));
+ svg.setAttribute("role","img");
+ svg.setAttribute("aria-label",`${trendRegionLabel(trendRegion)}の推移グラフ`);
+ svg.classList.add("trend-mobile-svg");
+
+ const add=(name,attrs={},text="")=>{
+   const el=document.createElementNS(ns,name);
+   Object.entries(attrs).forEach(([k,v])=>el.setAttribute(k,String(v)));
+   if(text!=="") el.textContent=text;
+   svg.appendChild(el);
+   return el;
+ };
+
+ add("rect",{x:0,y:0,width,height,rx:14,fill:"#fff"});
+
+ // legend
+ if(datasets.length>1){
+   let lx=pad.left;
+   datasets.forEach(ds=>{
+     add("line",{x1:lx,y1:18,x2:lx+18,y2:18,stroke:ds.borderColor||"#0b79b6","stroke-width":3,"stroke-dasharray":ds.borderDash?"7 5":"none"});
+     add("text",{x:lx+24,y:22,fill:"#536b79","font-size":11,"font-weight":700},ds.label||"");
+     lx+=Math.max(115,(ds.label||"").length*12+48);
+   });
+ }
+
+ const y=(v)=>pad.top+plotH-(Number(v)/max)*plotH;
+ const x=(i)=>count<=1?pad.left+plotW/2:pad.left+(i/(count-1))*plotW;
+
+ for(let i=0;i<=5;i++){
+   const val=max*i/5;
+   const yy=y(val);
+   add("line",{x1:pad.left,y1:yy,x2:width-pad.right,y2:yy,stroke:"rgba(90,130,150,.16)","stroke-width":1});
+   add("text",{x:pad.left-8,y:yy+4,"text-anchor":"end",fill:"#6f808b","font-size":10},Number.isInteger(val)?String(val):val.toFixed(1));
+ }
+ add("line",{x1:pad.left,y1:pad.top,x2:pad.left,y2:pad.top+plotH,stroke:"#cddbe3","stroke-width":1});
+ add("line",{x1:pad.left,y1:pad.top+plotH,x2:width-pad.right,y2:pad.top+plotH,stroke:"#cddbe3","stroke-width":1});
+
+ const labelStep=Math.max(1,Math.ceil(count/7));
+ visible.forEach((w,i)=>{
+   if(i%labelStep!==0 && i!==count-1) return;
+   const label=w.label||`${w.year}W${w.week}`;
+   add("text",{x:x(i),y:height-22,"text-anchor":"middle",fill:"#6f808b","font-size":10},label);
+ });
+
+ datasets.forEach((ds,di)=>{
+   const pts=[];
+   (ds.data||[]).forEach((v,i)=>{
+     if(v===null||v===undefined||v==="") return;
+     const num=Number(v);
+     if(Number.isFinite(num)) pts.push([x(i),y(num)]);
+   });
+   if(!pts.length) return;
+
+   if(di===0 && pts.length>1){
+     const base=pad.top+plotH;
+     const poly=[[pts[0][0],base],...pts,[pts[pts.length-1][0],base]].map(a=>a.join(",")).join(" ");
+     add("polygon",{points:poly,fill:"rgba(11,121,182,.08)"});
+   }
+   const d=pts.map((p,i)=>(i?"L":"M")+p[0]+" "+p[1]).join(" ");
+   add("path",{d,fill:"none",stroke:ds.borderColor||"#0b79b6","stroke-width":di===0?3:2.2,"stroke-linejoin":"round","stroke-linecap":"round","stroke-dasharray":ds.borderDash?"7 5":"none"});
+   pts.forEach(([px,py])=>add("circle",{cx:px,cy:py,r:di===0?3.5:2.6,fill:"#fff",stroke:ds.borderColor||"#0b79b6","stroke-width":2}));
+ });
+
+ add("text",{x:14,y:pad.top+plotH/2,fill:"#6f808b","font-size":10,"text-anchor":"middle",transform:`rotate(-90 14 ${pad.top+plotH/2})`},"定点当たり報告数");
+ host.appendChild(svg);
+
+ requestAnimationFrame(()=>{
+   const sc=document.querySelector("#chart-scroll");
+   if(sc) sc.scrollLeft=sc.scrollWidth;
+ });
+}
+
 function renderTrend(weeksCount=trendWeeks){
  trendWeeks=Number(weeksCount)||13;
  const visible=allWeeks.slice(-Math.min(trendWeeks,allWeeks.length));
@@ -740,8 +844,14 @@ function renderTrend(weeksCount=trendWeeks){
    });
  }
 
+ renderTrendMobileSVG(visible,datasets);
+
  const trendCanvas=document.querySelector("#trend-chart");
  if(!trendCanvas) return;
+ const mobileTrend=window.matchMedia("(max-width: 820px)").matches;
+ if(mobileTrend){
+   if(trendChart){trendChart.destroy();trendChart=null;}
+ }else{
  trendChart=new Chart(trendCanvas,{
    type:"line",
    data:{labels,datasets},
@@ -757,6 +867,7 @@ function renderTrend(weeksCount=trendWeeks){
      }
    }
  });
+ }
  const inner=document.querySelector(".chart-inner");
  if(inner) inner.style.minWidth=trendWeeks<=26?"100%":trendWeeks<=52?"1250px":"1800px";
 
@@ -1657,19 +1768,24 @@ function wireMapTimeline(){
  });
 }
 let trendViewportResizeTimer=null;
+let trendWasMobile=window.matchMedia("(max-width: 820px)").matches;
 function refreshTrendChartForViewport(){
  clearTimeout(trendViewportResizeTimer);
  trendViewportResizeTimer=setTimeout(()=>{
-   if(trendChart){
-     const inner=document.querySelector(".chart-inner");
-     if(inner && window.matchMedia("(max-width: 820px)").matches && inner.getBoundingClientRect().height < 240){
-       inner.style.height="330px";
-     }
+   const nowMobile=window.matchMedia("(max-width: 820px)").matches;
+   if(nowMobile!==trendWasMobile){
+     trendWasMobile=nowMobile;
+     renderTrend(trendWeeks);
+     return;
+   }
+   if(nowMobile){
+     renderTrend(trendWeeks);
+   }else if(trendChart){
      trendChart.resize();
    }
  },120);
 }
 window.addEventListener("resize",refreshTrendChartForViewport,{passive:true});
-window.addEventListener("orientationchange",refreshTrendChartForViewport,{passive:true});
+window.addEventListener("orientationchange",()=>{setTimeout(()=>renderTrend(trendWeeks),120);},{passive:true});
 
 main().catch(err=>{console.error(err);document.querySelector("#weekly-topic").textContent="データの読み込みに失敗しました。data/influenza_history.json の配置を確認してください。"});
