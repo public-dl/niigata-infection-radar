@@ -1,0 +1,52 @@
+/* Trend heading: show the municipalities covered by the selected reporting region. */
+.trend-card .section-title-row > div:first-child{
+  min-width:0;
+  flex:1 1 360px;
+}
+
+#trend-title{
+  min-width:0;
+  max-width:100%;
+  line-height:1.18;
+}
+
+#trend-title .trend-title-main{
+  display:block;
+}
+
+#trend-title .trend-title-municipalities{
+  display:block;
+  margin-top:.34rem;
+  max-width:100%;
+  color:#5e7483;
+  font-size:.64em;
+  font-weight:600;
+  line-height:1.45;
+  letter-spacing:.01em;
+  white-space:normal;
+  overflow-wrap:anywhere;
+}
+
+.trend-card .trend-actions{
+  flex:0 1 auto;
+  min-width:0;
+}
+
+@media (min-width:821px){
+  .trend-card .section-title-row{
+    column-gap:22px;
+  }
+
+  #trend-title .trend-title-municipalities{
+    /* Even the longest current area (Nagaoka) stays on its own title line. */
+    width:max-content;
+    max-width:min(46vw, 34rem);
+  }
+}
+
+@media (max-width:820px){
+  #trend-title .trend-title-municipalities{
+    font-size:.6em;
+    margin-top:.28rem;
+  }
+}

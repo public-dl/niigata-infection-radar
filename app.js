@@ -675,7 +675,23 @@ function renderTrend(weeksCount=trendWeeks){
  const selectedLabel=trendRegionLabel(trendRegion);
 
  const title=document.querySelector("#trend-title");
- if(title) title.textContent=trendRegion==="prefecture" ? "県全体の推移" : `${selectedLabel}の推移`;
+ if(title){
+   title.replaceChildren();
+   const main=document.createElement("span");
+   main.className="trend-title-main";
+   main.textContent=trendRegion==="prefecture" ? "県全体の推移" : `${selectedLabel}の推移`;
+   title.appendChild(main);
+
+   if(trendRegion!=="prefecture"){
+     const municipalities=REGION_MUNICIPALITIES[trendRegion]||[];
+     if(municipalities.length){
+       const sub=document.createElement("span");
+       sub.className="trend-title-municipalities";
+       sub.textContent=`（${municipalities.join("・")}）`;
+       title.appendChild(sub);
+     }
+   }
+ }
 
  const compare=document.querySelector("#trend-compare-prefecture");
  if(compare){
