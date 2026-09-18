@@ -1,0 +1,43 @@
+/* v101 — TREND mobile layout correction
+   The desktop title block uses flex-basis:360px horizontally.
+   On mobile .section-title-row becomes a column, so that basis was being
+   interpreted as vertical height and pushed the controls/chart far down. */
+@media (max-width:820px){
+  .trend-card .section-title-row{
+    align-items:stretch !important;
+    gap:0 !important;
+  }
+
+  .trend-card .section-title-row > div:first-child{
+    flex:0 0 auto !important;
+    width:100% !important;
+    min-width:0 !important;
+    min-height:0 !important;
+    height:auto !important;
+  }
+
+  .trend-card .trend-actions{
+    flex:0 0 auto !important;
+    width:100% !important;
+    min-height:0 !important;
+    height:auto !important;
+    margin-top:16px !important;
+  }
+
+  /* v99 was a canvas-era mobile guard. v100+ uses SVG on mobile. */
+  .trend-card .chart-scroll{
+    min-height:0 !important;
+    height:auto !important;
+  }
+  .trend-card .chart-inner{
+    min-height:0 !important;
+    height:auto !important;
+  }
+  .trend-card #trend-chart{
+    display:none !important;
+  }
+  .trend-card #trend-mobile-chart:not([hidden]){
+    display:block !important;
+    min-height:310px !important;
+  }
+}
