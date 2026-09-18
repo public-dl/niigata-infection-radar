@@ -17,7 +17,7 @@ OUTPUT_PATH = ROOT / "data" / "ai_comment.json"
 MODEL = os.getenv("OPENAI_MODEL", "gpt-5.6-luna")
 FORCE = os.getenv("FORCE_AI_COMMENT", "").lower() in {"1", "true", "yes"}
 
-SCHEMA_VERSION = 6
+SCHEMA_VERSION = 7
 
 REGION_DISPLAY_NAMES = {"新潟市": "新潟"}
 
@@ -52,8 +52,25 @@ AI_COMMENT_SCHEMA = {
         "kids_regional": {"type": "string"},
         "kids_age_group": {"type": "string"},
         "kids_year_on_year": {"type": "string"},
+        "emphasis": {
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "audience": {"type": "string", "enum": ["general", "kids"]},
+                    "field": {
+                        "type": "string",
+                        "enum": ["headline", "summary", "trend", "regional", "age_group", "year_on_year"],
+                    },
+                    "style": {"type": "string", "enum": ["marker", "underline"]},
+                    "text": {"type": "string"},
+                },
+                "required": ["audience", "field", "style", "text"],
+                "additionalProperties": False,
+            },
+        },
     },
-    "required": REQUIRED_FIELDS,
+    "required": [*REQUIRED_FIELDS, "emphasis"],
     "additionalProperties": False,
 }
 
@@ -128,6 +145,25 @@ SYSTEM_INSTRUCTIONS = """
 - kids_age_group: 「いちばん多いのは5～9歳です。10～14歳や1～4歳の子どもたちでも多く報告されています。」
 - kids_year_on_year: 「去年の同じころは、インフルエンザの報告はまだとても少ない時期でした。今年は去年より早い時期から増えています。」
 
+【強調表示 metadata】
+本文とは別に emphasis 配列を作ってください。サイト側で黄色マーカーと朱書き下線として表示します。
+- audience は general または kids。
+- field は headline / summary / trend / regional / age_group / year_on_year のいずれか。
+- style="marker" は「数字・傾向など、ひと目で拾ってほしい核心情報」に使う。
+- style="underline" は「流行水準への接近・基準超え・前年との大きな違いなど、意味として注意してほしい一文や短い句」に使う。
+- text は、対応する本文中に実際に存在する文字列を一字一句そのまま抜き出す。言い換え・省略・記号変更は禁止。
+- 1項目につき強調は原則0～2か所。全文を強調しない。
+- marker と underline を同じ文字列に重ねない。
+- 一般向けは全体で6～10か所程度、こども向けは全体で4～7か所程度を目安にする。
+- 重要な情報がない箇所では無理に強調しない。
+
+強調の例:
+- headline の「3週連続で増加」→ marker
+- summary の「9.44 人/定点」→ marker
+- summary の「1 人/定点の流行期入りの目安を上回っています」→ underline
+- regional の「糸魚川が21.5 人/定点」→ marker
+- kids_headline 相当の field=headline では「3週つづけて増えています」→ marker
+
 【こども向け出力前の自己チェック】
 JSONを返す前に、kids_* の5本文と見出しを頭の中で確認してください。
 - 一般向け文章をほぼコピーしていないか。
@@ -150,7 +186,12 @@ JSONを返す前に、kids_* の5本文と見出しを頭の中で確認して�
   "kids_trend": "『増えているの？』に答える、やさしく短い1～2文。必要なら直近3週の数字を使う",
   "kids_regional": "『どこで多い？』に答える、読みがな付きの地域名を使った短い1～2文。地域別の細かな数値は原則書かない",
   "kids_age_group": "『どの年代で多い？』に答える、具体的な年代を使った短い1～2文。細かな人/定点は原則書かない",
-  "kids_year_on_year": "『去年とくらべると？』に答える、意味優先の短い1～2文。差分値は原則書かない"
+  "kids_year_on_year": "『去年とくらべると？』に答える、意味優先の短い1～2文。差分値は原則書かない",
+  "emphasis": [
+    {"audience": "general", "field": "headline", "style": "marker", "text": "本文中の重要な短い文字列"},
+    {"audience": "general", "field": "summary", "style": "underline", "text": "本文中の注意してほしい短い文字列"},
+    {"audience": "kids", "field": "headline", "style": "marker", "text": "こども向け本文中の重要な短い文字列"}
+  ]
 }
 """.strip()
 
@@ -300,7 +341,37 @@ def parse_json_object(text):
     for key in REQUIRED_FIELDS:
         if not isinstance(obj.get(key), str) or not obj[key].strip():
             raise ValueError(f"必須フィールド {key} がありません。")
-    return {k: obj[k].strip() for k in REQUIRED_FIELDS}
+
+    result = {k: obj[k].strip() for k in REQUIRED_FIELDS}
+    emphasis = obj.get("emphasis") or []
+    valid_emphasis = []
+    for item in emphasis:
+        if not isinstance(item, dict):
+            continue
+        audience = item.get("audience")
+        field = item.get("field")
+        style = item.get("style")
+        text = item.get("text")
+        if audience not in {"general", "kids"}:
+            continue
+        if field not in {"headline", "summary", "trend", "regional", "age_group", "year_on_year"}:
+            continue
+        if style not in {"marker", "underline"}:
+            continue
+        if not isinstance(text, str) or not text.strip():
+            continue
+        source_key = f"kids_{field}" if audience == "kids" else field
+        clean_text = text.strip()
+        if clean_text not in result[source_key]:
+            continue
+        valid_emphasis.append({
+            "audience": audience,
+            "field": field,
+            "style": style,
+            "text": clean_text,
+        })
+    result["emphasis"] = valid_emphasis
+    return result
 
 
 def generate_comment(payload):
