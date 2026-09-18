@@ -497,6 +497,100 @@ async function renderWeeklyInsight(latest){
  }
 }
 
+function aiEmphasisItems(ai,audience,field,text){
+ const source=Array.isArray(ai?.emphasis)?ai.emphasis:[];
+ const explicit=source.filter(item=>
+   item && item.audience===audience && item.field===field &&
+   (item.style==="marker"||item.style==="underline") &&
+   typeof item.text==="string" && item.text && text.includes(item.text)
+ );
+ if(explicit.length) return explicit;
+ return deriveAIEmphasis(field,text,audience);
+}
+
+function firstMatchText(text,regex){
+ const m=text.match(regex);
+ return m?m[0]:null;
+}
+
+function firstSentenceContaining(text,needles){
+ const sentences=text.match(/[^。！？]+[。！？]?/g)||[];
+ for(const sentence of sentences){
+   if(needles.some(word=>sentence.includes(word))) return sentence.replace(/[。！？]$/,'').trim();
+ }
+ return null;
+}
+
+function deriveAIEmphasis(field,text,audience){
+ const items=[];
+ const add=(style,value)=>{
+   if(value && text.includes(value) && !items.some(x=>x.text===value)) items.push({style,text:value});
+ };
+ if(!text) return items;
+
+ if(audience==="general"){
+   if(field==="headline"){
+     add("marker",firstMatchText(text,/\d+週(?:間)?連続で(?:増加|減少)|(?:増加|減少)が続[^、。]*/));
+   }else if(field==="summary"){
+     add("marker",firstMatchText(text,/\d+(?:\.\d+)?\s*人\/定点/));
+     add("marker",firstMatchText(text,/前週から\d+(?:\.\d+)?\s*人\/定点(?:増加|減少)/));
+     add("underline",firstSentenceContaining(text,["流行期入りの目安","注意報基準相当","警報基準相当"]));
+   }else if(field==="trend"){
+     add("marker",firstMatchText(text,/\d+週(?:間)?連続で(?:増加|減少)/));
+     add("underline",firstSentenceContaining(text,["注意報基準相当","警報基準相当","近づいて","上回って"]));
+   }else if(field==="regional"){
+     add("marker",firstMatchText(text,/[^、。]{1,10}?が\d+(?:\.\d+)?\s*人\/定点(?:で最も多く|で最も高く|)/));
+   }else if(field==="age_group"){
+     add("marker",firstMatchText(text,/\d+～?\d*歳が\d+(?:\.\d+)?\s*人\/定点(?:で最も多く|で最も高く|)/));
+   }else if(field==="year_on_year"){
+     add("marker",firstMatchText(text,/今年は\d+(?:\.\d+)?\s*人\/定点/));
+     add("underline",firstMatchText(text,/前年同週を\d+(?:\.\d+)?\s*人\/定点(?:上回りました|下回りました)/));
+   }
+ }else{
+   if(field==="headline"){
+     add("marker",text.replace(/^\s*[^\p{L}\p{N}]+/u,"").trim());
+   }else if(field==="summary"){
+     add("marker",firstMatchText(text,/\d+週(?:間)?(?:つづけて|続けて)(?:増えています|減っています|増加しています|減少しています)/));
+     add("marker",firstMatchText(text,/平均（?へいきん）?で?\d+(?:\.\d+)?人|平均\d+(?:\.\d+)?人/));
+   }else if(field==="trend"){
+     add("marker",firstSentenceContaining(text,["はっきり増","はっきり減","増えてき","減ってき"]));
+   }else if(field==="regional"){
+     add("marker",firstSentenceContaining(text,["多くなっています","多いです"]));
+   }else if(field==="age_group"){
+     add("marker",firstMatchText(text,/いちばん多いのは[^。]+/));
+   }else if(field==="year_on_year"){
+     add("underline",firstSentenceContaining(text,["去年より","去年の同じころ"]));
+   }
+ }
+ return items.slice(0,3);
+}
+
+function appendAIEmphasizedText(target,text,items){
+ target.textContent="";
+ if(!text){return;}
+ const ranges=[];
+ for(const item of items||[]){
+   const needle=String(item?.text||"");
+   if(!needle) continue;
+   const start=text.indexOf(needle);
+   if(start<0) continue;
+   const end=start+needle.length;
+   if(ranges.some(r=>!(end<=r.start||start>=r.end))) continue;
+   ranges.push({start,end,style:item.style});
+ }
+ ranges.sort((a,b)=>a.start-b.start);
+ let cursor=0;
+ for(const range of ranges){
+   if(range.start>cursor) target.appendChild(document.createTextNode(text.slice(cursor,range.start)));
+   const span=document.createElement("span");
+   span.className=range.style==="underline"?"ai-red-underline":"ai-marker";
+   span.textContent=text.slice(range.start,range.end);
+   target.appendChild(span);
+   cursor=range.end;
+ }
+ if(cursor<text.length) target.appendChild(document.createTextNode(text.slice(cursor)));
+}
+
 function renderWeeklyInsightAudience(){
  const box=document.querySelector("#weekly-topic");
  const note=document.querySelector("#ai-topic-note");
@@ -512,12 +606,13 @@ function renderWeeklyInsightAudience(){
    ["前年同期",ai[prefix+"year_on_year"]]
  ];
  const headline=ai[prefix+"headline"];
+ const audience=kids?"kids":"general";
 
  box.innerHTML="";
  if(headline){
    const lead=document.createElement("p");
    lead.className="ai-insight-headline";
-   lead.textContent=headline;
+   appendAIEmphasizedText(lead,headline,aiEmphasisItems(ai,audience,"headline",headline));
    box.appendChild(lead);
  }
  const hasContent=Boolean(headline||fields.some(([,text])=>text));
@@ -537,7 +632,8 @@ function renderWeeklyInsightAudience(){
    tag.className="ai-insight-label";
    tag.textContent=label;
    const body=document.createElement("span");
-   body.textContent=text;
+   const fieldKey={"概況":"summary","推移":"trend","地域":"regional","年代":"age_group","前年同期":"year_on_year"}[label]||"summary";
+   appendAIEmphasizedText(body,text,aiEmphasisItems(ai,audience,fieldKey,text));
    p.append(tag,body);
    box.appendChild(p);
  });

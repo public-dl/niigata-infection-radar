@@ -1,0 +1,50 @@
+/* AI週次コメントの強調表示 v96 */
+.ai-marker{
+  display:inline;
+  padding:0 .06em .02em;
+  font-weight:800;
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 55%,
+      rgba(255,221,86,.60) 55%,
+      rgba(255,221,86,.60) 92%,
+      transparent 92%,
+      transparent 100%
+    );
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+}
+
+.ai-red-underline{
+  display:inline;
+  font-weight:750;
+  text-decoration-line:underline;
+  text-decoration-color:#d9574f;
+  text-decoration-thickness:2px;
+  text-underline-offset:4px;
+  text-decoration-skip-ink:none;
+  -webkit-box-decoration-break:clone;
+  box-decoration-break:clone;
+}
+
+.ai-insight-headline .ai-marker{
+  background:
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      transparent 58%,
+      rgba(255,221,86,.68) 58%,
+      rgba(255,221,86,.68) 94%,
+      transparent 94%,
+      transparent 100%
+    );
+}
+
+@media (max-width:640px){
+  .ai-red-underline{
+    text-underline-offset:3px;
+    text-decoration-thickness:2px;
+  }
+}
