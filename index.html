@@ -1,151 +1,485 @@
 <!doctype html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>新潟県のインフルエンザ流行状況・インフル情報 | 新潟インフルエンザレーダー</title>
+  <meta name="description" content="新潟県・新潟市を含む県内のインフルエンザ（インフル）の流行状況を週次で可視化。県全体の定点当たり報告数、地域別マップ、年代別推移、ヒートマップ、前年同期比較から、新潟の最新の流行状況をわかりやすく確認できます。新潟県感染症週報の公表データを使用しています。" />
+  <meta name="keywords" content="新潟,新潟県,新潟市,インフルエンザ,インフル,流行,インフルエンザ 流行,新潟 インフルエンザ,新潟県 インフルエンザ,新潟 インフル,新潟県 インフル,感染症週報,新潟県感染症情報,定点当たり報告数,インフルエンザ 地域別,インフルエンザ 年代別" />
+  <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
+  <link rel="canonical" href="https://niigata-infection-radar.netlify.app/" />
 
-  <title>新潟インフルエンザレーダー｜新潟県のインフルエンザ流行状況</title>
-  <meta name="description" content="新潟県のインフルエンザ流行状況を、定点当たり報告数、地域別、年代別、時系列で見やすく可視化するWebサイトです。">
-  <meta name="robots" content="index,follow">
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="ja_JP" />
+  <meta property="og:site_name" content="新潟インフルエンザレーダー" />
+  <meta property="og:title" content="新潟県のインフルエンザ流行状況・インフル情報 | 新潟インフルエンザレーダー" />
+  <meta property="og:description" content="新潟県のインフルエンザ（インフル）の流行状況を、県全体・地域別・年代別・時系列でわかりやすく可視化しています。" />
+  <meta property="og:url" content="https://niigata-infection-radar.netlify.app/" />
+  <meta property="og:image" content="https://niigata-infection-radar.netlify.app/ogp.png" />
+  <meta property="og:image:secure_url" content="https://niigata-infection-radar.netlify.app/ogp.png" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="新潟インフルエンザレーダー。新潟県13地域の流行状況を地図・グラフ・年代別データで確認できるサイト。" />
 
-  <link rel="canonical" href="https://niigata-infection-radar.netlify.app/">
-
-  <meta property="og:type" content="website">
-  <meta property="og:title" content="新潟インフルエンザレーダー">
-  <meta property="og:description" content="新潟県のインフルエンザ流行状況を、地域・年代・時系列で見やすく可視化しています。">
-  <meta property="og:url" content="https://niigata-infection-radar.netlify.app/">
-  <meta property="og:locale" content="ja_JP">
-
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="新潟インフルエンザレーダー">
-  <meta name="twitter:description" content="新潟県のインフルエンザ流行状況を、地域・年代・時系列で見やすく可視化しています。">
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="新潟県のインフルエンザ流行状況・インフル情報 | 新潟インフルエンザレーダー" />
+  <meta name="twitter:description" content="新潟県13地域のインフルエンザ流行状況を、地域別・年代別・時系列で確認できます。" />
+  <meta name="twitter:image" content="https://niigata-infection-radar.netlify.app/ogp.png" />
+  <meta name="twitter:image:alt" content="新潟インフルエンザレーダー。新潟県13地域の流行状況をわかりやすく可視化。" />
 
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
     "name": "新潟インフルエンザレーダー",
+    "alternateName": [
+      "インフルエンザレーダー（新潟県）",
+      "新潟県インフルエンザ流行状況",
+      "新潟インフル情報"
+    ],
     "url": "https://niigata-infection-radar.netlify.app/",
-    "description": "新潟県のインフルエンザ流行状況を、定点当たり報告数、地域別、年代別、時系列で見やすく可視化するWebサイトです。",
+    "description": "新潟県・新潟市を含む県内のインフルエンザ（インフル）の流行状況を週次で可視化するサイト。県全体、地域別、年代別、時系列の公表データを確認できます。",
+    "keywords": "新潟, 新潟県, 新潟市, インフルエンザ, インフル, 流行, インフルエンザ流行状況",
     "inLanguage": "ja"
   }
   </script>
-
-  <style>
-    :root {
-      color-scheme: light;
-      --ink: #173f63;
-      --muted: #607789;
-      --accent: #0b79b6;
-      --line: #dce8ef;
-      --bg: #f5f9fc;
-    }
-
-    * { box-sizing: border-box; }
-
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-        "Hiragino Sans", "Yu Gothic", Meiryo, sans-serif;
-      color: var(--ink);
-      background:
-        radial-gradient(circle at 85% 15%, rgba(86, 190, 229, .12), transparent 28%),
-        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
-    }
-
-    main {
-      width: min(820px, calc(100% - 32px));
-      margin: 0 auto;
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 48px 0;
-    }
-
-    .card {
-      width: 100%;
-      padding: clamp(28px, 5vw, 52px);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-      background: rgba(255, 255, 255, .95);
-      box-shadow: 0 18px 50px rgba(34, 81, 109, .08);
-    }
-
-    .kicker {
-      margin: 0 0 10px;
-      color: var(--accent);
-      font-size: .78rem;
-      font-weight: 800;
-      letter-spacing: .14em;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: clamp(2rem, 6vw, 3.3rem);
-      line-height: 1.18;
-      letter-spacing: -.02em;
-    }
-
-    .lead {
-      margin: 22px 0 0;
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.9;
-    }
-
-    .button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      margin-top: 28px;
-      padding: 13px 20px;
-      border-radius: 999px;
-      background: var(--accent);
-      color: #fff;
-      font-weight: 800;
-      text-decoration: none;
-      box-shadow: 0 8px 20px rgba(11, 121, 182, .18);
-    }
-
-    .button:hover,
-    .button:focus-visible {
-      filter: brightness(.96);
-    }
-
-    .note {
-      margin: 26px 0 0;
-      padding-top: 20px;
-      border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: .82rem;
-      line-height: 1.75;
-    }
-  </style>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com" crossorigin>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">
+  <link rel="stylesheet" href="./styles.css?v=52" />
+  <link rel="stylesheet" href="./home-v72.css?v=72" />
+  <script defer src="./analytics.js?v=55"></script>
+  <link rel="stylesheet" href="./mobile-v68.css?v=68" />
+  <link rel="stylesheet" href="./hero-v69.css?v=69" />
+  <link rel="stylesheet" href="./sentinel-v75.css?v=75" />
+  <link rel="stylesheet" href="./mobile-v77.css?v=77" />
+  <link rel="stylesheet" href="./status-v81.css?v=81" />
+  <link rel="stylesheet" href="./ai-emphasis-v96.css?v=96" />
+  <link rel="stylesheet" href="./region-municipalities-v97.css?v=97" />
+  <link rel="stylesheet" href="./region-prefecture-v102.css?v=102" />
+  <link rel="stylesheet" href="./share-v103.css?v=103" />
+  <link rel="stylesheet" href="./trend-municipalities-v98.css?v=98" />
+  <link rel="stylesheet" href="./age-latest-v82.css?v=82" />
+  <link rel="stylesheet" href="./age-layout-v83.css?v=83" />
+  <link rel="stylesheet" href="./age-latest-v84.css?v=84" />
+  <link rel="stylesheet" href="./age-latest-v85.css?v=85" />
+  <link rel="stylesheet" href="./age-latest-v86.css?v=86" />
+  <link rel="stylesheet" href="./age-latest-v87.css?v=87" />
+  <link rel="stylesheet" href="./trend-mobile-svg-v100.css?v=100" />
+  <link rel="stylesheet" href="./trend-mobile-layout-v101.css?v=101" />
 </head>
-
 <body>
-  <main>
-    <section class="card">
-      <p class="kicker">NIIGATA INFLUENZA RADAR</p>
-      <h1>新潟インフルエンザレーダー</h1>
+<header class="hero hero-photo hero-sample">
+  <div class="hero-sitebar">
+    <a class="hero-brand" href="#top" aria-label="インフルエンザレーダー（新潟県）">
+      <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+      <div>
+        <div class="brand-title">インフルエンザレーダー（新潟県）</div>
+        <div class="brand-en">NIIGATA INFLUENZA RADAR</div>
+      </div>
+    </a>
+    <nav class="hero-nav" aria-label="ページ内ナビゲーション">
+      <a href="#latest">最新の状況</a>
+      <a href="#area-map">地域別の状況</a>
+      <a href="#trend">グラフでみる</a>
+      <a href="#age-stats">年代別の状況</a>
+      <a href="./contact.html">お問い合わせ</a>
+        <a id="report-download" class="nav-report-download" aria-label="新潟県感染症週報サマリー PDFを開く" title="週次インフルエンザレポート（PDF）" href="./reports/latest.pdf" target="_blank" rel="noopener"><span class="nav-report-label">週次インフルエンザ<br><span>レポート（PDF）</span></span></a>
+    </nav>
+  </div>
 
-      <p class="lead">
-        新潟県が公表する「新潟県感染症情報（週報速報版）」をもとに、
-        インフルエンザの流行状況を見やすく整理・可視化しています。
-        県全体の推移、地域別の状況、年代別の発生状況などを確認できます。
-      </p>
+  <div class="hero-stage" id="top">
+    <div class="hero-photo-panel" aria-hidden="true"></div>
+    <div class="hero-white-fade" aria-hidden="true"></div>
+    <div class="hero-orbit hero-orbit-a" aria-hidden="true"></div>
+    <div class="hero-orbit hero-orbit-b" aria-hidden="true"></div>
 
-      <a class="button"
-         href="https://niigata-infection-radar.netlify.app/"
-         rel="noopener">
-        新潟インフルエンザレーダーを見る →
-      </a>
+    <div class="hero-stage-inner">
+      <div class="hero-copy-block">
+        <p class="hero-kicker">新潟のいまを、データで見える化</p>
+        <h1>インフルエンザ<br>レーダー<span>（新潟県）</span></h1>
+        <p class="hero-subtitle">NIIGATA INFLUENZA RADAR</p>
+        <p class="hero-description">
+          新潟県におけるインフルエンザの発生状況を、<br>
+          週次データに基づいてわかりやすくお伝えします。
+        </p>
+        <div class="hero-meta-row">
+          <div class="hero-meta hero-meta-pill">
+            <span class="hero-meta-label">最新週</span>
+            <strong id="latest-period">読み込み中…</strong>
+          </div>
+          <div class="hero-meta hero-meta-pill hero-update-pill">
+            <span class="hero-meta-label">最終更新</span>
+            <strong id="data-updated-at">読み込み中…</strong>
+          </div>
+        </div>
+        <p class="sentinel-explainer">
+          <span class="sentinel-source-note">当サイトは、新潟県が公表する「新潟県感染症情報（週報速報版）」をもとに、インフルエンザの流行状況を見やすく整理・可視化したものです。</span>
+          <span class="sentinel-definition-note"><strong>「人 / 定点」とは？</strong> 報告医療機関1か所あたりの患者報告数です。現在の <strong><span id="sentinel-current-value">--</span> 人 / 定点</strong> は、1医療機関あたり平均<span id="sentinel-current-value-inline">--</span>人の報告があったことを表します。</span>
+          <span class="sentinel-location-note"><strong>地域名の表示について</strong> 地域別の数値は、届出のあった<strong>医療機関の所在地</strong>に基づいています。患者の居住地を示すものではありませんので、ご注意ください。</span>
+        </p>
+      </div>
 
-      <p class="note">
-        本ページは「新潟インフルエンザレーダー」本体への案内ページです。
-        最新情報・グラフ・地域別データは本体サイトでご覧ください。
-      </p>
-    </section>
-  </main>
+      <div class="hero-status-panel" id="latest">
+        <article class="card primary-card hero-primary-card">
+          <div class="hero-status-label">現在の状況</div>
+
+          <div class="hero-overview-heading">県全体・定点当たり報告数</div>
+
+          <div class="primary-row hero-primary-row">
+            <div class="hero-value-wrap">
+              <div id="latest-value" class="big-number">--</div>
+              <div class="unit hero-value-unit">人 / 定点</div>
+            </div>
+
+            <div class="hero-status-wrap">
+              <div class="hero-signal-title">シグナル</div>
+              <div id="hero-signal-lights" class="hero-signal-lights" aria-label="現在の流行シグナル">
+                <span class="hero-signal-dot signal-blue" aria-hidden="true"></span>
+                <span class="hero-signal-dot signal-yellow is-active" aria-hidden="true"></span>
+                <span class="hero-signal-dot signal-red" aria-hidden="true"></span>
+                <span class="hero-signal-dot signal-purple" aria-hidden="true"></span>
+              </div>
+              <div id="level-badge" class="level-badge">判定中</div>
+            </div>
+          </div>
+          <div class="mini-grid">
+            <div><span>前週</span><strong id="prev-value">--</strong></div>
+            <div><span>前週から</span><strong id="wow-value">--</strong></div>
+          </div>
+          <div class="signal-guide" aria-label="流行水準の凡例">
+            <div class="signal-guide-head"><strong>流行水準の目安</strong><span>厚生労働省の従来区分を参考</span></div>
+            <div class="signal-list">
+              <div class="signal-item" data-signal="pre"><span class="signal-dot"></span><div><strong>1未満</strong><span class="signal-copy">流行期入りの目安<br>未満</span></div></div>
+              <div class="signal-item" data-signal="active"><span class="signal-dot"></span><div><strong>1以上</strong><span class="signal-copy">流行期入りの目安<br>以上</span></div></div>
+              <div class="signal-item" data-signal="caution"><span class="signal-dot"></span><div><strong>10以上</strong><span class="signal-copy">従来の注意報基準<br>相当</span></div></div>
+              <div class="signal-item" data-signal="warning"><span class="signal-dot"></span><div><strong>30以上</strong><span class="signal-copy">従来の警報基準<br>相当</span></div></div>
+            </div>
+            <p class="signal-note">※「注意報」「警報」の発令を示すものではなく、定点当たり報告数を従来基準と比較した表示です。</p>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-shortcuts" aria-label="主要コンテンツ">
+    <a href="#latest" class="hero-shortcut">
+      <span class="shortcut-icon">▥</span>
+      <div><strong>最新の状況</strong><small>県全体の発生状況を確認</small></div>
+      <span class="shortcut-arrow">→</span>
+    </a>
+    <a href="#area-map" class="hero-shortcut">
+      <span class="shortcut-icon">●</span>
+      <div><strong>地域別の状況</strong><small>地図で流行状況を確認</small></div>
+      <span class="shortcut-arrow">→</span>
+    </a>
+    <a href="#trend" class="hero-shortcut">
+      <span class="shortcut-icon">↗</span>
+      <div><strong>グラフでみる</strong><small>週ごとの推移を確認</small></div>
+      <span class="shortcut-arrow">→</span>
+    </a>
+  </div>
+</header>
+
+<main>
+<section class="summary-grid summary-grid-insight-only" id="weekly-insight">
+  <article class="card point-card">
+    <div class="section-title-row">
+      <div><div class="card-kicker">AI WEEKLY INSIGHT</div><h2>今週の流行分析</h2></div>
+      <div class="ai-audience-tools">
+        <div class="ai-audience-switch" role="group" aria-label="AIコメントの対象">
+          <button type="button" class="ai-audience-button is-active" data-ai-audience="general" aria-pressed="true">一般向け</button>
+          <button type="button" class="ai-audience-button" data-ai-audience="kids" aria-pressed="false">こども向け</button>
+        </div>
+        <span id="weekly-source" class="source-chip">AI自動生成</span>
+      </div>
+    </div>
+    <div id="weekly-topic" class="topic-text">データを読み込んでいます。</div>
+    <p id="ai-topic-note" class="ai-topic-note">新潟県公表データをもとにAIが自動生成した分析コメントです。</p>
+  </article>
+</section>
+
+<section class="card map-card map-feature" id="area-map">
+  <div class="section-title-row map-head">
+    <div>
+      <div class="card-kicker">AREA MAP</div>
+      <h2>地域別の流行状況</h2>
+      <p class="section-lead">新潟県内の流行の広がりを、市町村境界で確認できます。</p>
+    </div>
+    <div class="map-actions">
+      <button class="ghost-button region-info-button" type="button">地域区分を見る</button>
+      <span id="map-period" class="source-chip">--</span>
+    </div>
+  </div>
+  
+
+  <div class="map-layout map-layout-horizontal">
+    <div class="map-main-column">
+      <div id="map" class="map"></div>
+    </div>
+    <aside class="map-control-column">
+      <div class="map-timeline" aria-label="地図の表示週を選択">
+    <div class="map-timeline-head">
+      <div class="map-timeline-period">
+        <span class="card-kicker">TIME SLIDER</span>
+        <strong id="map-selected-period">--</strong>
+      </div>
+      <div class="map-timeline-tools">
+        <div class="map-range-buttons" role="group" aria-label="地図の表示期間">
+          <button class="map-range-button is-active" type="button" data-map-range="13">3か月</button>
+          <button class="map-range-button" type="button" data-map-range="26">半年</button>
+          <button class="map-range-button" type="button" data-map-range="52">1年</button>
+          <button class="map-range-button" type="button" data-map-range="all">すべて</button>
+        </div>
+        <div class="map-timeline-controls">
+          <button id="map-prev-week" class="timeline-button" type="button" aria-label="1週戻る">◀</button>
+          <button id="map-play" class="timeline-button timeline-play" type="button">▶ 再生</button>
+          <button id="map-next-week" class="timeline-button" type="button" aria-label="1週進む">▶</button>
+          <button id="map-latest" class="timeline-button timeline-latest" type="button">最新へ</button>
+        </div>
+      </div>
+    </div>
+    <input id="map-week-slider" class="map-week-slider" type="range" min="0" max="0" value="0" step="1" aria-label="表示する週">
+    <div class="map-timeline-scale">
+      <span id="map-first-week">--</span>
+      <span id="map-last-week">--</span>
+    </div>
+  </div>
+      <div class="map-side">
+        <div class="legend">
+          <h3>定点当たり報告数</h3>
+          <div><span class="swatch s0"></span>1未満</div>
+          <div><span class="swatch s1"></span>1–10未満</div>
+          <div><span class="swatch s2"></span>10–30未満</div>
+          <div><span class="swatch s3"></span>30以上</div>
+        </div>
+        <div class="map-reading"><strong>色の見方</strong><p>青 → 黄 → 赤 → 紫の順に、流行水準が高くなります。</p></div>
+        <p class="muted small">市町村境界は国土数値情報由来のGeoJSONを利用し、県の公表地域単位に対応付けています。</p>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="card trend-card" id="trend" data-copy-root>
+  <div id="trend-niigata-watermark" class="trend-niigata-watermark" aria-hidden="true"></div>
+  <div class="section-title-row trend-content-layer">
+    <div><div class="card-kicker">TREND</div><h2 id="trend-title">県全体の推移</h2></div>
+    <div class="trend-actions">
+      <label class="trend-region-select-wrap">
+        <span class="sr-only">地域を選択</span>
+        <select id="trend-region-select" class="trend-region-select" aria-label="推移グラフの地域">
+          <option value="prefecture">県全体</option>
+          <option value="新潟市">新潟市</option>
+          <option value="新発田">新発田</option>
+          <option value="新津">新津</option>
+          <option value="三条">三条</option>
+          <option value="長岡">長岡</option>
+          <option value="魚沼">魚沼</option>
+          <option value="南魚沼">南魚沼</option>
+          <option value="十日町">十日町</option>
+          <option value="柏崎">柏崎</option>
+          <option value="糸魚川">糸魚川</option>
+          <option value="村上">村上</option>
+          <option value="佐渡">佐渡</option>
+          <option value="上越">上越</option>
+        </select>
+      </label>
+      <label class="trend-compare-toggle">
+        <input id="trend-compare-prefecture" type="checkbox" checked>
+        <span>県計と比較</span>
+      </label>
+      <div class="range-switch" role="group" aria-label="表示期間">
+        <button type="button" class="range-button active" data-weeks="13">3か月</button>
+        <button type="button" class="range-button" data-weeks="26">半年</button>
+        <button type="button" class="range-button" data-weeks="52">1年</button>
+        <button type="button" class="range-button" data-weeks="104">2年</button>
+      </div>
+      <button id="to-latest" class="ghost-button" type="button">最新へ</button>
+      <button class="ghost-button graph-copy-button" type="button" data-copy-graph>📋 グラフをコピー</button>
+    </div>
+  </div>
+  <div class="threshold-note trend-content-layer">
+    <span><i class="line-dot"></i>流行期入りの目安 1</span>
+    <span><i class="line-dot"></i>注意報の目安 10</span>
+    <span><i class="line-dot"></i>警報の目安 30</span>
+    <span class="prevyear-note">3か月・半年・1年では前年同期を破線で表示</span>
+  </div>
+  <div id="chart-scroll" class="chart-scroll trend-content-layer"><div class="chart-inner"><canvas id="trend-chart"></canvas><div id="trend-mobile-chart" class="trend-mobile-chart" hidden></div></div></div>
+  <div class="graph-export-source">出典：新潟県「感染症情報（週報）」</div>
+</section>
+
+<section class="compare-grid">
+  <article class="card comparison-card">
+    <div class="card-kicker">YEAR ON YEAR</div><h2>前年同期との比較</h2>
+    <div id="comparison-list" class="comparison-list" aria-live="polite"></div>
+    <p id="year-compare-note" class="muted">比較データを確認中です。</p>
+  </article>
+
+  <article class="card">
+    <div class="section-title-row">
+      <div><div class="card-kicker">AREA DATA</div><h2>地域別の報告状況</h2></div>
+      <div class="ranking-actions">
+        <span id="ranking-period" class="source-chip">--</span>
+        <button class="ghost-button region-info-button" type="button">地域区分を見る</button>
+      </div>
+    </div>
+    <div id="ranking" class="ranking"></div>
+  </article>
+</section>
+
+
+
+<section class="age-section" id="age-stats" aria-labelledby="age-stats-title">
+  <div class="age-section-head">
+    <div>
+      <div class="card-kicker">AGE GROUPS</div>
+      <h2 id="age-stats-title">年代別の発生状況</h2>
+      <p class="section-lead">年代ごとの報告状況と、時間の経過による変化を確認できます。詳しい傾向を見たい方向けの統計です。</p>
+    </div>
+    <span class="source-chip">新潟県週報・年代別</span>
+  </div>
+
+  <div class="age-grid">
+    <article class="card age-latest-card" data-copy-root>
+      <div class="section-title-row age-card-head">
+        <div><div class="card-kicker">LATEST WEEK</div><h3>最新週の年代別比較</h3></div>
+        <div class="graph-head-actions">
+          <span id="age-latest-period" class="source-chip">--</span>
+          <button class="ghost-button graph-copy-button" type="button" data-copy-graph>📋 グラフをコピー</button>
+        </div>
+      </div>
+      <div class="age-chart-wrap age-latest-chart-wrap"><canvas id="age-latest-chart"></canvas></div>
+      <div id="age-latest-values" class="age-latest-values" aria-label="最新週の年代別数値一覧"></div>
+      <p class="muted small">棒グラフは報告数（人）。棒の上に人数を表示し、下の表で各年代の人/定点を確認できます。</p>
+      <div class="graph-export-source">出典：新潟県「感染症情報（週報）」</div>
+    </article>
+
+    <article class="card age-series-card" data-copy-root>
+      <div class="section-title-row age-card-head">
+        <div><div class="card-kicker">TIME SERIES</div><h3>年代別の時系列推移</h3></div>
+        <div class="graph-head-actions">
+          <div class="age-series-range range-switch" role="group" aria-label="年代別時系列の表示期間">
+          <button type="button" class="age-series-range-button active" data-age-series-weeks="13">3か月</button>
+          <button type="button" class="age-series-range-button" data-age-series-weeks="26">半年</button>
+          <button type="button" class="age-series-range-button" data-age-series-weeks="52">1年</button>
+          <button type="button" class="age-series-range-button" data-age-series-weeks="104">2年</button>
+          </div>
+          <button class="ghost-button graph-copy-button" type="button" data-copy-graph>📋 グラフをコピー</button>
+        </div>
+      </div>
+      <div id="age-series-toggles" class="age-series-toggles" aria-label="表示する年代"></div>
+      <div class="age-series-scroll" id="age-series-scroll">
+        <div class="age-series-inner"><canvas id="age-series-chart"></canvas></div>
+      </div>
+      <div class="graph-export-source">出典：新潟県「感染症情報（週報）」</div>
+    </article>
+  </div>
+
+  <article class="card age-heatmap-card" data-copy-root>
+    <div class="section-title-row age-card-head">
+      <div>
+        <div class="card-kicker">AGE HEATMAP</div>
+        <h3>年代別 流行ヒートマップ</h3>
+        <p class="muted small">各年代の過去最大値を100%として、流行の強弱を色で表示します。セルに触れると「人/定点」と実数を確認できます。</p>
+      </div>
+      <div class="graph-head-actions">
+        <div class="age-current-week">
+          <span>表示週</span>
+          <strong id="age-heatmap-period">--</strong>
+        </div>
+        <button class="ghost-button graph-copy-button" type="button" data-copy-graph>📋 グラフをコピー</button>
+      </div>
+    </div>
+
+    <div class="age-timeline" aria-label="年代別ヒートマップの表示週を選択">
+      <div class="age-timeline-tools">
+        <div class="age-range-buttons" role="group" aria-label="ヒートマップの表示期間">
+          <button class="age-range-button is-active" type="button" data-age-range="13">3か月</button>
+          <button class="age-range-button" type="button" data-age-range="26">半年</button>
+          <button class="age-range-button" type="button" data-age-range="52">1年</button>
+          <button class="age-range-button" type="button" data-age-range="104">2年</button>
+        </div>
+        <div class="age-playback-controls">
+          <button id="age-prev-week" class="timeline-button" type="button" aria-label="1週戻る">◀</button>
+          <button id="age-play" class="timeline-button timeline-play" type="button">▶ 再生</button>
+          <button id="age-next-week" class="timeline-button" type="button" aria-label="1週進む">▶</button>
+          <button id="age-latest" class="timeline-button timeline-latest" type="button">最新へ</button>
+        </div>
+      </div>
+      <input id="age-week-slider" class="map-week-slider age-week-slider" type="range" min="0" max="0" value="0" step="1" aria-label="年代別ヒートマップの表示週">
+      <div class="map-timeline-scale age-timeline-scale">
+        <span id="age-first-week">--</span>
+        <span id="age-last-week">--</span>
+      </div>
+    </div>
+
+    <div class="age-heatmap-scroll" id="age-heatmap-scroll" tabindex="0" aria-label="年代別流行ヒートマップ">
+      <div id="age-heatmap" class="age-heatmap"></div>
+    </div>
+    <div class="age-heatmap-legend" aria-hidden="true">
+      <span>低い</span><div class="age-legend-gradient"></div><span>高い</span>
+      <span class="age-legend-note">※ 色は各年代内での相対的な強さ</span>
+    </div>
+    <div class="graph-export-source">出典：新潟県「感染症情報（週報）」</div>
+  </article>
+
+
+  <p class="age-data-note">年代別の「人/定点」は県公表値をそのまま使用しています。年代によって年齢幅や受診状況が異なるため、年代間の値の大小だけで感染リスクを単純比較するものではありません。</p>
+</section>
+
+<section class="card share-card" id="share">
+  <div class="share-copy">
+    <div class="card-kicker">SHARE</div>
+    <h2>このページを共有</h2>
+    <p>家族・職場・学校などで、最新の流行状況を共有できます。</p>
+  </div>
+  <div class="share-actions" aria-label="共有方法">
+    <a id="share-x" class="share-button share-button-x" href="#" target="_blank" rel="noopener noreferrer" aria-label="Xで共有">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M18.244 2H21.5l-7.11 8.128L22.75 22h-6.545l-5.126-6.704L5.214 22H1.956l7.61-8.697L1.55 2h6.71l4.633 6.124L18.244 2Zm-1.143 17.91h1.804L7.28 3.99H5.344L17.1 19.91Z"/></svg>
+      <span>Xで共有</span>
+    </a>
+    <a id="share-line" class="share-button share-button-line" href="#" target="_blank" rel="noopener noreferrer" aria-label="LINEで送る">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21.3 10.3c0-4.17-4.18-7.56-9.3-7.56S2.7 6.13 2.7 10.3c0 3.74 3.32 6.87 7.8 7.46.3.07.72.2.82.46.1.24.07.62.03.86l-.13.81c-.04.24-.19.94.81.51 1-.42 5.4-3.18 7.37-5.44 1.36-1.49 1.9-3 1.9-4.66Z"/></svg>
+      <span>LINEで送る</span>
+    </a>
+    <a id="share-facebook" class="share-button" href="#" target="_blank" rel="noopener noreferrer" aria-label="Facebookで共有">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M13.5 22v-9h3l.45-3.5H13.5V7.26c0-1.01.28-1.7 1.74-1.7H17.1V2.43c-.32-.04-1.42-.13-2.7-.13-2.67 0-4.5 1.63-4.5 4.63V9.5H7v3.5h2.9v9h3.6Z"/></svg>
+      <span>Facebook</span>
+    </a>
+    <button id="share-copy" class="share-button" type="button" aria-label="ページURLをコピー">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+      <span>URLをコピー</span>
+    </button>
+    <button id="share-native" class="share-button share-button-native" type="button" hidden aria-label="端末の共有メニューを開く">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3v12m0-12 4 4m-4-4-4 4M5 13v6h14v-6"/></svg>
+      <span>共有</span>
+    </button>
+    <p id="share-status" class="share-status" role="status" aria-live="polite"></p>
+  </div>
+</section>
+
+<section class="footer-note" id="about">
+  <p>出典：新潟県「感染症情報（週報）」</p>
+  <p>本サイトは公表データを見やすく整理したもので、診断・受診判断を行うものではありません。</p>
+  <p><a class="footer-contact-link" href="./contact.html">お問い合わせ</a></p>
+  <p>Powered by CivITech</p>
+</section>
+</main>
+
+<dialog id="region-dialog" class="region-dialog">
+  <div class="dialog-head">
+    <div><div class="card-kicker">AREA DEFINITIONS</div><h2>地域区分と市町村</h2></div>
+    <button id="region-dialog-close" class="dialog-close" type="button" aria-label="閉じる">×</button>
+  </div>
+  <p class="muted small">新潟県の公表地域単位を、市町村に対応付けています。</p>
+  <div id="region-definition-list" class="region-definition-list"></div>
+</dialog>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="./app.js?v=102"></script>
+<script src="./share-v103.js?v=103"></script>
 </body>
 </html>
