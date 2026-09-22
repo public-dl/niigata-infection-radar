@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://niigata-infection-radar.netlify.app/sitemap.xml
+Sitemap: https://public-dl.github.io/niigata-infection-radar/sitemap.xml
