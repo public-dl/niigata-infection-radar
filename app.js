@@ -1150,6 +1150,8 @@ function buildAgeLatestExportCanvas(){
 
 let activeCopyRoot=null;
 let activeCopyButton=null;
+let activeCopyBlob=null;
+let activeCopyBlobToken=0;
 
 function copyTargetTitle(root){
  const title=root?.querySelector("h2,h3")?.textContent?.trim();
@@ -1258,9 +1260,83 @@ function copyDataForRoot(root){
  return `${copyTargetTitle(root)}\n${copyTargetUrl(root)}`;
 }
 
+
+function isIOSLike(){
+  const ua=navigator.userAgent||"";
+  return /iPad|iPhone|iPod/.test(ua) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+}
+
+async function buildMobileTrendExportCanvas(){
+  const svg=document.querySelector("#trend-mobile-chart svg");
+  if(!svg) throw new Error("スマホ用推移グラフを取得できません");
+
+  const vb=svg.viewBox?.baseVal;
+  const srcW=vb?.width||Number(svg.getAttribute("width"))||760;
+  const srcH=vb?.height||Number(svg.getAttribute("height"))||330;
+  const W=1200;
+  const chartX=48, chartY=142, chartW=W-96;
+  const chartH=Math.round(chartW*(srcH/srcW));
+  const H=chartY+chartH+118;
+  const dpr=1.35;
+
+  const out=document.createElement("canvas");
+  out.width=Math.round(W*dpr);
+  out.height=Math.round(H*dpr);
+  const ctx=out.getContext("2d");
+  ctx.scale(dpr,dpr);
+  ctx.fillStyle="#fff";
+  ctx.fillRect(0,0,W,H);
+
+  const font='system-ui,-apple-system,"Segoe UI","Yu Gothic UI","Hiragino Kaku Gothic ProN",sans-serif';
+  ctx.fillStyle="#536b7a";
+  ctx.font=`800 15px ${font}`;
+  ctx.fillText("TREND",48,50);
+
+  ctx.fillStyle="#092f4f";
+  ctx.font=`800 31px ${font}`;
+  ctx.fillText(copyTargetTitle(document.querySelector("#trend")),48,91);
+
+  const rangeLabel=trendWeeks===13?"3か月":trendWeeks===26?"半年":trendWeeks===52?"1年":"2年";
+  ctx.fillStyle="#6c8190";
+  ctx.font=`700 15px ${font}`;
+  ctx.fillText(`表示期間：${rangeLabel}`,48,120);
+
+  const clone=svg.cloneNode(true);
+  clone.setAttribute("xmlns","http://www.w3.org/2000/svg");
+  clone.setAttribute("width",String(srcW));
+  clone.setAttribute("height",String(srcH));
+  const source=new XMLSerializer().serializeToString(clone);
+  const blob=new Blob([source],{type:"image/svg+xml;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+
+  try{
+    const img=await new Promise((resolve,reject)=>{
+      const el=new Image();
+      el.onload=()=>resolve(el);
+      el.onerror=()=>reject(new Error("スマホ用推移グラフのPNG化に失敗しました"));
+      el.src=url;
+    });
+    ctx.drawImage(img,0,0,srcW,srcH,chartX,chartY,chartW,chartH);
+  }finally{
+    URL.revokeObjectURL(url);
+  }
+
+  const footerY=chartY+chartH+52;
+  ctx.strokeStyle="#e6eef3";
+  ctx.beginPath();ctx.moveTo(48,footerY-22);ctx.lineTo(W-48,footerY-22);ctx.stroke();
+  ctx.fillStyle="#71838f";
+  ctx.font=`500 13px ${font}`;
+  ctx.fillText('出典：新潟県「感染症情報（週報）」',48,footerY);
+
+  return out;
+}
+
 async function makeCopyImageBlob(root){
  if(!root) throw new Error("コピー対象が見つかりません");
  if(root.classList.contains("age-latest-card")) return canvasToBlob(buildAgeLatestExportCanvas());
+ if(root.id==="trend" && window.matchMedia("(max-width: 820px)").matches){
+   return canvasToBlob(await buildMobileTrendExportCanvas());
+ }
  if(typeof html2canvas!=="function") throw new Error("画像作成機能を読み込めませんでした");
 
  const isMap=root.id==="area-map";
@@ -1290,10 +1366,7 @@ async function makeCopyImageBlob(root){
        await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
      }
    }
-   // Mobile trend uses SVG instead of Chart.js canvas. html2canvas can capture it,
-   // but use the visible card width to avoid an oversized bitmap on phones.
-   const mobileTrend=root.id==="trend"&&window.matchMedia("(max-width: 820px)").matches;
-   const canvas=await captureGraphRoot(root,{isAgeCard:isAgeCard||mobileTrend});
+   const canvas=await captureGraphRoot(root,{isAgeCard});
    return await canvasToBlob(canvas);
  }finally{
    try{restoreCanvases();}catch(_){}
@@ -1319,16 +1392,28 @@ function pngFile(blob,root){
 }
 async function shareImageOrLink(root,blob=null){
  if(!navigator.share) return false;
- const data={title:copyTargetTitle(root),text:`新潟インフルエンザレーダー｜${copyTargetTitle(root)}`,url:copyTargetUrl(root)};
+ const title=copyTargetTitle(root);
+ const text=`新潟インフルエンザレーダー｜${title}`;
+
  if(blob&&window.File){
    const file=pngFile(blob,root);
-   if(!navigator.canShare||navigator.canShare({files:[file]})) data.files=[file];
+   const fileData={title,text,files:[file]};
+   try{
+     if(!navigator.canShare || navigator.canShare(fileData)){
+       await navigator.share(fileData);
+       return true;
+     }
+   }catch(err){
+     if(err?.name==="AbortError") return true;
+     console.warn("file share failed",err);
+   }
  }
+
  try{
-   await navigator.share(data);
+   await navigator.share({title,text,url:copyTargetUrl(root)});
    return true;
  }catch(err){
-   if(err?.name!=="AbortError") console.warn("share failed",err);
+   if(err?.name!=="AbortError") console.warn("link share failed",err);
    return err?.name==="AbortError";
  }
 }
@@ -1342,62 +1427,116 @@ function setCopyDialogStatus(message,isError=false){
 function setCopyDialogBusy(busy){
  document.querySelectorAll("#copy-dialog [data-copy-action]").forEach(btn=>btn.disabled=busy);
 }
+function setCopyImageActionsReady(ready){
+  document.querySelectorAll('#copy-dialog [data-copy-action="image"], #copy-dialog [data-copy-action="download"]').forEach(btn=>{
+    btn.disabled=!ready;
+  });
+}
+function configureCopyDialogForDevice(){
+  const imageButton=document.querySelector('#copy-dialog [data-copy-action="image"]');
+  const shareButton=document.querySelector('#copy-dialog [data-copy-action="share"]');
+  if(imageButton){
+    const strong=imageButton.querySelector("strong");
+    const span=imageButton.querySelector("span");
+    if(isIOSLike()){
+      if(strong) strong.textContent="画像を共有・保存";
+      if(span) span.textContent="iPhoneでは画像コピーの代わりに共有メニューを使用";
+    }else{
+      if(strong) strong.textContent="画像をコピー";
+      if(span) span.textContent="対応端末ではクリップボードへ。非対応時は共有・保存へ切替";
+    }
+  }
+  if(shareButton) shareButton.hidden=!navigator.share;
+}
+
 function closeCopyDialog(){
  const dialog=document.querySelector("#copy-dialog");
  if(dialog?.open) dialog.close();
  activeCopyRoot=null;
  activeCopyButton=null;
+ activeCopyBlob=null;
+ activeCopyBlobToken++;
 }
 function openCopyDialog(button){
  const root=button.closest("[data-copy-root]");
  if(!root) return;
  activeCopyRoot=root;
  activeCopyButton=button;
+ activeCopyBlob=null;
+ const token=++activeCopyBlobToken;
  const dialog=document.querySelector("#copy-dialog");
  const target=document.querySelector("#copy-dialog-target");
- const share=document.querySelector('#copy-dialog [data-copy-action="share"]');
  if(target) target.textContent=copyTargetTitle(root);
- if(share) share.hidden=!navigator.share;
- setCopyDialogStatus("");
+ configureCopyDialogForDevice();
+ setCopyImageActionsReady(false);
+ setCopyDialogStatus("画像を準備しています…");
  if(dialog?.showModal) dialog.showModal();
  else if(dialog) dialog.setAttribute("open","");
+
+ makeCopyImageBlob(root).then(blob=>{
+   if(token!==activeCopyBlobToken || root!==activeCopyRoot) return;
+   activeCopyBlob=blob;
+   setCopyImageActionsReady(true);
+   setCopyDialogStatus("");
+ }).catch(err=>{
+   console.error("copy image preparation failed",err);
+   if(token!==activeCopyBlobToken || root!==activeCopyRoot) return;
+   activeCopyBlob=null;
+   setCopyImageActionsReady(false);
+   setCopyDialogStatus("画像の準備に失敗しました。データコピーまたはリンク共有は利用できます。",true);
+ });
 }
 
 async function runCopyDialogAction(action){
  const root=activeCopyRoot;
  if(!root) return;
  setCopyDialogBusy(true);
- setCopyDialogStatus("作成中…");
  try{
    if(action==="data"){
+     setCopyDialogStatus("コピー中…");
      await copyTextRobust(copyDataForRoot(root));
      setCopyDialogStatus("データをコピーしました");
      return;
    }
    if(action==="link"){
+     setCopyDialogStatus("コピー中…");
      await copyTextRobust(copyTargetUrl(root));
      setCopyDialogStatus("リンクをコピーしました");
      return;
    }
 
-   const blob=await makeCopyImageBlob(root);
+   if(action==="share"){
+     setCopyDialogStatus("共有メニューを開いています…");
+     const shared=await shareImageOrLink(root,activeCopyBlob);
+     setCopyDialogStatus(shared?"共有メニューを開きました":"この端末では共有機能を利用できません",!shared);
+     return;
+   }
+
+   const blob=activeCopyBlob;
+   if(!blob) throw new Error("画像の準備が完了していません");
+
    if(action==="download"){
      downloadBlob(blob,copyTargetFilename(root));
      setCopyDialogStatus("PNGを保存しました");
      return;
    }
-   if(action==="share"){
-     const shared=await shareImageOrLink(root,blob);
-     setCopyDialogStatus(shared?"共有メニューを開きました":"この端末では共有機能を利用できません",!shared);
-     return;
-   }
+
    if(action==="image"){
+     if(isIOSLike()){
+       setCopyDialogStatus("共有メニューを開いています…");
+       if(await shareImageOrLink(root,blob)){
+         setCopyDialogStatus("画像を共有できます");
+         return;
+       }
+       downloadBlob(blob,copyTargetFilename(root));
+       setCopyDialogStatus("PNGを保存しました");
+       return;
+     }
+
      if(await writeImageToClipboard(blob)){
        setCopyDialogStatus("画像をコピーしました");
        return;
      }
-     // iOS/Safari等、PNGのClipboard APIが使えない端末では
-     // 画像付き共有を優先し、それも不可ならPNG保存へフォールバックする。
      if(await shareImageOrLink(root,blob)){
        setCopyDialogStatus("画像コピー非対応のため共有メニューを開きました");
        return;
@@ -1407,9 +1546,10 @@ async function runCopyDialogAction(action){
    }
  }catch(err){
    console.error(err);
-   setCopyDialogStatus("処理できませんでした。PNG保存またはデータコピーをお試しください",true);
+   setCopyDialogStatus("処理できませんでした。データコピーまたはリンクコピーは利用できます。",true);
  }finally{
    setCopyDialogBusy(false);
+   if(!activeCopyBlob) setCopyImageActionsReady(false);
  }
 }
 
