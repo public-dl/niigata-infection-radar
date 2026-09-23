@@ -125,3 +125,44 @@
     font-size:.74rem;
   }
 }
+
+
+/* v105 — unified chart/map/table share & copy dialog */
+.copy-dialog{
+  width:min(560px,calc(100% - 28px));
+  max-width:560px;
+  padding:0;
+  border:1px solid #d7e6ee;
+  border-radius:20px;
+  background:#fff;
+  color:#173f55;
+  box-shadow:0 22px 60px rgba(24,65,88,.22);
+}
+.copy-dialog::backdrop{background:rgba(18,43,58,.38);backdrop-filter:blur(2px)}
+.copy-dialog-shell{padding:20px}
+.copy-dialog-head{display:flex;align-items:flex-start;justify-content:space-between;gap:16px}
+.copy-dialog-head h2{margin:3px 0 0;font-size:1.15rem;color:#123e59}
+.copy-dialog-target{margin:6px 0 0;color:#6c8190;font-size:.8rem;font-weight:700}
+.copy-dialog-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.copy-option-button{
+  min-height:76px;padding:13px 14px;border:1px solid #d7e6ee;border-radius:14px;background:#fff;color:#173f55;
+  font:inherit;text-align:left;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:5px;
+  transition:background .15s ease,border-color .15s ease,transform .15s ease,box-shadow .15s ease;
+}
+.copy-option-button strong{font-size:.88rem;color:#164f70}
+.copy-option-button span{font-size:.72rem;line-height:1.45;color:#718692;font-weight:600}
+.copy-option-button:hover,.copy-option-button:focus-visible{background:#f3f9fc;border-color:#a9cfdf;box-shadow:0 5px 14px rgba(31,81,107,.10);transform:translateY(-1px)}
+.copy-option-button:disabled{opacity:.55;cursor:wait;transform:none;box-shadow:none}
+.copy-option-share{border-color:#bcdbea;background:#f7fcff}
+.copy-dialog-status{min-height:1.4em;margin:14px 2px 0;color:#0b79b6;font-size:.78rem;font-weight:800}
+.copy-dialog-status.is-error{color:#b84747}
+
+/* Exported images should contain the content, not the copy control itself. */
+.is-graph-exporting [data-copy-graph]{visibility:hidden!important}
+
+@media(max-width:620px){
+  .copy-dialog{width:calc(100% - 20px);border-radius:18px}
+  .copy-dialog-shell{padding:17px}
+  .copy-dialog-actions{grid-template-columns:1fr;gap:8px}
+  .copy-option-button{min-height:64px;padding:11px 13px}
+}

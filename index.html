@@ -8,6 +8,10 @@
   <meta name="keywords" content="新潟,新潟県,新潟市,インフルエンザ,インフル,流行,インフルエンザ 流行,新潟 インフルエンザ,新潟県 インフルエンザ,新潟 インフル,新潟県 インフル,感染症週報,新潟県感染症情報,定点当たり報告数,インフルエンザ 地域別,インフルエンザ 年代別" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <link rel="canonical" href="https://public-dl.github.io/niigata-infection-radar/" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="./favicon-48.png" type="image/png" sizes="48x48" />
+  <link rel="icon" href="./favicon-192.png" type="image/png" sizes="192x192" />
+  <link rel="apple-touch-icon" href="./apple-touch-icon.png" />
 
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="ja_JP" />
@@ -58,7 +62,7 @@
   <link rel="stylesheet" href="./ai-emphasis-v96.css?v=96" />
   <link rel="stylesheet" href="./region-municipalities-v97.css?v=97" />
   <link rel="stylesheet" href="./region-prefecture-v102.css?v=102" />
-  <link rel="stylesheet" href="./share-v103.css?v=103" />
+  <link rel="stylesheet" href="./share-v103.css?v=105" />
   <link rel="stylesheet" href="./trend-municipalities-v98.css?v=98" />
   <link rel="stylesheet" href="./age-latest-v82.css?v=82" />
   <link rel="stylesheet" href="./age-layout-v83.css?v=83" />
@@ -200,7 +204,7 @@
   </article>
 </section>
 
-<section class="card map-card map-feature" id="area-map">
+<section class="card map-card map-feature" id="area-map" data-copy-root>
   <div class="section-title-row map-head">
     <div>
       <div class="card-kicker">AREA MAP</div>
@@ -208,6 +212,7 @@
       <p class="section-lead">新潟県内の流行の広がりを、市町村境界で確認できます。</p>
     </div>
     <div class="map-actions">
+      <button class="ghost-button graph-copy-button" type="button" data-copy-graph>共有・コピー</button>
       <button class="ghost-button region-info-button" type="button">地域区分を見る</button>
       <span id="map-period" class="source-chip">--</span>
     </div>
@@ -296,7 +301,7 @@
         <button type="button" class="range-button" data-weeks="104">2年</button>
       </div>
       <button id="to-latest" class="ghost-button" type="button">最新へ</button>
-      <button class="ghost-button graph-copy-button" type="button" data-copy-graph>📋 グラフをコピー</button>
+      <button class="ghost-button graph-copy-button" type="button" data-copy-graph>共有・コピー</button>
     </div>
   </div>
   <div class="threshold-note trend-content-layer">
@@ -316,11 +321,12 @@
     <p id="year-compare-note" class="muted">比較データを確認中です。</p>
   </article>
 
-  <article class="card">
+  <article class="card" id="region-report" data-copy-root>
     <div class="section-title-row">
       <div><div class="card-kicker">AREA DATA</div><h2>地域別の報告状況</h2></div>
       <div class="ranking-actions">
         <span id="ranking-period" class="source-chip">--</span>
+        <button class="ghost-button graph-copy-button" type="button" data-copy-graph>共有・コピー</button>
         <button class="ghost-button region-info-button" type="button">地域区分を見る</button>
       </div>
     </div>
@@ -341,12 +347,12 @@
   </div>
 
   <div class="age-grid">
-    <article class="card age-latest-card" data-copy-root>
+    <article class="card age-latest-card" id="age-latest-card" data-copy-root>
       <div class="section-title-row age-card-head">
         <div><div class="card-kicker">LATEST WEEK</div><h3>最新週の年代別比較</h3></div>
         <div class="graph-head-actions">
           <span id="age-latest-period" class="source-chip">--</span>
-          <button class="ghost-button graph-copy-button" type="button" data-copy-graph>📋 グラフをコピー</button>
+          <button class="ghost-button graph-copy-button" type="button" data-copy-graph>共有・コピー</button>
         </div>
       </div>
       <div class="age-chart-wrap age-latest-chart-wrap"><canvas id="age-latest-chart"></canvas></div>
@@ -355,7 +361,7 @@
       <div class="graph-export-source">出典：新潟県「感染症情報（週報）」</div>
     </article>
 
-    <article class="card age-series-card" data-copy-root>
+    <article class="card age-series-card" id="age-series-card" data-copy-root>
       <div class="section-title-row age-card-head">
         <div><div class="card-kicker">TIME SERIES</div><h3>年代別の時系列推移</h3></div>
         <div class="graph-head-actions">
@@ -365,7 +371,7 @@
           <button type="button" class="age-series-range-button" data-age-series-weeks="52">1年</button>
           <button type="button" class="age-series-range-button" data-age-series-weeks="104">2年</button>
           </div>
-          <button class="ghost-button graph-copy-button" type="button" data-copy-graph>📋 グラフをコピー</button>
+          <button class="ghost-button graph-copy-button" type="button" data-copy-graph>共有・コピー</button>
         </div>
       </div>
       <div id="age-series-toggles" class="age-series-toggles" aria-label="表示する年代"></div>
@@ -376,7 +382,7 @@
     </article>
   </div>
 
-  <article class="card age-heatmap-card" data-copy-root>
+  <article class="card age-heatmap-card" id="age-heatmap-card" data-copy-root>
     <div class="section-title-row age-card-head">
       <div>
         <div class="card-kicker">AGE HEATMAP</div>
@@ -388,7 +394,7 @@
           <span>表示週</span>
           <strong id="age-heatmap-period">--</strong>
         </div>
-        <button class="ghost-button graph-copy-button" type="button" data-copy-graph>📋 グラフをコピー</button>
+        <button class="ghost-button graph-copy-button" type="button" data-copy-graph>共有・コピー</button>
       </div>
     </div>
 
@@ -467,6 +473,43 @@
 </section>
 </main>
 
+
+<dialog id="copy-dialog" class="copy-dialog" aria-labelledby="copy-dialog-title">
+  <div class="copy-dialog-shell">
+    <div class="copy-dialog-head">
+      <div>
+        <div class="card-kicker">SHARE / COPY</div>
+        <h2 id="copy-dialog-title">共有・コピー</h2>
+        <p id="copy-dialog-target" class="copy-dialog-target"></p>
+      </div>
+      <button id="copy-dialog-close" class="dialog-close" type="button" aria-label="閉じる">×</button>
+    </div>
+    <div class="copy-dialog-actions">
+      <button type="button" class="copy-option-button" data-copy-action="image">
+        <strong>画像をコピー</strong>
+        <span>対応端末ではクリップボードへ。非対応時は共有・保存へ切替</span>
+      </button>
+      <button type="button" class="copy-option-button" data-copy-action="download">
+        <strong>PNGを保存</strong>
+        <span>表示中のグラフ・地図・表を画像ファイルに保存</span>
+      </button>
+      <button type="button" class="copy-option-button" data-copy-action="data">
+        <strong>データをコピー</strong>
+        <span>表示中の数値をタブ区切りでコピー</span>
+      </button>
+      <button type="button" class="copy-option-button" data-copy-action="link">
+        <strong>リンクをコピー</strong>
+        <span>この表示位置へのURLをコピー</span>
+      </button>
+      <button type="button" class="copy-option-button copy-option-share" data-copy-action="share" hidden>
+        <strong>端末で共有</strong>
+        <span>スマホの共有メニューから送信・保存</span>
+      </button>
+    </div>
+    <p id="copy-dialog-status" class="copy-dialog-status" role="status" aria-live="polite"></p>
+  </div>
+</dialog>
+
 <dialog id="region-dialog" class="region-dialog">
   <div class="dialog-head">
     <div><div class="card-kicker">AREA DEFINITIONS</div><h2>地域区分と市町村</h2></div>
@@ -479,7 +522,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-<script src="./app.js?v=102"></script>
-<script src="./share-v103.js?v=103"></script>
+<script src="./app.js?v=104"></script>
+<script src="./share-v103.js?v=105"></script>
 </body>
 </html>

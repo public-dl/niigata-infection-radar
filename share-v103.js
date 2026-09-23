@@ -1,7 +1,7 @@
 (() => {
   "use strict";
 
-  const CANONICAL_URL = "https://niigata-infection-radar.netlify.app/";
+  const CANONICAL_URL = document.querySelector('link[rel="canonical"]')?.href || "https://public-dl.github.io/niigata-infection-radar/";
   const SHARE_TITLE = "新潟インフルエンザレーダー";
   const SHARE_TEXT = "新潟県のインフルエンザ流行状況を、地域・年代・時系列で確認できます。";
 

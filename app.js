@@ -1148,129 +1148,287 @@ function buildAgeLatestExportCanvas(){
  return out;
 }
 
-async function copyAgeLatestCard(button){
- const originalText=button.textContent;
- button.disabled=true;
- button.textContent="作成中…";
- try{
-   const canvas=buildAgeLatestExportCanvas();
-   const blob=await canvasToBlob(canvas);
-   let copied=false;
-   if(navigator.clipboard && window.ClipboardItem){
-     try{
-       await navigator.clipboard.write([new ClipboardItem({"image/png":blob})]);
-       copied=true;
-     }catch(err){
-       console.warn("clipboard image write failed",err);
-     }
-   }
-   if(copied){
-     button.textContent="✓ コピーしました";
-   }else{
-     downloadBlob(blob,"最新週の年代別比較.png");
-     button.textContent="PNGを保存しました";
-   }
- }catch(err){
-   console.error(err);
-   button.textContent="コピーできませんでした";
- }finally{
-   setTimeout(()=>{button.disabled=false;button.textContent=originalText;},1800);
- }
+let activeCopyRoot=null;
+let activeCopyButton=null;
+
+function copyTargetTitle(root){
+ const title=root?.querySelector("h2,h3")?.textContent?.trim();
+ return title||"新潟インフルエンザレーダー";
 }
-
-async function copyGraphCard(button){
- const root=button.closest("[data-copy-root]");
- if(!root) return;
-
- // 最新週の年代別比較は専用の合成Canvasでコピーする。
- if(root.classList.contains("age-latest-card")){
-   await copyAgeLatestCard(button);
+function copyTargetFilename(root){
+ return `${copyTargetTitle(root).replace(/[\\/:*?"<>|]/g,"-")}.png`;
+}
+function copyTargetUrl(root){
+ const base=document.querySelector('link[rel="canonical"]')?.href||location.href.split("#")[0];
+ const url=new URL(base,location.href);
+ if(root?.id) url.hash=root.id;
+ return url.href;
+}
+async function copyTextRobust(text){
+ if(navigator.clipboard?.writeText && window.isSecureContext){
+   await navigator.clipboard.writeText(text);
    return;
  }
+ const textarea=document.createElement("textarea");
+ textarea.value=text;
+ textarea.setAttribute("readonly","");
+ textarea.style.position="fixed";
+ textarea.style.left="-9999px";
+ textarea.style.top="0";
+ document.body.appendChild(textarea);
+ textarea.focus();
+ textarea.select();
+ const ok=document.execCommand("copy");
+ textarea.remove();
+ if(!ok) throw new Error("テキストコピーに失敗しました");
+}
+function tabular(rows){
+ return rows.map(row=>row.map(v=>String(v??"").replace(/\t/g," ").replace(/\r?\n/g," ")).join("\t")).join("\n");
+}
+function copyDataForRoot(root){
+ const id=root?.id||"";
+ const week=currentMapWeek||latestWeek||allWeeks.at(-1);
+
+ if(id==="area-map"){
+   const rows=[["地域","市町村","表示週","人/定点","報告数（人）"]];
+   REGION_ORDER.forEach(region=>rows.push([
+     displayRegionName(region),
+     (REGION_MUNICIPALITIES[region]||[]).join("・"),
+     compareHeading(week),
+     regionRate(week,region)===null?"--":fixed2(regionRate(week,region)),
+     regionCountText(regionActualCount(week,region))
+   ]));
+   return tabular(rows);
+ }
+
+ if(id==="region-report"){
+   const index=allWeeks.findIndex(w=>Number(w.year)===Number(week?.year)&&Number(w.week)===Number(week?.week));
+   const prev=index>0?allWeeks[index-1]:null;
+   const rows=[["地域","最新週","最新 人/定点","最新 報告数（人）","前週 人/定点","前週 報告数（人）","増減 人/定点","増減 報告数（人）"]];
+   const push=(name,currRate,currCount,prevRate,prevCount)=>{
+     const rateDelta=currRate===null||prevRate===null?null:currRate-prevRate;
+     const countDelta=currCount===null||prevCount===null?null:currCount-prevCount;
+     rows.push([name,compareHeading(week),currRate===null?"--":fixed2(currRate),regionCountText(currCount),prevRate===null?"--":fixed2(prevRate),regionCountText(prevCount),rateDelta===null?"--":signedFixed2(rateDelta),countDelta===null?"--":regionCountText(countDelta,{signed:true})]);
+   };
+   push("県計",prefectureRate(week),prefectureActualCount(week),prefectureRate(prev),prefectureActualCount(prev));
+   REGION_ORDER.forEach(region=>push(displayRegionName(region),regionRate(week,region),regionActualCount(week,region),regionRate(prev,region),regionActualCount(prev,region)));
+   return tabular(rows);
+ }
+
+ if(id==="trend"){
+   const visible=allWeeks.slice(-Math.min(trendWeeks,allWeeks.length));
+   const selectedLabel=trendRegionLabel(trendRegion);
+   const rows=[["週",selectedLabel+(trendRegion==="prefecture"?"":" 人/定点")]];
+   if(trendRegion!=="prefecture"&&trendComparePrefecture) rows[0].push("県計 人/定点");
+   if([13,26,52].includes(trendWeeks)) rows[0].push(`${selectedLabel} 前年同期 人/定点`);
+   visible.forEach(w=>{
+     const row=[`${w.year}年第${w.week}週 ${w.label||""}`,n(trendValue(w,trendRegion))];
+     if(trendRegion!=="prefecture"&&trendComparePrefecture) row.push(n(w.prefecture));
+     if([13,26,52].includes(trendWeeks)){
+       const prev=allWeeks.find(x=>x.year===w.year-1&&x.week===w.week);
+       row.push(prev?n(trendValue(prev,trendRegion)):"--");
+     }
+     rows.push(row);
+   });
+   return tabular(rows);
+ }
+
+ if(id==="age-latest-card"){
+   const w=allWeeks[ageLatestWeekIndex]||latestWeek||allWeeks.at(-1);
+   return tabular([["年代","表示週","人/定点","報告数（人）"],...AGE_GROUPS.map(g=>[g,compareHeading(w),ageRate(w,g)===null?"--":n(ageRate(w,g)),ageCount(w,g)===null?"--":n(ageCount(w,g),0)])]);
+ }
+
+ if(id==="age-series-card"){
+   const groups=AGE_GROUPS.filter(g=>ageSeriesVisible.has(g));
+   const visible=allWeeks.slice(-Math.min(ageSeriesWeeks,allWeeks.length));
+   return tabular([["週",...groups],...visible.map(w=>[`${w.year}年第${w.week}週 ${w.label||""}`,...groups.map(g=>ageRate(w,g)===null?"--":n(ageRate(w,g)) )])]);
+ }
+
+ if(id==="age-heatmap-card"){
+   const end=Math.max(0,Math.min(allWeeks.length-1,ageHeatmapEndIndex));
+   const count=Math.min(ageHeatmapRange,end+1);
+   const visible=allWeeks.slice(Math.max(0,end-count+1),end+1);
+   return tabular([["年代 / 週",...visible.map(w=>`${w.year}W${w.week}`)],...AGE_GROUPS.map(g=>[g,...visible.map(w=>ageRate(w,g)===null?"--":n(ageRate(w,g)) )])]);
+ }
+
+ const table=root?.querySelector("table");
+ if(table){
+   return [...table.rows].map(row=>[...row.cells].map(cell=>cell.innerText.trim()).join("\t")).join("\n");
+ }
+ return `${copyTargetTitle(root)}\n${copyTargetUrl(root)}`;
+}
+
+async function makeCopyImageBlob(root){
+ if(!root) throw new Error("コピー対象が見つかりません");
+ if(root.classList.contains("age-latest-card")) return canvasToBlob(buildAgeLatestExportCanvas());
+ if(typeof html2canvas!=="function") throw new Error("画像作成機能を読み込めませんでした");
 
  const isMap=root.id==="area-map";
  const isAgeCard=Boolean(root.closest("#age-stats"));
- const originalText=button.textContent;
- const originalVisibility=button.style.visibility;
+ const hidden=[];
  let restoreLeaflet=()=>{};
  let restoreCanvases=()=>{};
 
- button.disabled=true;
- button.textContent="作成中…";
-
- // 通常グラフは「カード全体」をコピーする。
- // Leaflet地図だけは、レイアウトを変えると内部座標がずれるため
- // 画面の配置を変えずにキャプチャする。
- if(isMap){
-   button.style.visibility="hidden";
- }else{
-   root.classList.add("is-graph-exporting");
- }
+ root.querySelectorAll("[data-copy-graph]").forEach(btn=>{
+   hidden.push([btn,btn.style.visibility]);
+   btn.style.visibility="hidden";
+ });
+ if(!isMap) root.classList.add("is-graph-exporting");
 
  try{
-   if(typeof html2canvas!=="function") throw new Error("画像コピー機能を読み込めませんでした");
-
-   if(isMap && mapInstance){
-     try{ mapInstance.stop(); }catch(_){}
-     try{ mapInstance.invalidateSize(false); }catch(_){}
+   if(isMap&&mapInstance){
+     try{mapInstance.stop();}catch(_){}
+     try{mapInstance.invalidateSize(false);}catch(_){}
      await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
      await new Promise(r=>setTimeout(r,80));
-
      const mapEl=root.querySelector("#map");
      if(mapEl) restoreLeaflet=flattenLeafletTransformsForCapture(mapEl);
    }else{
-     // export用CSS（ボタン非表示・出典表示）が反映されるのを待つ。
      await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
-
-     // 年代別グラフはChart.jsのcanvasをそのままhtml2canvasへ渡すと、
-     // ブラウザによってカード全体の取得に失敗することがある。
-     // コピー中だけcanvasを同じ見た目のPNG画像に置き換えてから
-     // カード全体を取得することで、他のグラフと同じ体裁にそろえる。
      if(isAgeCard){
        restoreCanvases=freezeCanvasRenderingForCapture(root);
        await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
      }
    }
-
-   const canvas=await captureGraphRoot(root,{isAgeCard});
-   const blob=await canvasToBlob(canvas);
-   let copied=false;
-
-   if(navigator.clipboard && window.ClipboardItem){
-     try{
-       await navigator.clipboard.write([new ClipboardItem({"image/png":blob})]);
-       copied=true;
-     }catch(_){}
-   }
-
-   if(copied){
-     button.textContent="✓ コピーしました";
-   }else{
-     const title=(root.querySelector("h2,h3")?.textContent||"influenza-graph").replace(/[\\/:*?"<>|]/g,"-");
-     downloadBlob(blob,`${title}.png`);
-     button.textContent="PNGを保存しました";
-   }
- }catch(err){
-   console.error(err);
-   button.textContent="コピーできませんでした";
+   // Mobile trend uses SVG instead of Chart.js canvas. html2canvas can capture it,
+   // but use the visible card width to avoid an oversized bitmap on phones.
+   const mobileTrend=root.id==="trend"&&window.matchMedia("(max-width: 820px)").matches;
+   const canvas=await captureGraphRoot(root,{isAgeCard:isAgeCard||mobileTrend});
+   return await canvasToBlob(canvas);
  }finally{
-   try{ restoreCanvases(); }catch(_){}
-   try{ restoreLeaflet(); }catch(_){}
-   if(isMap){
-     button.style.visibility=originalVisibility;
-     try{ mapInstance?.invalidateSize(false); }catch(_){}
-   }else{
-     root.classList.remove("is-graph-exporting");
-   }
-   setTimeout(()=>{
-     button.disabled=false;
-     button.textContent=originalText;
-   },1800);
+   try{restoreCanvases();}catch(_){}
+   try{restoreLeaflet();}catch(_){}
+   hidden.forEach(([btn,visibility])=>btn.style.visibility=visibility);
+   root.classList.remove("is-graph-exporting");
+   if(isMap){try{mapInstance?.invalidateSize(false);}catch(_){}}
  }
 }
 
+async function writeImageToClipboard(blob){
+ if(!(navigator.clipboard?.write&&window.ClipboardItem&&window.isSecureContext)) return false;
+ try{
+   await navigator.clipboard.write([new ClipboardItem({"image/png":blob})]);
+   return true;
+ }catch(err){
+   console.warn("clipboard image write failed",err);
+   return false;
+ }
+}
+function pngFile(blob,root){
+ return new File([blob],copyTargetFilename(root),{type:"image/png",lastModified:Date.now()});
+}
+async function shareImageOrLink(root,blob=null){
+ if(!navigator.share) return false;
+ const data={title:copyTargetTitle(root),text:`新潟インフルエンザレーダー｜${copyTargetTitle(root)}`,url:copyTargetUrl(root)};
+ if(blob&&window.File){
+   const file=pngFile(blob,root);
+   if(!navigator.canShare||navigator.canShare({files:[file]})) data.files=[file];
+ }
+ try{
+   await navigator.share(data);
+   return true;
+ }catch(err){
+   if(err?.name!=="AbortError") console.warn("share failed",err);
+   return err?.name==="AbortError";
+ }
+}
+
+function setCopyDialogStatus(message,isError=false){
+ const status=document.querySelector("#copy-dialog-status");
+ if(!status) return;
+ status.textContent=message;
+ status.classList.toggle("is-error",Boolean(isError));
+}
+function setCopyDialogBusy(busy){
+ document.querySelectorAll("#copy-dialog [data-copy-action]").forEach(btn=>btn.disabled=busy);
+}
+function closeCopyDialog(){
+ const dialog=document.querySelector("#copy-dialog");
+ if(dialog?.open) dialog.close();
+ activeCopyRoot=null;
+ activeCopyButton=null;
+}
+function openCopyDialog(button){
+ const root=button.closest("[data-copy-root]");
+ if(!root) return;
+ activeCopyRoot=root;
+ activeCopyButton=button;
+ const dialog=document.querySelector("#copy-dialog");
+ const target=document.querySelector("#copy-dialog-target");
+ const share=document.querySelector('#copy-dialog [data-copy-action="share"]');
+ if(target) target.textContent=copyTargetTitle(root);
+ if(share) share.hidden=!navigator.share;
+ setCopyDialogStatus("");
+ if(dialog?.showModal) dialog.showModal();
+ else if(dialog) dialog.setAttribute("open","");
+}
+
+async function runCopyDialogAction(action){
+ const root=activeCopyRoot;
+ if(!root) return;
+ setCopyDialogBusy(true);
+ setCopyDialogStatus("作成中…");
+ try{
+   if(action==="data"){
+     await copyTextRobust(copyDataForRoot(root));
+     setCopyDialogStatus("データをコピーしました");
+     return;
+   }
+   if(action==="link"){
+     await copyTextRobust(copyTargetUrl(root));
+     setCopyDialogStatus("リンクをコピーしました");
+     return;
+   }
+
+   const blob=await makeCopyImageBlob(root);
+   if(action==="download"){
+     downloadBlob(blob,copyTargetFilename(root));
+     setCopyDialogStatus("PNGを保存しました");
+     return;
+   }
+   if(action==="share"){
+     const shared=await shareImageOrLink(root,blob);
+     setCopyDialogStatus(shared?"共有メニューを開きました":"この端末では共有機能を利用できません",!shared);
+     return;
+   }
+   if(action==="image"){
+     if(await writeImageToClipboard(blob)){
+       setCopyDialogStatus("画像をコピーしました");
+       return;
+     }
+     // iOS/Safari等、PNGのClipboard APIが使えない端末では
+     // 画像付き共有を優先し、それも不可ならPNG保存へフォールバックする。
+     if(await shareImageOrLink(root,blob)){
+       setCopyDialogStatus("画像コピー非対応のため共有メニューを開きました");
+       return;
+     }
+     downloadBlob(blob,copyTargetFilename(root));
+     setCopyDialogStatus("画像コピー非対応のためPNGを保存しました");
+   }
+ }catch(err){
+   console.error(err);
+   setCopyDialogStatus("処理できませんでした。PNG保存またはデータコピーをお試しください",true);
+ }finally{
+   setCopyDialogBusy(false);
+ }
+}
+
+function wireCopyDialog(){
+ const dialog=document.querySelector("#copy-dialog");
+ if(!dialog||dialog.dataset.wired==="1") return;
+ dialog.dataset.wired="1";
+ document.querySelector("#copy-dialog-close")?.addEventListener("click",closeCopyDialog);
+ dialog.addEventListener("click",e=>{if(e.target===dialog)closeCopyDialog();});
+ dialog.addEventListener("cancel",e=>{e.preventDefault();closeCopyDialog();});
+ dialog.querySelectorAll("[data-copy-action]").forEach(btn=>btn.addEventListener("click",()=>runCopyDialogAction(btn.dataset.copyAction)));
+}
 function wireGraphCopyButtons(){
- document.querySelectorAll("[data-copy-graph]").forEach(btn=>btn.addEventListener("click",()=>copyGraphCard(btn)));
+ wireCopyDialog();
+ document.querySelectorAll("[data-copy-graph]").forEach(btn=>{
+   if(btn.dataset.copyWired==="1") return;
+   btn.dataset.copyWired="1";
+   btn.addEventListener("click",()=>openCopyDialog(btn));
+ });
 }
 
 function renderComparison(weeks,latest){
