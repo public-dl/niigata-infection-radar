@@ -1186,7 +1186,7 @@ function buildAreaMapExportCanvas(geo,week){
  const shapes=municipalityShapesForExport(geo);
  if(!shapes.length) throw new Error("地図形状を取得できません");
 
- const W=1400,H=920,dpr=1.5;
+ const W=1400,H=980,dpr=1.5;
  const out=document.createElement("canvas");
  out.width=Math.round(W*dpr);
  out.height=Math.round(H*dpr);
@@ -1214,9 +1214,9 @@ function buildAreaMapExportCanvas(geo,week){
  ctx.font=`600 16px ${font}`;
  ctx.fillText("新潟県内の流行の広がりを、市町村境界で確認できます。",48,128);
 
- const mapCard={x:48,y:156,w:920,h:650};
- const sideCard={x:992,y:156,w:360,h:650};
- const footerY=852;
+ const mapCard={x:48,y:156,w:920,h:710};
+ const sideCard={x:992,y:156,w:360,h:710};
+ const footerY=920;
 
  roundedRectPath(ctx,mapCard.x,mapCard.y,mapCard.w,mapCard.h,24);
  ctx.fillStyle="#edf5f9";
@@ -1287,43 +1287,46 @@ function buildAreaMapExportCanvas(geo,week){
  });
  ctx.restore();
 
- // サイドカード上部
+ // サイドカード上部：共有画像では操作UIを入れず、表示週と要点を読みやすく整理する。
  ctx.fillStyle="#6a7c89";
  ctx.font=`800 14px ${font}`;
  ctx.fillText("TIME",sideCard.x+28,192);
  ctx.fillStyle="#0b3250";
- ctx.font=`800 28px ${font}`;
- drawTextLines(ctx,[`${week.year} 第${week.week}週`,week.label?`（${week.label}）`:""],sideCard.x+28,230,34);
+ ctx.font=`800 26px ${font}`;
+ ctx.fillText(`${week.year} 第${week.week}週`,sideCard.x+28,228);
+ ctx.fillStyle="#395c73";
+ ctx.font=`700 17px ${font}`;
+ ctx.fillText(week.label?`（${week.label}）`:"",sideCard.x+28,258);
 
- roundedRectPath(ctx,sideCard.x+24,260,sideCard.w-48,120,18);
+ roundedRectPath(ctx,sideCard.x+24,282,sideCard.w-48,130,18);
  ctx.fillStyle="#ffffff";
  ctx.fill();
  ctx.strokeStyle="#dde9ef";
  ctx.stroke();
  ctx.fillStyle="#6a7d89";
  ctx.font=`700 14px ${font}`;
- ctx.fillText("県全体の流行状況",sideCard.x+44,292);
+ ctx.fillText("県全体の流行状況",sideCard.x+44,314);
  const pref=prefectureRate(week);
  const prefLevel=level(pref??0)[0].split("\n").join(" ");
  ctx.fillStyle="#092f4f";
- ctx.font=`800 32px ${font}`;
- ctx.fillText(pref===null?"--":`${n(pref)} 人/定点`,sideCard.x+44,336);
+ ctx.font=`800 31px ${font}`;
+ ctx.fillText(pref===null?"--":`${n(pref)} 人/定点`,sideCard.x+44,357);
  ctx.fillStyle="#5d7381";
- ctx.font=`700 17px ${font}`;
+ ctx.font=`700 16px ${font}`;
  const prefCount=prefectureActualCount(week);
- ctx.fillText(`報告数 ${prefCount===null?"--":regionCountText(prefCount)} 人`,sideCard.x+44,364);
+ ctx.fillText(`報告数 ${prefCount===null?"--":regionCountText(prefCount)} 人`,sideCard.x+44,386);
  ctx.fillStyle="#345d79";
- ctx.font=`700 15px ${font}`;
- ctx.fillText(prefLevel,sideCard.x+44,392);
+ ctx.font=`700 14px ${font}`;
+ ctx.fillText(prefLevel,sideCard.x+44,406);
 
- roundedRectPath(ctx,sideCard.x+24,404,sideCard.w-48,178,18);
+ roundedRectPath(ctx,sideCard.x+24,430,sideCard.w-48,184,18);
  ctx.fillStyle="#ffffff";
  ctx.fill();
  ctx.strokeStyle="#dde9ef";
  ctx.stroke();
  ctx.fillStyle="#0b3250";
  ctx.font=`800 18px ${font}`;
- ctx.fillText("定点当たり報告数",sideCard.x+44,438);
+ ctx.fillText("定点当たり報告数",sideCard.x+44,464);
  const legend=[
    ["#0b79b6","1未満"],
    ["#f2c94c","1.0〜10未満"],
@@ -1331,7 +1334,7 @@ function buildAreaMapExportCanvas(geo,week){
    ["#7b4bb7","30以上"]
  ];
  legend.forEach((item,index)=>{
-   const y=474+index*30;
+   const y=500+index*30;
    roundedRectPath(ctx,sideCard.x+44,y-14,22,14,4);
    ctx.fillStyle=item[0];
    ctx.fill();
@@ -1340,24 +1343,24 @@ function buildAreaMapExportCanvas(geo,week){
    ctx.fillText(item[1],sideCard.x+80,y-2);
  });
  ctx.fillStyle="#71838f";
- ctx.font=`600 13px ${font}`;
- const noteLines=wrapLines(ctx,"色は流行水準を表します。市町村境界は国土数値情報由来のGeoJSONを利用し、県の公表地域単位に対応付けています。",sideCard.w-88);
- drawTextLines(ctx,noteLines,sideCard.x+44,598,20);
+ ctx.font=`600 12px ${font}`;
+ const noteLines=wrapLines(ctx,"色は流行水準を表します。市町村境界は国土数値情報GeoJSONを使用しています。",sideCard.w-88);
+ drawTextLines(ctx,noteLines,sideCard.x+44,594,18);
 
- roundedRectPath(ctx,sideCard.x+24,600,sideCard.w-48,172,18);
+ roundedRectPath(ctx,sideCard.x+24,632,sideCard.w-48,192,18);
  ctx.fillStyle="#ffffff";
  ctx.fill();
  ctx.strokeStyle="#dde9ef";
  ctx.stroke();
  ctx.fillStyle="#0b3250";
  ctx.font=`800 18px ${font}`;
- ctx.fillText("地域別の値",sideCard.x+44,634);
+ ctx.fillText("地域別の値（上位4地域）",sideCard.x+44,666);
  const topRegions=REGION_ORDER.map(region=>({
    region:displayRegionName(region),
    rate:regionRate(week,region)
- })).sort((a,b)=>(b.rate??-Infinity)-(a.rate??-Infinity)).slice(0,5);
+ })).sort((a,b)=>(b.rate??-Infinity)-(a.rate??-Infinity)).slice(0,4);
  topRegions.forEach((item,index)=>{
-   const y=668+index*24;
+   const y=704+index*27;
    ctx.fillStyle="#5f7584";
    ctx.font=`700 14px ${font}`;
    ctx.fillText(`${index+1}. ${item.region}`,sideCard.x+44,y);
