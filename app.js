@@ -1342,11 +1342,6 @@ function buildAreaMapExportCanvas(geo,week){
    ctx.font=`700 16px ${font}`;
    ctx.fillText(item[1],sideCard.x+80,y-2);
  });
- ctx.fillStyle="#71838f";
- ctx.font=`600 12px ${font}`;
- const noteLines=wrapLines(ctx,"色は流行水準を表します。市町村境界は国土数値情報GeoJSONを使用しています。",sideCard.w-88);
- drawTextLines(ctx,noteLines,sideCard.x+44,594,18);
-
  roundedRectPath(ctx,sideCard.x+24,632,sideCard.w-48,220,18);
  ctx.fillStyle="#ffffff";
  ctx.fill();
