@@ -1,0 +1,168 @@
+name: Update influenza data
+
+on:
+  workflow_dispatch:
+
+  # 設定ファイルを更新したら即実行する
+  push:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/update-influenza.yml"
+      - "scripts/update.py"
+
+  # 新潟県の更新は木曜が基本だが、祝日・連休等による遅延を考慮して追跡する。
+  # GitHub Actions の cron は UTC。
+  schedule:
+    # 木曜・金曜：日本時間 12:17 / 15:17 / 18:17
+    - cron: "17 3,6,9 * * 4,5"
+    # 月曜〜水曜：日本時間 18:17
+    - cron: "17 9 * * 1-3"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install system packages for PDF
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            fonts-noto-cjk \
+            libpango-1.0-0 \
+            libpangoft2-1.0-0 \
+            libharfbuzz-subset0 \
+            libjpeg-dev \
+            libopenjp2-7-dev \
+            libffi-dev
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install --upgrade openai weasyprint
+
+      - name: Diagnose latest published week
+        run: |
+          python - <<'PY'
+          import sys, json
+          from pathlib import Path
+          sys.path.insert(0, "scripts")
+          from common import discover_week_pages
+          pages = discover_week_pages(2025)
+          latest = max(pages, key=lambda p: (p.year, p.week))
+          print("Prefecture latest:", latest.year, latest.week, latest.url)
+          p = Path("data/influenza_history.json")
+          data = json.loads(p.read_text(encoding="utf-8"))
+          weeks = data.get("weeks", [])
+          stored = max(
+              weeks,
+              key=lambda w: (int(w.get("year",0)), int(w.get("week",0)))
+          )
+          print(
+              "Stored latest:",
+              stored.get("year"),
+              stored.get("week"),
+              stored.get("prefecture")
+          )
+          PY
+
+      - name: Update latest weekly data
+        id: update_data
+        run: |
+          python scripts/update.py
+
+          if git diff --quiet -- data/influenza_history.json; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "No influenza data changes."
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+            echo "Influenza data changed."
+          fi
+
+      # データはAI/PDFより先に確定・pushする。
+      # 後段が失敗しても最新の流行データだけはサイトへ反映される。
+      - name: Commit and push data first
+        if: steps.update_data.outputs.changed == 'true'
+        run: |
+          git config user.name "niigata-infection-radar-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          git add data/influenza_history.json
+          git commit -m "Update influenza weekly data"
+          git push
+
+      - name: Generate AI weekly insight
+        if: steps.update_data.outputs.changed == 'true'
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: gpt-5.6-luna
+        run: python scripts/generate_ai_comment.py
+
+      - name: Check production history
+        if: steps.update_data.outputs.changed == 'true'
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path("data/influenza_history.json")
+          if not p.exists():
+              raise SystemExit("ERROR: data/influenza_history.json がありません。")
+
+          data = json.loads(p.read_text(encoding="utf-8"))
+          weeks = data.get("weeks", [])
+          print(f"history weeks: {len(weeks)}")
+
+          if len(weeks) < 20:
+              raise SystemExit(
+                  "ERROR: 過去データが20週未満です。PDF生成を停止します。"
+              )
+          latest = max(
+              weeks,
+              key=lambda w: (int(w.get("year", 0)), int(w.get("week", 0)))
+          )
+          print(
+              "latest:",
+              latest.get("year"),
+              latest.get("week"),
+              latest.get("prefecture")
+          )
+          PY
+
+      - name: Generate weekly PDF
+        if: steps.update_data.outputs.changed == 'true'
+        run: python scripts/generate_weekly_report.py
+
+      - name: Verify PDF
+        if: steps.update_data.outputs.changed == 'true'
+        run: |
+          test -s reports/latest.pdf
+          ls -lh reports/latest.pdf
+
+      - name: Commit AI and PDF
+        if: steps.update_data.outputs.changed == 'true'
+        run: |
+          git config user.name "niigata-infection-radar-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          git add data/ai_comment.json reports/latest.pdf
+          if git diff --cached --quiet; then
+            echo "No AI/PDF changes."
+            exit 0
+          fi
+
+          git commit -m "Update influenza AI insight and weekly PDF"
+          git push

@@ -1,45 +1,80 @@
 name: Generate AI insight and weekly PDF
+
 on:
+  # 通常の自動生成は update-influenza.yml 側で、
+  # influenza_history.json に実際の変更があった場合のみ実行する。
+  # このWorkflowは手動再生成専用。
   workflow_dispatch:
-  schedule:
-    - cron: "0 10 * * *"
+    inputs:
+      force_regenerate:
+        description: "同じ週でもAIコメントを強制再生成する"
+        required: false
+        type: boolean
+        default: false
+
 permissions:
   contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+
+      - name: Install system packages for PDF
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            fonts-noto-cjk \
+            libpango-1.0-0 \
+            libpangoft2-1.0-0 \
+            libharfbuzz-subset0 \
+            libjpeg-dev \
+            libopenjp2-7-dev \
+            libffi-dev
+
       - name: Install Python dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install openai playwright
-      - name: Install Chromium and Japanese font
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y fonts-noto-cjk
-          python -m playwright install --with-deps chromium
+          pip install -r requirements.txt
+          pip install --upgrade openai weasyprint
+          weasyprint --version
+
       - name: Generate AI weekly insight
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-5.6-luna
-        run: python scripts/generate_ai_comment.py
+          FORCE_AI_COMMENT: ${{ github.event.inputs.force_regenerate || 'false' }}
+        run: |
+          echo "FORCE_AI_COMMENT=$FORCE_AI_COMMENT"
+          python scripts/generate_ai_comment.py
+
       - name: Generate A4 landscape PDF
         run: python scripts/generate_weekly_report.py
+
+      - name: Verify PDF
+        run: |
+          test -s reports/latest.pdf
+          ls -lh reports/latest.pdf
+
       - name: Commit AI JSON and PDF
         run: |
           git add data/ai_comment.json reports/latest.pdf reports/niigata_influenza_report_*.pdf
+
           if git diff --cached --quiet; then
             echo "No weekly output changes."
             exit 0
           fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Update AI insight and weekly influenza report"
