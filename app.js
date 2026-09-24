@@ -1148,10 +1148,240 @@ function buildAgeLatestExportCanvas(){
  return out;
 }
 
+function drawTextLines(ctx,lines,x,y,lineHeight){
+ lines.forEach((line,index)=>ctx.fillText(line,x,y+index*lineHeight));
+}
+
+function wrapLines(ctx,text,maxWidth){
+ const src=String(text||"").split(/\n/);
+ const lines=[];
+ src.forEach(block=>{
+   if(!block){ lines.push(""); return; }
+   let current="";
+   for(const ch of block){
+     const next=current+ch;
+     if(current && ctx.measureText(next).width>maxWidth){
+       lines.push(current);
+       current=ch;
+     }else current=next;
+   }
+   if(current) lines.push(current);
+ });
+ return lines.length?lines:[""];
+}
+
+function municipalityShapesForExport(geo){
+ return (geo?.features||[]).map(feature=>{
+   const props=feature?.properties||{};
+   return {
+     municipality:municipalityLabel(props),
+     region:regionForFeature(props),
+     rings:geometryRings(feature?.geometry)
+   };
+ }).filter(item=>item.rings.length);
+}
+
+function buildAreaMapExportCanvas(geo,week){
+ if(!geo||!week) throw new Error("地図データを取得できません");
+ const shapes=municipalityShapesForExport(geo);
+ if(!shapes.length) throw new Error("地図形状を取得できません");
+
+ const W=1400,H=920,dpr=1.5;
+ const out=document.createElement("canvas");
+ out.width=Math.round(W*dpr);
+ out.height=Math.round(H*dpr);
+ const ctx=out.getContext("2d");
+ ctx.scale(dpr,dpr);
+
+ const font='system-ui,-apple-system,"Segoe UI","Yu Gothic UI","Hiragino Kaku Gothic ProN",sans-serif';
+ ctx.fillStyle="#ffffff";
+ ctx.fillRect(0,0,W,H);
+ roundedRectPath(ctx,1,1,W-2,H-2,28);
+ ctx.strokeStyle="#d8e7ef";
+ ctx.lineWidth=2;
+ ctx.stroke();
+
+ ctx.textBaseline="alphabetic";
+ ctx.fillStyle="#536b7a";
+ ctx.font=`800 15px ${font}`;
+ ctx.fillText("AREA MAP",48,56);
+
+ ctx.fillStyle="#092f4f";
+ ctx.font=`800 32px ${font}`;
+ ctx.fillText("地域別の流行状況",48,100);
+
+ ctx.fillStyle="#6d808d";
+ ctx.font=`600 16px ${font}`;
+ ctx.fillText("新潟県内の流行の広がりを、市町村境界で確認できます。",48,128);
+
+ const mapCard={x:48,y:156,w:920,h:650};
+ const sideCard={x:992,y:156,w:360,h:650};
+ const footerY=852;
+
+ roundedRectPath(ctx,mapCard.x,mapCard.y,mapCard.w,mapCard.h,24);
+ ctx.fillStyle="#edf5f9";
+ ctx.fill();
+ ctx.strokeStyle="#dbe8ef";
+ ctx.stroke();
+
+ roundedRectPath(ctx,sideCard.x,sideCard.y,sideCard.w,sideCard.h,24);
+ ctx.fillStyle="#f8fbfd";
+ ctx.fill();
+ ctx.strokeStyle="#dbe8ef";
+ ctx.stroke();
+
+ const weekLabel=`${week.year} 第${week.week}週${week.label?`（${week.label}）`:""}`;
+ ctx.font=`700 17px ${font}`;
+ const pillW=Math.ceil(ctx.measureText(weekLabel).width)+34;
+ roundedRectPath(ctx,mapCard.x+24,mapCard.y+22,pillW,40,20);
+ ctx.fillStyle="#f5fbfe";
+ ctx.fill();
+ ctx.strokeStyle="#c3dceb";
+ ctx.stroke();
+ ctx.fillStyle="#2c6586";
+ ctx.textAlign="center";
+ ctx.fillText(weekLabel,mapCard.x+24+pillW/2,mapCard.y+47);
+ ctx.textAlign="left";
+
+ const allPoints=shapes.flatMap(shape=>shape.rings.flat());
+ let minX=Infinity,maxX=-Infinity,minY=Infinity,maxY=-Infinity;
+ allPoints.forEach(([x,y])=>{
+   if(x<minX) minX=x;
+   if(x>maxX) maxX=x;
+   if(y<minY) minY=y;
+   if(y>maxY) maxY=y;
+ });
+ const boundsW=maxX-minX;
+ const boundsH=maxY-minY;
+ const plot={x:mapCard.x+22,y:mapCard.y+74,w:mapCard.w-44,h:mapCard.h-98};
+ const scale=Math.min((plot.w-50)/boundsW,(plot.h-44)/boundsH);
+ const offsetX=plot.x+(plot.w-boundsW*scale)/2;
+ const offsetY=plot.y+(plot.h-boundsH*scale)/2;
+ const toCanvasPoint=([x,y])=>({
+   x:offsetX+(x-minX)*scale,
+   y:plot.y+plot.h-(offsetY-plot.y+(y-minY)*scale)
+ });
+
+ ctx.save();
+ roundedRectPath(ctx,plot.x,plot.y,plot.w,plot.h,18);
+ ctx.clip();
+ ctx.fillStyle="#e8f1f6";
+ ctx.fillRect(plot.x,plot.y,plot.w,plot.h);
+
+ shapes.forEach(shape=>{
+   const rate=shape.region?regionRate(week,shape.region):null;
+   ctx.beginPath();
+   shape.rings.forEach(ring=>{
+     ring.forEach((point,index)=>{
+       const p=toCanvasPoint(point);
+       if(index===0) ctx.moveTo(p.x,p.y);
+       else ctx.lineTo(p.x,p.y);
+     });
+     ctx.closePath();
+   });
+   ctx.fillStyle=rate===null?"#d4dde5":color(rate);
+   ctx.fill();
+   ctx.strokeStyle="rgba(255,255,255,.95)";
+   ctx.lineWidth=1.4;
+   ctx.stroke();
+ });
+ ctx.restore();
+
+ // サイドカード上部
+ ctx.fillStyle="#6a7c89";
+ ctx.font=`800 14px ${font}`;
+ ctx.fillText("TIME",sideCard.x+28,192);
+ ctx.fillStyle="#0b3250";
+ ctx.font=`800 28px ${font}`;
+ drawTextLines(ctx,[`${week.year} 第${week.week}週`,week.label?`（${week.label}）`:""],sideCard.x+28,230,34);
+
+ roundedRectPath(ctx,sideCard.x+24,260,sideCard.w-48,120,18);
+ ctx.fillStyle="#ffffff";
+ ctx.fill();
+ ctx.strokeStyle="#dde9ef";
+ ctx.stroke();
+ ctx.fillStyle="#6a7d89";
+ ctx.font=`700 14px ${font}`;
+ ctx.fillText("県全体の流行状況",sideCard.x+44,292);
+ const pref=prefectureRate(week);
+ const prefLevel=level(pref??0)[0].split("\n").join(" ");
+ ctx.fillStyle="#092f4f";
+ ctx.font=`800 32px ${font}`;
+ ctx.fillText(pref===null?"--":`${n(pref)} 人/定点`,sideCard.x+44,336);
+ ctx.fillStyle="#5d7381";
+ ctx.font=`700 17px ${font}`;
+ const prefCount=prefectureActualCount(week);
+ ctx.fillText(`報告数 ${prefCount===null?"--":regionCountText(prefCount)} 人`,sideCard.x+44,364);
+ ctx.fillStyle="#345d79";
+ ctx.font=`700 15px ${font}`;
+ ctx.fillText(prefLevel,sideCard.x+44,392);
+
+ roundedRectPath(ctx,sideCard.x+24,404,sideCard.w-48,178,18);
+ ctx.fillStyle="#ffffff";
+ ctx.fill();
+ ctx.strokeStyle="#dde9ef";
+ ctx.stroke();
+ ctx.fillStyle="#0b3250";
+ ctx.font=`800 18px ${font}`;
+ ctx.fillText("定点当たり報告数",sideCard.x+44,438);
+ const legend=[
+   ["#0b79b6","1未満"],
+   ["#f2c94c","1.0〜10未満"],
+   ["#ef6a5b","10〜30未満"],
+   ["#7b4bb7","30以上"]
+ ];
+ legend.forEach((item,index)=>{
+   const y=474+index*30;
+   roundedRectPath(ctx,sideCard.x+44,y-14,22,14,4);
+   ctx.fillStyle=item[0];
+   ctx.fill();
+   ctx.fillStyle="#26465f";
+   ctx.font=`700 16px ${font}`;
+   ctx.fillText(item[1],sideCard.x+80,y-2);
+ });
+ ctx.fillStyle="#71838f";
+ ctx.font=`600 13px ${font}`;
+ const noteLines=wrapLines(ctx,"色は流行水準を表します。市町村境界は国土数値情報由来のGeoJSONを利用し、県の公表地域単位に対応付けています。",sideCard.w-88);
+ drawTextLines(ctx,noteLines,sideCard.x+44,598,20);
+
+ roundedRectPath(ctx,sideCard.x+24,600,sideCard.w-48,172,18);
+ ctx.fillStyle="#ffffff";
+ ctx.fill();
+ ctx.strokeStyle="#dde9ef";
+ ctx.stroke();
+ ctx.fillStyle="#0b3250";
+ ctx.font=`800 18px ${font}`;
+ ctx.fillText("地域別の値",sideCard.x+44,634);
+ const topRegions=REGION_ORDER.map(region=>({
+   region:displayRegionName(region),
+   rate:regionRate(week,region)
+ })).sort((a,b)=>(b.rate??-Infinity)-(a.rate??-Infinity)).slice(0,5);
+ topRegions.forEach((item,index)=>{
+   const y=668+index*24;
+   ctx.fillStyle="#5f7584";
+   ctx.font=`700 14px ${font}`;
+   ctx.fillText(`${index+1}. ${item.region}`,sideCard.x+44,y);
+   ctx.fillStyle="#0d6598";
+   ctx.font=`800 14px ${font}`;
+   ctx.textAlign="right";
+   ctx.fillText(item.rate===null?"--":`${n(item.rate)} 人/定点`,sideCard.x+sideCard.w-44,y);
+   ctx.textAlign="left";
+ });
+
+ ctx.beginPath();
+ ctx.moveTo(48,footerY-28);
+ ctx.lineTo(W-48,footerY-28);
+ ctx.strokeStyle="#e6eef3";
+ ctx.stroke();
+ ctx.fillStyle="#71838f";
+ ctx.font=`500 13px ${font}`;
+ ctx.fillText('出典：新潟県「感染症情報（週報）」／市町村境界：国土数値情報 GeoJSON',48,footerY);
+
+ return out;
+}
+
 let activeCopyRoot=null;
 let activeCopyButton=null;
-let activeCopyBlob=null;
-let activeCopyBlobToken=0;
 
 function copyTargetTitle(root){
  const title=root?.querySelector("h2,h3")?.textContent?.trim();
@@ -1260,86 +1490,13 @@ function copyDataForRoot(root){
  return `${copyTargetTitle(root)}\n${copyTargetUrl(root)}`;
 }
 
-
-function isIOSLike(){
-  const ua=navigator.userAgent||"";
-  return /iPad|iPhone|iPod/.test(ua) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
-}
-
-async function buildMobileTrendExportCanvas(){
-  const svg=document.querySelector("#trend-mobile-chart svg");
-  if(!svg) throw new Error("スマホ用推移グラフを取得できません");
-
-  const vb=svg.viewBox?.baseVal;
-  const srcW=vb?.width||Number(svg.getAttribute("width"))||760;
-  const srcH=vb?.height||Number(svg.getAttribute("height"))||330;
-  const W=1200;
-  const chartX=48, chartY=142, chartW=W-96;
-  const chartH=Math.round(chartW*(srcH/srcW));
-  const H=chartY+chartH+118;
-  const dpr=1.35;
-
-  const out=document.createElement("canvas");
-  out.width=Math.round(W*dpr);
-  out.height=Math.round(H*dpr);
-  const ctx=out.getContext("2d");
-  ctx.scale(dpr,dpr);
-  ctx.fillStyle="#fff";
-  ctx.fillRect(0,0,W,H);
-
-  const font='system-ui,-apple-system,"Segoe UI","Yu Gothic UI","Hiragino Kaku Gothic ProN",sans-serif';
-  ctx.fillStyle="#536b7a";
-  ctx.font=`800 15px ${font}`;
-  ctx.fillText("TREND",48,50);
-
-  ctx.fillStyle="#092f4f";
-  ctx.font=`800 31px ${font}`;
-  ctx.fillText(copyTargetTitle(document.querySelector("#trend")),48,91);
-
-  const rangeLabel=trendWeeks===13?"3か月":trendWeeks===26?"半年":trendWeeks===52?"1年":"2年";
-  ctx.fillStyle="#6c8190";
-  ctx.font=`700 15px ${font}`;
-  ctx.fillText(`表示期間：${rangeLabel}`,48,120);
-
-  const clone=svg.cloneNode(true);
-  clone.setAttribute("xmlns","http://www.w3.org/2000/svg");
-  clone.setAttribute("width",String(srcW));
-  clone.setAttribute("height",String(srcH));
-  const source=new XMLSerializer().serializeToString(clone);
-  const blob=new Blob([source],{type:"image/svg+xml;charset=utf-8"});
-  const url=URL.createObjectURL(blob);
-
-  try{
-    const img=await new Promise((resolve,reject)=>{
-      const el=new Image();
-      el.onload=()=>resolve(el);
-      el.onerror=()=>reject(new Error("スマホ用推移グラフのPNG化に失敗しました"));
-      el.src=url;
-    });
-    ctx.drawImage(img,0,0,srcW,srcH,chartX,chartY,chartW,chartH);
-  }finally{
-    URL.revokeObjectURL(url);
-  }
-
-  const footerY=chartY+chartH+52;
-  ctx.strokeStyle="#e6eef3";
-  ctx.beginPath();ctx.moveTo(48,footerY-22);ctx.lineTo(W-48,footerY-22);ctx.stroke();
-  ctx.fillStyle="#71838f";
-  ctx.font=`500 13px ${font}`;
-  ctx.fillText('出典：新潟県「感染症情報（週報）」',48,footerY);
-
-  return out;
-}
-
 async function makeCopyImageBlob(root){
  if(!root) throw new Error("コピー対象が見つかりません");
  if(root.classList.contains("age-latest-card")) return canvasToBlob(buildAgeLatestExportCanvas());
- if(root.id==="trend" && window.matchMedia("(max-width: 820px)").matches){
-   return canvasToBlob(await buildMobileTrendExportCanvas());
- }
+ const isMap=root.id==="area-map";
+ if(isMap) return canvasToBlob(buildAreaMapExportCanvas(await fetchGeoData(),currentMapWeek||latestWeek||allWeeks.at(-1)));
  if(typeof html2canvas!=="function") throw new Error("画像作成機能を読み込めませんでした");
 
- const isMap=root.id==="area-map";
  const isAgeCard=Boolean(root.closest("#age-stats"));
  const hidden=[];
  let restoreLeaflet=()=>{};
@@ -1366,7 +1523,10 @@ async function makeCopyImageBlob(root){
        await new Promise(r=>requestAnimationFrame(()=>requestAnimationFrame(r)));
      }
    }
-   const canvas=await captureGraphRoot(root,{isAgeCard});
+   // Mobile trend uses SVG instead of Chart.js canvas. html2canvas can capture it,
+   // but use the visible card width to avoid an oversized bitmap on phones.
+   const mobileTrend=root.id==="trend"&&window.matchMedia("(max-width: 820px)").matches;
+   const canvas=await captureGraphRoot(root,{isAgeCard:isAgeCard||mobileTrend});
    return await canvasToBlob(canvas);
  }finally{
    try{restoreCanvases();}catch(_){}
@@ -1392,28 +1552,16 @@ function pngFile(blob,root){
 }
 async function shareImageOrLink(root,blob=null){
  if(!navigator.share) return false;
- const title=copyTargetTitle(root);
- const text=`新潟インフルエンザレーダー｜${title}`;
-
+ const data={title:copyTargetTitle(root),text:`新潟インフルエンザレーダー｜${copyTargetTitle(root)}`,url:copyTargetUrl(root)};
  if(blob&&window.File){
    const file=pngFile(blob,root);
-   const fileData={title,text,files:[file]};
-   try{
-     if(!navigator.canShare || navigator.canShare(fileData)){
-       await navigator.share(fileData);
-       return true;
-     }
-   }catch(err){
-     if(err?.name==="AbortError") return true;
-     console.warn("file share failed",err);
-   }
+   if(!navigator.canShare||navigator.canShare({files:[file]})) data.files=[file];
  }
-
  try{
-   await navigator.share({title,text,url:copyTargetUrl(root)});
+   await navigator.share(data);
    return true;
  }catch(err){
-   if(err?.name!=="AbortError") console.warn("link share failed",err);
+   if(err?.name!=="AbortError") console.warn("share failed",err);
    return err?.name==="AbortError";
  }
 }
@@ -1427,116 +1575,62 @@ function setCopyDialogStatus(message,isError=false){
 function setCopyDialogBusy(busy){
  document.querySelectorAll("#copy-dialog [data-copy-action]").forEach(btn=>btn.disabled=busy);
 }
-function setCopyImageActionsReady(ready){
-  document.querySelectorAll('#copy-dialog [data-copy-action="image"], #copy-dialog [data-copy-action="download"]').forEach(btn=>{
-    btn.disabled=!ready;
-  });
-}
-function configureCopyDialogForDevice(){
-  const imageButton=document.querySelector('#copy-dialog [data-copy-action="image"]');
-  const shareButton=document.querySelector('#copy-dialog [data-copy-action="share"]');
-  if(imageButton){
-    const strong=imageButton.querySelector("strong");
-    const span=imageButton.querySelector("span");
-    if(isIOSLike()){
-      if(strong) strong.textContent="画像を共有・保存";
-      if(span) span.textContent="iPhoneでは画像コピーの代わりに共有メニューを使用";
-    }else{
-      if(strong) strong.textContent="画像をコピー";
-      if(span) span.textContent="対応端末ではクリップボードへ。非対応時は共有・保存へ切替";
-    }
-  }
-  if(shareButton) shareButton.hidden=!navigator.share;
-}
-
 function closeCopyDialog(){
  const dialog=document.querySelector("#copy-dialog");
  if(dialog?.open) dialog.close();
  activeCopyRoot=null;
  activeCopyButton=null;
- activeCopyBlob=null;
- activeCopyBlobToken++;
 }
 function openCopyDialog(button){
  const root=button.closest("[data-copy-root]");
  if(!root) return;
  activeCopyRoot=root;
  activeCopyButton=button;
- activeCopyBlob=null;
- const token=++activeCopyBlobToken;
  const dialog=document.querySelector("#copy-dialog");
  const target=document.querySelector("#copy-dialog-target");
+ const share=document.querySelector('#copy-dialog [data-copy-action="share"]');
  if(target) target.textContent=copyTargetTitle(root);
- configureCopyDialogForDevice();
- setCopyImageActionsReady(false);
- setCopyDialogStatus("画像を準備しています…");
+ if(share) share.hidden=!navigator.share;
+ setCopyDialogStatus("");
  if(dialog?.showModal) dialog.showModal();
  else if(dialog) dialog.setAttribute("open","");
-
- makeCopyImageBlob(root).then(blob=>{
-   if(token!==activeCopyBlobToken || root!==activeCopyRoot) return;
-   activeCopyBlob=blob;
-   setCopyImageActionsReady(true);
-   setCopyDialogStatus("");
- }).catch(err=>{
-   console.error("copy image preparation failed",err);
-   if(token!==activeCopyBlobToken || root!==activeCopyRoot) return;
-   activeCopyBlob=null;
-   setCopyImageActionsReady(false);
-   setCopyDialogStatus("画像の準備に失敗しました。データコピーまたはリンク共有は利用できます。",true);
- });
 }
 
 async function runCopyDialogAction(action){
  const root=activeCopyRoot;
  if(!root) return;
  setCopyDialogBusy(true);
+ setCopyDialogStatus("作成中…");
  try{
    if(action==="data"){
-     setCopyDialogStatus("コピー中…");
      await copyTextRobust(copyDataForRoot(root));
      setCopyDialogStatus("データをコピーしました");
      return;
    }
    if(action==="link"){
-     setCopyDialogStatus("コピー中…");
      await copyTextRobust(copyTargetUrl(root));
      setCopyDialogStatus("リンクをコピーしました");
      return;
    }
 
-   if(action==="share"){
-     setCopyDialogStatus("共有メニューを開いています…");
-     const shared=await shareImageOrLink(root,activeCopyBlob);
-     setCopyDialogStatus(shared?"共有メニューを開きました":"この端末では共有機能を利用できません",!shared);
-     return;
-   }
-
-   const blob=activeCopyBlob;
-   if(!blob) throw new Error("画像の準備が完了していません");
-
+   const blob=await makeCopyImageBlob(root);
    if(action==="download"){
      downloadBlob(blob,copyTargetFilename(root));
      setCopyDialogStatus("PNGを保存しました");
      return;
    }
-
+   if(action==="share"){
+     const shared=await shareImageOrLink(root,blob);
+     setCopyDialogStatus(shared?"共有メニューを開きました":"この端末では共有機能を利用できません",!shared);
+     return;
+   }
    if(action==="image"){
-     if(isIOSLike()){
-       setCopyDialogStatus("共有メニューを開いています…");
-       if(await shareImageOrLink(root,blob)){
-         setCopyDialogStatus("画像を共有できます");
-         return;
-       }
-       downloadBlob(blob,copyTargetFilename(root));
-       setCopyDialogStatus("PNGを保存しました");
-       return;
-     }
-
      if(await writeImageToClipboard(blob)){
        setCopyDialogStatus("画像をコピーしました");
        return;
      }
+     // iOS/Safari等、PNGのClipboard APIが使えない端末では
+     // 画像付き共有を優先し、それも不可ならPNG保存へフォールバックする。
      if(await shareImageOrLink(root,blob)){
        setCopyDialogStatus("画像コピー非対応のため共有メニューを開きました");
        return;
@@ -1546,10 +1640,9 @@ async function runCopyDialogAction(action){
    }
  }catch(err){
    console.error(err);
-   setCopyDialogStatus("処理できませんでした。データコピーまたはリンクコピーは利用できます。",true);
+   setCopyDialogStatus("処理できませんでした。PNG保存またはデータコピーをお試しください",true);
  }finally{
    setCopyDialogBusy(false);
-   if(!activeCopyBlob) setCopyImageActionsReady(false);
  }
 }
 
