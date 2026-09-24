@@ -1347,18 +1347,18 @@ function buildAreaMapExportCanvas(geo,week){
  const noteLines=wrapLines(ctx,"色は流行水準を表します。市町村境界は国土数値情報GeoJSONを使用しています。",sideCard.w-88);
  drawTextLines(ctx,noteLines,sideCard.x+44,594,18);
 
- roundedRectPath(ctx,sideCard.x+24,632,sideCard.w-48,192,18);
+ roundedRectPath(ctx,sideCard.x+24,632,sideCard.w-48,220,18);
  ctx.fillStyle="#ffffff";
  ctx.fill();
  ctx.strokeStyle="#dde9ef";
  ctx.stroke();
  ctx.fillStyle="#0b3250";
  ctx.font=`800 18px ${font}`;
- ctx.fillText("地域別の値（上位4地域）",sideCard.x+44,666);
+ ctx.fillText("地域別の値（上位5地域）",sideCard.x+44,666);
  const topRegions=REGION_ORDER.map(region=>({
    region:displayRegionName(region),
    rate:regionRate(week,region)
- })).sort((a,b)=>(b.rate??-Infinity)-(a.rate??-Infinity)).slice(0,4);
+ })).sort((a,b)=>(b.rate??-Infinity)-(a.rate??-Infinity)).slice(0,5);
  topRegions.forEach((item,index)=>{
    const y=704+index*27;
    ctx.fillStyle="#5f7584";
