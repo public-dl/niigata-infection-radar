@@ -4,7 +4,6 @@ import json
 import os, math, os, re, shutil, subprocess, sys, urllib.request
 from datetime import datetime
 from pathlib import Path
-
 ROOT=Path(__file__).resolve().parents[1]
 HISTORY=Path(os.environ.get('INFLUENZA_HISTORY_PATH', ROOT/'data'/'influenza_history.json'))
 AI=Path(os.environ.get('AI_COMMENT_PATH', ROOT/'data'/'ai_comment.json'))
@@ -14,7 +13,7 @@ OUT.mkdir(exist_ok=True)
 AGE_GROUPS=['0歳','1～4歳','5～9歳','10～14歳','15～19歳','20～59歳','60歳以上']
 REGION_DISPLAY={'新潟市':'新潟'}
 REGION_ORDER=['新潟市','新発田','新津','三条','長岡','魚沼','南魚沼','十日町','柏崎','糸魚川','村上','佐渡','上越']
-REGION_DETAIL_LABELS={'新潟市':'新潟市','新発田':'新発田','新津':'新津※','三条':'三条','長岡':'長岡','魚沼':'魚沼','南魚沼':'南魚沼','十日町':'十日町','柏崎':'柏崎','糸魚川':'糸魚川','村上':'村上','佐渡':'佐渡','上越':'上越'}
+REGION_DETAIL_LABELS={'新潟市':'新潟市','新発田':'新発田','新津':'新津','三条':'三条','長岡':'長岡','魚沼':'魚沼','南魚沼':'南魚沼','十日町':'十日町','柏崎':'柏崎','糸魚川':'糸魚川','村上':'村上','佐渡':'佐渡','上越':'上越'}
 GEOJSON=ROOT/'data'/'niigata_municipality.geojson'
 GEOJSON_URL='https://raw.githubusercontent.com/smartnews-smri/japan-topography/refs/heads/main/data/municipality/geojson/s0010/N03-21_15_210101.json'
 REGION_MUNICIPALITIES={
@@ -34,7 +33,6 @@ REGION_MUNICIPALITIES={
 }
 MUNI_TO_REGION={m:r for r,ms in REGION_MUNICIPALITIES.items() for m in ms}
 COLORS=['#4e9bd7','#7cb9e5','#3a83bf','#5f9fd0','#8bbbe0','#4e91c8','#6ca8d6']
-
 def load(path, fallback):
     if path.exists():
         return json.loads(path.read_text(encoding='utf-8'))
@@ -48,7 +46,6 @@ def signal(v):
     if v < 10: return '#f2c94c','流行期入りの目安以上','yellow'
     if v < 30: return '#ef6a5b','従来の注意報基準相当','red'
     return '#7b4bb7','従来の警報基準相当','purple'
-
 def period_text(w):
     label=str(w.get('label',''))
     m=re.search(r'R\d+/(.+)',label)
@@ -59,7 +56,6 @@ def _week_date_label(w):
     label=str(w.get('label',''))
     m=re.search(r'R\d+/(.+)', label)
     return m.group(1) if m else ''
-
 def svg_trend(weeks,w=720,h=292):
     vals=[float(x.get('prefecture') or 0) for x in weeks]
     vmax=max(7.0,max(vals)*1.12)
@@ -83,7 +79,6 @@ def svg_trend(weeks,w=720,h=292):
         if dl:
             ss.append(f'<text x="{x:.1f}" y="{h-11}" text-anchor="middle" font-size="9pt" fill="#52799d">{esc(dl)}</text>')
     ss.append('</svg>'); return ''.join(ss)
-
 def svg_age(counts,rates,w=500,h=225):
     vals=[float(counts.get(g,0) or 0) for g in AGE_GROUPS]
     vmax=max(150,max(vals)*1.12)
@@ -103,7 +98,6 @@ def svg_age(counts,rates,w=500,h=225):
         if bw>pw*.83: lx=ml+bw-5; anchor='end'
         ss.append(f'<text x="{lx:.1f}" y="{cy+4:.1f}" text-anchor="{anchor}" font-size="10pt" font-weight="800" fill="#0c3e6e">{int(v)}人</text>')
     ss.append('</svg>'); return ''.join(ss)
-
 def _walk_coords(geom):
     tp=geom.get('type'); c=geom.get('coordinates',[])
     if tp=='Polygon':
@@ -117,7 +111,6 @@ def _municipality_name(props):
     for v in vals[::-1]:
         if re.search(r'(市.+区|市|町|村)$',v): return v
     return vals[-1] if vals else ''
-
 def _region_for_muni(name):
     if name.startswith('新潟市'): return '新潟'
     if name in MUNI_TO_REGION: return MUNI_TO_REGION[name]
@@ -132,7 +125,6 @@ def _map_color(v):
     if v>=4: return '#5592c6'
     if v>=1: return '#8bb8dd'
     return '#c8def0'
-
 def _ensure_geojson():
     if GEOJSON.exists() and GEOJSON.stat().st_size>1000: return True
     GEOJSON.parent.mkdir(exist_ok=True)
@@ -142,7 +134,6 @@ def _ensure_geojson():
     except Exception as e:
         print(f'[report] GeoJSON download unavailable, using preview fallback: {e}',file=sys.stderr)
         return False
-
 def map_html(display_regions):
     if _ensure_geojson():
         try:
@@ -170,7 +161,6 @@ def map_html(display_regions):
             print(f'[report] GeoJSON parse failed, using preview fallback: {e}',file=sys.stderr)
     p=(TEMPLATE.parent/'assets'/'reference-map.png').resolve().as_uri()
     return f'<img src="{p}" alt="新潟県地域別マップ（オフラインプレビュー）">'
-
 def fmt(v): return '--' if v is None else f'{float(v):.2f}'
 
 def delta_class(value):
@@ -180,7 +170,6 @@ def delta_class(value):
     if value < 0:
         return 'delta-minus'
     return 'delta-zero'
-
 
 def merge_week_records(raw_weeks):
     """
@@ -195,7 +184,6 @@ def merge_week_records(raw_weeks):
             merged[key] = dict(w)
             order.append(key)
             continue
-
         base = merged[key]
         for k, v in w.items():
             if k in ("regions", "age_counts", "age_per_sentinel"):
@@ -210,9 +198,7 @@ def merge_week_records(raw_weeks):
             elif v not in (None, "", [], {}):
                 base[k] = v
         merged[key] = base
-
     return sorted((merged[k] for k in order), key=lambda x: (x.get("year", 0), x.get("week", 0)))
-
 def main():
     data=load(HISTORY,{'weeks':[]}); weeks=merge_week_records(data.get('weeks',[]))
     # Safety guard: never silently generate a production report from a truncated/sample history.
@@ -243,7 +229,7 @@ def main():
     age_rate=''.join(f'<td>{float(rates.get(g,0) or 0):.2f}</td>' for g in AGE_GROUPS)
     age_count=''.join(f'<td>{int(counts.get(g,0) or 0)}</td>' for g in AGE_GROUPS)
     age_share=''.join(f'<td>{float(counts.get(g,0) or 0)/total*100:.1f}</td>' for g in AGE_GROUPS)
-    # 地域別詳細は指定順：県計 → 新潟市 → 新発田 → 新津※ → 三条 → 長岡 → 魚沼 → 南魚沼 → 十日町 → 柏崎 → 糸魚川 → 村上 → 佐渡 → 上越
+    # 地域別詳細は指定順：県計 → 新潟市 → 新発田 → 新津 → 三条 → 長岡 → 魚沼 → 南魚沼 → 十日町 → 柏崎 → 糸魚川 → 村上 → 佐渡 → 上越
     reg_headers='<th>県計</th>'+''.join(f'<th>{esc(REGION_DETAIL_LABELS.get(r,r))}</th>' for r in REGION_ORDER)
     reg_now=f'<td class="prefecture">{v:.2f}</td>'+''.join(f'<td>{fmt(regions.get(r))}</td>' for r in REGION_ORDER)
     reg_prev=f'<td class="prefecture">{pv:.2f}</td>'+''.join(f'<td>{fmt(prev_regions.get(r))}</td>' for r in REGION_ORDER)
@@ -266,7 +252,6 @@ def main():
         if text:
             ai_rows.append(f'<div class="ai-row"><b>{esc(label)}</b><p>{esc(text)}</p></div>')
     ai_rows_html=''.join(ai_rows) or '<div class="ai-row"><b>分析</b><p>AI週次分析データを読み込めませんでした。</p></div>'
-
     # AI本文は文章量に応じて9.0-10.5ptの範囲で自動調整する。
     ai_char_count = sum(len(str(ai.get(k,'') or '')) for k in ('headline','summary','regional','age_group','year_on_year'))
     if ai_char_count <= 220:
@@ -277,7 +262,6 @@ def main():
         ai_size_class = 'ai-size-9_5'
     else:
         ai_size_class = 'ai-size-9'
-
     region_rows=[]
     for r in REGION_ORDER:
         name=REGION_DISPLAY.get(r,r)
@@ -293,7 +277,6 @@ def main():
             f'<tr><td>{esc(name)}</td><td>{fmt(now)}</td><td>{fmt(before)}</td><td{delta_cls}>{delta}</td></tr>'
         )
     region_rows_html=''.join(region_rows)
-
     repl={
       'TITLE_PERIOD':period_text(latest),'UPDATE_TIME':update,'LATEST_VALUE':f'{v:.2f}','PREV_VALUE':f'{pv:.2f}','DIFF_VALUE':f'{diff:+.2f}','DIFF_CLASS':delta_class(diff),
       'SIGNAL_COLOR':color,'SIGNAL_TEXT':sig,
@@ -323,5 +306,4 @@ def main():
     if not wp: raise RuntimeError('weasyprint not found')
     subprocess.run([wp,str(rendered),str(pdf)],check=True)
     print(pdf)
-
 if __name__=='__main__': main()
