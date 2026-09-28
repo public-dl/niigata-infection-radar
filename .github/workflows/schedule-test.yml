@@ -2,8 +2,6 @@ name: Schedule test
 
 on:
   workflow_dispatch:
-  schedule:
-    - cron: "3,13,23,33,43,53 * * * *"
 
 jobs:
   test:
@@ -11,5 +9,5 @@ jobs:
     steps:
       - name: Show trigger time
         run: |
-          echo "schedule fired"
+          echo "schedule test fired manually"
           date -u
