@@ -1,0 +1,15 @@
+name: Schedule test
+
+# 定期テストは終了。
+# 必要な場合だけ手動実行する。
+on:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show trigger time
+        run: |
+          echo "schedule test fired manually"
+          date -u
