@@ -2,7 +2,7 @@ name: Generate AI insight and weekly PDF
 
 on:
   # 自動実行は Update influenza data に一本化。
-  # このWorkflowは手動再生成専用。
+  # このWorkflowは同じ週のAI/PDFを手動で再生成したい時だけ使う。
   workflow_dispatch:
     inputs:
       force_regenerate:
@@ -32,14 +32,7 @@ jobs:
       - name: Install system packages for PDF
         run: |
           sudo apt-get update
-          sudo apt-get install -y \
-            fonts-noto-cjk \
-            libpango-1.0-0 \
-            libpangoft2-1.0-0 \
-            libharfbuzz-subset0 \
-            libjpeg-dev \
-            libopenjp2-7-dev \
-            libffi-dev
+          sudo apt-get install -y             fonts-noto-cjk             libpango-1.0-0             libpangoft2-1.0-0             libharfbuzz-subset0             libjpeg-dev             libopenjp2-7-dev             libffi-dev
 
       - name: Install Python dependencies
         run: |
@@ -68,10 +61,12 @@ jobs:
       - name: Commit AI JSON and PDF
         run: |
           git add data/ai_comment.json reports/latest.pdf reports/niigata_influenza_report_*.pdf
+
           if git diff --cached --quiet; then
             echo "No weekly output changes."
             exit 0
           fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git commit -m "Update AI insight and weekly influenza report"

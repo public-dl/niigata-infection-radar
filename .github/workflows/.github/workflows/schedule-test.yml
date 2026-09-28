@@ -1,7 +1,7 @@
 name: Schedule test
 
-# 定期テストは終了。
-# 必要な場合だけ手動実行する。
+# 定期実行は停止。
+# 必要な場合だけ手動で起動する。
 on:
   workflow_dispatch:
 
@@ -11,5 +11,5 @@ jobs:
     steps:
       - name: Show trigger time
         run: |
-          echo "schedule test fired manually"
+          echo "Schedule test fired manually."
           date -u
