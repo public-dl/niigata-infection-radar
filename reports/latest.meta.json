@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "source_week": {
+    "year": 2026,
+    "week": 39
+  },
+  "pdf_sha256": "b023ab4edecc5b5108dd6d43213578ec0ad502017b94705adce8b727dd60c6b4",
+  "ai_sha256": "a2ad3cebda1f6fa126207851aa36263a2d9d76068fba5032d0457842ba4e4fb3",
+  "history_sha256": "b2d523540e0a4a5f05f15aead49659d46483d00ae5c032c8fe111580f95443fb"
+}
