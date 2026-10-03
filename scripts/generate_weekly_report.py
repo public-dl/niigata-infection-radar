@@ -4,6 +4,7 @@ import json
 import os, math, os, re, shutil, subprocess, sys, urllib.request
 from datetime import datetime
 from pathlib import Path
+from weekly_outputs import is_pdf, write_pdf_metadata
 ROOT=Path(__file__).resolve().parents[1]
 HISTORY=Path(os.environ.get('INFLUENZA_HISTORY_PATH', ROOT/'data'/'influenza_history.json'))
 AI=Path(os.environ.get('AI_COMMENT_PATH', ROOT/'data'/'ai_comment.json'))
@@ -308,6 +309,14 @@ def main():
     pdf=OUT/'latest.pdf'
     wp=shutil.which('weasyprint')
     if not wp: raise RuntimeError('weasyprint not found')
-    subprocess.run([wp,str(rendered),str(pdf)],check=True)
+    pending_pdf=pdf.with_suffix('.pending.pdf')
+    try:
+        subprocess.run([wp,str(rendered),str(pending_pdf)],check=True)
+        if not is_pdf(pending_pdf):
+            raise RuntimeError('PDF renderer did not produce a PDF')
+        os.replace(pending_pdf,pdf)
+        write_pdf_metadata(pdf,latest,AI,HISTORY)
+    finally:
+        pending_pdf.unlink(missing_ok=True)
     print(pdf)
 if __name__=='__main__': main()

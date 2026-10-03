@@ -15,6 +15,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: influenza-repository-writer-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
@@ -24,6 +28,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -92,15 +97,33 @@ jobs:
           git commit -m "Update influenza weekly data"
           git push
 
+      - name: Plan weekly output recovery
+        id: output_plan
+        env:
+          DATA_CHANGED: ${{ steps.update_data.outputs.changed }}
+        run: python scripts/weekly_outputs.py --data-changed "$DATA_CHANGED" --github-output "$GITHUB_OUTPUT"
+
       - name: Generate AI weekly insight
-        if: steps.update_data.outputs.changed == 'true'
+        if: steps.output_plan.outputs.generate_ai == 'true'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-5.6-luna
         run: python scripts/generate_ai_comment.py
 
+      - name: Commit AI before PDF generation
+        if: steps.output_plan.outputs.generate_ai == 'true'
+        run: |
+          python scripts/weekly_outputs.py --require-ai
+          git config user.name "niigata-infection-radar-bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add data/ai_comment.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update influenza AI insight"
+            git push
+          fi
+
       - name: Check production history
-        if: steps.update_data.outputs.changed == 'true'
+        if: steps.output_plan.outputs.generate_pdf == 'true'
         run: |
           python - <<'PY'
           import json
@@ -132,27 +155,19 @@ jobs:
           PY
 
       - name: Generate weekly PDF
-        if: steps.update_data.outputs.changed == 'true'
+        if: steps.output_plan.outputs.generate_pdf == 'true'
         run: python scripts/generate_weekly_report.py
 
-      - name: Verify PDF
-        if: steps.update_data.outputs.changed == 'true'
-        run: |
-          test -s reports/latest.pdf
-          ls -lh reports/latest.pdf
+      - name: Verify weekly outputs
+        run: python scripts/weekly_outputs.py --require-current
 
-      - name: Commit AI and PDF
-        if: steps.update_data.outputs.changed == 'true'
+      - name: Commit PDF and metadata
+        if: steps.output_plan.outputs.generate_pdf == 'true'
         run: |
           git config user.name "niigata-infection-radar-bot"
           git config user.email "actions@users.noreply.github.com"
-
-          git add data/ai_comment.json reports/latest.pdf reports/niigata_influenza_report_*.pdf
-
-          if git diff --cached --quiet; then
-            echo "No AI/PDF changes."
-            exit 0
+          git add reports/latest.pdf reports/latest.meta.json reports/niigata_influenza_report_*.pdf
+          if ! git diff --cached --quiet; then
+            git commit -m "Update influenza weekly PDF and metadata"
+            git push
           fi
-
-          git commit -m "Update influenza AI insight and weekly PDF"
-          git push

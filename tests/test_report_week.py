@@ -2,6 +2,7 @@
 import importlib.util
 import json
 import re
+import sys
 import tempfile
 import unittest
 from datetime import date, timedelta
@@ -9,6 +10,7 @@ from pathlib import Path
 from unittest.mock import patch
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / 'scripts'))
 SPEC = importlib.util.spec_from_file_location('weekly_report', ROOT / 'scripts/generate_weekly_report.py')
 report = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(report)
@@ -41,7 +43,7 @@ class ReportingWeekTests(unittest.TestCase):
             with patch.multiple(report, HISTORY=history, AI=tmp / 'absent-ai.json', TEMPLATE=template, OUT=tmp), \
                  patch.object(report, 'map_html', return_value='<svg></svg>'), \
                  patch.object(report.shutil, 'which', return_value='weasyprint'), \
-                 patch.object(report.subprocess, 'run') as pdf:
+                 patch.object(report.subprocess, 'run', side_effect=lambda command, **kwargs: Path(command[2]).write_bytes(b'%PDF-test')) as pdf:
                 report.main()
                 pdf.assert_called_once()
             return (tmp / 'weekly_report_rendered.html').read_text(encoding='utf-8')

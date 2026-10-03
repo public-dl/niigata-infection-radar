@@ -12,6 +12,10 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: influenza-repository-writer-${{ github.ref }}
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,6 +25,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+          ref: ${{ github.ref_name }}
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -39,33 +44,46 @@ jobs:
           pip install --upgrade openai weasyprint
           weasyprint --version
 
+      - name: Plan weekly output recovery
+        id: output_plan
+        run: python scripts/weekly_outputs.py --github-output "$GITHUB_OUTPUT"
+
       - name: Generate AI weekly insight
+        if: steps.output_plan.outputs.generate_ai == 'true' || github.event.inputs.force_regenerate == 'true'
         env:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           OPENAI_MODEL: gpt-5.6-luna
           FORCE_AI_COMMENT: ${{ github.event.inputs.force_regenerate || 'false' }}
+        run: python scripts/generate_ai_comment.py
+
+      - name: Commit AI before PDF generation
+        if: steps.output_plan.outputs.generate_ai == 'true' || github.event.inputs.force_regenerate == 'true'
         run: |
-          echo "FORCE_AI_COMMENT=$FORCE_AI_COMMENT"
-          python scripts/generate_ai_comment.py
+          python scripts/weekly_outputs.py --require-ai
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/ai_comment.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Update AI weekly influenza insight"
+            git push
+          fi
 
       - name: Generate A4 landscape PDF
+        if: steps.output_plan.outputs.generate_pdf == 'true' || github.event.inputs.force_regenerate == 'true'
         run: python scripts/generate_weekly_report.py
 
-      - name: Verify PDF
-        run: |
-          test -s reports/latest.pdf
-          ls -lh reports/latest.pdf
+      - name: Verify weekly outputs
+        run: python scripts/weekly_outputs.py --require-current
 
-      - name: Commit AI JSON and PDF
+      - name: Commit PDF and metadata
+        if: steps.output_plan.outputs.generate_pdf == 'true' || github.event.inputs.force_regenerate == 'true'
         run: |
-          git add data/ai_comment.json reports/latest.pdf reports/niigata_influenza_report_*.pdf
-
+          git add reports/latest.pdf reports/latest.meta.json reports/niigata_influenza_report_*.pdf
           if git diff --cached --quiet; then
             echo "No weekly output changes."
             exit 0
           fi
-
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git commit -m "Update AI insight and weekly influenza report"
+          git commit -m "Update weekly influenza PDF and metadata"
           git push
