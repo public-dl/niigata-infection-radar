@@ -24,15 +24,10 @@
 
       <form name="influenza-radar-contact"
             method="POST"
-            action="/thanks.html"
-            data-netlify="true"
-            data-netlify-honeypot="bot-field">
-
-        <input type="hidden" name="form-name" value="influenza-radar-contact">
-
-        <p hidden>
-          <label>この欄は入力しないでください <input name="bot-field"></label>
-        </p>
+            action="https://api.web3forms.com/submit">
+        <input type="hidden" name="access_key" value="742c2064-6658-4f24-8653-b1c900af3c98">
+        <input type="hidden" name="subject" value="新潟インフルエンザレーダーからのお問い合わせ">
+        <input type="checkbox" name="botcheck" hidden tabindex="-1" autocomplete="off">
 
         <div class="contact-grid">
 <div class="contact-field full">
@@ -68,10 +63,57 @@
         </label>
 
         <button class="contact-submit" type="submit">送信する</button>
+        <p id="contact-result" class="contact-note" role="status" aria-live="polite" hidden></p>
       </form>
     </section>
 
     <p class="contact-footer">Powered by CivITech</p>
   </main>
+<script>
+(() => {
+  const form = document.forms['influenza-radar-contact'];
+  const button = form.querySelector('button[type="submit"]');
+  const result = document.getElementById('contact-result');
+  let submitting = false;
+
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault();
+    if (submitting || !form.reportValidity()) return;
+    result.hidden = false;
+    if (form.elements.botcheck.checked) {
+      result.textContent = '送信できませんでした。入力内容を確認してください。';
+      return;
+    }
+    const body = JSON.stringify(Object.fromEntries(new FormData(form)));
+    submitting = true;
+    button.disabled = true;
+    button.textContent = '送信中…';
+    result.textContent = '送信しています。しばらくお待ちください。';
+    form.setAttribute('aria-busy', 'true');
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), 30000);
+    try {
+      const response = await fetch(form.action, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body,
+        signal: controller.signal
+      });
+      const data = await response.json();
+      if (!response.ok || data.success !== true) throw new Error('Submission failed');
+      form.reset();
+      result.textContent = 'お問い合わせを送信しました。ありがとうございました。';
+    } catch (error) {
+      result.textContent = '送信を確認できませんでした。入力内容は保持しています。時間をおいて再度お試しください。';
+    } finally {
+      clearTimeout(timeout);
+      submitting = false;
+      button.disabled = false;
+      button.textContent = '送信する';
+      form.removeAttribute('aria-busy');
+    }
+  });
+})();
+</script>
 </body>
 </html>

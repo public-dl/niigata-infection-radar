@@ -2,7 +2,7 @@
 
 新潟県の公表データをもとに、インフルエンザの流行状況を見やすく可視化するWebサイトです。
 
-- 公開サイト: https://niigata-infection-radar.netlify.app/
+- 公開サイト: https://public-dl.github.io/niigata-infection-radar/
 - データ出典: 新潟県「感染症情報（週報）」
 - 運営: CivITech
 
@@ -26,18 +26,18 @@
 
 ## 自動更新
 
-GitHub Actions により、原則として毎週木曜日 19:30（日本時間）に自動更新します。
+GitHub Pages が `main` ブランチのルートを公開します。GitHub Actions によるデータ確認は、木曜・金曜の12:17／15:17／18:17、月曜〜水曜の18:17（日本時間）に実行します。実行開始はGitHub側の混雑等で遅れる場合があります。
 
 処理の流れは次のとおりです。
 
-1. 新潟県の最新週データを取得
-2. `data/influenza_history.json` を更新
-3. 最新週をもとにAI週次分析を生成
-4. `data/ai_comment.json` を更新
-5. 最新データとAI分析をもとに週次PDFを生成
-6. `reports/latest.pdf` を更新
-7. 変更ファイルをGitHubへcommit / push
-8. Netlifyが更新を検知してサイトを再デプロイ
+1. 新潟県の最新週データを取得し、履歴に変更があれば先にcommit / push
+2. `scripts/weekly_outputs.py` で履歴・AI・PDFの最新状態を判定
+3. AIが欠落または対象週が古ければ生成し、PDF生成前にcommit / push
+4. PDFが欠落・古い・入力と不整合なら再生成
+5. PDFと `reports/latest.meta.json` を検証し、commit / push
+6. GitHub Pagesで公開内容を更新
+
+データ差分がなくても古いAI/PDFは再試行します。すべて最新なら生成をスキップします。書き込み系5 Workflowは同じブランチの共通concurrencyで実行を直列化します。
 
 自動更新ワークフロー:
 
@@ -108,8 +108,8 @@ reports/latest.pdf
 
 ```text
 scripts/generate_weekly_report.py
-report.html
-report.css
+reports/template/report.html
+reports/template/report.css
 ```
 
 出力先:
@@ -124,9 +124,17 @@ PDFでは、前週からの増減を次のように表示します。
 - 減少: 青
 - 変化なし: グレー
 
+PDFと同時に `reports/latest.meta.json` を生成し、対象年・週およびPDF・AI・履歴のSHA-256を記録します。両ファイルはセットで管理してください。
+
+`reports/template/weekly_report_rendered.html` はテンプレートにデータを埋め込んだPDF変換用中間HTMLです。現行処理が毎回生成します。現在はGit管理を継続しています。
+
+## お問い合わせ
+
+`contact.html` は専用のWeb3Forms Access Keyで `https://api.web3forms.com/submit` に送信します。JavaScriptで成功応答を確認した場合だけ完了表示と入力クリアを行い、エラー時は入力を保持します。GitHub Pages側に送信用サーバーは不要です。
+
 ## AI週次分析
 
-最新週のデータ更新後に、
+最新週のAIコメントが存在しない、または対象週が一致しない場合に、
 
 ```text
 scripts/generate_ai_comment.py
@@ -177,6 +185,14 @@ PDF生成:
 
 ```bash
 python scripts/generate_weekly_report.py
+```
+
+## テスト
+
+```bash
+pip install -r requirements-test.txt
+python -B -m unittest discover -s tests -v
+node --test tests/test_contact_submit.cjs
 ```
 
 ## 検索・SNS対応
