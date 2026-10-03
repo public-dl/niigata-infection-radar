@@ -46,11 +46,15 @@ def signal(v):
     if v < 10: return '#f2c94c','流行期入りの目安以上','yellow'
     if v < 30: return '#ef6a5b','従来の注意報基準相当','red'
     return '#7b4bb7','従来の警報基準相当','purple'
+def week_text(w):
+    # Use the reporting year, which can differ from the period's start year.
+    return f"{int(w['year'])}年第{int(w['week']):02d}週"
+
 def period_text(w):
     label=str(w.get('label',''))
     m=re.search(r'R\d+/(.+)',label)
     tail=m.group(1) if m else label
-    return f"{w.get('year')}年第{int(w.get('week')):02d}週（{tail}）"
+    return f"{week_text(w)}（{tail}）"
 
 def _week_date_label(w):
     label=str(w.get('label',''))
@@ -278,7 +282,7 @@ def main():
         )
     region_rows_html=''.join(region_rows)
     repl={
-      'TITLE_PERIOD':period_text(latest),'UPDATE_TIME':update,'LATEST_VALUE':f'{v:.2f}','PREV_VALUE':f'{pv:.2f}','DIFF_VALUE':f'{diff:+.2f}','DIFF_CLASS':delta_class(diff),
+      'TITLE_PERIOD':period_text(latest),'LATEST_WEEK':week_text(latest),'UPDATE_TIME':update,'LATEST_VALUE':f'{v:.2f}','PREV_VALUE':f'{pv:.2f}','DIFF_VALUE':f'{diff:+.2f}','DIFF_CLASS':delta_class(diff),
       'SIGNAL_COLOR':color,'SIGNAL_TEXT':sig,
       'B_ACTIVE':'active' if level=='blue' else '',
       'Y_ACTIVE':'active' if level=='yellow' else '',
