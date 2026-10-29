@@ -17,12 +17,12 @@
     ],
     "generated_by": "scripts/backfill.py",
     "weeks_discovered": 88,
-    "weeks_ok": 94,
-    "weeks_with_age_data": 94,
+    "weeks_ok": 95,
+    "weeks_with_age_data": 95,
     "weeks_failed": 0,
-    "updated_at": "2026-10-22T17:39:22+09:00",
+    "updated_at": "2026-10-29T19:00:32+09:00",
     "updated_by": "scripts/update.py",
-    "weeks_with_region_counts": 7
+    "weeks_with_region_counts": 8
   },
   "weeks": [
     {
@@ -7270,6 +7270,97 @@
           "expected_rate": 10.11,
           "age_rate_sum": 10.1,
           "rate_difference": -0.01
+        },
+        "strategy": "age_counts_and_per_sentinel"
+      }
+    },
+    {
+      "year": 2026,
+      "week": 43,
+      "start": "2026-10-19",
+      "end": "2026-10-25",
+      "label": "R8/10/19–10/25",
+      "prefecture": 11.4,
+      "regions": {
+        "新潟市": 10.11,
+        "新発田": 10.0,
+        "新津": 5.0,
+        "三条": 14.8,
+        "長岡": 10.0,
+        "魚沼": 7.5,
+        "南魚沼": 11.33,
+        "十日町": 6.5,
+        "柏崎": 7.5,
+        "糸魚川": 12.5,
+        "村上": 27.5,
+        "佐渡": 28.5,
+        "上越": 9.25
+      },
+      "region_counts": {
+        "新潟市": 182.0,
+        "新発田": 40.0,
+        "新津": 10.0,
+        "三条": 74.0,
+        "長岡": 70.0,
+        "魚沼": 15.0,
+        "南魚沼": 34.0,
+        "十日町": 13.0,
+        "柏崎": 15.0,
+        "糸魚川": 25.0,
+        "村上": 55.0,
+        "佐渡": 57.0,
+        "上越": 37.0
+      },
+      "age_counts": {
+        "0歳": 3.0,
+        "1～4歳": 93.0,
+        "5～9歳": 175.0,
+        "10～14歳": 102.0,
+        "15～19歳": 37.0,
+        "20～59歳": 146.0,
+        "60歳以上": 71.0
+      },
+      "age_per_sentinel": {
+        "0歳": 0.06,
+        "1～4歳": 1.69,
+        "5～9歳": 3.17,
+        "10～14歳": 1.85,
+        "15～19歳": 0.67,
+        "20～59歳": 2.65,
+        "60歳以上": 1.29
+      },
+      "topic": "インフルエンザの注意報を発令しています。（別紙1参照）\n○県内では定点当たりの報告数が11.40と前週の10.11に比べて増加し、注意報基準（定点当たり10）を超えています。\n○学校において、学級閉鎖等が見られています。\n○発熱や咳などの症状がある場合は、外出を控えてください。\n○やむを得ず外出される場合にはマスクを着用するとともに、手洗いの励行など基本的な感染対策の徹底をお願いします。\n​※【参考】過去3シーズンの注意報基準を越えた週\n・2025/2026シーズン：2025(令和7)年第45週(11月3日～11月9日)：定点当たり11.20\n・2024/2025シーズン：2024(令和6)年第50週(12月9日～12月15日)：定点当たり10.34\n・2023/2024シーズン：2023(令和5)年第43週(10月23日～10月29日)：定点当たり12.12\nインフルエンザに注意しましょう - 新潟県ホームページ\n令和8年度 今冬の急性呼吸器感染症（ARI）総合対策｜厚生労働省\n＜外部リンク＞",
+      "source_page": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0843.html",
+      "source_excel": "https://www.pref.niigata.lg.jp/uploaded/attachment/514337.xlsx",
+      "verification": {
+        "method": "niigata_main_table",
+        "niigata_topic_value": null,
+        "prefecture_count": 627.0
+      },
+      "_parser": {
+        "sheet": "入力シート",
+        "title_row": 1,
+        "header_row": 2,
+        "flu_row": 3,
+        "value_row": 4,
+        "region_count": 13,
+        "strategy": "main_regional_table_only"
+      },
+      "_age_parser": {
+        "sheet": "入力シート",
+        "title_row": 49,
+        "header_row": 49,
+        "flu_row": 50,
+        "count_row": 50,
+        "rate_row": 51,
+        "raw_age_columns": 7,
+        "verification": {
+          "expected_count": 627.0,
+          "age_count_sum": 627.0,
+          "count_difference": 0.0,
+          "expected_rate": 11.4,
+          "age_rate_sum": 11.38,
+          "rate_difference": -0.02
         },
         "strategy": "age_counts_and_per_sentinel"
       }
