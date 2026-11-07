@@ -148,16 +148,16 @@
         <div class="hero-meta-row">
           <div class="hero-meta hero-meta-pill">
             <span class="hero-meta-label">最新週</span>
-            <strong id="latest-period">読み込み中…</strong>
+            <strong id="latest-period">2026/10/26–11/1</strong>
           </div>
           <div class="hero-meta hero-meta-pill hero-update-pill">
             <span class="hero-meta-label">最終更新</span>
-            <strong id="data-updated-at">読み込み中…</strong>
+            <strong id="data-updated-at">2026/11/5 19:59</strong>
           </div>
         </div>
         <p class="sentinel-explainer">
           <span class="sentinel-source-note">当サイトは、新潟県が公表する「新潟県感染症情報（週報速報版）」をもとに、インフルエンザの流行状況を見やすく整理・可視化したものです。</span>
-          <span class="sentinel-definition-note"><strong>「人 / 定点」とは？</strong> 報告医療機関1か所あたりの患者報告数です。現在の <strong><span id="sentinel-current-value">--</span> 人 / 定点</strong> は、1医療機関あたり平均<span id="sentinel-current-value-inline">--</span>人の報告があったことを表します。</span>
+          <span class="sentinel-definition-note"><strong>「人 / 定点」とは？</strong> 報告医療機関1か所あたりの患者報告数です。現在の <strong><span id="sentinel-current-value">13.44</span> 人 / 定点</strong> は、1医療機関あたり平均<span id="sentinel-current-value-inline">13.44</span>人の報告があったことを表します。</span>
           <span class="sentinel-location-note"><strong>地域名の表示について</strong> 地域別の数値は、届出のあった<strong>医療機関の所在地</strong>に基づいています。患者の居住地を示すものではありませんので、ご注意ください。</span>
         </p>
       </div>
@@ -170,31 +170,32 @@
 
           <div class="primary-row hero-primary-row">
             <div class="hero-value-wrap">
-              <div id="latest-value" class="big-number">--</div>
+              <div id="latest-value" class="big-number tier-red">13.44</div>
               <div class="unit hero-value-unit">人 / 定点</div>
             </div>
 
             <div class="hero-status-wrap">
               <div class="hero-signal-title">シグナル</div>
-              <div id="hero-signal-lights" class="hero-signal-lights" aria-label="現在の流行シグナル">
+              <div id="hero-signal-lights" class="hero-signal-lights tier-red" aria-label="現在の流行シグナル">
                 <span class="hero-signal-dot signal-blue" aria-hidden="true"></span>
-                <span class="hero-signal-dot signal-yellow is-active" aria-hidden="true"></span>
-                <span class="hero-signal-dot signal-red" aria-hidden="true"></span>
+                <span class="hero-signal-dot signal-yellow" aria-hidden="true"></span>
+                <span class="hero-signal-dot signal-red is-active" aria-hidden="true"></span>
                 <span class="hero-signal-dot signal-purple" aria-hidden="true"></span>
               </div>
-              <div id="level-badge" class="level-badge">判定中</div>
+              <div id="level-badge" class="level-badge tier-red">従来の注意報基準
+相当</div>
             </div>
           </div>
           <div class="mini-grid">
-            <div><span>前週</span><strong id="prev-value">--</strong></div>
-            <div><span>前週から</span><strong id="wow-value">--</strong></div>
+            <div><span>前週</span><strong id="prev-value">11.4</strong></div>
+            <div><span>前週から</span><strong id="wow-value">+2.04</strong></div>
           </div>
           <div class="signal-guide" aria-label="流行水準の凡例">
             <div class="signal-guide-head"><strong>流行水準の目安</strong><span>厚生労働省の従来区分を参考</span></div>
             <div class="signal-list">
               <div class="signal-item" data-signal="pre"><span class="signal-dot"></span><div><strong>1未満</strong><span class="signal-copy">流行期入りの目安<br>未満</span></div></div>
               <div class="signal-item" data-signal="active"><span class="signal-dot"></span><div><strong>1以上</strong><span class="signal-copy">流行期入りの目安<br>以上</span></div></div>
-              <div class="signal-item" data-signal="caution"><span class="signal-dot"></span><div><strong>10以上</strong><span class="signal-copy">従来の注意報基準<br>相当</span></div></div>
+              <div class="signal-item is-current" data-signal="caution"><span class="signal-dot"></span><div><strong>10以上</strong><span class="signal-copy">従来の注意報基準<br>相当</span></div></div>
               <div class="signal-item" data-signal="warning"><span class="signal-dot"></span><div><strong>30以上</strong><span class="signal-copy">従来の警報基準<br>相当</span></div></div>
             </div>
             <p class="signal-note">※「注意報」「警報」の発令を示すものではなく、定点当たり報告数を従来基準と比較した表示です。</p>

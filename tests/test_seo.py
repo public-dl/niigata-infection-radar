@@ -31,7 +31,7 @@ class SeoTests(unittest.TestCase):
         for year, week, rate in [(2025,44,4.15),(2026,43,11.4),(2026,44,13.44)]:
             start = date.fromisocalendar(year, week, 1)
             self.history['weeks'].append({
-                'year':year, 'week':week, 'start':start.isoformat(),
+                'year':year, 'week':week, 'label':f'R{year-2018}/{start.month}/{start.day}–{(start+timedelta(days=6)).month}/{(start+timedelta(days=6)).day}', 'start':start.isoformat(),
                 'end':(start+timedelta(days=6)).isoformat(), 'prefecture':rate,
                 'regions':{'佐渡':38.0,'村上':22.0,'南魚沼':17.0,'新潟市':14.94},
                 'age_per_sentinel':{'0歳':0.16,'5～9歳':3.42,'10～14歳':2.8},
@@ -57,6 +57,78 @@ class SeoTests(unittest.TestCase):
         for text in ['2026年第44週', '2026-10-26', '2026-11-01', '13.44', '11.40', '2.04', '4.15', '佐渡', '村上', '南魚沼', '5～9歳', '3.42', self.ai['summary'], '2026-11-05']:
             self.assertIn(text, section)
         self.assertNotRegex(section, r'display\s*:\s*none|\bhidden\b|<script')
+
+    def hero_text(self, ident):
+        from html import unescape
+        return unescape(re.search(r'<[^>]+ id="'+ident+r'"[^>]*>([^<]*)</', self.output())[1])
+
+    def test_hero_current_values_and_classes(self):
+        seo.update(self.root)
+        expected = {'latest-period':'2026/10/26–11/1', 'data-updated-at':'2026/11/5 19:59',
+                    'latest-value':'13.44', 'prev-value':'11.4', 'wow-value':'+2.04',
+                    'sentinel-current-value':'13.44', 'sentinel-current-value-inline':'13.44',
+                    'level-badge':'従来の注意報基準\n相当'}
+        for ident, value in expected.items():
+            self.assertEqual(self.hero_text(ident), value)
+        self.assertIn('class="big-number tier-red"', self.output())
+        self.assertIn('class="level-badge tier-red"', self.output())
+        self.assertIn('class="hero-signal-lights tier-red"', self.output())
+        self.assertIn('signal-red is-active', self.output())
+        self.assertIn('class="signal-item is-current" data-signal="caution"', self.output())
+
+    def test_hero_transitions_all_tiers_and_is_idempotent(self):
+        for value, tier, signal in [(30,'purple','warning'),(15.44,'red','caution'),(1,'yellow','active'),(0,'blue','pre')]:
+            self.history['weeks'][-1]['prefecture'] = value
+            self.save()
+            seo.update(self.root)
+            self.assertEqual(self.hero_text('latest-value'), seo.fmt_n(value))
+            tag = re.search(r'<div id="latest-value"[^>]*>', self.output())[0]
+            self.assertEqual(re.findall(r'tier-\w+', tag), ['tier-'+tier])
+            self.assertEqual(self.output().count('hero-signal-dot signal-'+tier+' is-active'), 1)
+            self.assertIn('class="signal-item is-current" data-signal="'+signal+'"', self.output())
+            before = self.blobs()
+            self.assertFalse(seo.update(self.root))
+            self.assertEqual(before, self.blobs())
+            self.assertEqual(seo.hero_update(self.output(),self.history), self.output())
+
+    def test_hero_missing_previous(self):
+        self.history['weeks'] = [self.history['weeks'][-1]]
+        self.save()
+        seo.update(self.root)
+        self.assertEqual(self.hero_text('prev-value'), '--')
+        self.assertEqual(self.hero_text('wow-value'), '--')
+
+    def test_hero_uses_previous_available_week(self):
+        self.history['weeks'].pop(1)
+        self.history['weeks'].reverse()
+        self.save()
+        seo.update(self.root)
+        self.assertEqual(self.hero_text('prev-value'), '4.15')
+        self.assertEqual(self.hero_text('wow-value'), '+9.29')
+        self.assertIn('前週値・前週比は未確認', self.output())
+
+    def test_hero_number_and_date_formatters(self):
+        for value, expected in [(None,'--'),('bad','--'),(13.44,'13.44'),(11.4,'11.4'),(38,'38'),(0,'0'),(2.04,'2.04')]:
+            self.assertEqual(seo.fmt_n(value),expected)
+        self.assertEqual(seo.hero_updated_at('2026-11-05T10:59:23Z'),'2026/11/5 19:59')
+        self.assertEqual(seo.hero_updated_at(None),'--')
+        self.assertEqual(seo.hero_updated_at('bad'),'--')
+        self.history['weeks'][-1]['prefecture'] = 0
+        self.history['weeks'][-1]['label'] = '2026年第44週'
+        self.save()
+        seo.update(self.root)
+        self.assertEqual(self.hero_text('wow-value'),'−11.4')
+        self.assertEqual(self.hero_text('latest-period'),'2026年第44週')
+
+    def test_hero_missing_or_duplicate_target_changes_no_files(self):
+        for broken in [self.html.replace('id="wow-value"','id="missing-value"'),
+                       self.html+'<span id="latest-value">old</span>',
+                       self.html.replace('signal-purple','signal-unknown')]:
+            (self.root/'index.html').write_text(broken,encoding='utf-8')
+            before = self.blobs()
+            with self.assertRaises(ValueError):
+                seo.update(self.root)
+            self.assertEqual(before,self.blobs())
 
     def test_metadata_title_and_website_preserved(self):
         seo.update(self.root)
@@ -107,6 +179,9 @@ class SeoTests(unittest.TestCase):
         self.assertTrue(seo.update(self.root))
         self.assertIn('2026年第45週', self.output())
         self.assertIn('15.44', self.output())
+        self.assertEqual(self.hero_text('latest-value'), '15.44')
+        self.assertEqual(self.hero_text('prev-value'), '13.44')
+        self.assertEqual(self.hero_text('wow-value'), '+2')
         self.assertIn('2.00人/定点増加', self.output())
         self.assertIn('2026-11-12', (self.root/'sitemap.xml').read_text())
         self.assertFalse(seo.update(self.root))

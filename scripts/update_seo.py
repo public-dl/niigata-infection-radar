@@ -47,6 +47,81 @@ def replace_once(text, pattern, replacement):
     return result
 
 
+
+def fmt_n(value):
+    """Hero formatting mirrors app.js n(); summary keeps two decimal places."""
+    try:
+        value = Decimal(str(value))
+        if not value.is_finite():
+            return '--'
+        return format(value, '.2f').rstrip('0').rstrip('.')
+    except (InvalidOperation, ValueError):
+        return '--'
+
+
+def hero_updated_at(value):
+    try:
+        dt = datetime.fromisoformat(value.replace('Z', '+00:00'))
+        if dt.tzinfo is None:
+            return '--'
+        dt = dt.astimezone(JST)
+        return f'{dt.year}/{dt.month}/{dt.day} {dt.hour:02}:{dt.minute:02}'
+    except (AttributeError, TypeError, ValueError):
+        return '--'
+
+
+def hero_update(html, history):
+    """Only replace leaf text and the specified state classes, in memory."""
+    weeks = sorted(history['weeks'], key=source_week)
+    latest = weeks[-1]
+    current = number(latest['prefecture'])
+    previous = number(weeks[-2].get('prefecture')) if len(weeks) > 1 else None
+    tier, signal, badge = (
+        ('purple', 'warning', '従来の警報基準\n相当') if current >= 30 else
+        ('red', 'caution', '従来の注意報基準\n相当') if current >= 10 else
+        ('yellow', 'active', '流行期入りの目安\n以上') if current >= 1 else
+        ('blue', 'pre', '流行期入りの目安\n未満'))
+    values = {
+        'latest-period': re.sub(r'^R\d+/', str(latest['year']) + '/', latest.get('label') or ''),
+        'data-updated-at': hero_updated_at(history.get('meta', {}).get('updated_at')),
+        'latest-value': fmt_n(current), 'prev-value': fmt_n(previous),
+        'sentinel-current-value': fmt_n(current),
+        'sentinel-current-value-inline': fmt_n(current),
+        'wow-value': '--' if previous is None else ('+' if current >= previous else '−') + fmt_n(abs(current - previous)),
+        'level-badge': badge,
+    }
+    def one(pattern, transform, text):
+        matches = list(re.finditer(pattern, text, re.S))
+        if len(matches) != 1:
+            raise ValueError(f'Expected one hero target, found {len(matches)}: {pattern}')
+        return replace_once(text, pattern, transform(matches[0]))
+
+    def classes(tag, remove, add=()):
+        def change(m):
+            tokens = [c for c in m[1].split() if not remove(c)]
+            tokens.extend(c for c in add if c not in tokens)
+            return 'class="' + ' '.join(tokens) + '"'
+        return one(r'\bclass="([^"]*)"', change, tag)
+
+    for ident, value in values.items():
+        pattern = r'(<([a-z][\w:-]*)\b[^>]*\bid="' + re.escape(ident) + r'"[^>]*>)[^<]*(</\2\s*>)'
+        html = one(pattern, lambda m: m[1] + escape(value) + m[3], html)
+    for ident in ('latest-value', 'level-badge', 'hero-signal-lights'):
+        pattern = r'<[a-z][\w:-]*\b[^>]*\bid="' + ident + r'"[^>]*>'
+        html = one(pattern, lambda m: classes(m[0], lambda c: c.startswith('tier-'), ['tier-' + tier]), html)
+    pattern = r'(<div\b[^>]*\bid="hero-signal-lights"[^>]*>)(.*?)(</div>)'
+    def dots(m):
+        inner = m[2]
+        for color in ('blue', 'yellow', 'red', 'purple'):
+            pat = r'<span\b(?=[^>]*\bclass="[^"]*\bhero-signal-dot\b)(?=[^>]*\bclass="[^"]*\bsignal-' + color + r'\b)[^>]*>'
+            inner = one(pat, lambda d: classes(d[0], lambda c: c == 'is-active', ['is-active'] if color == tier else []), inner)
+        return m[1] + inner + m[3]
+    html = one(pattern, dots, html)
+    for key in ('pre', 'active', 'caution', 'warning'):
+        pattern = r'<div\b(?=[^>]*\bclass="[^"]*\bsignal-item\b)[^>]*\bdata-signal="' + key + r'"[^>]*>'
+        html = one(pattern, lambda m: classes(m[0], lambda c: c == 'is-current', ['is-current'] if key == signal else []), html)
+    return html
+
 def block(text, start, end, content, anchor):
     replacement = f'{start}\n{content}\n{end}'
     if start in text or end in text:
@@ -149,6 +224,7 @@ def build(html, xml, history, ai, digest):
     }
     encoded = json.dumps(dataset, ensure_ascii=False, indent=2).replace('<', '\\u003c').replace('>', '\\u003e').replace('&', '\\u0026')
     html = block(html, DS_START, DS_END, '<script type="application/ld+json">\n' + encoded + '\n</script>', '</head>')
+    html = hero_update(html, history)
     return html, sitemap_update(xml, updated)
 
 
