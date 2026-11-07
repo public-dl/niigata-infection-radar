@@ -75,10 +75,17 @@ jobs:
       - name: Verify weekly outputs
         run: python scripts/weekly_outputs.py --require-current
 
+      # Compare against the last published history, not just this run's git diff.
+      # A failed AI/PDF/SEO run can therefore recover on the next scheduled run.
+      - name: Update static weekly SEO
+        id: seo
+        run: python scripts/update_seo.py --github-output "$GITHUB_OUTPUT"
+
       - name: Commit PDF and metadata
-        if: steps.output_plan.outputs.generate_pdf == 'true' || github.event.inputs.force_regenerate == 'true'
+        if: steps.seo.outputs.changed == 'true' || steps.output_plan.outputs.generate_pdf == 'true' || github.event.inputs.force_regenerate == 'true'
         run: |
           git add reports/latest.pdf reports/latest.meta.json reports/niigata_influenza_report_*.pdf
+          git add index.html sitemap.xml
           if git diff --cached --quiet; then
             echo "No weekly output changes."
             exit 0

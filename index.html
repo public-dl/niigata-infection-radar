@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>新潟県のインフルエンザ発生状況・流行状況 | 新潟インフルエンザレーダー</title>
-  <meta name="description" content="新潟県のインフルエンザ発生状況・流行状況を毎週更新。新潟市を含む県内13地域の定点当たり報告数を、地域別マップ、年代別、時系列、前年同期比較でわかりやすく確認できます。新潟県感染症週報の公表データを使用しています。" />
+  <meta name="description" content="2026年第44週の新潟県インフルエンザ定点当たり報告数は13.44人/定点。前週から2.04人/定点増加しています。地域別マップ、年代別、時系列、前年同期比較で流行状況を確認できます。" />
   <meta name="keywords" content="新潟,新潟県,新潟市,インフルエンザ,新潟 インフルエンザ,新潟県 インフルエンザ,新潟県 インフルエンザ 発生状況,新潟県インフルエンザ発生状況,インフルエンザ 流行状況,インフル マップ,感染症週報,定点当たり報告数,インフルエンザ 地域別,インフルエンザ 年代別" />
   <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1" />
   <link rel="canonical" href="https://public-dl.github.io/niigata-infection-radar/" />
@@ -17,7 +17,7 @@
   <meta property="og:locale" content="ja_JP" />
   <meta property="og:site_name" content="新潟インフルエンザレーダー" />
   <meta property="og:title" content="新潟県のインフルエンザ発生状況・流行状況 | 新潟インフルエンザレーダー" />
-  <meta property="og:description" content="新潟県のインフルエンザ発生状況・流行状況を、県全体・地域別マップ・年代別・時系列でわかりやすく確認できます。" />
+  <meta property="og:description" content="2026年第44週の新潟県インフルエンザ定点当たり報告数は13.44人/定点。前週から2.04人/定点増加しています。地域別マップ、年代別、時系列、前年同期比較で流行状況を確認できます。" />
   <meta property="og:url" content="https://public-dl.github.io/niigata-infection-radar/" />
   <meta property="og:image" content="https://public-dl.github.io/niigata-infection-radar/ogp.png" />
   <meta property="og:image:secure_url" content="https://public-dl.github.io/niigata-infection-radar/ogp.png" />
@@ -28,7 +28,7 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="新潟県のインフルエンザ発生状況・流行状況 | 新潟インフルエンザレーダー" />
-  <meta name="twitter:description" content="新潟県13地域のインフルエンザ発生状況・流行状況を、地域別マップ・年代別・時系列で確認できます。" />
+  <meta name="twitter:description" content="2026年第44週の新潟県インフルエンザ定点当たり報告数は13.44人/定点。前週から2.04人/定点増加しています。地域別マップ、年代別、時系列、前年同期比較で流行状況を確認できます。" />
   <meta name="twitter:image" content="https://public-dl.github.io/niigata-infection-radar/ogp.png" />
   <meta name="twitter:image:alt" content="新潟インフルエンザレーダー。新潟県13地域の流行状況をわかりやすく可視化。" />
 
@@ -74,6 +74,41 @@
   <link rel="stylesheet" href="./age-latest-v87.css?v=87" />
   <link rel="stylesheet" href="./trend-mobile-svg-v100.css?v=100" />
   <link rel="stylesheet" href="./trend-mobile-layout-v101.css?v=101" />
+<!-- WEEKLY-DATASET:START -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "@id": "https://public-dl.github.io/niigata-infection-radar/#weekly-dataset",
+  "name": "新潟県インフルエンザ週次公表データ",
+  "description": "2026年第44週の新潟県インフルエンザ定点当たり報告数は13.44人/定点。前週から2.04人/定点増加しています。地域別マップ、年代別、時系列、前年同期比較で流行状況を確認できます。新潟県感染症情報（週報）を元に地域別・年代別・時系列で整理したデータです。",
+  "url": "https://public-dl.github.io/niigata-infection-radar/",
+  "version": "2026年第44週",
+  "dateModified": "2026-11-05",
+  "temporalCoverage": "2024-12-30/2026-11-01",
+  "spatialCoverage": {
+    "@type": "Place",
+    "name": "新潟県"
+  },
+  "isBasedOn": {
+    "@type": "CreativeWork",
+    "name": "新潟県感染症情報（週報）",
+    "url": "https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0844.html"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "CivITech"
+  },
+  "variableMeasured": "インフルエンザ定点当たり報告数（人/定点）",
+  "distribution": {
+    "@type": "DataDownload",
+    "encodingFormat": "application/json",
+    "contentUrl": "https://public-dl.github.io/niigata-infection-radar/data/influenza_history.json"
+  },
+  "inLanguage": "ja"
+}
+</script>
+<!-- WEEKLY-DATASET:END -->
 </head>
 <body>
 <header class="hero hero-photo hero-sample">
@@ -467,9 +502,21 @@
   </div>
 </section>
 
+<!-- WEEKLY-SEO:START -->
+<section class="card" id="weekly-static-summary" aria-labelledby="weekly-static-title">
+  <h2 id="weekly-static-title">最新週のデータ概要</h2>
+  <p>2026年第44週（2026-10-26～2026-11-01）の新潟県の定点当たり報告数は13.44人/定点でした。前週値は11.40人/定点です。前週から2.04人/定点増加しています。前年同週（2025年第44週）は4.15人/定点でした。</p>
+  <p>地域別の上位は、佐渡38.00人/定点、村上22.00人/定点、南魚沼17.00人/定点です。地域は報告医療機関の所在地に基づきます。</p>
+  <p>年代別の定点当たり報告数が最も高いのは5～9歳（3.42人/定点）です。年齢幅や受診状況が異なるため、年代間の感染リスクの比較ではありません。</p>
+  <p>AI週次要約：10月26日～11月1日の新潟県のインフルエンザ報告数は13.44 人/定点で、前週から2.04 人/定点増加しました。従来の注意報基準相当の10 人/定点を上回っています。</p>
+  <p class="muted small">データ最終更新日：<time datetime="2026-11-05">2026-11-05</time> ／ <a href="https://www.pref.niigata.lg.jp/sec/kanyaku/shuho0844.html">新潟県感染症情報（週報）：2026年第44週</a></p>
+</section>
+<!-- WEEKLY-SEO-HISTORY:b4fb61ac6d6f5cf03e54c96edcffccdfa15bd588f7518e46ddee4a13222ebc8a -->
+<!-- WEEKLY-SEO:END -->
 <section class="footer-note" id="about">
-  <p>出典：新潟県「感染症情報（週報）」</p>
-  <p>本サイトは公表データを見やすく整理したもので、診断・受診判断を行うものではありません。</p>
+  <h2>このサイトについて</h2>
+  <p>新潟県が公表する「感染症情報（週報）」を元に、インフルエンザの報告数を地域別・年代別・時系列で整理・可視化し、県の公表に合わせて自動更新しています。</p>
+  <p>CivITechが運営する、新潟県の公式サイトではない情報サイトです。公表データを見やすく整理することを目的としており、診断・受診判断などの医療判断を行うものではありません。</p>
   <p><a class="footer-contact-link" href="./contact.html">お問い合わせ</a></p>
 </section>
 </main>
