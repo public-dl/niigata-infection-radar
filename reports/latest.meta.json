@@ -2,9 +2,9 @@
   "schema_version": 1,
   "source_week": {
     "year": 2026,
-    "week": 44
+    "week": 45
   },
-  "pdf_sha256": "79ff9ed19387ca36d1b716736db491880d067adb0acb451ddd2ba9e8f634b8ca",
-  "ai_sha256": "97a04217df44889d8c92a8b1a63a2ff0c67f39012375bc426961d4886d6f0548",
-  "history_sha256": "17ff76a2562d595dac404a64ca7a79655a7e64d5f03d4ad98985af3fa2bbb4c2"
+  "pdf_sha256": "f2e21245bc621632aabbd335afe5a8a55b79ce7ce74e1fa033c83009be23a931",
+  "ai_sha256": "42903f6c43a82025e730792076a786d934c80e76e589df404c913c33bbf0f54f",
+  "history_sha256": "3198fabcdac62bb4addfd935a4f211a66e20e7f819d4adcf57244088fb4131b8"
 }
