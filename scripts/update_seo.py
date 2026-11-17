@@ -218,6 +218,8 @@ def build(html, xml, history, ai, digest):
         'spatialCoverage': {'@type': 'Place', 'name': '新潟県'},
         'isBasedOn': {'@type': 'CreativeWork', 'name': '新潟県感染症情報（週報）', 'url': source},
         'publisher': {'@type': 'Organization', 'name': 'CivITech'},
+        'creator': {'@type': 'Organization', 'name': 'CivITech', 'url': URL},
+        'license': 'https://creativecommons.org/licenses/by/4.0/',
         'variableMeasured': 'インフルエンザ定点当たり報告数（人/定点）',
         'distribution': {'@type': 'DataDownload', 'encodingFormat': 'application/json', 'contentUrl': URL + 'data/influenza_history.json'},
         'inLanguage': 'ja',
