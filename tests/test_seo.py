@@ -144,6 +144,8 @@ class SeoTests(unittest.TestCase):
         self.assertEqual(datasets[0], website_before)
         self.assertEqual(datasets[1]['dateModified'], '2026-11-05')
         self.assertEqual(datasets[1]['spatialCoverage']['name'], '新潟県')
+        self.assertEqual(datasets[1]['creator'], {'@type': 'Organization', 'name': 'CivITech', 'url': seo.URL})
+        self.assertEqual(datasets[1]['license'], 'https://creativecommons.org/licenses/by/4.0/')
 
     def test_sitemap_changes_homepage_only(self):
         seo.update(self.root)
